@@ -6,12 +6,16 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Badge, Button, Text, Title } from 'rizzui';
+import { useRouter } from 'next/navigation';
+import { Badge, Button, Checkbox, Text, Title } from 'rizzui';
 import WidgetCard from '@core/components/cards/widget-card';
 import { assessmentService } from '@/services/assessment.service';
 import type { AssessmentHistoryItem, TestType } from '@/types/assessment.types';
+
+/** Max number of completed assessments a user can select at once to compare. */
+const MAX_COMPARE_SELECTION = 2;
 
 const TEST_TYPE_LABEL: Record<TestType, string> = {
   holland: 'هالند (RIASEC)',
@@ -35,8 +39,10 @@ function formatDate(iso?: string): string {
 }
 
 export default function AssessmentHistoryPage() {
+  const router = useRouter();
   const [items, setItems] = useState<AssessmentHistoryItem[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedForCompare, setSelectedForCompare] = useState<string[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -53,6 +59,25 @@ export default function AssessmentHistoryPage() {
     };
   }, []);
 
+  const completedCount = useMemo(
+    () => items?.filter((item) => item.status === 'completed').length ?? 0,
+    [items]
+  );
+
+  function toggleCompareSelection(sessionId: string) {
+    setSelectedForCompare((prev) => {
+      if (prev.includes(sessionId)) return prev.filter((id) => id !== sessionId);
+      if (prev.length >= MAX_COMPARE_SELECTION) return [prev[1], sessionId].filter(Boolean);
+      return [...prev, sessionId];
+    });
+  }
+
+  function goToCompare() {
+    if (selectedForCompare.length !== MAX_COMPARE_SELECTION) return;
+    const [a, b] = selectedForCompare;
+    router.push(`/career-guidance/assessments/compare?a=${a}&b=${b}`);
+  }
+
   return (
     <main className="mx-auto w-full max-w-4xl p-6 sm:p-8 lg:p-10">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -64,9 +89,26 @@ export default function AssessmentHistoryPage() {
         </Link>
       </div>
       <Text className="mt-3 text-sm leading-7 text-gray-600">
-        آزمون‌های قبلی خودت را اینجا می‌بینی — می‌توانی آزمون نیمه‌تمام را ادامه بدهی یا گزارش کامل
-        آزمون‌های تکمیل‌شده را دوباره مرور کنی.
+        آزمون‌های قبلی خودت را اینجا می‌بینی — می‌توانی آزمون نیمه‌تمام را ادامه بدهی، گزارش کامل
+        آزمون‌های تکمیل‌شده را دوباره مرور کنی، یا دو آزمون تکمیل‌شده را برای دیدن روند تغییرات با
+        هم مقایسه کنی.
       </Text>
+
+      {completedCount >= 2 && (
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed border-emerald-300 bg-emerald-50 p-4">
+          <Text className="text-sm text-emerald-800">
+            برای مقایسه، دقیقاً دو آزمون تکمیل‌شده را انتخاب کن ({selectedForCompare.length}/
+            {MAX_COMPARE_SELECTION} انتخاب شده).
+          </Text>
+          <Button
+            size="sm"
+            disabled={selectedForCompare.length !== MAX_COMPARE_SELECTION}
+            onClick={goToCompare}
+          >
+            مقایسه دو آزمون
+          </Button>
+        </div>
+      )}
 
       <section className="mt-8">
         {isLoading ? (
@@ -81,29 +123,40 @@ export default function AssessmentHistoryPage() {
           <div className="space-y-3">
             {items.map((item) => {
               const statusMeta = STATUS_META[item.status] ?? STATUS_META.in_progress;
+              const isCompleted = item.status === 'completed';
+              const isSelected = selectedForCompare.includes(item.sessionId);
               return (
                 <div
                   key={item.sessionId}
                   className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-muted bg-white p-5 shadow-sm"
                 >
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <Text className="font-semibold text-gray-900">
-                        {TEST_TYPE_LABEL[item.testType] ?? item.testType}
-                      </Text>
-                      <Badge variant="flat" color={statusMeta.color}>
-                        {statusMeta.label}
-                      </Badge>
-                    </div>
-                    <Text className="mt-1 text-xs text-gray-500">
-                      شروع: {formatDate(item.startedAt)}
-                      {item.completedAt ? ` · پایان: ${formatDate(item.completedAt)}` : ''}
-                    </Text>
-                    {item.topCode && (
-                      <Text className="mt-1 text-xs font-medium text-emerald-700">
-                        کد نتیجه: {item.topCode}
-                      </Text>
+                  <div className="flex items-start gap-3">
+                    {isCompleted && completedCount >= 2 && (
+                      <Checkbox
+                        className="mt-1"
+                        checked={isSelected}
+                        onChange={() => toggleCompareSelection(item.sessionId)}
+                      />
                     )}
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Text className="font-semibold text-gray-900">
+                          {TEST_TYPE_LABEL[item.testType] ?? item.testType}
+                        </Text>
+                        <Badge variant="flat" color={statusMeta.color}>
+                          {statusMeta.label}
+                        </Badge>
+                      </div>
+                      <Text className="mt-1 text-xs text-gray-500">
+                        شروع: {formatDate(item.startedAt)}
+                        {item.completedAt ? ` · پایان: ${formatDate(item.completedAt)}` : ''}
+                      </Text>
+                      {item.topCode && (
+                        <Text className="mt-1 text-xs font-medium text-emerald-700">
+                          کد نتیجه: {item.topCode}
+                        </Text>
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-3">

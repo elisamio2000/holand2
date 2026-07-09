@@ -23,18 +23,31 @@ interface DimensionRadarChartProps {
   title?: string;
   dimensions: DimensionScore[];
   className?: string;
+  /** Label for the primary series — only shown when a comparison series is present. */
+  seriesLabel?: string;
+  /** Optional second set of dimension scores to overlay (e.g. a prior assessment). */
+  compareDimensions?: DimensionScore[];
+  /** Label for the comparison series. */
+  compareLabel?: string;
 }
 
 export default function DimensionRadarChart({
   title = 'نمودار ابعاد',
   dimensions,
   className,
+  seriesLabel = 'امتیاز نرمال شده',
+  compareDimensions,
+  compareLabel = 'آزمون قبلی',
 }: DimensionRadarChartProps) {
-  const data = dimensions.map((d) => ({
-    dimension: d.dimension,
-    label: d.label,
-    امتیاز: d.normalizedScore,
-  }));
+  const data = dimensions.map((d) => {
+    const compareMatch = compareDimensions?.find((c) => c.dimension === d.dimension);
+    return {
+      dimension: d.dimension,
+      label: d.label,
+      [seriesLabel]: d.normalizedScore,
+      ...(compareDimensions ? { [compareLabel]: compareMatch?.normalizedScore ?? 0 } : {}),
+    };
+  });
 
   return (
     <WidgetCard title={title} className={className}>
@@ -46,12 +59,21 @@ export default function DimensionRadarChart({
             <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fontSize: 10 }} />
             <Tooltip content={<CustomTooltip postfix="%" />} />
             <Radar
-              name="امتیاز نرمال شده"
-              dataKey="امتیاز"
+              name={seriesLabel}
+              dataKey={seriesLabel}
               stroke="#10b981"
               fill="#10b981"
               fillOpacity={0.35}
             />
+            {compareDimensions && (
+              <Radar
+                name={compareLabel}
+                dataKey={compareLabel}
+                stroke="#6366f1"
+                fill="#6366f1"
+                fillOpacity={0.2}
+              />
+            )}
           </RadarChart>
         </ResponsiveContainer>
       </div>
