@@ -1,4 +1,9 @@
-"""Expert Lab router — draft / review / publish workflow for questions & formulas."""
+"""Legacy Expert Lab router.
+
+Kept for backward compatibility, but canonical assessment authoring/versioning
+for publish governance lives under `/admin/assessment-versions` and
+`/admin/formula-versions`.
+"""
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.ext.asyncio import AsyncSession

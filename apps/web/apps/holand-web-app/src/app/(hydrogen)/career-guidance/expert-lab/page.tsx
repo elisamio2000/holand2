@@ -1,11 +1,10 @@
 import { metaObject } from '@/config/site.config';
-import { ExpertLabDashboard } from '@/app/shared/expert-lab';
+import { AssessmentAuthoringDashboard } from '@/app/shared/assessment-authoring';
 
 export const metadata = {
-  ...metaObject('Expert Analyst Lab'),
+  ...metaObject('Assessment Authoring Console'),
 };
 
 export default function ExpertLabPage() {
-  return <ExpertLabDashboard />;
+  return <AssessmentAuthoringDashboard />;
 }
-
