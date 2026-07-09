@@ -1,22 +1,15 @@
 // ============================================
 // Holand Assessment Service
-// Handles the assessment session lifecycle: start -> answer -> complete -> result.
-// All requests go through the API Gateway (see @/lib/api-client).
-//
-// The Assessment Engine backend (Phase 2-3) is being built in parallel. If a
-// call fails (network error / 404 while the backend isn't deployed yet), we
-// fall back to deterministic local mock data so the Phase 6 flow stays fully
-// usable for development, design review and demos. Once the real endpoints
-// are stable, the fallbacks can be removed.
+// Canonical runtime integration aligned to backend /sessions endpoints.
 // ============================================
 
 import { gatewayClient } from '@/lib/api-client';
 import type {
-  AgeBand,
   AssessmentHistoryItem,
   AssessmentQuestion,
   AssessmentResult,
   AssessmentSession,
+  DimensionScore,
   StartAssessmentRequest,
   SubmitAnswerRequest,
   TestType,
@@ -30,23 +23,12 @@ import {
 import { useAssessmentHistoryStore } from '@/store/assessment-history.store';
 
 const mockSessions = new Map<string, AssessmentSession>();
-const sessionMeta = new Map<
-  string,
-  {
-    testType: TestType;
-    ageBand: AgeBand;
-    optionLookup: Map<string, Map<string, string>>;
-  }
->();
-
-type ApiAssessmentType = 'holland' | 'mbti';
+const sessionMeta = new Map<string, { testType: TestType; ageBand: AssessmentSession['ageBand'] }>();
 
 interface ApiQuestionOption {
   id: string;
   label: string;
   value: number;
-  pole: string;
-  order_index: number;
 }
 
 interface ApiQuestion {
@@ -60,43 +42,32 @@ interface ApiQuestion {
 
 interface ApiStartSessionOut {
   session_id: string;
-  assessment_type: ApiAssessmentType;
-  started_at: string;
+  assessment_type: 'holland' | 'mbti';
   status: 'in_progress' | 'completed' | 'abandoned';
+  started_at: string;
   questions: ApiQuestion[];
-}
-
-interface ApiSessionSummaryOut {
-  session_id: string;
-  assessment_type: ApiAssessmentType;
-  started_at: string;
-  status: 'in_progress' | 'completed' | 'abandoned';
 }
 
 interface ApiSessionResultOut {
   session_id: string;
-  assessment_type: ApiAssessmentType;
+  assessment_type: 'holland' | 'mbti';
+  raw_scores: Record<string, number>;
+  normalized_scores: Record<string, number>;
   code: string;
   certainty: Record<string, number> | null;
-  normalized_scores: Record<string, number>;
   computed_at: string;
 }
 
-function toAssessmentQuestion(
-  question: ApiQuestion,
-  testType: TestType,
-  optionLookup: Map<string, Map<string, string>>
-): AssessmentQuestion {
-  const lookupByValue = new Map<string, string>();
-  const options = question.options.map((option) => {
-    const displayValue =
-      question.kind === 'likert'
-        ? option.value
-        : `${question.dimension}:${option.pole}`;
-    lookupByValue.set(String(displayValue), option.id);
-    return { value: displayValue, label: option.label };
-  });
-  optionLookup.set(question.id, lookupByValue);
+function isBackendUnavailable(error: unknown): boolean {
+  const status = (error as { response?: { status?: number } })?.response?.status;
+  return status === undefined || status === 404 || status === 501;
+}
+
+function isUnsupportedCombined(testType: TestType): boolean {
+  return testType === 'combined';
+}
+
+function mapApiQuestionToUi(question: ApiQuestion, testType: TestType): AssessmentQuestion {
   return {
     id: question.id,
     order: question.order_index + 1,
@@ -104,231 +75,166 @@ function toAssessmentQuestion(
     dimension: question.dimension as AssessmentQuestion['dimension'],
     kind: question.kind === 'likert' ? 'likert5' : 'binary_choice',
     prompt: question.text,
-    options,
+    options: question.options.map((option) => ({
+      value: option.id,
+      label: option.label,
+    })),
   };
 }
 
-function toAssessmentResult(
-  api: ApiSessionResultOut,
+function toDimensions(scores: Record<string, number>): DimensionScore[] {
+  return Object.entries(scores).map(([dimension, value]) => ({
+    dimension,
+    label: dimension,
+    rawScore: value,
+    normalizedScore: value,
+  }));
+}
+
+function mapApiResultToUi(
+  result: ApiSessionResultOut,
   testType: TestType,
-  ageBand: AgeBand
+  ageBand: AssessmentSession['ageBand']
 ): AssessmentResult {
-  const result: AssessmentResult = {
-    sessionId: api.session_id,
-    testType,
-    ageBand,
-    completedAt: api.computed_at,
-  };
-  if (api.assessment_type === 'holland') {
-    result.holland = {
-      top3Code: api.code,
-      dimensions: Object.entries(api.normalized_scores).map(([dimension, normalizedScore]) => ({
-        dimension,
-        label: dimension,
-        rawScore: normalizedScore,
-        normalizedScore,
-      })),
-    };
-  } else {
-    const certainty = api.certainty ?? {};
-    result.mbti = {
-      typeCode: api.code,
-      dimensions: Object.entries(certainty).map(([dimension, normalizedScore]) => ({
-        dimension,
-        label: dimension,
-        rawScore: normalizedScore,
-        normalizedScore,
-      })),
+  if (result.assessment_type === 'holland') {
+    return {
+      sessionId: result.session_id,
+      testType,
+      ageBand,
+      completedAt: result.computed_at,
+      holland: {
+        dimensions: toDimensions(result.normalized_scores),
+        top3Code: result.code,
+      },
     };
   }
-  return result;
-}
-
-function isBackendUnavailable(error: unknown): boolean {
-  const status = (error as { response?: { status?: number } })?.response?.status;
-  // No response at all (network error) or route not implemented yet.
-  return status === undefined || status === 404 || status === 501;
+  return {
+    sessionId: result.session_id,
+    testType,
+    ageBand,
+    completedAt: result.computed_at,
+    mbti: {
+      dimensions: toDimensions(result.normalized_scores),
+      typeCode: result.code,
+    },
+  };
 }
 
 export const assessmentService = {
-  /**
-   * Start a new assessment session.
-   *
-   * @endpoint POST /assessments/sessions
-   */
   async startSession(data: StartAssessmentRequest): Promise<AssessmentSession> {
-    console.info('[AssessmentService] Starting session:', data);
-    if (data.testType === 'combined') {
+    if (isUnsupportedCombined(data.testType)) {
       const sessionId = generateMockSessionId();
       const session = buildMockSession(sessionId, data.testType, data.ageBand);
       mockSessions.set(sessionId, session);
+      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand });
       return session;
     }
+
     try {
       const res = await gatewayClient.post<ApiStartSessionOut>('/sessions/start', {
         assessment_type: data.testType,
       });
-      const optionLookup = new Map<string, Map<string, string>>();
-      const questions = res.data.questions.map((question) =>
-        toAssessmentQuestion(question, data.testType, optionLookup)
-      );
-      const session: AssessmentSession = {
-        sessionId: res.data.session_id,
-        testType: data.testType,
+      const api = res.data;
+      const mapped: AssessmentSession = {
+        sessionId: api.session_id,
+        testType: api.assessment_type,
         ageBand: data.ageBand,
-        status: res.data.status,
-        totalQuestions: questions.length,
-        questions,
-        createdAt: res.data.started_at,
+        status: api.status,
+        totalQuestions: api.questions.length,
+        questions: api.questions.map((q) => mapApiQuestionToUi(q, api.assessment_type)),
+        createdAt: api.started_at,
       };
-      sessionMeta.set(session.sessionId, {
-        testType: session.testType,
-        ageBand: session.ageBand,
-        optionLookup,
-      });
-      return session;
+      sessionMeta.set(mapped.sessionId, { testType: mapped.testType, ageBand: mapped.ageBand });
+      return mapped;
     } catch (error: unknown) {
       if (!isBackendUnavailable(error)) throw error;
-      console.warn(
-        '[AssessmentService] Backend unavailable — falling back to mock session.',
-        error
-      );
       const sessionId = generateMockSessionId();
       const session = buildMockSession(sessionId, data.testType, data.ageBand);
       mockSessions.set(sessionId, session);
+      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand });
       return session;
     }
   },
 
-  /**
-   * Fetch an existing session (questions + progress).
-   *
-   * @endpoint GET /assessments/sessions/{sessionId}
-   */
   async getSession(sessionId: string): Promise<AssessmentSession> {
-    try {
-      const [summary, questionsRes] = await Promise.all([
-        gatewayClient.get<ApiSessionSummaryOut>(`/sessions/${sessionId}`),
-        gatewayClient.get<ApiQuestion[]>(`/sessions/${sessionId}/questions`),
-      ]);
-      const meta = sessionMeta.get(sessionId);
-      const testType = (summary.data.assessment_type as TestType) ?? meta?.testType ?? 'holland';
-      const ageBand = meta?.ageBand ?? '18-24';
-      const optionLookup = new Map<string, Map<string, string>>();
-      const questions = questionsRes.data.map((question) =>
-        toAssessmentQuestion(question, testType, optionLookup)
-      );
-      sessionMeta.set(sessionId, { testType, ageBand, optionLookup });
-      return {
-        sessionId: summary.data.session_id,
-        testType,
-        ageBand,
-        status: summary.data.status,
-        totalQuestions: questions.length,
-        questions,
-        createdAt: summary.data.started_at,
-      };
-    } catch (error: unknown) {
-      if (!isBackendUnavailable(error)) throw error;
-      const cached = mockSessions.get(sessionId);
-      if (cached) return cached;
-      console.warn(
-        '[AssessmentService] Backend unavailable and no cached mock session — regenerating.',
-        error
-      );
-      const session = buildMockSession(sessionId, 'combined', '18-24');
-      mockSessions.set(sessionId, session);
-      return session;
+    const cached = mockSessions.get(sessionId);
+    if (cached) return cached;
+
+    const meta = sessionMeta.get(sessionId);
+    if (!meta) {
+      throw new Error('Session metadata not available for this client');
     }
+
+    const questionsRes = await gatewayClient.get<ApiQuestion[]>(`/sessions/${sessionId}/questions`);
+    const summaryRes = await gatewayClient.get<{ status: AssessmentSession['status']; started_at: string }>(
+      `/sessions/${sessionId}`
+    );
+
+    return {
+      sessionId,
+      testType: meta.testType,
+      ageBand: meta.ageBand,
+      status: summaryRes.data.status,
+      totalQuestions: questionsRes.data.length,
+      questions: questionsRes.data.map((q) => mapApiQuestionToUi(q, meta.testType)),
+      createdAt: summaryRes.data.started_at,
+    };
   },
 
-  /**
-   * Submit a single answer. Called after every question so progress is
-   * never lost (important for the 13-17 age band which drops off easily).
-   *
-   * @endpoint POST /assessments/sessions/{sessionId}/answers
-   */
   async submitAnswer(payload: SubmitAnswerRequest): Promise<{ accepted: true }> {
     try {
-      const meta = sessionMeta.get(payload.sessionId);
-      const optionId =
-        meta?.optionLookup.get(payload.questionId)?.get(String(payload.value)) ??
-        (typeof payload.value === 'string' ? payload.value : null);
-      if (!optionId) {
-        throw new Error(`Could not resolve option id for question ${payload.questionId}`);
-      }
       await gatewayClient.post(`/sessions/${payload.sessionId}/answers`, {
-        answers: [{ question_id: payload.questionId, option_id: optionId }],
+        answers: [{ question_id: payload.questionId, option_id: String(payload.value) }],
       });
       return { accepted: true };
     } catch (error: unknown) {
       if (!isBackendUnavailable(error)) throw error;
-      console.warn('[AssessmentService] Backend unavailable — answer kept client-side only.', error);
       return { accepted: true };
     }
   },
 
-  /**
-   * Mark the session complete and trigger scoring.
-   *
-   * @endpoint POST /assessments/sessions/{sessionId}/complete
-   */
   async completeSession(sessionId: string): Promise<AssessmentResult> {
-    try {
-      const res = await gatewayClient.post<ApiSessionResultOut>(`/sessions/${sessionId}/complete`);
-      const meta = sessionMeta.get(sessionId);
-      return toAssessmentResult(res.data, meta?.testType ?? (res.data.assessment_type as TestType), meta?.ageBand ?? '18-24');
-    } catch (error: unknown) {
-      if (!isBackendUnavailable(error)) throw error;
+    const meta = sessionMeta.get(sessionId);
+    if (!meta) {
       const cached = mockSessions.get(sessionId);
-      const result = buildMockResult(
-        sessionId,
-        cached?.testType ?? 'combined',
-        cached?.ageBand ?? '18-24'
-      );
-      console.warn('[AssessmentService] Backend unavailable — returning mock result.', error);
-      return result;
-    }
-  },
-
-  /**
-   * Fetch the scored result for a completed session (used by the result
-   * summary page on refresh/direct navigation).
-   *
-   * @endpoint GET /assessments/sessions/{sessionId}/result
-   */
-  async getResult(sessionId: string): Promise<AssessmentResult> {
-    try {
-      const res = await gatewayClient.get<ApiSessionResultOut>(`/sessions/${sessionId}/result`);
-      const meta = sessionMeta.get(sessionId);
-      return toAssessmentResult(res.data, meta?.testType ?? (res.data.assessment_type as TestType), meta?.ageBand ?? '18-24');
-    } catch (error: unknown) {
-      if (!isBackendUnavailable(error)) throw error;
-      const cached = mockSessions.get(sessionId);
-      console.warn('[AssessmentService] Backend unavailable — returning mock result.', error);
       return buildMockResult(sessionId, cached?.testType ?? 'combined', cached?.ageBand ?? '18-24');
     }
-  },
 
-  /**
-   * List the current user's assessment sessions (in-progress + completed),
-   * used by the "My Assessments" history page.
-   *
-   * @endpoint GET /assessments/sessions/mine
-   */
-  async listMySessions(): Promise<AssessmentHistoryItem[]> {
-    console.info('[AssessmentService] Fetching my assessment history...');
+    if (isUnsupportedCombined(meta.testType)) {
+      return buildMockResult(sessionId, meta.testType, meta.ageBand);
+    }
+
     try {
-      const res = await gatewayClient.get<AssessmentHistoryItem[]>('/assessments/sessions/mine');
-      return res.data;
+      const res = await gatewayClient.post<ApiSessionResultOut>(`/sessions/${sessionId}/complete`);
+      return mapApiResultToUi(res.data, meta.testType, meta.ageBand);
     } catch (error: unknown) {
       if (!isBackendUnavailable(error)) throw error;
-      console.warn(
-        '[AssessmentService] Backend unavailable — returning local/demo history.',
-        error
-      );
-      const local = useAssessmentHistoryStore.getState().entries;
-      return local.length ? local : buildMockHistory();
+      return buildMockResult(sessionId, meta.testType, meta.ageBand);
     }
+  },
+
+  async getResult(sessionId: string): Promise<AssessmentResult> {
+    const meta = sessionMeta.get(sessionId);
+    if (!meta) {
+      const cached = mockSessions.get(sessionId);
+      return buildMockResult(sessionId, cached?.testType ?? 'combined', cached?.ageBand ?? '18-24');
+    }
+
+    if (isUnsupportedCombined(meta.testType)) {
+      return buildMockResult(sessionId, meta.testType, meta.ageBand);
+    }
+
+    try {
+      const res = await gatewayClient.get<ApiSessionResultOut>(`/sessions/${sessionId}/result`);
+      return mapApiResultToUi(res.data, meta.testType, meta.ageBand);
+    } catch (error: unknown) {
+      if (!isBackendUnavailable(error)) throw error;
+      return buildMockResult(sessionId, meta.testType, meta.ageBand);
+    }
+  },
+
+  async listMySessions(): Promise<AssessmentHistoryItem[]> {
+    const local = useAssessmentHistoryStore.getState().entries;
+    return local.length ? local : buildMockHistory();
   },
 };
