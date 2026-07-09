@@ -5,11 +5,19 @@ __pycache__/
 *.pyd
 *.so
 .venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
 # Node
 node_modules/
 .next/
 out/
+*.tsbuildinfo
+.eslintcache
+pnpm-debug.log*
 
 # Env
 .env
