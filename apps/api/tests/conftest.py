@@ -7,8 +7,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from sqlalchemy.pool import StaticPool
 
 from app.database import get_db
+from app.deps import get_current_user
 from app.main import app
 from app.models.base import Base
+from app.models.user import User, UserRole
 
 # ── In-memory SQLite for tests (no Postgres needed) ─────────────────────────
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
@@ -58,6 +60,36 @@ async def client(db_session: AsyncSession):
         yield db_session
 
     app.dependency_overrides[get_db] = override_get_db
+    if hasattr(app.state.limiter, "_storage"):
+        app.state.limiter._storage.reset()
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app), base_url="http://test"
+    ) as ac:
+        yield ac
+
+    if hasattr(app.state.limiter, "_storage"):
+        app.state.limiter._storage.reset()
+    app.dependency_overrides.clear()
+
+
+@pytest_asyncio.fixture(scope="function")
+async def admin_client(db_session: AsyncSession):
+    async def override_get_db():
+        yield db_session
+
+    async def override_current_user() -> User:
+        return User(
+            id="test-admin-id",
+            username="admin",
+            email="admin@holand.dev",
+            hashed_password="not-used-in-tests",
+            role=UserRole.ADMIN,
+            is_active=True,
+        )
+
+    app.dependency_overrides[get_db] = override_get_db
+    app.dependency_overrides[get_current_user] = override_current_user
     if hasattr(app.state.limiter, "_storage"):
         app.state.limiter._storage.reset()
 

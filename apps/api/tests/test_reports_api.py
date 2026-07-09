@@ -38,11 +38,11 @@ class TestRecommendationsApi:
         assert response.status_code == 200
         assert len(response.json()) <= 50
 
-    async def test_recommendation_quality_signal_applies_safe_heuristic(self, client):
+    async def test_recommendation_quality_signal_applies_safe_heuristic(self, admin_client):
         target_holland_code = None
         target_mbti_type = None
         for i in range(10):
-            report_response = await client.post(
+            report_response = await admin_client.post(
                 "/reports/generate",
                 json={
                     "holland_scores": {"R": 10, "I": 30, "A": 5, "S": 10, "E": 5, "C": 20},
@@ -66,7 +66,7 @@ class TestRecommendationsApi:
                 target_holland_code = report_body["holland_code"]
                 target_mbti_type = report_body["mbti_type"]
 
-            feedback_response = await client.post(
+            feedback_response = await admin_client.post(
                 "/recommendations/feedback",
                 json={
                     "report_id": report_body["id"],
@@ -78,7 +78,7 @@ class TestRecommendationsApi:
             )
             assert feedback_response.status_code == 201
 
-        response = await client.post(
+        response = await admin_client.post(
             "/recommendations",
             json={
                 "holland_code": target_holland_code,

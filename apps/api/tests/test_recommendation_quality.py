@@ -10,8 +10,8 @@ from app.models.recommendation_quality import RecommendationFeedback
 
 class TestRecommendationQualityMonitor:
     @pytest.mark.asyncio
-    async def test_feedback_submission_with_reason_taxonomy(self, client):
-        report_response = await client.post(
+    async def test_feedback_submission_with_reason_taxonomy(self, admin_client):
+        report_response = await admin_client.post(
             "/reports/generate",
             json={
                 "holland_scores": {"R": 12, "I": 30, "A": 8, "S": 10, "E": 5, "C": 20},
@@ -32,7 +32,7 @@ class TestRecommendationQualityMonitor:
         assert report_response.status_code == 200
         report_id = report_response.json()["id"]
 
-        response = await client.post(
+        response = await admin_client.post(
             "/recommendations/feedback",
             json={
                 "report_id": report_id,
@@ -54,10 +54,10 @@ class TestRecommendationQualityMonitor:
         assert body["accepted"] is False
 
     @pytest.mark.asyncio
-    async def test_quality_alert_triggered_for_low_quality_feedback(self, client):
+    async def test_quality_alert_triggered_for_low_quality_feedback(self, admin_client):
         # threshold defaults: min_samples=10, threshold=35%
         for i in range(10):
-            report_response = await client.post(
+            report_response = await admin_client.post(
                 "/reports/generate",
                 json={
                     "holland_scores": {"R": 10, "I": 30, "A": 5, "S": 10, "E": 5, "C": 20},
@@ -78,7 +78,7 @@ class TestRecommendationQualityMonitor:
             assert report_response.status_code == 200
             report_id = report_response.json()["id"]
 
-            response = await client.post(
+            response = await admin_client.post(
                 "/recommendations/feedback",
                 json={
                     "report_id": report_id,
@@ -91,7 +91,7 @@ class TestRecommendationQualityMonitor:
             )
             assert response.status_code == 201
 
-        response = await client.get("/admin/alerts/recommendation-quality")
+        response = await admin_client.get("/admin/alerts/recommendation-quality")
         assert response.status_code == 200
         body = response.json()
         assert body["total_feedback"] == 10
@@ -107,9 +107,9 @@ class TestRecommendationQualityMonitor:
         )
 
     @pytest.mark.asyncio
-    async def test_quality_alert_not_triggered_when_below_threshold(self, client):
+    async def test_quality_alert_not_triggered_when_below_threshold(self, admin_client):
         for i in range(10):
-            report_response = await client.post(
+            report_response = await admin_client.post(
                 "/reports/generate",
                 json={
                     "holland_scores": {"R": 15, "I": 25, "A": 5, "S": 10, "E": 10, "C": 20},
@@ -129,7 +129,7 @@ class TestRecommendationQualityMonitor:
             )
             assert report_response.status_code == 200
 
-            response = await client.post(
+            response = await admin_client.post(
                 "/recommendations/feedback",
                 json={
                     "report_id": report_response.json()["id"],
@@ -141,7 +141,7 @@ class TestRecommendationQualityMonitor:
             )
             assert response.status_code == 201
 
-        response = await client.get("/admin/alerts/recommendation-quality")
+        response = await admin_client.get("/admin/alerts/recommendation-quality")
         assert response.status_code == 200
         body = response.json()
         assert body["alert_triggered"] is False
@@ -150,9 +150,9 @@ class TestRecommendationQualityMonitor:
         assert body["recommended_action"] == "continue-monitoring"
 
     @pytest.mark.asyncio
-    async def test_feedback_trends_and_reason_aggregation(self, client):
+    async def test_feedback_trends_and_reason_aggregation(self, admin_client):
         for i in range(6):
-            report_response = await client.post(
+            report_response = await admin_client.post(
                 "/reports/generate",
                 json={
                     "holland_scores": {"R": 10, "I": 30, "A": 5, "S": 10, "E": 5, "C": 20},
@@ -172,7 +172,7 @@ class TestRecommendationQualityMonitor:
             )
             assert report_response.status_code == 200
 
-            feedback_response = await client.post(
+            feedback_response = await admin_client.post(
                 "/recommendations/feedback",
                 json={
                     "report_id": report_response.json()["id"],
@@ -184,7 +184,7 @@ class TestRecommendationQualityMonitor:
             )
             assert feedback_response.status_code == 201
 
-        response = await client.get("/admin/recommendation-quality/trends?window_days=30")
+        response = await admin_client.get("/admin/recommendation-quality/trends?window_days=30")
         assert response.status_code == 200
         body = response.json()
         assert body["window_days"] == 30
@@ -197,8 +197,8 @@ class TestRecommendationQualityMonitor:
         assert reason_counts["age_band_mismatch"] == 1
 
     @pytest.mark.asyncio
-    async def test_quality_drift_endpoint_reports_degrading_status(self, client, db_session):
-        old_report = await client.post(
+    async def test_quality_drift_endpoint_reports_degrading_status(self, admin_client, db_session):
+        old_report = await admin_client.post(
             "/reports/generate",
             json={
                 "holland_scores": {"R": 15, "I": 25, "A": 8, "S": 10, "E": 7, "C": 20},
@@ -217,7 +217,7 @@ class TestRecommendationQualityMonitor:
             },
         )
         assert old_report.status_code == 200
-        old_feedback = await client.post(
+        old_feedback = await admin_client.post(
             "/recommendations/feedback",
             json={
                 "report_id": old_report.json()["id"],
@@ -238,7 +238,7 @@ class TestRecommendationQualityMonitor:
         await db_session.commit()
 
         for i in range(2):
-            report_response = await client.post(
+            report_response = await admin_client.post(
                 "/reports/generate",
                 json={
                     "holland_scores": {"R": 12, "I": 28, "A": 10, "S": 8, "E": 12, "C": 18},
@@ -257,7 +257,7 @@ class TestRecommendationQualityMonitor:
                 },
             )
             assert report_response.status_code == 200
-            feedback_response = await client.post(
+            feedback_response = await admin_client.post(
                 "/recommendations/feedback",
                 json={
                     "report_id": report_response.json()["id"],
@@ -269,7 +269,7 @@ class TestRecommendationQualityMonitor:
             )
             assert feedback_response.status_code == 201
 
-        response = await client.get("/admin/recommendation-quality/drift?window_days=7")
+        response = await admin_client.get("/admin/recommendation-quality/drift?window_days=7")
         assert response.status_code == 200
         body = response.json()
         assert body["window_days"] == 7
@@ -278,8 +278,8 @@ class TestRecommendationQualityMonitor:
         assert body["drift_status"] == "degrading"
 
     @pytest.mark.asyncio
-    async def test_monitoring_metrics_expose_quality_loop_kpis(self, client):
-        report_response = await client.post(
+    async def test_monitoring_metrics_expose_quality_loop_kpis(self, admin_client):
+        report_response = await admin_client.post(
             "/reports/generate",
             json={
                 "holland_scores": {"R": 10, "I": 20, "A": 10, "S": 20, "E": 10, "C": 20},
@@ -298,7 +298,7 @@ class TestRecommendationQualityMonitor:
             },
         )
         assert report_response.status_code == 200
-        feedback_response = await client.post(
+        feedback_response = await admin_client.post(
             "/recommendations/feedback",
             json={
                 "report_id": report_response.json()["id"],
@@ -310,7 +310,7 @@ class TestRecommendationQualityMonitor:
         )
         assert feedback_response.status_code == 201
 
-        metrics_response = await client.get("/monitoring/metrics")
+        metrics_response = await admin_client.get("/monitoring/metrics")
         assert metrics_response.status_code == 200
         quality_loop = metrics_response.json()["quality_loop_kpis"]
         assert quality_loop["feedback_total"] >= 1
