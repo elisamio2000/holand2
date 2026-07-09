@@ -17,6 +17,7 @@ from .routers.admin_users import router as admin_users_router
 from .routers.admin_versions import router as admin_versions_router
 from .routers.analytics import router as analytics_router
 from .routers.auth import router as auth_router
+from .routers.counselor import router as counselor_router
 from .routers.expert_lab import router as expert_lab_router
 from .routers.monitoring import router as monitoring_router
 from .routers.recommendation_quality import router as recommendation_quality_router
@@ -92,6 +93,7 @@ app.include_router(admin_versions_router)
 app.include_router(sessions_router)
 app.include_router(reco_router)
 app.include_router(reports_router)
+app.include_router(counselor_router)
 app.include_router(analytics_router)
 app.include_router(expert_lab_router)
 app.include_router(recommendation_quality_router)
@@ -131,4 +133,3 @@ def mbti_score(payload: MbtiRequest) -> MbtiResult:
         quality_score=quality_score,
         quality_band=quality_band,
     )
-

@@ -21,8 +21,25 @@ uvicorn app.main:app --reload --port 8000
 - POST /recommendations
 - GET /recommendations/catalog/jobs
 - GET /recommendations/catalog/majors
-- POST /reports/generate
-- GET /reports/{report_id}
+- POST /reports/generate (auth required)
+- GET /reports/history (auth required)
+- GET /reports/{report_id} (auth required)
+- GET /reports/{report_id}/export?format=pdf|html (auth required)
+- GET /counselor/dashboard (counselor/admin only)
+
+## Report & counselor usage
+
+1. Create or login and use the returned Bearer token.
+2. Generate reports through `/reports/generate`; ownership is bound to the authenticated user.
+3. End users can access only their own reports/history.
+4. Counselors can access reports only for assigned students (`counselor_assignments` table).
+5. Admins can access all reports and can inspect any counselor dashboard via `?counselor_id=...`.
+
+## Known limits
+
+- PDF export depends on the host having a working WeasyPrint runtime; when unavailable, use `format=html`.
+- Counselor case visibility is assignment-driven; unassigned students are intentionally hidden.
+- Legacy reports without `user_id` are restricted to admin access.
 
 ## Seed taxonomy dataset
 

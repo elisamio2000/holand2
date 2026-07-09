@@ -230,6 +230,57 @@ class ReportResponse(BaseModel):
     recommendations: RecommendationResponseV2
 
 
+class ReportExportResponse(BaseModel):
+    report_id: str
+    format: str
+    content_type: str
+    filename: str
+
+
+class ReportHistoryItem(BaseModel):
+    report_id: str
+    session_id: str | None = None
+    holland_code: str
+    mbti_type: str
+    age_band: str
+    confidence_score: float
+    created_at: datetime
+    top_careers_fa: list[str]
+    top_majors_fa: list[str]
+    compare_to_report_id: str | None = None
+    student_id: str | None = None
+    student_name: str | None = None
+
+
+class CounselorStudentSummary(BaseModel):
+    session_id: str
+    student_id: str
+    student_name: str
+    age_band: str
+    test_type: str = "combined"
+    status: str
+    progress_percent: int
+    top_code: str | None = None
+    updated_at: datetime
+    latest_report_id: str | None = None
+    latest_confidence_score: float | None = None
+    confidence_delta: float | None = None
+    compare_report_id: str | None = None
+
+
+class CounselorDashboardStats(BaseModel):
+    total_students: int
+    completed_assessments: int
+    in_progress_assessments: int
+    average_completion_percent: int
+    dimension_averages: list[dict[str, float | str]]
+
+
+class CounselorDashboardResponse(BaseModel):
+    stats: CounselorDashboardStats
+    students: list[CounselorStudentSummary]
+
+
 # ── Analytics (funnel instrumentation) ──────────────────────────────────────
 
 
