@@ -9,8 +9,6 @@ import BoronLayout from '@/layouts/boron/boron-layout';
 import CarbonLayout from '@/layouts/carbon/carbon-layout';
 import { useLayout } from '@/layouts/use-layout';
 import { LAYOUT_OPTIONS } from '@/config/enums';
-import WorkspaceBrandingSync from '@/app/shared/workspace/components/workspace-branding-sync';
-import WorkspaceHomeRedirect from '@/app/shared/workspace/components/workspace-home-redirect';
 import { GlobalAudioPlayerHost } from '@/components/audio-player/components/global-audio-player-host';
 import { GlobalVideoPlayerHost } from '@/components/video-player/global-video-player-host';
 
@@ -21,8 +19,6 @@ type LayoutProps = {
 export default function DefaultLayout({ children }: LayoutProps) {
   return (
     <>
-      <WorkspaceBrandingSync />
-      <WorkspaceHomeRedirect />
       <LayoutProvider>{children}</LayoutProvider>
       <GlobalAudioPlayerHost />
       <GlobalVideoPlayerHost />

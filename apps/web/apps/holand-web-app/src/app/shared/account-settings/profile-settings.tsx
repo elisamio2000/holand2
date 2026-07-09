@@ -18,25 +18,11 @@ import { adminService } from '@/services/admin.service';
 import { authService } from '@/services/auth.service';
 import type { UserResponse } from '@/types/auth.types';
 import { z } from 'zod';
-import dynamic from 'next/dynamic';
 import {
-  isDiceBearAvatarUrl,
   isValidAvatarUrl,
   resolveAvatarSrc,
-} from '@/utils/dicebear/dicebear-avatar-url';
-import { classifyApiError, getApiErrorMessage } from '@/lib/api-errors';
-
-const AvatarBuilder = dynamic(
-  () => import('@/app/shared/account-settings/avatar-builder'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex min-h-[320px] items-center justify-center rounded-xl border border-dashed border-gray-200">
-        <Loader variant="spinner" size="xl" />
-      </div>
-    ),
-  }
-);
+} from '@/utils/avatar/resolve-avatar-src';
+import { getApiErrorMessage } from '@/lib/api-errors';
 
 /**
  * DEV NOTE: Backend fields mapping for Profile tab
@@ -120,18 +106,8 @@ async function buildAvatarBlobFromEditor(
 
 function resolveProfileApiErrorMessage(
   err: unknown,
-  fallback: string,
-  options?: { avatarUrl?: string; avatarBackendError?: string }
+  fallback: string
 ): string {
-  const classified = classifyApiError(err);
-  if (
-    classified.status === 422 &&
-    options?.avatarUrl &&
-    isDiceBearAvatarUrl(options.avatarUrl) &&
-    options.avatarBackendError
-  ) {
-    return options.avatarBackendError;
-  }
   return getApiErrorMessage(err, fallback);
 }
 
@@ -208,12 +184,7 @@ export default function ProfileSettingsView() {
       });
       toast.success(<Text as="b">{t('account.profileSettings.saveSuccess')}</Text>);
     } catch (err: unknown) {
-      toast.error(
-        resolveProfileApiErrorMessage(err, t('account.profileSettings.saveError'), {
-          avatarUrl: data.avatar_url,
-          avatarBackendError: t('account.profileSettings.avatarSaveBackendError'),
-        })
-      );
+      toast.error(resolveProfileApiErrorMessage(err, t('account.profileSettings.saveError')));
     } finally {
       setIsSaving(false);
     }
@@ -390,8 +361,8 @@ export default function ProfileSettingsView() {
                 </FormGroup>
 
                 <FormGroup
-                  title={t('account.profileSettings.avatarBuilder')}
-                  description={t('account.profileSettings.avatarBuilderDesc')}
+                  title={t('account.profileSettings.avatarUploadTitle')}
+                  description={t('account.profileSettings.avatarBackendNote')}
                   layout="stacked"
                   className="pt-7 @2xl:pt-9 @3xl:pt-11"
                 >
@@ -606,7 +577,7 @@ export default function ProfileSettingsView() {
                                     setAvatarOffsetY(0);
                                   }}
                                 >
-                                  {t('account.avatarBuilder.resetOptions')}
+                                  Reset
                                 </Button>
                                 <Button
                                   type="button"
@@ -621,17 +592,6 @@ export default function ProfileSettingsView() {
                           </div>
                         ) : null}
 
-                        <AvatarBuilder
-                          key={`${session?.user?.id ?? 'guest'}-${userData?.avatar_url ?? 'new'}`}
-                          value={field.value ?? ''}
-                          onChange={field.onChange}
-                          defaultSeed={
-                            session?.user?.id ||
-                            userData?.username ||
-                            userData?.email ||
-                            'user'
-                          }
-                        />
                       </div>
                     )}
                   />

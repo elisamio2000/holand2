@@ -8,7 +8,7 @@ import ProfileSettingsScrollFlush from '@/app/shared/account-settings/profile-se
  * AccountLayout — Canonical account pages wrapper.
  *
  * Keeps account navigation and dev requirements panel in a unified layout
- * for /account/profile, /account/security, /account/activity.
+ * for /account/profile, /account/security, /account/activity, /account/appearance.
  */
 export default function AccountLayout({
   children,

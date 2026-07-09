@@ -9,8 +9,7 @@ import dynamic from 'next/dynamic';
 import SimpleBar from 'simplebar-react';
 import { useSession } from 'next-auth/react';
 import { useTranslation } from 'react-i18next';
-import { resolveAvatarSrc } from '@/utils/dicebear/dicebear-avatar-url';
-import WorkspaceSidebarIdentity from '@/app/shared/workspace/components/workspace-sidebar-identity';
+import { resolveAvatarSrc } from '@/utils/avatar/resolve-avatar-src';
 import { CarbonSidebarMenu } from './carbon-sidebar-menu';
 
 const NeedSupport = dynamic(() => import('@/layouts/carbon/need-support'), {
@@ -43,7 +42,6 @@ export function CarbonSidebar({ className }: { className?: string }) {
             <Logo className="max-w-[155px]" />
           </Link>
         </div>
-        <WorkspaceSidebarIdentity variant="carbon" className="pb-2" />
       </div>
 
       <SimpleBar

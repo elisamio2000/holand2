@@ -2,7 +2,6 @@ import Link from 'next/link';
 import cn from '@core/utils/class-names';
 import SimpleBar from '@core/ui/simplebar';
 import Logo from '@core/components/logo';
-import WorkspaceSidebarIdentity from '@/app/shared/workspace/components/workspace-sidebar-identity';
 import { SidebarMenu } from '../hydrogen/sidebar-menu';
 
 export function CarbonDrawerSidebar({ className }: { className?: string }) {
@@ -23,7 +22,6 @@ export function CarbonDrawerSidebar({ className }: { className?: string }) {
             <Logo className="max-w-[155px]" />
           </Link>
         </div>
-        <WorkspaceSidebarIdentity variant="carbon" className="pb-2" />
       </div>
 
       <SimpleBar className="min-h-0 flex-1">

@@ -10,7 +10,6 @@ import {
   PiCalendarPlusDuotone,
   PiChatCenteredDotsDuotone,
   PiClipboardTextDuotone,
-  PiCodesandboxLogoDuotone,
   PiCpuDuotone,
   PiEnvelopeDuotone,
   PiFolderDuotone,
@@ -19,12 +18,10 @@ import {
   PiFolderPlusDuotone,
   PiGearDuotone,
   PiGlobeHemisphereWestDuotone,
-  PiGraphDuotone,
   PiHardDrivesDuotone,
   PiListChecksDuotone,
   PiLockKeyDuotone,
   PiMagnifyingGlassDuotone,
-  PiMapTrifoldDuotone,
   PiNewspaperClippingDuotone,
   PiPlugDuotone,
   PiProjectorScreenChartDuotone,
@@ -144,36 +141,6 @@ export const carbonMenuItems: MenuItemsType[] = [
         name: 'nav.storage',
         icon: PiHardDrivesDuotone,
         href: routes.storage,
-      },
-    ],
-  },
-
-  // ==========================================
-  // Visual Workspace
-  // ==========================================
-  {
-    id: '3',
-    name: 'nav.visualWorkspace',
-    title: 'nav.visualWorkspace',
-    icon: PiCodesandboxLogoDuotone,
-    menuItems: [
-      {
-        name: 'nav.myBoards',
-        icon: PiCodesandboxLogoDuotone,
-        href: routes.userBoards.hub,
-        badge: 'NEW',
-      },
-      {
-        name: 'nav.graphExplorer',
-        icon: PiGraphDuotone,
-        href: routes.graphExplorer,
-        badge: 'NEW',
-      },
-      {
-        name: 'nav.offlineMap',
-        icon: PiMapTrifoldDuotone,
-        href: routes.offlineMap,
-        badge: 'NEW',
       },
     ],
   },
@@ -367,4 +334,3 @@ export const carbonMenuItemAtom = atom(carbonMenuItems[0]);
 
 /** Same stable nav ids as Hydrogen (`name` i18n keys). */
 export { MENU_CATALOG } from '@/lib/menu-catalog';
-
