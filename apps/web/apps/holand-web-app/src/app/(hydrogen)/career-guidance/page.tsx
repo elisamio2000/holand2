@@ -7,7 +7,9 @@ export const metadata = {
 
 const links = [
   { href: '/career-guidance/assessments', label: 'Assessment Engine' },
+  { href: '/career-guidance/assessments/start', label: 'شروع آزمون جدید' },
   { href: '/career-guidance/reports', label: 'Reporting & Interpretation' },
+  { href: '/career-guidance/counselor', label: 'داشبورد مشاور' },
   { href: '/career-guidance/expert-lab', label: 'Expert Analyst Lab' },
 ];
 
