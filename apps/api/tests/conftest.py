@@ -2,14 +2,13 @@
 
 import pytest
 import pytest_asyncio
-from httpx import AsyncClient, ASGITransport
+from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from app.main import app
 from app.database import get_db
+from app.main import app
 from app.models.base import Base
-
 
 # ── In-memory SQLite for tests (no Postgres needed) ─────────────────────────
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
@@ -59,10 +58,14 @@ async def client(db_session: AsyncSession):
         yield db_session
 
     app.dependency_overrides[get_db] = override_get_db
+    if hasattr(app.state.limiter, "_storage"):
+        app.state.limiter._storage.reset()
 
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
     ) as ac:
         yield ac
 
+    if hasattr(app.state.limiter, "_storage"):
+        app.state.limiter._storage.reset()
     app.dependency_overrides.clear()

@@ -21,8 +21,13 @@ uvicorn app.main:app --reload --port 8000
 - POST /recommendations
 - GET /recommendations/catalog/jobs
 - GET /recommendations/catalog/majors
+- POST /recommendations/feedback
+- GET /admin/alerts/recommendation-quality
+- GET /admin/recommendation-quality/trends
+- GET /admin/recommendation-quality/drift
 - POST /reports/generate
 - GET /reports/{report_id}
+- GET /monitoring/metrics (includes quality-loop KPIs)
 
 ## Seed taxonomy dataset
 

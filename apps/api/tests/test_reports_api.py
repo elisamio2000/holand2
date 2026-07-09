@@ -35,6 +35,62 @@ class TestRecommendationsApi:
         assert response.status_code == 200
         assert len(response.json()) <= 50
 
+    async def test_recommendation_quality_signal_applies_safe_heuristic(self, client):
+        target_holland_code = None
+        target_mbti_type = None
+        for i in range(10):
+            report_response = await client.post(
+                "/reports/generate",
+                json={
+                    "holland_scores": {"R": 10, "I": 30, "A": 5, "S": 10, "E": 5, "C": 20},
+                    "mbti_scores": {
+                        "E": 30,
+                        "I": 70,
+                        "S": 40,
+                        "N": 60,
+                        "T": 65,
+                        "F": 35,
+                        "J": 55,
+                        "P": 45,
+                    },
+                    "age": 22,
+                    "session_id": f"heuristic-session-{i}",
+                },
+            )
+            assert report_response.status_code == 200
+            report_body = report_response.json()
+            if target_holland_code is None:
+                target_holland_code = report_body["holland_code"]
+                target_mbti_type = report_body["mbti_type"]
+
+            feedback_response = await client.post(
+                "/recommendations/feedback",
+                json={
+                    "report_id": report_body["id"],
+                    "helpful": i >= 6,
+                    "rating": 2 if i < 6 else 5,
+                    "accepted": i >= 6,
+                    "reason_code": "low_relevance_to_profile" if i < 6 else None,
+                },
+            )
+            assert feedback_response.status_code == 201
+
+        response = await client.post(
+            "/recommendations",
+            json={
+                "holland_code": target_holland_code,
+                "mbti_type": target_mbti_type,
+                "age": 22,
+                "limit": 6,
+            },
+        )
+        assert response.status_code == 200
+        body = response.json()
+        assert body["quality_signal"]["low_quality_detected"] is True
+        assert body["quality_signal"]["heuristic_applied"] is True
+        assert body["quality_signal"]["sample_size"] >= 10
+        assert any(item["quality_note_fa"] for item in body["careers"])
+
 
 @pytest.mark.asyncio
 class TestReportsApi:
