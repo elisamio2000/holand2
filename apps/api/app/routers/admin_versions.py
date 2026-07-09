@@ -22,12 +22,14 @@ from ..models.assessment import (
     VersionAuditLog,
     VersionEntityType,
     VersionStatus,
+    VersionValidationReport,
 )
 from ..schemas_assessment import (
     AssessmentVersionDetailOut,
     AssessmentVersionDraftIn,
     AssessmentVersionOut,
     AuditLogEntryOut,
+    QuestionBankQualityReportOut,
     RollbackIn,
     ScoringFormulaDraftIn,
     ScoringFormulaVersionOut,
@@ -35,11 +37,19 @@ from ..schemas_assessment import (
     SimulateFormulaIn,
     SimulateFormulaOut,
     SimulateResultOut,
+    ValidationReportOut,
     VersionActionIn,
     VersionDiffOut,
 )
 from ..services.assessment_scoring import compute_session_result
-from ..services.formula_engine import FormulaError, evaluate_formula, validate_formula
+from ..services.formula_engine import (
+    FormulaError,
+    evaluate_formula,
+    validate_formula,
+    validate_formula_drift,
+    validate_formula_version_payload,
+)
+from ..services.question_bank_quality import build_quality_report
 from ..services.versioning import VersioningError, assert_transition_allowed, log_transition
 
 router = APIRouter(prefix="/admin", tags=["Question Bank Governance"])
@@ -80,6 +90,31 @@ async def _next_version_number(
     )
     latest = result.scalars().first()
     return (latest or 0) + 1
+
+
+async def _record_validation_report(
+    db: AsyncSession,
+    *,
+    entity_type: VersionEntityType,
+    entity_id: str,
+    gate: str,
+    target_status: VersionStatus,
+    ok: bool,
+    report: dict,
+    actor: str | None,
+) -> VersionValidationReport:
+    entry = VersionValidationReport(
+        entity_type=entity_type,
+        entity_id=entity_id,
+        gate=gate,
+        target_status=target_status.value,
+        ok=ok,
+        report=report,
+        actor=actor,
+    )
+    db.add(entry)
+    await db.flush()
+    return entry
 
 
 # ── Assessment versions: create / read ───────────────────────────────────────
@@ -189,6 +224,18 @@ async def get_assessment_version(
     return await _get_assessment_version(db, version_id)
 
 
+@router.get(
+    "/assessment-versions/{version_id}/quality-report",
+    response_model=QuestionBankQualityReportOut,
+)
+async def get_assessment_version_quality_report(
+    version_id: str, db: Annotated[AsyncSession, Depends(get_db)]
+) -> QuestionBankQualityReportOut:
+    version = await _get_assessment_version(db, version_id)
+    report = build_quality_report(version.assessment_type, version.questions)
+    return QuestionBankQualityReportOut.model_validate(report)
+
+
 # ── Assessment versions: workflow transitions ────────────────────────────────
 async def _transition_assessment_version(
     db: AsyncSession, version_id: str, target: VersionStatus, payload: VersionActionIn
@@ -204,6 +251,29 @@ async def _transition_assessment_version(
     if target == VersionStatus.APPROVED:
         version.approved_by = payload.actor
     if target == VersionStatus.PUBLISHED:
+        quality_report = build_quality_report(version.assessment_type, version.questions)
+        await _record_validation_report(
+            db,
+            entity_type=VersionEntityType.ASSESSMENT_VERSION,
+            entity_id=version.id,
+            gate="question_bank_quality",
+            target_status=target,
+            ok=quality_report["error_count"] == 0,
+            report=quality_report,
+            actor=payload.actor,
+        )
+        if quality_report["error_count"] > 0:
+            error_codes = ", ".join(
+                issue["code"] for issue in quality_report["issues"] if issue["severity"] == "error"
+            )
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Assessment publish gate failed: "
+                    f"quality report contains blocking errors ({error_codes})"
+                ),
+            )
+
         # Archive any currently-published version of the same assessment type.
         result = await db.execute(
             select(AssessmentVersion).where(
@@ -505,14 +575,96 @@ async def _transition_formula_version(
     if target == VersionStatus.APPROVED:
         formula.approved_by = payload.actor
     if target == VersionStatus.PUBLISHED:
-        result = await db.execute(
+        existing_published_result = await db.execute(
             select(ScoringFormulaVersion).where(
                 ScoringFormulaVersion.formula_key == formula.formula_key,
                 ScoringFormulaVersion.status == VersionStatus.PUBLISHED,
                 ScoringFormulaVersion.id != formula.id,
             )
         )
-        for prev in result.scalars().all():
+        existing_published = list(existing_published_result.scalars().all())
+
+        expr = formula.expression.get("expr", "") if isinstance(formula.expression, dict) else ""
+        try:
+            validate_formula_version_payload(
+                expression=expr,
+                input_variables=formula.input_variables,
+                validation_rules=formula.validation_rules,
+                unit_tests=formula.unit_tests,
+            )
+            max_drift = None
+            if isinstance(formula.validation_rules, dict):
+                max_drift = formula.validation_rules.get("max_drift")
+            if max_drift is not None:
+                if not isinstance(max_drift, int | float):
+                    raise FormulaError("validation_rules.max_drift must be numeric when provided")
+                sample_variables = [
+                    case.get("variables")
+                    for case in (formula.unit_tests or [])
+                    if isinstance(case, dict) and isinstance(case.get("variables"), dict)
+                ]
+                for prev in existing_published:
+                    prev_expr = prev.expression.get("expr", "") if isinstance(prev.expression, dict) else ""
+                    validate_formula_drift(
+                        previous_expression=prev_expr,
+                        candidate_expression=expr,
+                        samples=sample_variables,
+                        max_drift=float(max_drift),
+                    )
+            await _record_validation_report(
+                db,
+                entity_type=VersionEntityType.FORMULA_VERSION,
+                entity_id=formula.id,
+                gate="formula_publish",
+                target_status=target,
+                ok=True,
+                report={
+                    "ok": True,
+                    "error_count": 0,
+                    "warning_count": 0,
+                    "issues": [],
+                    "metrics": {
+                        "unit_test_count": len(formula.unit_tests or []),
+                        "validation_rules": formula.validation_rules or {},
+                        "compared_published_versions": len(existing_published),
+                    },
+                },
+                actor=payload.actor,
+            )
+        except FormulaError as exc:
+            await _record_validation_report(
+                db,
+                entity_type=VersionEntityType.FORMULA_VERSION,
+                entity_id=formula.id,
+                gate="formula_publish",
+                target_status=target,
+                ok=False,
+                report={
+                    "ok": False,
+                    "error_count": 1,
+                    "warning_count": 0,
+                    "issues": [
+                        {
+                            "code": "formula_publish_gate_failed",
+                            "severity": "error",
+                            "message": str(exc),
+                            "context": {},
+                        }
+                    ],
+                    "metrics": {
+                        "unit_test_count": len(formula.unit_tests or []),
+                        "validation_rules": formula.validation_rules or {},
+                        "compared_published_versions": len(existing_published),
+                    },
+                },
+                actor=payload.actor,
+            )
+            raise HTTPException(
+                status_code=409,
+                detail=f"Formula publish gate failed: {exc}",
+            ) from exc
+
+        for prev in existing_published:
             prev.status = VersionStatus.ARCHIVED
             prev.effective_to = _now()
             await log_transition(
@@ -647,5 +799,20 @@ async def list_audit_logs(
     stmt = select(VersionAuditLog).order_by(VersionAuditLog.created_at.desc())
     if entity_id is not None:
         stmt = stmt.where(VersionAuditLog.entity_id == entity_id)
+    result = await db.execute(stmt)
+    return list(result.scalars().all())
+
+
+@router.get("/version-validation-reports", response_model=list[ValidationReportOut])
+async def list_validation_reports(
+    entity_id: Annotated[str | None, Query()] = None,
+    entity_type: Annotated[VersionEntityType | None, Query()] = None,
+    db: Annotated[AsyncSession, Depends(get_db)] = None,
+) -> list[VersionValidationReport]:
+    stmt = select(VersionValidationReport).order_by(VersionValidationReport.created_at.desc())
+    if entity_id is not None:
+        stmt = stmt.where(VersionValidationReport.entity_id == entity_id)
+    if entity_type is not None:
+        stmt = stmt.where(VersionValidationReport.entity_type == entity_type)
     result = await db.execute(stmt)
     return list(result.scalars().all())

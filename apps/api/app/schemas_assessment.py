@@ -137,6 +137,21 @@ class SimulateResultOut(BaseModel):
     certainty: dict[str, float] | None = None
 
 
+class QualityIssueOut(BaseModel):
+    code: str
+    severity: str
+    message: str
+    context: dict[str, Any] = Field(default_factory=dict)
+
+
+class QuestionBankQualityReportOut(BaseModel):
+    ok: bool
+    error_count: int
+    warning_count: int
+    issues: list[QualityIssueOut]
+    metrics: dict[str, Any]
+
+
 # ── Scoring formulas ──────────────────────────────────────────────────────────
 class ScoringFormulaVersionOut(BaseModel):
     id: str
@@ -186,6 +201,20 @@ class AuditLogEntryOut(BaseModel):
     to_status: str | None
     actor: str | None
     note: str | None
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class ValidationReportOut(BaseModel):
+    id: str
+    entity_type: str
+    entity_id: str
+    gate: str
+    target_status: str
+    ok: bool
+    report: dict[str, Any]
+    actor: str | None
     created_at: datetime
 
     model_config = {"from_attributes": True}
