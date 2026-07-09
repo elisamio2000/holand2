@@ -28,6 +28,21 @@ A professional platform for Holland and MBTI assessments with smart guidance for
 - docs/job-taxonomy-modernization-and-ethics-fa.md
 - docs/beta-launch-runbook-fa.md
 
+## Monitoring / Observability baseline (Phase 10)
+
+- Structured request logs with JSON payload (`event`, `request_id`, `path`, `status_code`, `duration_ms`).
+- Optional Sentry hook initialization via environment settings.
+- Baseline metrics endpoint:
+  - `GET /monitoring/metrics`
+- Recommendation quality admin alert endpoint:
+  - `GET /admin/alerts/recommendation-quality`
+
+### Environment keys
+
+- `OBSERVABILITY_LOG_LEVEL` (default: `INFO`)
+- `SENTRY_DSN` (optional)
+- `SENTRY_TRACES_SAMPLE_RATE` (default: `0.1`)
+
 ## Web App (Holand Base)
 
 - Source path: apps/web/apps/holand-web-app

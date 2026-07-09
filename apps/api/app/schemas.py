@@ -154,11 +154,13 @@ class RecommendationFeedbackOut(BaseModel):
 
 class RecommendationQualityAlert(BaseModel):
     alert_triggered: bool
+    severity: str
     threshold_percent: float
     min_samples: int
     total_feedback: int
     low_quality_feedback: int
     low_quality_ratio: float
+    recommended_action: str
 
 
 class MonitoringMetricsResponse(BaseModel):

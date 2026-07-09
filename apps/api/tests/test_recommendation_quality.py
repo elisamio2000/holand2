@@ -43,3 +43,27 @@ class TestRecommendationQualityMonitor:
         assert body["low_quality_feedback"] == 5
         assert body["low_quality_ratio"] == 50.0
         assert body["alert_triggered"] is True
+        assert body["severity"] == "warning"
+        assert body["recommended_action"] == (
+            "review-latest-feedback-and-adjust-recommendation-weights"
+        )
+
+    @pytest.mark.asyncio
+    async def test_quality_alert_not_triggered_when_below_threshold(self, client):
+        for i in range(10):
+            await client.post(
+                "/recommendations/feedback",
+                json={
+                    "recommendation_id": f"good-rec-{i}",
+                    "user_id": f"good-user-{i}",
+                    "rating": 5,
+                    "accepted": True,
+                },
+            )
+
+        response = await client.get("/admin/alerts/recommendation-quality")
+        assert response.status_code == 200
+        body = response.json()
+        assert body["alert_triggered"] is False
+        assert body["severity"] == "ok"
+        assert body["recommended_action"] == "continue-monitoring"

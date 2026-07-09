@@ -59,12 +59,23 @@ async def get_quality_alert(db: AsyncSession) -> RecommendationQualityAlert:
     threshold = float(settings.recommendation_quality_alert_threshold_percent)
     min_samples = int(settings.recommendation_quality_alert_min_samples)
     alert_triggered = total_feedback >= min_samples and low_quality_ratio >= threshold
+    severity = "ok"
+    recommended_action = "continue-monitoring"
+    if alert_triggered:
+        if low_quality_ratio >= threshold + 20:
+            severity = "critical"
+            recommended_action = "pause-rollout-and-review-recommendation-rules"
+        else:
+            severity = "warning"
+            recommended_action = "review-latest-feedback-and-adjust-recommendation-weights"
 
     return RecommendationQualityAlert(
         alert_triggered=alert_triggered,
+        severity=severity,
         threshold_percent=threshold,
         min_samples=min_samples,
         total_feedback=total_feedback,
         low_quality_feedback=low_quality_feedback,
         low_quality_ratio=low_quality_ratio,
+        recommended_action=recommended_action,
     )
