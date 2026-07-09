@@ -49,7 +49,7 @@ interface ApiQuestion {
 
 interface ApiStartSessionOut {
   session_id: string;
-  assessment_type: 'holland' | 'mbti';
+  assessment_type: 'holland' | 'mbti' | 'combined';
   status: 'in_progress' | 'completed' | 'abandoned';
   started_at: string;
   questions: ApiQuestion[];
@@ -57,11 +57,20 @@ interface ApiStartSessionOut {
 
 interface ApiSessionResultOut {
   session_id: string;
-  assessment_type: 'holland' | 'mbti';
+  assessment_type: 'holland' | 'mbti' | 'combined';
   raw_scores: Record<string, number>;
-  normalized_scores: Record<string, number>;
+  normalized_scores: Record<string, unknown>;
   code: string;
-  certainty: Record<string, number> | null;
+  certainty: Record<string, unknown> | null;
+  holland?: {
+    code: string;
+    normalized_scores: Record<string, number>;
+  } | null;
+  mbti?: {
+    code: string;
+    normalized_scores: Record<string, number>;
+    certainty?: Record<string, number> | null;
+  } | null;
   computed_at: string;
 }
 
@@ -70,15 +79,13 @@ function isBackendUnavailable(error: unknown): boolean {
   return status === undefined || status === 404 || status === 501;
 }
 
-function isUnsupportedCombined(testType: TestType): boolean {
-  return testType === 'combined';
-}
-
-function mapApiQuestionToUi(question: ApiQuestion, testType: TestType): AssessmentQuestion {
+function mapApiQuestionToUi(question: ApiQuestion, testType: TestType, order: number): AssessmentQuestion {
+  const resolvedType =
+    testType === 'combined' ? (question.kind === 'likert' ? 'holland' : 'mbti') : testType;
   return {
     id: question.id,
-    order: question.order_index + 1,
-    testType,
+    order,
+    testType: resolvedType,
     dimension: question.dimension as AssessmentQuestion['dimension'],
     kind: question.kind === 'likert' ? 'likert5' : 'binary_choice',
     prompt: question.text,
@@ -103,6 +110,45 @@ function mapApiResultToUi(
   testType: TestType,
   ageBand: AssessmentSession['ageBand']
 ): AssessmentResult {
+  if (result.assessment_type === 'combined') {
+    const hollandPayload =
+      result.holland ??
+      ((result.normalized_scores.holland as Record<string, number> | undefined)
+        ? {
+            code: result.code.split('-', 1)[0] ?? '',
+            normalized_scores: result.normalized_scores.holland as Record<string, number>,
+          }
+        : null);
+    const mbtiPayload =
+      result.mbti ??
+      ((result.normalized_scores.mbti as Record<string, number> | undefined)
+        ? {
+            code: result.code.includes('-') ? result.code.split('-')[1] : '',
+            normalized_scores: result.normalized_scores.mbti as Record<string, number>,
+            certainty: (result.certainty?.mbti as Record<string, number> | undefined) ?? null,
+          }
+        : null);
+
+    return {
+      sessionId: result.session_id,
+      testType,
+      ageBand,
+      completedAt: result.computed_at,
+      holland: hollandPayload
+        ? {
+            dimensions: toDimensions(hollandPayload.normalized_scores),
+            top3Code: hollandPayload.code,
+          }
+        : undefined,
+      mbti: mbtiPayload
+        ? {
+            dimensions: toDimensions(mbtiPayload.normalized_scores),
+            typeCode: mbtiPayload.code,
+          }
+        : undefined,
+    };
+  }
+
   if (result.assessment_type === 'holland') {
     return {
       sessionId: result.session_id,
@@ -110,7 +156,7 @@ function mapApiResultToUi(
       ageBand,
       completedAt: result.computed_at,
       holland: {
-        dimensions: toDimensions(result.normalized_scores),
+        dimensions: toDimensions(result.normalized_scores as Record<string, number>),
         top3Code: result.code,
       },
     };
@@ -121,7 +167,7 @@ function mapApiResultToUi(
     ageBand,
     completedAt: result.computed_at,
     mbti: {
-      dimensions: toDimensions(result.normalized_scores),
+      dimensions: toDimensions(result.normalized_scores as Record<string, number>),
       typeCode: result.code,
     },
   };
@@ -129,14 +175,6 @@ function mapApiResultToUi(
 
 export const assessmentService = {
   async startSession(data: StartAssessmentRequest): Promise<AssessmentSession> {
-    if (isUnsupportedCombined(data.testType)) {
-      const sessionId = generateMockSessionId();
-      const session = buildMockSession(sessionId, data.testType, data.ageBand);
-      mockSessions.set(sessionId, session);
-      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand, optionLookup: new Map() });
-      return session;
-    }
-
     try {
       const res = await gatewayClient.post<ApiStartSessionOut>('/sessions/start', {
         assessment_type: data.testType,
@@ -148,7 +186,7 @@ export const assessmentService = {
         ageBand: data.ageBand,
         status: api.status,
         totalQuestions: api.questions.length,
-        questions: api.questions.map((q) => mapApiQuestionToUi(q, api.assessment_type)),
+        questions: api.questions.map((q, index) => mapApiQuestionToUi(q, api.assessment_type, index + 1)),
         createdAt: api.started_at,
       };
       const optionLookup = new Map<string, Map<string, string>>();
@@ -210,7 +248,7 @@ export const assessmentService = {
       ageBand: meta.ageBand,
       status: summaryRes.data.status,
       totalQuestions: questionsRes.data.length,
-      questions: questionsRes.data.map((q) => mapApiQuestionToUi(q, meta.testType)),
+      questions: questionsRes.data.map((q, index) => mapApiQuestionToUi(q, meta.testType, index + 1)),
       createdAt: summaryRes.data.started_at,
     };
   },
@@ -241,10 +279,6 @@ export const assessmentService = {
       return buildMockResult(sessionId, cached?.testType ?? 'combined', cached?.ageBand ?? '18-24');
     }
 
-    if (isUnsupportedCombined(meta.testType)) {
-      return buildMockResult(sessionId, meta.testType, meta.ageBand);
-    }
-
     try {
       const res = await gatewayClient.post<ApiSessionResultOut>(`/sessions/${sessionId}/complete`);
       return mapApiResultToUi(res.data, meta.testType, meta.ageBand);
@@ -259,10 +293,6 @@ export const assessmentService = {
     if (!meta) {
       const cached = mockSessions.get(sessionId);
       return buildMockResult(sessionId, cached?.testType ?? 'combined', cached?.ageBand ?? '18-24');
-    }
-
-    if (isUnsupportedCombined(meta.testType)) {
-      return buildMockResult(sessionId, meta.testType, meta.ageBand);
     }
 
     try {

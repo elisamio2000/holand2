@@ -17,6 +17,11 @@
 3. اگر error rate یا alert quality از آستانه عبور کرد، rollout را متوقف کنید.
 4. در صورت پایداری 24 ساعته، cohort را تا 25% افزایش دهید.
 
+### پیش‌نیاز فنی قرارداد canonical جلسات
+
+- پیش از rollout وب، migration `20260709_03` باید روی دیتابیس production/staging اجرا شده باشد (افزودن پشتیبانی `combined` و فیلدهای pin نسخه ثانویه session).
+- بعد از استقرار API، endpointهای canonical مسیر `/sessions/*` باید برای `combined` نیز سالم باشند؛ fallback اختصاصی `combined` در وب بازنشسته شده است.
+
 ## 3) onboarding تیم مشاوره و پشتیبانی
 
 - جلسه 45 دقیقه‌ای معرفی جریان آزمون Holland/MBTI

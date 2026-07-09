@@ -33,9 +33,9 @@ from ..schemas_assessment import (
     AssessmentVersionDraftIn,
     AssessmentVersionOut,
     AuditLogEntryOut,
-    QuestionBankQualityReportOut,
     OptionReorderIn,
     PreflightIssueOut,
+    QuestionBankQualityReportOut,
     QuestionDraftIn,
     QuestionDraftPatchIn,
     QuestionOptionDraftIn,
@@ -74,6 +74,14 @@ router = APIRouter(
 
 def _now() -> datetime:
     return datetime.now(timezone.utc)  # noqa: UP017
+
+
+def _ensure_admin_assessment_type_supported(assessment_type: AssessmentType) -> None:
+    if assessment_type == AssessmentType.COMBINED:
+        raise HTTPException(
+            status_code=400,
+            detail="Combined is a runtime-only synthetic session type and cannot be versioned in admin endpoints",
+        )
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -161,6 +169,7 @@ async def create_assessment_version_draft(
     payload: AssessmentVersionDraftIn,
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> AssessmentVersion:
+    _ensure_admin_assessment_type_supported(payload.assessment_type)
     version_number = await _next_version_number(
         db, AssessmentVersion, AssessmentVersion.assessment_type, payload.assessment_type
     )
@@ -870,6 +879,7 @@ async def create_formula_version_draft(
     payload: ScoringFormulaDraftIn,
     db: Annotated[AsyncSession, Depends(get_db)] = None,
 ) -> ScoringFormulaVersion:
+    _ensure_admin_assessment_type_supported(payload.assessment_type)
     try:
         validate_formula(payload.expression.get("expr", ""), payload.input_variables)
     except FormulaError as exc:

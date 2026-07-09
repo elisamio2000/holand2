@@ -1,10 +1,9 @@
 import pytest
 from sqlalchemy import delete
 
-from app.models.assessment import QuestionOption
-
 from app.deps import get_current_user
 from app.main import app
+from app.models.assessment import QuestionOption
 from app.models.user import User, UserRole
 
 
@@ -66,6 +65,38 @@ def _reverse_scored_holland_payload() -> dict:
                     {"label": "5", "value": 5, "pole": "R", "weight": 5.0, "order_index": 4},
                 ],
             }
+        ],
+    }
+
+
+def _mbti_draft_payload() -> dict:
+    return {
+        "assessment_type": "mbti",
+        "title": "MBTI draft test v1",
+        "created_by": "test-admin",
+        "questions": [
+            {
+                "kind": "forced_choice",
+                "dimension": "EI",
+                "text": "I gain energy from social interaction.",
+                "order_index": 0,
+                "is_reverse_scored": False,
+                "options": [
+                    {"label": "E", "value": 1, "pole": "E", "weight": 1.0, "order_index": 0},
+                    {"label": "I", "value": 2, "pole": "I", "weight": 1.0, "order_index": 1},
+                ],
+            },
+            {
+                "kind": "forced_choice",
+                "dimension": "SN",
+                "text": "I trust concrete details over abstract ideas.",
+                "order_index": 1,
+                "is_reverse_scored": False,
+                "options": [
+                    {"label": "S", "value": 1, "pole": "S", "weight": 1.0, "order_index": 0},
+                    {"label": "N", "value": 2, "pole": "N", "weight": 1.0, "order_index": 1},
+                ],
+            },
         ],
     }
 
@@ -296,11 +327,9 @@ async def test_formula_publish_is_blocked_by_drift_threshold(admin_client) -> No
     detail = publish.json()["detail"].lower()
     assert "max_drift" in detail
     assert "delta" in detail
-
+@pytest.mark.asyncio
 
 @pytest.mark.asyncio
-async def test_session_api_start_answer_complete_result(client) -> None:
-    create = await client.post("/admin/assessment-versions/draft", json=_holland_draft_payload())
 async def test_session_api_start_answer_complete_result(admin_client) -> None:
     create = await admin_client.post("/admin/assessment-versions/draft", json=_holland_draft_payload())
     version_id = create.json()["id"]
@@ -333,6 +362,52 @@ async def test_session_api_start_answer_complete_result(admin_client) -> None:
     fetch = await admin_client.get(f"/sessions/{session_id}/result")
     assert fetch.status_code == 200
     assert fetch.json()["session_id"] == session_id
+
+
+@pytest.mark.asyncio
+async def test_session_api_combined_start_answer_complete_result(admin_client) -> None:
+    holland_create = await admin_client.post("/admin/assessment-versions/draft", json=_holland_draft_payload())
+    assert holland_create.status_code == 201
+    holland_version_id = holland_create.json()["id"]
+    await admin_client.post(f"/admin/assessment-versions/{holland_version_id}/review", json={"actor": "r"})
+    await admin_client.post(f"/admin/assessment-versions/{holland_version_id}/approve", json={"actor": "a"})
+    await admin_client.post(f"/admin/assessment-versions/{holland_version_id}/publish", json={"actor": "p"})
+
+    mbti_create = await admin_client.post("/admin/assessment-versions/draft", json=_mbti_draft_payload())
+    assert mbti_create.status_code == 201
+    mbti_version_id = mbti_create.json()["id"]
+    await admin_client.post(f"/admin/assessment-versions/{mbti_version_id}/review", json={"actor": "r"})
+    await admin_client.post(f"/admin/assessment-versions/{mbti_version_id}/approve", json={"actor": "a"})
+    await admin_client.post(f"/admin/assessment-versions/{mbti_version_id}/publish", json={"actor": "p"})
+
+    start = await admin_client.post("/sessions/start", json={"assessment_type": "combined"})
+    assert start.status_code == 201
+    body = start.json()
+    session_id = body["session_id"]
+    assert body["assessment_type"] == "combined"
+    assert len(body["questions"]) == 4
+
+    answers = [{"question_id": q["id"], "option_id": q["options"][0]["id"]} for q in body["questions"]]
+    submit = await admin_client.post(f"/sessions/{session_id}/answers", json={"answers": answers})
+    assert submit.status_code == 200
+    assert submit.json()["answered_count"] == 4
+
+    complete = await admin_client.post(f"/sessions/{session_id}/complete")
+    assert complete.status_code == 200
+    result = complete.json()
+    assert result["assessment_type"] == "combined"
+    assert result["holland"]["code"]
+    assert result["mbti"]["code"]
+    assert "holland" in result["normalized_scores"]
+    assert "mbti" in result["normalized_scores"]
+    assert "-" in result["code"]
+
+    fetch = await admin_client.get(f"/sessions/{session_id}/result")
+    assert fetch.status_code == 200
+    fetched = fetch.json()
+    assert fetched["assessment_type"] == "combined"
+    assert fetched["holland"]["code"] == result["holland"]["code"]
+    assert fetched["mbti"]["code"] == result["mbti"]["code"]
 
 
 @pytest.mark.asyncio

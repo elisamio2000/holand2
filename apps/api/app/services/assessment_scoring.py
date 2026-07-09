@@ -99,4 +99,18 @@ def compute_session_result(
         code, certainty = compute_mbti_result(raw_totals, formula)
         return {"normalized_scores": raw_totals, "code": code, "certainty": certainty}
 
+    if assessment_type == AssessmentType.COMBINED:
+        holland_normalized, holland_code = compute_holland_result(raw_totals, None)
+        mbti_code, mbti_certainty = compute_mbti_result(raw_totals, None)
+        return {
+            "normalized_scores": {
+                "holland": holland_normalized,
+                "mbti": raw_totals,
+            },
+            "code": f"{holland_code}-{mbti_code}",
+            "certainty": {"mbti": mbti_certainty},
+            "holland": {"code": holland_code, "normalized_scores": holland_normalized},
+            "mbti": {"code": mbti_code, "normalized_scores": raw_totals, "certainty": mbti_certainty},
+        }
+
     raise ValueError(f"Unsupported assessment type: {assessment_type}")

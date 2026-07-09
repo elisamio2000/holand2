@@ -133,9 +133,79 @@ describe('assessmentService contract adapter', () => {
     expect(result.completedAt).toBe('2026-01-01T00:10:00Z');
   });
 
-  it('uses mock path for combined testType', async () => {
+  it('maps combined startSession to /sessions/start and tags question test type by kind', async () => {
+    postMock.mockResolvedValueOnce({
+      data: {
+        session_id: 's4',
+        assessment_type: 'combined',
+        started_at: '2026-01-01T00:00:00Z',
+        status: 'in_progress',
+        questions: [
+          {
+            id: 'q1',
+            kind: 'likert',
+            dimension: 'R',
+            text: 'holland question',
+            order_index: 0,
+            options: [{ id: 'o1', label: '1', value: 1, pole: 'R', order_index: 0 }],
+          },
+          {
+            id: 'q2',
+            kind: 'forced_choice',
+            dimension: 'EI',
+            text: 'mbti question',
+            order_index: 0,
+            options: [{ id: 'o2', label: 'A', value: 1, pole: 'E', order_index: 0 }],
+          },
+        ],
+      },
+    });
+
     const session = await assessmentService.startSession({ testType: 'combined', ageBand: '18-24' });
-    expect(postMock).not.toHaveBeenCalled();
-    expect(session.sessionId).toBe('mock-session-id');
+    expect(postMock).toHaveBeenCalledWith('/sessions/start', { assessment_type: 'combined' });
+    expect(session.testType).toBe('combined');
+    expect(session.questions[0].testType).toBe('holland');
+    expect(session.questions[1].testType).toBe('mbti');
+  });
+
+  it('maps combined completeSession result to dual holland/mbti sections', async () => {
+    postMock.mockResolvedValueOnce({
+      data: {
+        session_id: 's5',
+        assessment_type: 'combined',
+        started_at: '2026-01-01T00:00:00Z',
+        status: 'in_progress',
+        questions: [],
+      },
+    });
+    await assessmentService.startSession({ testType: 'combined', ageBand: '18-24' });
+
+    postMock.mockResolvedValueOnce({
+      data: {
+        session_id: 's5',
+        assessment_type: 'combined',
+        code: 'RIA-INTJ',
+        certainty: { mbti: { EI: 60 } },
+        normalized_scores: {
+          holland: { R: 55, I: 25, A: 20 },
+          mbti: { EI: 60, SN: 55, TF: 70, JP: 65 },
+        },
+        holland: {
+          code: 'RIA',
+          normalized_scores: { R: 55, I: 25, A: 20 },
+        },
+        mbti: {
+          code: 'INTJ',
+          normalized_scores: { EI: 60, SN: 55, TF: 70, JP: 65 },
+          certainty: { EI: 60 },
+        },
+        computed_at: '2026-01-01T00:10:00Z',
+      },
+    });
+
+    const result = await assessmentService.completeSession('s5');
+    expect(postMock).toHaveBeenNthCalledWith(2, '/sessions/s5/complete');
+    expect(result.holland?.top3Code).toBe('RIA');
+    expect(result.mbti?.typeCode).toBe('INTJ');
   });
 });

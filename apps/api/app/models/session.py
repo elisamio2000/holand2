@@ -36,6 +36,9 @@ class AssessmentSession(Base, TimestampMixin):
     assessment_version_id: Mapped[str] = mapped_column(
         Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=False, index=True
     )
+    secondary_assessment_version_id: Mapped[str | None] = mapped_column(
+        Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=True, index=True
+    )
     status: Mapped[SessionStatus] = mapped_column(
         Enum(SessionStatus, name="session_status_enum"),
         nullable=False,
@@ -85,6 +88,9 @@ class SessionResult(Base, TimestampMixin):
         index=True,
     )
     formula_version_id: Mapped[str | None] = mapped_column(
+        Uuid(as_uuid=False), ForeignKey("scoring_formula_versions.id"), nullable=True
+    )
+    secondary_formula_version_id: Mapped[str | None] = mapped_column(
         Uuid(as_uuid=False), ForeignKey("scoring_formula_versions.id"), nullable=True
     )
     raw_scores: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
