@@ -177,116 +177,116 @@ export function AssessmentAuthoringDashboard() {
     } catch (err: unknown) {
       setError(toErrorMessage(err));
     }
+  }
 
-    async function handleDeleteQuestion(questionId: string) {
-      if (!selectedAssessmentId) return;
-      setError(null);
-      try {
-        const detail = await assessmentAuthoringService.deleteQuestion(selectedAssessmentId, questionId);
-        setAssessmentDetail(detail);
-        if (selectedQuestionId === questionId) {
-          const next = detail.questions[0];
-          setSelectedQuestionId(next?.id ?? null);
-          setQuestionEditText(next?.text ?? '');
-        }
-        setAssessmentPreflight(null);
-      } catch (err: unknown) {
-        setError(toErrorMessage(err));
+  async function handleDeleteQuestion(questionId: string) {
+    if (!selectedAssessmentId) return;
+    setError(null);
+    try {
+      const detail = await assessmentAuthoringService.deleteQuestion(selectedAssessmentId, questionId);
+      setAssessmentDetail(detail);
+      if (selectedQuestionId === questionId) {
+        const next = detail.questions[0];
+        setSelectedQuestionId(next?.id ?? null);
+        setQuestionEditText(next?.text ?? '');
       }
+      setAssessmentPreflight(null);
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
     }
+  }
 
-    async function handleUpdateSelectedQuestion() {
-      if (!selectedAssessmentId || !selectedQuestionId) return;
-      setError(null);
-      try {
-        const detail = await assessmentAuthoringService.updateQuestion(selectedAssessmentId, selectedQuestionId, {
-          text: questionEditText.trim(),
-        });
-        setAssessmentDetail(detail);
-        setAssessmentPreflight(null);
-      } catch (err: unknown) {
-        setError(toErrorMessage(err));
-      }
+  async function handleUpdateSelectedQuestion() {
+    if (!selectedAssessmentId || !selectedQuestionId) return;
+    setError(null);
+    try {
+      const detail = await assessmentAuthoringService.updateQuestion(selectedAssessmentId, selectedQuestionId, {
+        text: questionEditText.trim(),
+      });
+      setAssessmentDetail(detail);
+      setAssessmentPreflight(null);
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
     }
+  }
 
-    async function handleMoveQuestion(questionId: string, direction: 'up' | 'down') {
-      if (!selectedAssessmentId || !assessmentDetail) return;
-      const sorted = [...assessmentDetail.questions].sort((a, b) => a.order_index - b.order_index);
-      const index = sorted.findIndex((q) => q.id === questionId);
-      if (index === -1) return;
-      const target = direction === 'up' ? index - 1 : index + 1;
-      if (target < 0 || target >= sorted.length) return;
-      [sorted[index], sorted[target]] = [sorted[target], sorted[index]];
-      const items = sorted.map((q, idx) => ({ question_id: q.id, order_index: idx }));
-      setError(null);
-      try {
-        const detail = await assessmentAuthoringService.reorderQuestions(selectedAssessmentId, items);
-        setAssessmentDetail(detail);
-        setAssessmentPreflight(null);
-      } catch (err: unknown) {
-        setError(toErrorMessage(err));
-      }
+  async function handleMoveQuestion(questionId: string, direction: 'up' | 'down') {
+    if (!selectedAssessmentId || !assessmentDetail) return;
+    const sorted = [...assessmentDetail.questions].sort((a, b) => a.order_index - b.order_index);
+    const index = sorted.findIndex((q) => q.id === questionId);
+    if (index === -1) return;
+    const target = direction === 'up' ? index - 1 : index + 1;
+    if (target < 0 || target >= sorted.length) return;
+    [sorted[index], sorted[target]] = [sorted[target], sorted[index]];
+    const items = sorted.map((q, idx) => ({ question_id: q.id, order_index: idx }));
+    setError(null);
+    try {
+      const detail = await assessmentAuthoringService.reorderQuestions(selectedAssessmentId, items);
+      setAssessmentDetail(detail);
+      setAssessmentPreflight(null);
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
     }
+  }
 
-    async function handleAddOption() {
-      if (!selectedAssessmentId || !selectedQuestionId || !assessmentDetail) return;
-      const selectedQuestion = assessmentDetail.questions.find((q) => q.id === selectedQuestionId);
-      if (!selectedQuestion) return;
-      setError(null);
-      try {
-        const detail = await assessmentAuthoringService.addOption(selectedAssessmentId, selectedQuestionId, {
-          label: optionLabel.trim(),
-          value: optionValue,
-          pole: optionPole.trim(),
-          weight: optionWeight,
-          order_index: selectedQuestion.options.length,
-        });
-        setAssessmentDetail(detail);
-        setAssessmentPreflight(null);
-      } catch (err: unknown) {
-        setError(toErrorMessage(err));
-      }
+  async function handleAddOption() {
+    if (!selectedAssessmentId || !selectedQuestionId || !assessmentDetail) return;
+    const selectedQuestion = assessmentDetail.questions.find((q) => q.id === selectedQuestionId);
+    if (!selectedQuestion) return;
+    setError(null);
+    try {
+      const detail = await assessmentAuthoringService.addOption(selectedAssessmentId, selectedQuestionId, {
+        label: optionLabel.trim(),
+        value: optionValue,
+        pole: optionPole.trim(),
+        weight: optionWeight,
+        order_index: selectedQuestion.options.length,
+      });
+      setAssessmentDetail(detail);
+      setAssessmentPreflight(null);
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
     }
+  }
 
-    async function handleDeleteOption(optionId: string) {
-      if (!selectedAssessmentId || !selectedQuestionId) return;
-      setError(null);
-      try {
-        const detail = await assessmentAuthoringService.deleteOption(
-          selectedAssessmentId,
-          selectedQuestionId,
-          optionId
-        );
-        setAssessmentDetail(detail);
-        setAssessmentPreflight(null);
-      } catch (err: unknown) {
-        setError(toErrorMessage(err));
-      }
+  async function handleDeleteOption(optionId: string) {
+    if (!selectedAssessmentId || !selectedQuestionId) return;
+    setError(null);
+    try {
+      const detail = await assessmentAuthoringService.deleteOption(
+        selectedAssessmentId,
+        selectedQuestionId,
+        optionId
+      );
+      setAssessmentDetail(detail);
+      setAssessmentPreflight(null);
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
     }
+  }
 
-    async function handleMoveOption(optionId: string, direction: 'up' | 'down') {
-      if (!selectedAssessmentId || !selectedQuestionId || !assessmentDetail) return;
-      const selectedQuestion = assessmentDetail.questions.find((q) => q.id === selectedQuestionId);
-      if (!selectedQuestion) return;
-      const sorted = [...selectedQuestion.options].sort((a, b) => a.order_index - b.order_index);
-      const index = sorted.findIndex((o) => o.id === optionId);
-      if (index === -1) return;
-      const target = direction === 'up' ? index - 1 : index + 1;
-      if (target < 0 || target >= sorted.length) return;
-      [sorted[index], sorted[target]] = [sorted[target], sorted[index]];
-      const items = sorted.map((o, idx) => ({ option_id: o.id, order_index: idx }));
-      setError(null);
-      try {
-        const detail = await assessmentAuthoringService.reorderOptions(
-          selectedAssessmentId,
-          selectedQuestionId,
-          items
-        );
-        setAssessmentDetail(detail);
-        setAssessmentPreflight(null);
-      } catch (err: unknown) {
-        setError(toErrorMessage(err));
-      }
+  async function handleMoveOption(optionId: string, direction: 'up' | 'down') {
+    if (!selectedAssessmentId || !selectedQuestionId || !assessmentDetail) return;
+    const selectedQuestion = assessmentDetail.questions.find((q) => q.id === selectedQuestionId);
+    if (!selectedQuestion) return;
+    const sorted = [...selectedQuestion.options].sort((a, b) => a.order_index - b.order_index);
+    const index = sorted.findIndex((o) => o.id === optionId);
+    if (index === -1) return;
+    const target = direction === 'up' ? index - 1 : index + 1;
+    if (target < 0 || target >= sorted.length) return;
+    [sorted[index], sorted[target]] = [sorted[target], sorted[index]];
+    const items = sorted.map((o, idx) => ({ option_id: o.id, order_index: idx }));
+    setError(null);
+    try {
+      const detail = await assessmentAuthoringService.reorderOptions(
+        selectedAssessmentId,
+        selectedQuestionId,
+        items
+      );
+      setAssessmentDetail(detail);
+      setAssessmentPreflight(null);
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
     }
   }
 
