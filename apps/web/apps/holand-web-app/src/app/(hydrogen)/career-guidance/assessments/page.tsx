@@ -1,4 +1,5 @@
 import { metaObject } from '@/config/site.config';
+import { AssessmentFunnelBeacon } from '@/app/shared/assessment-funnel/assessment-funnel-beacon';
 
 export const metadata = {
   ...metaObject('Assessment Engine'),
@@ -25,6 +26,7 @@ const items = [
 export default function AssessmentDesignPage() {
   return (
     <main className="mx-auto w-full max-w-7xl p-6 sm:p-8 lg:p-10">
+      <AssessmentFunnelBeacon />
       <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">ماژول آزمون ها</h1>
       <p className="mt-3 max-w-3xl text-sm leading-7 text-gray-600">
         در این بخش طراحی هسته اجرای آزمون MBTI و Holland انجام می شود: مدیریت Session، ذخیره خودکار پاسخ،

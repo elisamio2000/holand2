@@ -2,13 +2,18 @@
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from starlette.responses import JSONResponse
 
 from .config import get_settings
 from .database import engine
 from .recommendations import build_recommendations
-from .scoring import score_holland, score_mbti
+from .routers.analytics import router as analytics_router
+from .routers.expert_lab import router as expert_lab_router
 from .schemas import (
     HealthResponse,
     HollandRequest,
@@ -18,8 +23,11 @@ from .schemas import (
     RecommendationRequest,
     RecommendationResponse,
 )
+from .scoring import score_holland, score_mbti
+from .security import BodySizeLimitMiddleware, SecurityHeadersMiddleware, limiter
 
 settings = get_settings()
+
 
 
 @asynccontextmanager
@@ -45,6 +53,19 @@ app = FastAPI(
     redoc_url="/redoc" if settings.debug else None,
 )
 
+app.state.limiter = limiter
+
+
+async def _rate_limit_handler(request: Request, exc: RateLimitExceeded) -> JSONResponse:
+    return _rate_limit_exceeded_handler(request, exc)
+
+
+app.add_exception_handler(RateLimitExceeded, _rate_limit_handler)
+
+# ── Security middleware (order matters: outermost added last runs first) ────
+app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(BodySizeLimitMiddleware)
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts_list)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
@@ -53,11 +74,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Routers (uncommented as each phase is implemented) ───────────────────────
+# ── Routers ───────────────────────────────────────────────────────────────
+app.include_router(analytics_router)
+app.include_router(expert_lab_router)
 # Phase 1: from .routers.auth import router as auth_router; app.include_router(auth_router)
 # Phase 1: from .routers.users import router as users_router; app.include_router(users_router)
 # Phase 3: from .routers.sessions import router as sessions_router; app.include_router(sessions_router)
-# Phase 4: from .routers.recommendations import router as reco_router; app.include_router(reco_router)
 # Phase 5: from .routers.reports import router as reports_router; app.include_router(reports_router)
 
 

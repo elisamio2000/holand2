@@ -32,11 +32,11 @@ export type LanguageCode = (typeof LANGUAGES)[number]['code'];
  * call it after hydration to restore the user's preferred language.
  */
 export function getStoredLanguage(): LanguageCode {
-  if (typeof window === 'undefined') return 'en';
-  return (localStorage.getItem('Holand_language') as LanguageCode) || 'en';
+  if (typeof window === 'undefined') return 'fa';
+  return (localStorage.getItem('Holand_language') as LanguageCode) || 'fa';
 }
 
-// Always initialize with 'en' so server and client render the same content.
+// Default to Persian (fa) for the Holand product audience.
 // The LanguageProvider's useEffect switches to the stored language
 // after hydration, preventing React hydration mismatch errors.
 i18n.use(initReactI18next).init({
@@ -44,7 +44,7 @@ i18n.use(initReactI18next).init({
     en: { translation: en },
     fa: { translation: fa },
   },
-  lng: 'en',
+  lng: 'fa',
   fallbackLng: 'en',
   /** i18next v25+ â€” hide Locize sponsorship line in the browser console */
   showSupportNotice: false,
@@ -57,4 +57,3 @@ i18n.use(initReactI18next).init({
 });
 
 export default i18n;
-
