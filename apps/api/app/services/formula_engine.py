@@ -30,6 +30,7 @@ __all__ = [
     "validate_formula",
     "extract_variables",
     "validate_formula_version_payload",
+    "validate_formula_drift",
 ]
 
 
@@ -183,6 +184,47 @@ def validate_formula_version_payload(
         if expected is not None and abs(value - float(expected)) > float(tolerance):
             errors.append(
                 f"unit_tests[{index}] expected {expected} with tolerance {tolerance}, got {value}"
+            )
+
+    if errors:
+        raise FormulaError("; ".join(errors))
+
+
+def validate_formula_drift(
+    *,
+    previous_expression: str,
+    candidate_expression: str,
+    samples: list[dict[str, float]],
+    max_drift: float,
+) -> None:
+    """Ensure candidate formula output drift stays under the configured threshold."""
+    if max_drift < 0:
+        raise FormulaError("validation_rules.max_drift must be non-negative")
+    if not samples:
+        raise FormulaError(
+            "Drift validation requires at least one sample variable set (from unit_tests.variables)"
+        )
+
+    errors: list[str] = []
+    for index, variables in enumerate(samples):
+        if not isinstance(variables, dict):
+            errors.append(f"drift sample {index} must be an object")
+            continue
+        try:
+            prev_value = evaluate_formula(previous_expression, variables)
+            next_value = evaluate_formula(candidate_expression, variables)
+        except FormulaError as exc:
+            errors.append(f"drift sample {index} evaluation failed: {exc}")
+            continue
+
+        if not math.isfinite(prev_value) or not math.isfinite(next_value):
+            errors.append(f"drift sample {index} produced non-finite value(s)")
+            continue
+
+        delta = abs(next_value - prev_value)
+        if delta > max_drift:
+            errors.append(
+                f"drift sample {index} delta {delta} exceeds max_drift {max_drift}"
             )
 
     if errors:

@@ -208,6 +208,52 @@ async def test_formula_publish_is_blocked_by_validation_rule_bounds(client) -> N
 
 
 @pytest.mark.asyncio
+async def test_formula_publish_is_blocked_by_drift_threshold(client) -> None:
+    base = await client.post(
+        "/admin/formula-versions/draft",
+        json={
+            "formula_key": "mbti_preference_percentage",
+            "assessment_type": "mbti",
+            "expression": {"expr": "(left / (left + right)) * 100 if (left + right) > 0 else 50"},
+            "input_variables": ["left", "right"],
+            "output_metric": "preference_percentage",
+            "created_by": "test-analyst",
+            "unit_tests": [{"variables": {"left": 8, "right": 2}, "expected": 80.0}],
+        },
+    )
+    assert base.status_code == 201
+    base_id = base.json()["id"]
+    await client.post(f"/admin/formula-versions/{base_id}/review", json={"actor": "qa"})
+    await client.post(f"/admin/formula-versions/{base_id}/approve", json={"actor": "qa"})
+    base_publish = await client.post(f"/admin/formula-versions/{base_id}/publish", json={"actor": "qa"})
+    assert base_publish.status_code == 200
+
+    candidate = await client.post(
+        "/admin/formula-versions/draft",
+        json={
+            "formula_key": "mbti_preference_percentage",
+            "assessment_type": "mbti",
+            "expression": {"expr": "(right / (left + right)) * 100 if (left + right) > 0 else 50"},
+            "input_variables": ["left", "right"],
+            "output_metric": "preference_percentage",
+            "created_by": "test-analyst",
+            "validation_rules": {"max_drift": 5},
+            "unit_tests": [{"variables": {"left": 8, "right": 2}, "expected": 20.0}],
+        },
+    )
+    assert candidate.status_code == 201
+    candidate_id = candidate.json()["id"]
+    await client.post(f"/admin/formula-versions/{candidate_id}/review", json={"actor": "qa"})
+    await client.post(f"/admin/formula-versions/{candidate_id}/approve", json={"actor": "qa"})
+
+    publish = await client.post(f"/admin/formula-versions/{candidate_id}/publish", json={"actor": "qa"})
+    assert publish.status_code == 409
+    detail = publish.json()["detail"].lower()
+    assert "max_drift" in detail
+    assert "delta" in detail
+
+
+@pytest.mark.asyncio
 async def test_session_api_start_answer_complete_result(client) -> None:
     create = await client.post("/admin/assessment-versions/draft", json=_holland_draft_payload())
     version_id = create.json()["id"]
@@ -259,6 +305,30 @@ async def test_assessment_quality_report_flags_missing_dimensions_and_duplicates
     codes = {issue["code"] for issue in body["issues"]}
     assert "holland_dimension_missing" in codes
     assert "duplicate_question_text" in codes
+
+
+@pytest.mark.asyncio
+async def test_assessment_publish_is_blocked_by_quality_gate(client) -> None:
+    payload = _holland_draft_payload()
+    payload["questions"][1]["dimension"] = "R"
+    payload["questions"][1]["text"] = payload["questions"][0]["text"]
+
+    create = await client.post("/admin/assessment-versions/draft", json=payload)
+    assert create.status_code == 201
+    version_id = create.json()["id"]
+
+    review = await client.post(f"/admin/assessment-versions/{version_id}/review", json={"actor": "qa"})
+    assert review.status_code == 200
+    approve = await client.post(
+        f"/admin/assessment-versions/{version_id}/approve", json={"actor": "qa"}
+    )
+    assert approve.status_code == 200
+
+    publish = await client.post(f"/admin/assessment-versions/{version_id}/publish", json={"actor": "qa"})
+    assert publish.status_code == 409
+    detail = publish.json()["detail"].lower()
+    assert "publish gate failed" in detail
+    assert "duplicate_question_text" in detail
 
 
 @pytest.mark.asyncio

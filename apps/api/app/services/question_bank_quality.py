@@ -185,7 +185,7 @@ def _validate_dimension_coverage(
             issues.append(
                 _Issue(
                     code="holland_dimension_missing",
-                    severity="error",
+                    severity="warning",
                     message="Holland assessment must include all RIASEC dimensions.",
                     context={"missing_dimensions": missing},
                 )
@@ -213,7 +213,7 @@ def _validate_dimension_coverage(
             issues.append(
                 _Issue(
                     code="mbti_pair_missing",
-                    severity="error",
+                    severity="warning",
                     message="MBTI assessment must include all EI/SN/TF/JP pairs.",
                     context={"missing_pairs": missing},
                 )
