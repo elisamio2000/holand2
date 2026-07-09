@@ -47,7 +47,15 @@
 
 ### B) افت کیفیت توصیه‌ها
 - بررسی alert در `/admin/alerts/recommendation-quality`
+- بررسی روند بازخورد در `/admin/recommendation-quality/trends` (به‌ویژه top reasonها)
+- تحلیل drift در `/admin/recommendation-quality/drift` برای مقایسه پنجره جاری/قبلی
 - قرنطینه cohort جدید و بازبینی rule/weights
+
+## 4.1) cadence بازبینی کیفیت توصیه (Recommendation Quality Review)
+
+1. بازبینی روزانه (عملیاتی): بررسی alert، drift هفت‌روزه، و reason taxonomy پرتکرار.
+2. بازبینی هفتگی (محصول/داده): تحلیل trend 14-30 روزه، نرخ helpful/unhelpful، و اثر تغییرات ranking heuristic.
+3. بازبینی ماهانه (حاکمیتی): بازنگری آستانه‌های alert، taxonomy دلیل‌ها، و تصمیم rollout/rollback ruleهای توصیه.
 
 ### C) ریزش شدید در funnel
 - تحلیل endpoint `/analytics/funnel`

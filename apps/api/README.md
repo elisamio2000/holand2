@@ -21,6 +21,11 @@ uvicorn app.main:app --reload --port 8000
 - POST /recommendations
 - GET /recommendations/catalog/jobs
 - GET /recommendations/catalog/majors
+- POST /recommendations/feedback
+- GET /admin/alerts/recommendation-quality (admin only)
+- GET /admin/recommendation-quality/trends (admin only)
+- GET /admin/recommendation-quality/drift (admin only)
+- GET /monitoring/metrics (admin only; includes quality-loop KPIs)
 - POST /reports/generate (auth required)
 - GET /reports/history (auth required)
 - GET /reports/{report_id} (auth required)
@@ -29,7 +34,7 @@ uvicorn app.main:app --reload --port 8000
 
 ## Report & counselor usage
 
-1. Create or login and use the returned Bearer token.
+1. Create or login and use the returned access token.
 2. Generate reports through `/reports/generate`; ownership is bound to the authenticated user.
 3. End users can access only their own reports/history.
 4. Counselors can access reports only for assigned students (`counselor_assignments` table).

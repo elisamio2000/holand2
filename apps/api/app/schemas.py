@@ -1,6 +1,7 @@
 from datetime import datetime
+from typing import Literal
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, model_validator
 
 RIASEC_DIMENSIONS = ["R", "I", "A", "S", "E", "C"]
 MBTI_DIMENSIONS = ["E", "I", "S", "N", "T", "F", "J", "P"]
@@ -162,6 +163,7 @@ class JobRecommendation(BaseModel):
     salary_band: str | None = None
     deprioritized: bool = False
     warning_fa: str | None = None
+    quality_note_fa: str | None = None
 
 
 class MajorRecommendation(BaseModel):
@@ -176,6 +178,16 @@ class MajorRecommendation(BaseModel):
     related_job_titles: list[str] = []
     deprioritized: bool = False
     warning_fa: str | None = None
+    quality_note_fa: str | None = None
+
+
+class RecommendationQualitySignal(BaseModel):
+    low_quality_detected: bool
+    lookback_days: int
+    sample_size: int
+    unhelpful_ratio: float
+    heuristic_applied: bool
+    heuristic_note_fa: str | None = None
 
 
 class RecommendationResponseV2(BaseModel):
@@ -183,6 +195,7 @@ class RecommendationResponseV2(BaseModel):
     careers: list[JobRecommendation]
     majors: list[MajorRecommendation]
     confidence_score: float
+    quality_signal: RecommendationQualitySignal | None = None
 
 
 # ── Phase 5: interpretation + report generation ──────────────────────────────
@@ -372,20 +385,62 @@ class ReviewDecision(BaseModel):
     notes: str | None = Field(default=None, max_length=4000)
 
 
+RECOMMENDATION_FEEDBACK_REASON_CODES = [
+    "low_relevance_to_profile",
+    "explanation_unclear",
+    "age_band_mismatch",
+    "market_signal_mismatch",
+    "duplicate_or_redundant",
+    "missing_actionability",
+    "other",
+]
+RecommendationFeedbackReasonCode = Literal[
+    "low_relevance_to_profile",
+    "explanation_unclear",
+    "age_band_mismatch",
+    "market_signal_mismatch",
+    "duplicate_or_redundant",
+    "missing_actionability",
+    "other",
+]
+
+
 class RecommendationFeedbackCreate(BaseModel):
-    recommendation_id: str = Field(..., min_length=1, max_length=128)
+    recommendation_id: str | None = Field(default=None, min_length=1, max_length=128)
+    report_id: str | None = Field(default=None, min_length=1, max_length=36)
+    session_id: str | None = Field(default=None, min_length=1, max_length=64)
     user_id: str | None = Field(default=None, max_length=128)
-    rating: int = Field(..., ge=1, le=5)
-    accepted: bool = False
+    helpful: bool | None = None
+    rating: int | None = Field(default=None, ge=1, le=5)
+    accepted: bool | None = None
+    reason_code: RecommendationFeedbackReasonCode | None = None
+    reason_detail: str | None = Field(default=None, max_length=1000)
     comment: str | None = Field(default=None, max_length=4000)
+
+    @model_validator(mode="after")
+    def _validate_quality_feedback(self):
+        if not any([self.recommendation_id, self.report_id, self.session_id]):
+            raise ValueError("At least one of recommendation_id/report_id/session_id is required.")
+        if self.helpful is None and self.rating is None and self.accepted is None:
+            raise ValueError("At least one of helpful/rating/accepted must be provided.")
+        if self.helpful is True and self.reason_code is not None:
+            raise ValueError("reason_code is only accepted for unhelpful feedback.")
+        if self.reason_code == "other" and not self.reason_detail:
+            raise ValueError("reason_detail is required when reason_code is 'other'.")
+        return self
 
 
 class RecommendationFeedbackOut(BaseModel):
     id: str
-    recommendation_id: str
+    recommendation_id: str | None
+    report_id: str | None
+    session_id: str | None
     user_id: str | None
+    helpful: bool
     rating: int
     accepted: bool
+    reason_code: RecommendationFeedbackReasonCode | None
+    reason_detail: str | None
     comment: str | None
     created_at: datetime
     updated_at: datetime
@@ -399,8 +454,49 @@ class RecommendationQualityAlert(BaseModel):
     threshold_percent: float
     min_samples: int
     total_feedback: int
+    helpful_feedback: int
+    unhelpful_feedback: int
     low_quality_feedback: int
     low_quality_ratio: float
+    recommended_action: str
+
+
+class RecommendationQualityTrendPoint(BaseModel):
+    day: str
+    feedback_count: int
+    helpful_feedback: int
+    unhelpful_feedback: int
+    helpful_ratio: float
+    unhelpful_ratio: float
+    avg_rating: float | None
+
+
+class RecommendationFeedbackReasonStat(BaseModel):
+    reason_code: RecommendationFeedbackReasonCode
+    count: int
+
+
+class RecommendationQualityTrendsResponse(BaseModel):
+    window_days: int
+    total_feedback: int
+    helpful_feedback: int
+    unhelpful_feedback: int
+    unhelpful_ratio: float
+    trend_points: list[RecommendationQualityTrendPoint]
+    top_unhelpful_reasons: list[RecommendationFeedbackReasonStat]
+
+
+class RecommendationQualityDriftResponse(BaseModel):
+    window_days: int
+    current_total_feedback: int
+    previous_total_feedback: int
+    current_unhelpful_ratio: float
+    previous_unhelpful_ratio: float
+    unhelpful_ratio_delta: float
+    current_avg_rating: float | None
+    previous_avg_rating: float | None
+    avg_rating_delta: float | None
+    drift_status: str
     recommended_action: str
 
 
@@ -410,3 +506,4 @@ class MonitoringMetricsResponse(BaseModel):
     requests_total: int
     error_responses_total: int
     by_path: dict[str, int]
+    quality_loop_kpis: dict[str, object]
