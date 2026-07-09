@@ -20,10 +20,17 @@ This satisfies docs/questionnaire-scoring-design-fa.md #5 ("DSL فرمول و
 from __future__ import annotations
 
 import ast
+import math
 import operator
 from typing import Any
 
-__all__ = ["FormulaError", "evaluate_formula", "validate_formula", "extract_variables"]
+__all__ = [
+    "FormulaError",
+    "evaluate_formula",
+    "validate_formula",
+    "extract_variables",
+    "validate_formula_version_payload",
+]
 
 
 class FormulaError(ValueError):
@@ -107,6 +114,79 @@ def evaluate_formula(expression: str, variables: dict[str, float]) -> float:
         raise FormulaError("Division by zero in formula") from exc
     except Exception as exc:  # noqa: BLE001 - surface as FormulaError
         raise FormulaError(f"Formula evaluation failed: {exc}") from exc
+
+
+def validate_formula_version_payload(
+    *,
+    expression: str,
+    input_variables: list[str],
+    validation_rules: dict[str, Any] | None,
+    unit_tests: list[dict[str, Any]] | None,
+) -> None:
+    """Validate full formula payload used by governance transitions.
+
+    Besides AST and variable validation, this executes formula unit tests and
+    optional min/max bounds checks.
+    """
+    validate_formula(expression, input_variables)
+
+    errors: list[str] = []
+    tests = unit_tests or []
+    rules = validation_rules or {}
+
+    min_bound = rules.get("min")
+    max_bound = rules.get("max")
+    if min_bound is not None and not isinstance(min_bound, int | float):
+        errors.append("validation_rules.min must be numeric when provided")
+    if max_bound is not None and not isinstance(max_bound, int | float):
+        errors.append("validation_rules.max must be numeric when provided")
+    if errors:
+        raise FormulaError("; ".join(errors))
+
+    for index, test_case in enumerate(tests):
+        if not isinstance(test_case, dict):
+            errors.append(f"unit_tests[{index}] must be an object")
+            continue
+
+        variables = test_case.get("variables")
+        expected = test_case.get("expected")
+        tolerance = test_case.get("tolerance", 1e-6)
+
+        if not isinstance(variables, dict):
+            errors.append(f"unit_tests[{index}].variables must be an object")
+            continue
+        if expected is not None and not isinstance(expected, int | float):
+            errors.append(f"unit_tests[{index}].expected must be numeric when provided")
+            continue
+        if not isinstance(tolerance, int | float):
+            errors.append(f"unit_tests[{index}].tolerance must be numeric")
+            continue
+
+        try:
+            value = evaluate_formula(expression, variables)
+        except FormulaError as exc:
+            errors.append(f"unit_tests[{index}] evaluation failed: {exc}")
+            continue
+
+        if not isinstance(value, int | float) or not math.isfinite(value):
+            errors.append(f"unit_tests[{index}] produced a non-finite numeric result")
+            continue
+
+        if min_bound is not None and value < float(min_bound):
+            errors.append(
+                f"unit_tests[{index}] result {value} is below validation_rules.min {min_bound}"
+            )
+        if max_bound is not None and value > float(max_bound):
+            errors.append(
+                f"unit_tests[{index}] result {value} is above validation_rules.max {max_bound}"
+            )
+        if expected is not None and abs(value - float(expected)) > float(tolerance):
+            errors.append(
+                f"unit_tests[{index}] expected {expected} with tolerance {tolerance}, got {value}"
+            )
+
+    if errors:
+        raise FormulaError("; ".join(errors))
 
 
 _ALLOWED_NODE_TYPES = (

@@ -142,6 +142,72 @@ async def test_formula_workflow_and_simulate(client) -> None:
 
 
 @pytest.mark.asyncio
+async def test_formula_publish_is_blocked_when_unit_tests_fail(client) -> None:
+    create = await client.post(
+        "/admin/formula-versions/draft",
+        json={
+            "formula_key": "mbti_preference_percentage",
+            "assessment_type": "mbti",
+            "expression": {"expr": "(left / (left + right)) * 100 if (left + right) > 0 else 50"},
+            "input_variables": ["left", "right"],
+            "output_metric": "preference_percentage",
+            "created_by": "test-analyst",
+            "unit_tests": [
+                {"variables": {"left": 8, "right": 2}, "expected": 10.0, "tolerance": 0.01}
+            ],
+        },
+    )
+    assert create.status_code == 201
+    formula_id = create.json()["id"]
+
+    review = await client.post(f"/admin/formula-versions/{formula_id}/review", json={"actor": "qa"})
+    assert review.status_code == 200
+    approve = await client.post(
+        f"/admin/formula-versions/{formula_id}/approve", json={"actor": "qa"}
+    )
+    assert approve.status_code == 200
+
+    publish = await client.post(
+        f"/admin/formula-versions/{formula_id}/publish", json={"actor": "qa"}
+    )
+    assert publish.status_code == 409
+    assert "publish gate failed" in publish.json()["detail"].lower()
+    assert "unit_tests" in publish.json()["detail"]
+
+
+@pytest.mark.asyncio
+async def test_formula_publish_is_blocked_by_validation_rule_bounds(client) -> None:
+    create = await client.post(
+        "/admin/formula-versions/draft",
+        json={
+            "formula_key": "mbti_preference_percentage",
+            "assessment_type": "mbti",
+            "expression": {"expr": "(left / (left + right)) * 100 if (left + right) > 0 else 50"},
+            "input_variables": ["left", "right"],
+            "output_metric": "preference_percentage",
+            "created_by": "test-analyst",
+            "validation_rules": {"min": 0, "max": 60},
+            "unit_tests": [{"variables": {"left": 8, "right": 2}, "expected": 80.0}],
+        },
+    )
+    assert create.status_code == 201
+    formula_id = create.json()["id"]
+    review = await client.post(f"/admin/formula-versions/{formula_id}/review", json={"actor": "qa"})
+    assert review.status_code == 200
+    approve = await client.post(
+        f"/admin/formula-versions/{formula_id}/approve", json={"actor": "qa"}
+    )
+    assert approve.status_code == 200
+
+    publish = await client.post(
+        f"/admin/formula-versions/{formula_id}/publish", json={"actor": "qa"}
+    )
+    assert publish.status_code == 409
+    detail = publish.json()["detail"].lower()
+    assert "validation_rules.max" in detail
+
+
+@pytest.mark.asyncio
 async def test_session_api_start_answer_complete_result(client) -> None:
     create = await client.post("/admin/assessment-versions/draft", json=_holland_draft_payload())
     version_id = create.json()["id"]

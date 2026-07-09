@@ -40,7 +40,12 @@ from ..schemas_assessment import (
     VersionDiffOut,
 )
 from ..services.assessment_scoring import compute_session_result
-from ..services.formula_engine import FormulaError, evaluate_formula, validate_formula
+from ..services.formula_engine import (
+    FormulaError,
+    evaluate_formula,
+    validate_formula,
+    validate_formula_version_payload,
+)
 from ..services.question_bank_quality import build_quality_report
 from ..services.versioning import VersioningError, assert_transition_allowed, log_transition
 
@@ -519,6 +524,20 @@ async def _transition_formula_version(
     if target == VersionStatus.APPROVED:
         formula.approved_by = payload.actor
     if target == VersionStatus.PUBLISHED:
+        expr = formula.expression.get("expr", "") if isinstance(formula.expression, dict) else ""
+        try:
+            validate_formula_version_payload(
+                expression=expr,
+                input_variables=formula.input_variables,
+                validation_rules=formula.validation_rules,
+                unit_tests=formula.unit_tests,
+            )
+        except FormulaError as exc:
+            raise HTTPException(
+                status_code=409,
+                detail=f"Formula publish gate failed: {exc}",
+            ) from exc
+
         result = await db.execute(
             select(ScoringFormulaVersion).where(
                 ScoringFormulaVersion.formula_key == formula.formula_key,
