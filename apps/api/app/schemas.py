@@ -122,17 +122,110 @@ class MbtiResult(BaseModel):
     certainty: dict[str, float]
 
 
-class RecommendationRequest(BaseModel):
+# ── Phase 4: age-aware recommendation engine ─────────────────────────────────
+
+AGE_BANDS = ["13-17", "18-24", "25-30", "30+"]
+
+
+def age_to_band(age: int) -> str:
+    if age <= 17:
+        return "13-17"
+    if age <= 24:
+        return "18-24"
+    if age <= 30:
+        return "25-30"
+    return "30+"
+
+
+class RecommendationRequestV2(BaseModel):
     holland_code: str = Field(..., min_length=3, max_length=3)
     mbti_type: str = Field(..., min_length=4, max_length=4)
+    age: int = Field(..., ge=10, le=100, description="Age used to derive the age band")
+    limit: int = Field(8, ge=1, le=20)
 
 
-class RecommendationItem(BaseModel):
+class JobRecommendation(BaseModel):
     title: str
+    title_fa: str
     fit_score: float
-    why: str
+    confidence: float
+    why_fa: str
+    taxonomy_source: str
+    taxonomy_code: str
+    education_level: str
+    market_demand_score: float
+    future_outlook: str
+    salary_band: str | None = None
+    deprioritized: bool = False
+    warning_fa: str | None = None
 
 
 class RecommendationResponse(BaseModel):
     careers: list[RecommendationItem]
     majors: list[RecommendationItem]
+
+
+class MajorRecommendation(BaseModel):
+    title: str
+    title_fa: str
+    fit_score: float
+    confidence: float
+    why_fa: str
+    degree_level: str
+    market_demand_score: float
+    future_outlook: str
+    related_job_titles: list[str] = []
+    deprioritized: bool = False
+    warning_fa: str | None = None
+
+
+class RecommendationResponseV2(BaseModel):
+    age_band: str
+    careers: list[JobRecommendation]
+    majors: list[MajorRecommendation]
+    confidence_score: float
+
+
+# ── Phase 5: interpretation + report generation ──────────────────────────────
+
+
+class SummaryCard(BaseModel):
+    holland_code: str
+    mbti_type: str
+    age_band: str
+    headline_fa: str
+    top_careers_fa: list[str]
+    top_majors_fa: list[str]
+
+
+class LayeredInterpretation(BaseModel):
+    psychometric_fa: str
+    behavioral_fit_fa: str
+    career_major_fa: str
+    skill_growth_fa: str
+
+
+class ActionPlan(BaseModel):
+    short_term_3_months_fa: list[str]
+    mid_term_6_months_fa: list[str]
+    long_term_12_months_fa: list[str]
+
+
+class ReportRequest(BaseModel):
+    holland_scores: dict[str, float]
+    mbti_scores: dict[str, float]
+    age: int = Field(..., ge=10, le=100)
+    session_id: str | None = None
+
+
+class ReportResponse(BaseModel):
+    id: str | None = None
+    holland_code: str
+    mbti_type: str
+    age_band: str
+    summary_card: SummaryCard
+    detailed_interpretation: LayeredInterpretation
+    action_plan: ActionPlan
+    risk_flags: list[str]
+    confidence_score: float
+    recommendations: RecommendationResponseV2

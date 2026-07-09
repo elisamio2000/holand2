@@ -1,0 +1,235 @@
+"""Age-aware recommendation engine (Phase 4).
+
+Maps a Holland (RIASEC) code + MBTI type + age to ranked job/major
+recommendations sourced from the standardized taxonomy backbone (Job/Major
+models), honoring the deprecation/deprioritization rules from
+docs/job-taxonomy-modernization-and-ethics-fa.md and the age-segmentation
+requirement from docs/esanj-benchmark-and-interpretation-requirements-fa.md
+(quality of suggestions must differ across 13-17, 18-24, 25-30, 30+).
+"""
+
+from dataclasses import dataclass
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from ..models.job import AgeBand, Job, Major
+from ..schemas import (
+    JobRecommendation,
+    MajorRecommendation,
+    RecommendationResponseV2,
+    age_to_band,
+)
+
+# MBTI letter -> RIASEC letters it tends to reinforce.
+_MBTI_RIASEC_AFFINITY = {
+    "E": "ES",
+    "I": "IR",
+    "S": "RC",
+    "N": "AI",
+    "T": "IC",
+    "F": "SA",
+    "J": "CE",
+    "P": "AI",
+}
+
+# Per age-band tuning: how many career vs. major slots to prioritize, and a
+# short rationale surfaced in warnings when relevant.
+_AGE_BAND_WEIGHTS = {
+    AgeBand.TEEN.value: {"job_share": 0.35, "major_share": 0.65},
+    AgeBand.YOUNG_ADULT.value: {"job_share": 0.5, "major_share": 0.5},
+    AgeBand.EARLY_CAREER.value: {"job_share": 0.7, "major_share": 0.3},
+    AgeBand.ADULT.value: {"job_share": 0.75, "major_share": 0.25},
+}
+
+DEPRIORITIZED_WARNING_FA = "فرصت شغلی این مسیر محدود یا رو به کاهش است؛ فقط به عنوان گزینه فرعی در نظر بگیرید."
+
+
+def _riasec_fit_score(profile: str, holland_code: str) -> float:
+    """Weighted positional overlap between a job/major RIASEC profile and the
+    user's 3-letter Holland code. Earlier letters in the code carry more
+    weight since they represent stronger interest priorities."""
+    profile_letters = list(profile.upper())
+    code_letters = list(holland_code.upper())
+    if profile_letters[: len(code_letters)] == code_letters:
+        return 100.0
+
+    max_score = 0.0
+    score = 0.0
+    for idx, letter in enumerate(code_letters):
+        code_weight = 3 - idx  # 3, 2, 1
+        max_score += code_weight
+        if letter in profile_letters:
+            pos = profile_letters.index(letter)
+            pos_weight = max(3 - pos, 0.5) / 3.0
+            score += code_weight * pos_weight
+
+    if max_score == 0:
+        return 0.0
+    return round((score / max_score) * 100.0, 1)
+
+
+def _mbti_alignment_score(profile: str, mbti_type: str) -> float:
+    profile_letters = set(profile.upper())
+    hits = 0
+    total = 0
+    for letter in mbti_type.upper():
+        affinity = _MBTI_RIASEC_AFFINITY.get(letter, "")
+        if not affinity:
+            continue
+        total += 1
+        if profile_letters & set(affinity):
+            hits += 1
+    if total == 0:
+        return 50.0
+    return round((hits / total) * 100.0, 1)
+
+
+def _combined_fit(
+    profile: str, holland_code: str, mbti_type: str, market_demand: float, local_relevance: float
+) -> float:
+    riasec_fit = _riasec_fit_score(profile, holland_code)
+    mbti_fit = _mbti_alignment_score(profile, mbti_type)
+    demand_component = min(market_demand, 100.0)
+    relevance_component = min(local_relevance, 100.0)
+
+    fit = (
+        riasec_fit * 0.60
+        + mbti_fit * 0.25
+        + demand_component * 0.10
+        + relevance_component * 0.05
+    )
+    return round(min(fit, 99.0), 1)
+
+
+def _confidence(fit_score: float, deprioritized: bool, has_rich_metadata: bool) -> float:
+    base = 40.0 + fit_score * 0.5
+    if has_rich_metadata:
+        base += 8.0
+    if deprioritized:
+        base -= 15.0
+    return round(max(min(base, 99.0), 20.0), 1)
+
+
+@dataclass
+class _RankedJob:
+    job: Job
+    fit_score: float
+    confidence: float
+
+
+@dataclass
+class _RankedMajor:
+    major: Major
+    fit_score: float
+    confidence: float
+
+
+async def _fetch_eligible_jobs(session: AsyncSession, age_band: str) -> list[Job]:
+    result = await session.execute(select(Job).where(Job.deprecation_flag.is_(False)))
+    jobs = result.scalars().all()
+    return [j for j in jobs if not j.suitable_age_bands or age_band in j.suitable_age_bands]
+
+
+async def _fetch_eligible_majors(session: AsyncSession, age_band: str) -> list[Major]:
+    result = await session.execute(select(Major).where(Major.deprecation_flag.is_(False)))
+    majors = result.scalars().all()
+    return [m for m in majors if not m.suitable_age_bands or age_band in m.suitable_age_bands]
+
+
+def _rank_jobs(jobs: list[Job], holland_code: str, mbti_type: str) -> list[_RankedJob]:
+    ranked = []
+    for job in jobs:
+        fit = _combined_fit(
+            job.riasec_profile, holland_code, mbti_type, job.market_demand_score, job.local_relevance_score
+        )
+        conf = _confidence(fit, job.deprioritized, bool(job.required_skills))
+        ranked.append(_RankedJob(job=job, fit_score=fit, confidence=conf))
+    # Non-deprioritized items first (best fit first), deprioritized pushed to the tail.
+    ranked.sort(key=lambda r: (r.job.deprioritized, -r.fit_score))
+    return ranked
+
+
+def _rank_majors(majors: list[Major], holland_code: str, mbti_type: str) -> list[_RankedMajor]:
+    ranked = []
+    for major in majors:
+        fit = _combined_fit(
+            major.riasec_profile,
+            holland_code,
+            mbti_type,
+            major.market_demand_score,
+            major.local_relevance_score,
+        )
+        conf = _confidence(fit, major.deprioritized, bool(major.core_skills))
+        ranked.append(_RankedMajor(major=major, fit_score=fit, confidence=conf))
+    ranked.sort(key=lambda r: (r.major.deprioritized, -r.fit_score))
+    return ranked
+
+
+def _job_to_schema(ranked: _RankedJob) -> JobRecommendation:
+    job = ranked.job
+    return JobRecommendation(
+        title=job.canonical_title,
+        title_fa=job.canonical_title_fa,
+        fit_score=ranked.fit_score,
+        confidence=ranked.confidence,
+        why_fa=job.why_fa or "",
+        taxonomy_source=job.taxonomy_source,
+        taxonomy_code=job.taxonomy_code,
+        education_level=job.education_level,
+        market_demand_score=job.market_demand_score,
+        future_outlook=job.future_outlook,
+        salary_band=job.salary_band,
+        deprioritized=job.deprioritized,
+        warning_fa=DEPRIORITIZED_WARNING_FA if job.deprioritized else None,
+    )
+
+
+def _major_to_schema(ranked: _RankedMajor) -> MajorRecommendation:
+    major = ranked.major
+    return MajorRecommendation(
+        title=major.canonical_title,
+        title_fa=major.canonical_title_fa,
+        fit_score=ranked.fit_score,
+        confidence=ranked.confidence,
+        why_fa=major.why_fa or "",
+        degree_level=major.degree_level,
+        market_demand_score=major.market_demand_score,
+        future_outlook=major.future_outlook,
+        related_job_titles=major.related_job_titles or [],
+        deprioritized=major.deprioritized,
+        warning_fa=DEPRIORITIZED_WARNING_FA if major.deprioritized else None,
+    )
+
+
+async def build_recommendations_v2(
+    session: AsyncSession,
+    holland_code: str,
+    mbti_type: str,
+    age: int,
+    limit: int = 8,
+) -> RecommendationResponseV2:
+    age_band = age_to_band(age)
+    weights = _AGE_BAND_WEIGHTS[age_band]
+
+    job_slots = max(1, round(limit * weights["job_share"]))
+    major_slots = max(1, round(limit * weights["major_share"]))
+
+    eligible_jobs = await _fetch_eligible_jobs(session, age_band)
+    eligible_majors = await _fetch_eligible_majors(session, age_band)
+
+    ranked_jobs = _rank_jobs(eligible_jobs, holland_code, mbti_type)[:job_slots]
+    ranked_majors = _rank_majors(eligible_majors, holland_code, mbti_type)[:major_slots]
+
+    careers = [_job_to_schema(r) for r in ranked_jobs]
+    majors = [_major_to_schema(r) for r in ranked_majors]
+
+    all_confidences = [r.confidence for r in ranked_jobs] + [r.confidence for r in ranked_majors]
+    confidence_score = round(sum(all_confidences) / len(all_confidences), 1) if all_confidences else 40.0
+
+    return RecommendationResponseV2(
+        age_band=age_band,
+        careers=careers,
+        majors=majors,
+        confidence_score=confidence_score,
+    )
