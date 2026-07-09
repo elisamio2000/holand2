@@ -26,6 +26,7 @@ A professional platform for Holland and MBTI assessments with smart guidance for
 - docs/mvp-execution-plan-fa.md
 - docs/esanj-benchmark-and-interpretation-requirements-fa.md
 - docs/job-taxonomy-modernization-and-ethics-fa.md
+- docs/beta-launch-runbook-fa.md
 
 ## Web App (Holand Base)
 

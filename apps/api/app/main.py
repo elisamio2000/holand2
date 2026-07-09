@@ -11,9 +11,12 @@ from starlette.responses import JSONResponse
 
 from .config import get_settings
 from .database import engine
+from .monitoring import RequestObservabilityMiddleware, init_sentry_hooks
 from .recommendations import build_recommendations
 from .routers.analytics import router as analytics_router
 from .routers.expert_lab import router as expert_lab_router
+from .routers.monitoring import router as monitoring_router
+from .routers.recommendation_quality import router as recommendation_quality_router
 from .schemas import (
     HealthResponse,
     HollandRequest,
@@ -63,6 +66,7 @@ async def _rate_limit_handler(request: Request, exc: RateLimitExceeded) -> JSONR
 app.add_exception_handler(RateLimitExceeded, _rate_limit_handler)
 
 # ── Security middleware (order matters: outermost added last runs first) ────
+app.add_middleware(RequestObservabilityMiddleware)
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(BodySizeLimitMiddleware)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts_list)
@@ -77,10 +81,14 @@ app.add_middleware(
 # ── Routers ───────────────────────────────────────────────────────────────
 app.include_router(analytics_router)
 app.include_router(expert_lab_router)
+app.include_router(recommendation_quality_router)
+app.include_router(monitoring_router)
 # Phase 1: from .routers.auth import router as auth_router; app.include_router(auth_router)
 # Phase 1: from .routers.users import router as users_router; app.include_router(users_router)
 # Phase 3: from .routers.sessions import router as sessions_router; app.include_router(sessions_router)
 # Phase 5: from .routers.reports import router as reports_router; app.include_router(reports_router)
+
+init_sentry_hooks()
 
 
 @app.get("/health", response_model=HealthResponse, tags=["System"])

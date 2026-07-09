@@ -129,3 +129,41 @@ class ContentDraftOut(BaseModel):
 class ReviewDecision(BaseModel):
     reviewer: str = Field(..., min_length=1, max_length=255)
     notes: str | None = Field(default=None, max_length=4000)
+
+
+class RecommendationFeedbackCreate(BaseModel):
+    recommendation_id: str = Field(..., min_length=1, max_length=128)
+    user_id: str | None = Field(default=None, max_length=128)
+    rating: int = Field(..., ge=1, le=5)
+    accepted: bool = False
+    comment: str | None = Field(default=None, max_length=4000)
+
+
+class RecommendationFeedbackOut(BaseModel):
+    id: str
+    recommendation_id: str
+    user_id: str | None
+    rating: int
+    accepted: bool
+    comment: str | None
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class RecommendationQualityAlert(BaseModel):
+    alert_triggered: bool
+    threshold_percent: float
+    min_samples: int
+    total_feedback: int
+    low_quality_feedback: int
+    low_quality_ratio: float
+
+
+class MonitoringMetricsResponse(BaseModel):
+    started_at: str
+    uptime_seconds: int
+    requests_total: int
+    error_responses_total: int
+    by_path: dict[str, int]
