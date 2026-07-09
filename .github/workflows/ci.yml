@@ -44,20 +44,27 @@ jobs:
             app/routers/admin_versions.py \
             app/routers/analytics.py \
             app/routers/expert_lab.py \
+            app/routers/monitoring.py \
+            app/routers/recommendation_quality.py \
             app/routers/reports.py \
             app/routers/sessions.py \
             app/services/assessment_scoring.py \
             app/services/analytics.py \
             app/services/expert_lab.py \
             app/services/formula_engine.py \
+            app/services/recommendation_quality.py \
             app/services/question_bank_quality.py \
+            app/monitoring.py \
             tests/test_phase2_phase3_api.py \
             tests/test_formula_engine.py \
             tests/test_reports_api.py \
             tests/test_scoring.py \
             tests/test_analytics.py \
             tests/test_expert_lab.py \
-            tests/test_security.py
+            tests/test_security.py \
+            tests/test_monitoring.py \
+            tests/test_recommendation_quality.py \
+            tests/test_beta_readiness.py
 
       - name: Pytest assessment quality gates
         run: |
@@ -66,6 +73,14 @@ jobs:
             tests/test_phase2_phase3_api.py \
             tests/test_formula_engine.py \
             tests/test_reports_api.py
+
+      - name: Pytest beta readiness gates
+        run: |
+          pytest -q \
+            tests/test_monitoring.py \
+            tests/test_analytics.py \
+            tests/test_recommendation_quality.py \
+            tests/test_beta_readiness.py
 
       - name: Pytest
         run: pytest -q

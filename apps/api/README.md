@@ -16,6 +16,8 @@ uvicorn app.main:app --reload --port 8000
 ## Endpoints
 
 - GET /health
+- GET /monitoring/metrics (admin only; includes quality-loop KPIs)
+- GET /monitoring/readiness
 - POST /assessments/holland/score
 - POST /assessments/mbti/score
 - POST /recommendations
@@ -25,7 +27,7 @@ uvicorn app.main:app --reload --port 8000
 - GET /admin/alerts/recommendation-quality (admin only)
 - GET /admin/recommendation-quality/trends (admin only)
 - GET /admin/recommendation-quality/drift (admin only)
-- GET /monitoring/metrics (admin only; includes quality-loop KPIs)
+- GET /analytics/funnel
 - POST /reports/generate (auth required)
 - GET /reports/history (auth required)
 - GET /reports/{report_id} (auth required)
@@ -39,6 +41,19 @@ uvicorn app.main:app --reload --port 8000
 3. End users can access only their own reports/history.
 4. Counselors can access reports only for assigned students (`counselor_assignments` table).
 5. Admins can access all reports and can inspect any counselor dashboard via `?counselor_id=...`.
+
+## Beta operational readiness thresholds
+
+- Completion rate: `BETA_COMPLETION_RATE_THRESHOLD_PERCENT` (default `70`)
+- Minimum completion sample size: `BETA_COMPLETION_MIN_SESSIONS` (default `10`)
+- 5xx error rate: `BETA_5XX_ERROR_RATE_THRESHOLD_PERCENT` (default `1`)
+- Recommendation quality alert threshold: `RECOMMENDATION_QUALITY_ALERT_THRESHOLD_PERCENT` (default `35`)
+
+## Smoke check command
+
+Run this against a running API instance:
+
+python -m app.scripts.smoke_beta_readiness --base-url http://127.0.0.1:8000
 
 ## Known limits
 

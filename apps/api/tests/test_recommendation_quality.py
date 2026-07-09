@@ -100,6 +100,7 @@ class TestRecommendationQualityMonitor:
         assert body["low_quality_feedback"] == 5
         assert body["low_quality_ratio"] == 50.0
         assert body["alert_triggered"] is True
+        assert body["alert_code"] == "RECOMMENDATION_QUALITY_DEGRADED"
         assert body["severity"] == "warning"
         assert body["recommended_action"] == (
             "review-latest-feedback-and-adjust-recommendation-weights"
@@ -144,6 +145,7 @@ class TestRecommendationQualityMonitor:
         assert response.status_code == 200
         body = response.json()
         assert body["alert_triggered"] is False
+        assert body["alert_code"] == "RECOMMENDATION_QUALITY_OK"
         assert body["severity"] == "ok"
         assert body["recommended_action"] == "continue-monitoring"
 

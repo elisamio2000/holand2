@@ -450,6 +450,7 @@ class RecommendationFeedbackOut(BaseModel):
 
 class RecommendationQualityAlert(BaseModel):
     alert_triggered: bool
+    alert_code: str
     severity: str
     threshold_percent: float
     min_samples: int
@@ -507,3 +508,26 @@ class MonitoringMetricsResponse(BaseModel):
     error_responses_total: int
     by_path: dict[str, int]
     quality_loop_kpis: dict[str, object]
+
+
+class MonitoringReadinessCheck(BaseModel):
+    name: str
+    passed: bool
+    owner: str
+    observed: str
+    threshold: str
+    message: str
+
+
+class MonitoringReadinessThresholds(BaseModel):
+    completion_rate_threshold_percent: float
+    completion_min_sessions: int
+    error_5xx_rate_threshold_percent: float
+    recommendation_quality_threshold_percent: float
+
+
+class MonitoringReadinessResponse(BaseModel):
+    go_no_go: str
+    checked_at: str
+    checks: list[MonitoringReadinessCheck]
+    thresholds: MonitoringReadinessThresholds
