@@ -148,3 +148,13 @@ async def get_report(report_id: str, session: DbSession) -> ReportResponse:
         confidence_score=report_row.confidence_score,
         recommendations=recommendations,
     )
+
+
+@router.get("/{report_id}/pdf")
+async def get_report_pdf(report_id: str, session: DbSession) -> dict:
+    _ = session
+    _ = report_id
+    raise HTTPException(
+        status_code=501,
+        detail="PDF generation is not implemented yet in this service.",
+    )

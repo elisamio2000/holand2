@@ -80,6 +80,10 @@ class TestReportsApi:
         response = await client.get("/reports/does-not-exist")
         assert response.status_code == 404
 
+    async def test_get_report_pdf_stub_returns_501(self, client):
+        response = await client.get("/reports/any-id/pdf")
+        assert response.status_code == 501
+
     async def test_generate_report_invalid_scores(self, client):
         payload = {
             "holland_scores": {"R": 10, "I": 20},
