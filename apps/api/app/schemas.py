@@ -164,11 +164,6 @@ class JobRecommendation(BaseModel):
     warning_fa: str | None = None
 
 
-class RecommendationResponse(BaseModel):
-    careers: list[RecommendationItem]
-    majors: list[RecommendationItem]
-
-
 class MajorRecommendation(BaseModel):
     title: str
     title_fa: str

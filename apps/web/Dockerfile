@@ -6,7 +6,7 @@ RUN npm install -g pnpm@9
 WORKDIR /app
 
 # Copy workspace files
-COPY pnpm-workspace.yaml package.json turbo.json ./
+COPY pnpm-workspace.yaml package.json turbo.json pnpm-lock.yaml ./
 COPY packages/config-tailwind/package.json packages/config-tailwind/
 COPY packages/config-typescript/package.json packages/config-typescript/
 COPY packages/holand-core/package.json packages/holand-core/

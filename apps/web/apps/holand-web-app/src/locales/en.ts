@@ -1,5 +1,5 @@
-﻿// ============================================
-// English (en) Translation â€” Holand Platform
+// ============================================
+// English (en) Translation - Holand Platform
 // Default language for the application
 // ============================================
 
@@ -18,7 +18,7 @@ const en = {
           galleryBody: 'Browse all audio and video variants with live props and lazy-loaded heavy engines.',
           scenariosTitle: 'Scenarios',
           scenariosBody: 'Switch to Scenarios for production integration paths (MPS expand, sticky, watch).',
-          chatTitle: 'S1 â€” Chat expand',
+          chatTitle: 'S1 — Chat expand',
           chatBody: 'Regression-critical: inline play, expand, and close must preserve one media session.',
         },
       },
@@ -165,7 +165,7 @@ const en = {
     copied: 'Color copied',
     copyFailed: 'Could not copy',
     eyedropper: 'Pick from page',
-    eyedropperHint: 'Tap or click to pick Â· Esc to cancel',
+    eyedropperHint: 'Tap or click to pick · Esc to cancel',
     eyedropperUnsupported: 'Could not start color picker in this browser.',
   },
 
@@ -285,9 +285,9 @@ const en = {
     bulkDeleteMessage: 'Are you sure you want to delete {{count}} files? This action cannot be undone.',
     deleteNow: 'Delete now',
     reload: 'Reload',
-    previewNotAvailable: 'No preview yet â€” showing file icon',
+    previewNotAvailable: 'No preview yet — showing file icon',
     previewServerError: 'Preview temporarily unavailable (server error)',
-    previewRateLimited: 'Too many preview requests â€” try again shortly',
+    previewRateLimited: 'Too many preview requests — try again shortly',
     navigationPanel: 'Navigation panel',
     detailsPanel: 'Details panel',
     openNavigationPanel: 'Open navigation panel',
@@ -437,7 +437,7 @@ const en = {
     language: {
       title: 'Language',
       en: 'English',
-      fa: 'ÙØ§Ø±Ø³ÛŒ',
+      fa: 'فارسی',
     },
   },
 
@@ -448,7 +448,7 @@ const en = {
     websocket: {
       connected: 'Live (WebSocket)',
       disconnected: 'Polling fallback',
-      reconnecting: 'Reconnectingâ€¦',
+      reconnecting: 'Reconnecting…',
       error: 'Connection error',
     },
     list: {
@@ -606,14 +606,14 @@ const en = {
         async: {
           label: 'Auto (Async)',
           description:
-            'Full pipeline: Review â†’ Embed â†’ Store. Runs in background and is best for large folders.',
+            'Full pipeline: Review → Embed → Store. Runs in background and is best for large folders.',
           capability:
             'Best for heavy imports with stable queue behavior and resilient retry handling.',
         },
         sync: {
           label: 'Auto (Sync)',
           description:
-            'Full pipeline: Review â†’ Embed â†’ Store. Waits until complete and is recommended for small folders.',
+            'Full pipeline: Review → Embed → Store. Waits until complete and is recommended for small folders.',
           capability:
             'Best for short imports when immediate completion feedback is needed.',
         },
@@ -804,7 +804,7 @@ const en = {
       vectorCount: 'Vectors (Qdrant)',
       partialBanner:
         'The import service returned no stored detail for this case (HTTP 404). The summary below is taken from your last /cases list load and, when available, the graph store.',
-      graphCounts: '{{nodes}} nodes Â· {{rels}} relationships (from graph API)',
+      graphCounts: '{{nodes}} nodes · {{rels}} relationships (from graph API)',
       loadError: 'Could not load this case from the server.',
       detail404NoCache:
         'Import detail was not found (404), and there is no cached list row. Open /cases first to refresh the list, or verify the Case ID on the server.',
@@ -885,7 +885,7 @@ const en = {
         generatedAt: 'Generated at {{date}}',
       },
       expertNotes: {
-        placeholder: 'Write your analysis notes hereâ€¦',
+        placeholder: 'Write your analysis notes here…',
         draft: 'Draft',
         final: 'Final',
         save: 'Save note',
@@ -1014,16 +1014,16 @@ const en = {
         'React pages shipped with this UI. They are not loaded from the plugin-executor service.',
       executorTitle: 'Plugin executor catalog',
       executorHint:
-        'Tools advertised by the local executor (HTTP) or a static fallback list â€” often Python processors on disk.',
+        'Tools advertised by the local executor (HTTP) or a static fallback list — often Python processors on disk.',
       splitExplainerTitle: 'How this page is split',
       splitExplainerIntro:
-        'â€œExternalâ€ here means outside the gateway tool registry tab â€” not â€œno serverâ€. The two blocks differ by where the tool runs and how it is discovered:',
+        '“External” here means outside the gateway tool registry tab — not “no server”. The two blocks differ by where the tool runs and how it is discovered:',
       splitBulletFrontend:
         'In-app tools: UI and orchestration live in Next.js; they may still call the API gateway (e.g. :8000) for data.',
       splitBulletExecutor:
         'Executor catalog: discovered via the executor URL (e.g. :8100) or fallback metadata; execution is not the same path as POST /tools/{id}/execute.',
       splitBulletInternal:
-        'Gateway-registered tools are listed under Internal Plugins â€” that list comes from GET /tools on the API gateway.',
+        'Gateway-registered tools are listed under Internal Plugins — that list comes from GET /tools on the API gateway.',
     },
     frontendCatalog: {
       categories: {
@@ -1042,7 +1042,7 @@ const en = {
         },
         offline_map: {
           name: 'Offline map',
-          description: 'Vector map with PMTiles â€” works without external tile servers when data is available.',
+          description: 'Vector map with PMTiles — works without external tile servers when data is available.',
           cap0: 'Offline tiles',
           cap1: 'Theme & layers',
           cap2: 'Export & capture',
@@ -1162,7 +1162,7 @@ const en = {
       utilization: 'GPU Utilization',
     },
     disclaimerToolRunner:
-      'This page shows tool-runner VRAM cache on the gateway â€” not inference GPU on remote nodes.',
+      'This page shows tool-runner VRAM cache on the gateway — not inference GPU on remote nodes.',
     linkNodes: 'GPU Nodes & Deploy',
     linkPipeline: 'Pipeline Admin',
   },
@@ -1235,7 +1235,7 @@ const en = {
       analytics: 'Analytics',
       resources: 'Resources',
       calendarBridge: 'Calendar view links tasks with due dates to Event Calendar (mock bridge).',
-      timelineComing: 'Timeline / Gantt view â€” phase 3 roadmap.',
+      timelineComing: 'Timeline / Gantt view — phase 3 roadmap.',
     },
     archive: {
       title: 'Archived projects',
@@ -1283,9 +1283,9 @@ const en = {
       customFields: 'Custom fields',
       subtasks: 'Subtasks',
       dependencies: 'Dependencies',
-      ermineLinks: 'ERMINE links',
+      ermineLinks: 'Holand links',
       comments: 'Comments',
-      addComment: 'Add a commentâ€¦',
+      addComment: 'Add a comment…',
     },
     status: {
       backlog: 'Backlog',
@@ -1301,11 +1301,11 @@ const en = {
     },
     automations: {
       title: 'Automations',
-      presetImport: 'When case import completes â†’ create milestone tasks',
-      presetOverdue: 'When task overdue â†’ notify in Messages',
-      presetAssign: 'When task assigned â†’ inbox notification',
+      presetImport: 'When case import completes → create milestone tasks',
+      presetOverdue: 'When task overdue → notify in Messages',
+      presetAssign: 'When task assigned → inbox notification',
       executionLog: 'Execution log (mock)',
-      noRuns: 'No automation runs yet â€” assign a task in mock mode to trigger preset.',
+      noRuns: 'No automation runs yet — assign a task in mock mode to trigger preset.',
     },
     table: {
       title: 'Title',
@@ -1333,17 +1333,17 @@ const en = {
   // ==========================================
   messages: {
     title: 'Messages',
-    description: 'Internal messaging â€” email and conversations in one place',
+    description: 'Internal messaging — email and conversations in one place',
     mailbox: 'Mailbox',
     people: 'People',
     lens: {
       mailbox: {
-        description: 'Email-style inbox â€” folders, subjects, and formal threads',
+        description: 'Email-style inbox — folders, subjects, and formal threads',
       },
       people: {
-        description: 'Chat-style conversations â€” people-first, quick replies',
-        typing: 'typingâ€¦',
-        typingWithName: '{{name}} is typingâ€¦',
+        description: 'Chat-style conversations — people-first, quick replies',
+        typing: 'typing…',
+        typingWithName: '{{name}} is typing…',
         selectConversation: 'Select a conversation',
         selectHint: 'Pick a person from the list or start a new chat',
         newChat: 'New chat',
@@ -1353,7 +1353,7 @@ const en = {
         newGroupChatHint: 'Select 2 or more users to create a group conversation',
         startGroupChat: 'Create group',
         groupDefaultSubject: 'Group chat',
-        searchUsersPlaceholder: 'Search people by name or emailâ€¦',
+        searchUsersPlaceholder: 'Search people by name or email…',
         draftHint: 'Send your first message to start this conversation',
         newConversation: 'New conversation',
         presence: {
@@ -1365,13 +1365,13 @@ const en = {
       },
     },
     shortcuts: {
-      hint: 'Shortcuts: c compose Â· r reply Â· a archive Â· j/k navigate Â· Esc back',
+      hint: 'Shortcuts: c compose · r reply · a archive · j/k navigate · Esc back',
     },
     bugReport: {
       reportBug: 'Report bug',
       startRecording: 'Start recording session',
       stopRecording: 'Stop and compose report',
-      recording: 'Recordingâ€¦',
+      recording: 'Recording…',
       captureScreenshot: 'Capture screenshot',
       composerTitle: 'Bug report to dev team',
       composerHint: 'Session replay, screenshots, console logs, and network calls are attached automatically.',
@@ -1384,7 +1384,7 @@ const en = {
         critical: 'Critical',
       },
       description: 'What happened?',
-      descriptionPlaceholder: 'Describe the bug, steps to reproduce, and expected behaviorâ€¦',
+      descriptionPlaceholder: 'Describe the bug, steps to reproduce, and expected behavior…',
       noDescription: '(no description provided)',
       errorNoDescription: 'Please describe the bug before sending.',
       url: 'Page URL',
@@ -1400,7 +1400,7 @@ const en = {
       replayNoBaseline:
         'Replay data is incomplete (missing page snapshot). Record again after interacting with the page.',
       replayLoadFailed: 'Failed to load session replay player.',
-      replayStats: '{{playable}} playable / {{total}} total events Â· {{snapshots}} snapshot(s)',
+      replayStats: '{{playable}} playable / {{total}} total events · {{snapshots}} snapshot(s)',
       replayPlay: 'Play replay',
       replayPause: 'Pause replay',
       replayTimeline: 'Replay timeline',
@@ -1408,14 +1408,14 @@ const en = {
       timeline: {
         empty: 'No user actions captured during this session.',
         click: 'Click: {{target}}',
-        api: '{{method}} {{endpoint}} â†’ {{status}}',
+        api: '{{method}} {{endpoint}} → {{status}}',
         error: 'Error: {{message}}',
-        navigation: 'Navigate: {{from}} â†’ {{to}}',
+        navigation: 'Navigate: {{from}} → {{to}}',
         state: '{{component}}: {{change}}',
         addNote: 'Add note',
         deleteAction: 'Remove',
-        notePlaceholder: 'Add a noteâ€¦',
-        note: 'ðŸ“ {{text}}',
+        notePlaceholder: 'Add a note…',
+        note: '📝 {{text}}',
       },
       sessionJson: 'Full session payload (JSON)',
       sendToTeam: 'Send to dev team',
@@ -1425,8 +1425,8 @@ const en = {
       channelEmail: 'Email (Recommended)',
       channelChat: 'Chat Message',
       recipientLabel: 'Send to',
-      recipientPlaceholder: 'Choose recipientâ€¦',
-      recipientLoading: 'Loading team membersâ€¦',
+      recipientPlaceholder: 'Choose recipient…',
+      recipientLoading: 'Loading team members…',
       recipientHint: 'Report will be sent to this team member inbox.',
       recipientRoleAdmin: 'Admin',
       recipientRoleSupport: 'Support',
@@ -1441,7 +1441,7 @@ const en = {
       uploadRetry: 'Upload failed. Retry?',
       capturing: 'Recording session...',
       captureActive: 'Bug reporter is active',
-      navigationTracked: 'Navigation: {{from}} â†’ {{to}}',
+      navigationTracked: 'Navigation: {{from}} → {{to}}',
       upload: {
         uploading: 'Uploading assets...',
         sending: 'Sending report...',
@@ -1460,7 +1460,7 @@ const en = {
         startRecording: 'Record video',
         stopRecording: 'Stop video',
         retake: 'Re-record',
-        recording: 'Recording in progressâ€¦',
+        recording: 'Recording in progress…',
         preview: 'Screen Recording',
         hint: 'This video will be included in your bug report',
         uploadVideo: 'Upload video file',
@@ -1468,7 +1468,7 @@ const en = {
         switchToWebcam: 'Switch to webcam',
       },
       systemLabel: 'System Report',
-      loadingSession: 'Loading session replayâ€¦',
+      loadingSession: 'Loading session replay…',
       replayTruncated:
         'Session replay data was truncated due to size limits. Action timeline and screenshots are still available.',
       viewCardBelow:
@@ -1543,15 +1543,15 @@ const en = {
     },
     mockDataBanner:
       'Preview mode: sample data from messages/mock/ (NEXT_PUBLIC_MESSAGES_MOCK=true). When backend is ready, delete the mock/ folder and remove MOCK_LAYER from messages.service.ts.',
-    syncing: 'Syncingâ€¦',
+    syncing: 'Syncing…',
     realtime: {
-      fallback: 'Realtime unavailable â€” using slower refresh',
+      fallback: 'Realtime unavailable — using slower refresh',
       polling: 'polling',
       connected: 'Live',
       retry: 'Retry realtime',
     },
     apiErrorStorage:
-      'Backend storage service failed (storage_500). user_mail and user_chat depend on storage â€” the backend team must fix storage and internal /mail/ and /user-chat/ paths.',
+      'Backend storage service failed (storage_500). user_mail and user_chat depend on storage — the backend team must fix storage and internal /mail/ and /user-chat/ paths.',
     apiErrorReplies:
       'plugin_user_chat_replies is not registered on tool-runner (404). Sync the plugin version with the gateway.',
     apiErrorPluginNotRegistered:
@@ -1569,9 +1569,9 @@ const en = {
     },
     commandPalette: {
       title: 'Messages commands',
-      search: 'Search commandsâ€¦',
+      search: 'Search commands…',
       empty: 'No matching commands',
-      hint: 'âŒ˜K',
+      hint: '⌘K',
     },
     entityPicker: {
       attach: 'Attach record',
@@ -1620,7 +1620,7 @@ const en = {
     },
     voice: {
       record: 'Record voice note',
-      recording: 'Recordingâ€¦',
+      recording: 'Recording…',
       tapToRecord: 'Tap to record',
       preview: 'Voice preview',
       send: 'Send voice note',
@@ -1630,10 +1630,10 @@ const en = {
       voice: 'Voice call',
       video: 'Video call',
       unknown: 'Unknown contact',
-      connecting: 'Connectingâ€¦',
+      connecting: 'Connecting…',
       localVideo: 'You',
       remoteVideo: 'Remote',
-      mockHint: 'Mock call UI â€” WebRTC signaling deferred to backend',
+      mockHint: 'Mock call UI — WebRTC signaling deferred to backend',
       mute: 'Mute',
       camera: 'Toggle camera',
       end: 'End call',
@@ -1645,21 +1645,21 @@ const en = {
     },
     compose: {
       purposeHint:
-        'Full email compose â€” new threads, subject lines, rich formatting, and drafts. For quick replies inside a conversation, use the inline composer in the thread view.',
+        'Full email compose — new threads, subject lines, rich formatting, and drafts. For quick replies inside a conversation, use the inline composer in the thread view.',
       title: 'New Message',
       from: 'From',
       to: 'To',
       subject: 'Subject',
-      bodyPlaceholder: 'Write your message hereâ€¦',
-      subjectPlaceholder: 'Add a subjectâ€¦',
-      recipientsPlaceholder: 'Recipient user ID â€” press Enter to add',
-      searchUsersPlaceholder: 'Search by name or emailâ€¦',
+      bodyPlaceholder: 'Write your message here…',
+      subjectPlaceholder: 'Add a subject…',
+      recipientsPlaceholder: 'Recipient user ID — press Enter to add',
+      searchUsersPlaceholder: 'Search by name or email…',
       noUsersFound: 'No users found',
       userSearchFailed: 'Could not search users',
       removeRecipient: 'Remove {{name}}',
-      ccPlaceholder: 'Search users for Ccâ€¦',
+      ccPlaceholder: 'Search users for Cc…',
       openFullEditor: 'Open in full editor',
-      bccPlaceholder: 'Search users for Bccâ€¦',
+      bccPlaceholder: 'Search users for Bcc…',
       priority: 'Priority',
       attachments: 'Attachments',
       send: 'Send',
@@ -1677,8 +1677,8 @@ const en = {
       backToList: 'Back to list',
       selectMessage: 'Select a message to read',
       noSubject: '(No subject)',
-      replyPlaceholder: 'Write a replyâ€¦',
-      sendHint: 'Enter to send Â· Shift+Enter for new line',
+      replyPlaceholder: 'Write a reply…',
+      sendHint: 'Enter to send · Shift+Enter for new line',
       emptyReply: 'Write something before sending.',
       waitUpload: 'Wait for attachments to finish uploading.',
       sent: 'Reply sent.',
@@ -1715,10 +1715,10 @@ const en = {
       subtitle:
         'Living checklist for plugin_user_mail + plugin_user_chat integration. Inspired by Gmail/Outlook inbox patterns and Slack/Teams chat UX. Update when APIs change.',
       sections: {
-        api: 'Plugin tools â€” FE wiring vs BE health',
+        api: 'Plugin tools — FE wiring vs BE health',
         contract: 'Response fields the UI depends on',
         blockers: 'Current blockers (fix first)',
-        roadmap: 'UX roadmap â€” industry patterns we can add next',
+        roadmap: 'UX roadmap — industry patterns we can add next',
       },
       cols: {
         tool: 'Tool / route',
@@ -1751,7 +1751,7 @@ const en = {
         get: { fe: 'Wired' },
         send: { fe: 'Wired' },
         reply: { fe: 'Wired' },
-        replies: { fe: 'Wired', note: '404 on tool-runner â€” chat timeline empty' },
+        replies: { fe: 'Wired', note: '404 on tool-runner — chat timeline empty' },
         search: { fe: 'Wired' },
         update: { fe: 'Wired' },
         delete: { fe: 'Wired' },
@@ -1776,11 +1776,11 @@ const en = {
         },
         recipient: {
           title: 'Recipient picker',
-          impact: 'Compose expects raw user UUID â€” poor UX',
+          impact: 'Compose expects raw user UUID — poor UX',
           fix: 'Expose directory search (reuse GET /admin/users or messenger recipients tool)',
         },
         cc: {
-          impact: 'Cc/Bcc wired in compose â€” backend must accept and return cc/bcc',
+          impact: 'Cc/Bcc wired in compose — backend must accept and return cc/bcc',
           fix: 'Extend send args: cc[], bcc[] on plugin_user_mail_send',
         },
       },
@@ -1789,7 +1789,7 @@ const en = {
           name: 'Realtime inbox (new mail badge)',
           note: 'Subscribe to channels from list/get responses',
         },
-        snooze: { name: 'Snooze / defer', note: 'Hide until datetime â€” Gmail/Outlook pattern' },
+        snooze: { name: 'Snooze / defer', note: 'Hide until datetime — Gmail/Outlook pattern' },
         star: { name: 'Star / flag important', note: '' },
         pin: { name: 'Pin to top of inbox', note: '' },
         mute: { name: 'Mute thread', note: '' },
@@ -1797,21 +1797,21 @@ const en = {
         forward: { name: 'Forward message', note: '' },
         peopleApi: {
           name: 'Conversations API (People view)',
-          note: 'Today grouped client-side from list â€” server-side partner summary preferred',
+          note: 'Today grouped client-side from list — server-side partner summary preferred',
         },
         reactions: { name: 'Message reactions', note: '' },
         readReceipts: { name: 'Read receipts per participant', note: '' },
         labels: { name: 'Labels / tags (multi-filter)', note: '' },
-        context: { name: 'Contact context panel', note: 'Cases, files, graph â€” reuse existing plugins' },
+        context: { name: 'Contact context panel', note: 'Cases, files, graph — reuse existing plugins' },
       },
     },
     devRequirements: {
       toggle: 'Backend integration checklist (dev)',
-      title: 'Messages â€” Backend API requirements',
+      title: 'Messages — Backend API requirements',
       subtitle:
-        'Mailbox (mail) + People (chat) lanes â€” expand gap rows for request/response samples',
+        'Mailbox (mail) + People (chat) lanes — expand gap rows for request/response samples',
       footer:
-        'Source: messages/config/messages-api-requirements.ts Â· backend-capability-gaps.ts Â· documents/backend-requests/v0.120.0_messages-api-catalog.md',
+        'Source: messages/config/messages-api-requirements.ts · backend-capability-gaps.ts · documents/backend-requests/v0.120.0_messages-api-catalog.md',
       resolved: 'Done',
       reProbe: 'Re-probe APIs',
       copy: 'Copy',
@@ -2148,14 +2148,14 @@ const en = {
   // ==========================================
   searchHub: {
     subtitle:
-      'One query across chats, cases, files, storage, and graph data â€” powered by the API gateway.',
+      'One query across chats, cases, files, storage, and graph data — powered by the API gateway.',
     previewBadge: 'UI preview',
-    previewNote: 'Sample data only â€” enable live APIs via check-and-run.ps1 One Search mode.',
+    previewNote: 'Sample data only — enable live APIs via check-and-run.ps1 One Search mode.',
     smartSearchBadge: 'One Search API',
     degradedSourcesTitle: 'Partially degraded sources',
     degradedSourcesHint:
       'Some semantic indexers are unavailable. Configure tool bindings at /admin/pipeline.',
-    omniboxPlaceholder: 'Try a name, case id, phrase, or transliterationâ€¦',
+    omniboxPlaceholder: 'Try a name, case id, phrase, or transliteration…',
     runSearch: 'Search',
     openAdvanced: 'Advanced & operators',
     backToSimple: 'Simple search',
@@ -2169,15 +2169,15 @@ const en = {
     },
     modesHint: 'Modes route through plugin_smart_search on the API gateway.',
     facetsTitle: 'Scope & filters',
-    facetsHint: 'Time range, case, group, MIME type, language â€” to be bound to facet APIs.',
+    facetsHint: 'Time range, case, group, MIME type, language — to be bound to facet APIs.',
     lanesTitle: 'Results by source',
     lanesHint: 'Use the tabs below: each tab shows the same hits in a layout tuned for that source (like Google categories).',
     tabAll: 'All',
     tabsHint:
-      'Switch tabs to change layout â€” merged list, chat thread, case table, file paths, storage tiles, people grid, graph edges.',
+      'Switch tabs to change layout — merged list, chat thread, case table, file paths, storage tiles, people grid, graph edges.',
     resultsCount: '{{count}} results',
     resultsInTab: 'About {{count}} sample hits (all tabs combined)',
-    loadMoreMock: 'More results (placeholder â€” wire pagination later)',
+    loadMoreMock: 'More results (placeholder — wire pagination later)',
     lanes: {
       all: 'All',
       chat: 'Chats & messages',
@@ -2188,13 +2188,13 @@ const en = {
       graph: 'Knowledge graph',
       projects_tasks: 'Projects & tasks',
     },
-    emptyLane: 'No hits yet â€” connect the search API for this lane.',
+    emptyLane: 'No hits yet — connect the search API for this lane.',
     dorkTitle: 'Structured query ideas',
     dorkBody:
-      'Examples: `type:chat Ø§Ø­Ù…Ø¯`, `case:* AND path:*report*`, `lang:fa OR lang:en`, `before:2026-05-01`. Final operator set is for the backend contract.',
+      'Examples: `type:chat احمد`, `case:* AND path:*report*`, `lang:fa OR lang:en`, `before:2026-05-01`. Final operator set is for the backend contract.',
     transliterationTitle: 'Names across scripts',
     transliterationBody:
-      'Same entity may appear as Ø§Ø­Ù…Ø¯ / ahmad / Ahmad. The UI will show script variants when the gateway returns alias facets.',
+      'Same entity may appear as احمد / ahmad / Ahmad. The UI will show script variants when the gateway returns alias facets.',
     colCase: 'Case',
     colCaseId: 'Case ID',
     colScore: 'Score',
@@ -2202,8 +2202,8 @@ const en = {
     mockSampleBadge: 'Mock sample',
     mockSampleExplain:
       'Results are generated only inside this page for UX testing. No other route imports this data. In production builds mock defaults off unless you set NEXT_PUBLIC_ONE_SEARCH_MOCK=true.',
-    mockSearching: 'Searching sample indexâ€¦',
-    mockEnterQuery: 'Submit a query (try Ø§Ø­Ù…Ø¯ or ahmad) to load the sample federated response.',
+    mockSearching: 'Searching sample index…',
+    mockEnterQuery: 'Submit a query (try احمد or ahmad) to load the sample federated response.',
     mockDisabled:
       'Mock is off (set NEXT_PUBLIC_ONE_SEARCH_MOCK=true to enable, or run in development). Connect the real gateway search API for live results.',
     topNavAria: 'Product shortcuts (preview)',
@@ -2215,17 +2215,17 @@ const en = {
     navFiles: 'Files',
     navGraph: 'Graph',
     navMore: 'More',
-    navStubHint: 'Not wired yet â€” navigation preview only.',
+    navStubHint: 'Not wired yet — navigation preview only.',
     brandAccent: 'One',
     brandRest: 'Search',
-    heroTagline: 'One search across your workspace â€” chats, cases, files, storage, people, and graph.',
+    heroTagline: 'One search across your workspace — chats, cases, files, storage, people, and graph.',
     clearQuery: 'Clear',
     voiceStub: 'Voice search (coming soon)',
     visualStub: 'Search by image (coming soon)',
     searchByImage: 'Search by image',
     visualSearchStarted: 'Visual search started',
     visualSearchFailed: 'Image search failed',
-    visualUploading: 'Uploading imageâ€¦',
+    visualUploading: 'Uploading image…',
     removeVisualSearch: 'Remove image search',
     insightsVisualKind: 'Visual search',
     insightsHybridKind: 'Hybrid search',
@@ -2234,7 +2234,7 @@ const en = {
     insightsTookMs: '{{ms}} ms',
     insightsNoVisualMatchTitle: 'Visual similarity unavailable',
     insightsNoVisualMatch:
-      'No visual matches were found. Results are based on file name and metadata â€” not image similarity.',
+      'No visual matches were found. Results are based on file name and metadata — not image similarity.',
     insightsAiSummary: 'Search summary',
     insightsQueryImage: 'Search by this image',
     matchTypeVisual: 'Visual match',
@@ -2249,14 +2249,14 @@ const en = {
       'The API gateway is rate-limiting requests. Wait a few seconds, then retry. Avoid switching tabs quickly or opening many parallel searches.',
     rateLimitedRetry: 'Retry search',
     advancedMinScoreHint:
-      'Maps to smart_search score_threshold (0.0â€“1.0). Changes are debounced before refetch.',
+      'Maps to smart_search score_threshold (0.0–1.0). Changes are debounced before refetch.',
     quickTry: 'Quick try',
-    sampleAhmad: 'Ø§Ø­Ù…Ø¯',
+    sampleAhmad: 'احمد',
     ctaImageSearch: 'Image search',
     ctaVoiceBundle: 'Voice bundle',
     heroFootnote: 'Multimodal routing and ranking will follow the gateway contract.',
     moreMenu: 'More options',
-    serpStats: 'About {{count}} results Â· {{ms}} ms',
+    serpStats: 'About {{count}} results · {{ms}} ms',
     refine0: 'Latest',
     refine1: 'This week',
     refine2: 'PDFs only',
@@ -2267,11 +2267,11 @@ const en = {
     related1: 'CASE-MOCK-4412 attachments',
     related2: 'storage artifact image/png',
     related3: 'knowledge graph Person',
-    related4: 'directory Ø§Ø­Ù…Ø¯',
+    related4: 'directory احمد',
     related5: 'file path report',
     resultMenu: 'Result options',
     noResults: 'No results found',
-    modeEmptyHint: 'Try another query or switch mode â€” currently viewing Â«{{mode}}Â».',
+    modeEmptyHint: 'Try another query or switch mode — currently viewing «{{mode}}».',
     advancedFiltersClientOnlyNote:
       'Dev note: advanced sidebar filters are applied client-side and sent in smart_search args; backend may ignore until server facets/sort ship.',
     source: 'Source',
@@ -2289,7 +2289,7 @@ const en = {
     statsMs: 'Milliseconds',
     aiPanelTitle: 'AI overview',
     aiQuestion: 'What is {{query}}?',
-    aiFooter: 'Auto summary for â€œ{{query}}â€',
+    aiFooter: 'Auto summary for “{{query}}”',
     aiSummaryPlaceholder: 'This is sample text that should come from the server.',
     imageStripCount: '{{shown}} of {{total}} images for this query',
     viewAllImages: 'All images',
@@ -2300,16 +2300,16 @@ const en = {
     realDataBadge: 'Live data',
     tempApiFootnote:
       'Legacy fallback: results merged from individual gateway plugins until POST /search/query ships.',
-    searching: 'Searchingâ€¦',
+    searching: 'Searching…',
     apiFootprint: {
       title: 'APIs used for this One Search query',
-      subtitle: 'Mode Â«{{mode}}Â» â€” live gateway calls via plugin_smart_search (+ file_manager supplement when needed).',
+      subtitle: 'Mode «{{mode}}» — live gateway calls via plugin_smart_search (+ file_manager supplement when needed).',
       provider: 'Provider: {{id}}',
       tookMs: '{{ms}} ms total',
       hasReal: 'Live gateway calls',
       hasMock: 'Includes mock lanes',
       searchKind: 'search_kind: {{kind}}',
-      smartSearchDegraded: 'smart_search failed â€” legacy fallback',
+      smartSearchDegraded: 'smart_search failed — legacy fallback',
       fallbackUsed: 'Temp-federated fallback used',
       rateLimited: 'Rate limited (429)',
       callCount: '{{count}} gateway calls',
@@ -2369,19 +2369,19 @@ const en = {
         colPriority: 'Priority',
         colAcceptance: 'Acceptance criteria',
         priority: {
-          P0: 'P0 â€” blocker',
-          P1: 'P1 â€” soon',
-          P2: 'P2 â€” later',
+          P0: 'P0 — blocker',
+          P1: 'P1 — soon',
+          P2: 'P2 — later',
         },
         resolved: 'Resolved',
       },
     },
     devRequirements: {
       toggle: 'Backend integration checklist (dev)',
-      title: 'One Search â€” Backend API requirements',
-      subtitle: 'Mode Â«{{mode}}Â» â€” APIs and capability gaps for this tab',
+      title: 'One Search — Backend API requirements',
+      subtitle: 'Mode «{{mode}}» — APIs and capability gaps for this tab',
       footer:
-        'Source: search-api-requirements.ts Â· backend-capability-gaps.ts Â· docs/backend-integration/03-frontend-pages/one-search-endpoint-guide.md',
+        'Source: search-api-requirements.ts · backend-capability-gaps.ts · docs/backend-integration/03-frontend-pages/one-search-endpoint-guide.md',
       resolved: 'Resolved',
       copy: 'Copy',
       tabApis: 'APIs in use',
@@ -2437,11 +2437,11 @@ const en = {
       },
     },
     surfaceGuide: {
-      title: 'Endpoints for Â«{{mode}}Â» surface',
-      subtitle: 'APIs used on this tab â€” live vs workaround vs missing.',
+      title: 'Endpoints for «{{mode}}» surface',
+      subtitle: 'APIs used on this tab — live vs workaround vs missing.',
       expand: 'Show endpoints',
       collapse: 'Hide endpoints',
-      compactLine: '{{live}} live Â· {{resolved}} resolved Â· {{workaround}} workaround Â· {{binding}} binding Â· {{missing}} missing',
+      compactLine: '{{live}} live · {{resolved}} resolved · {{workaround}} workaround · {{binding}} binding · {{missing}} missing',
       status: {
         live: 'Live',
         resolved: 'Resolved',
@@ -2458,7 +2458,7 @@ const en = {
         userIdForwarding: 'args.user_id forwarded to cases/users for RBAC',
         queryImageEcho: 'data.metadata.query_image echo for UI crop preview',
         textModeTranscripts: 'mode=text merges AV transcript hits into files lane',
-        clipBinding: 'SigLIP textâ†’image â€” needs embed_imagetext binding (optional)',
+        clipBinding: 'SigLIP text→image — needs embed_imagetext binding (optional)',
         relatedSearches: 'Related searches panel needs server suggestions',
         serverFacets: 'args.filters/sort/pagination honored server-side (basic)',
         smartSearchText: 'Text lane via smart_search mode=text',
@@ -2469,13 +2469,13 @@ const en = {
         tempUpload: 'Target TTL upload without catalog pollution',
         smartSearchVideo: 'Video lane routing',
         smartSearchAudio: 'Audio lane routing',
-        audioPlaybackJwt: 'JWT blob fetch â†’ blob: URL for WaveSurfer (blob-first)',
+        audioPlaybackJwt: 'JWT blob fetch → blob: URL for WaveSurfer (blob-first)',
         audioPresignedFallback: 'Presigned MinIO URL when blob fetch fails (may fail CORS)',
-        audioClientSort: 'Legacy note â€” toolbar refetches with args.sort',
-        mediaServerRefetch: 'Toolbar patch refetched via buildSmartSearchArgs â€” BE honors',
+        audioClientSort: 'Legacy note — toolbar refetches with args.sort',
+        mediaServerRefetch: 'Toolbar patch refetched via buildSmartSearchArgs — BE honors',
         audioHitMetadata: 'Duration + transcript_match timestamps in hit meta',
-        transcriptGet: 'TranscriptPanel full segments â€” GET /storage/files/{id}/transcript',
-        waveformPeaks: 'Precomputed mini waveform â€” GET .../waveform-peaks (useWaveformPeaks)',
+        transcriptGet: 'TranscriptPanel full segments — GET /storage/files/{id}/transcript',
+        waveformPeaks: 'Precomputed mini waveform — GET .../waveform-peaks (useWaveformPeaks)',
         videoPlaybackBlobFallback: 'Blob fallback when presigned stream unavailable',
         transcriptIndex: 'Transcript search needs text_search binding + index',
         mediaStream: 'Presigned URLs for playback',
@@ -2528,7 +2528,7 @@ const en = {
     },
     filterLanguages: 'Content language',
     filterMinScore: 'Minimum score',
-    filterMinScoreHint: '0â€“1 â€” to be wired to the API',
+    filterMinScoreHint: '0–1 — to be wired to the API',
     paaSubtitle: '{{count}} related questions',
     relatedSearchesSubtitle: '{{count}} suggested queries',
     sidebarLanes: 'Result sources',
@@ -2549,7 +2549,7 @@ const en = {
     imageToolbar: {
       resultCount: '{{shown}} of {{total}} images',
       filtersTitle: 'Filters',
-      minSimilarity: 'Min similarity (0â€“1)',
+      minSimilarity: 'Min similarity (0–1)',
       minSize: 'Min size (KB)',
       maxSize: 'Max size (KB)',
       formatFilter: 'Format',
@@ -2580,9 +2580,9 @@ const en = {
       hint: {
         filename: 'Matched because the query appears in the file name or path.',
         transcript:
-          'Matched inside the spoken transcript â€” click the snippet to jump to that moment.',
+          'Matched inside the spoken transcript — click the snippet to jump to that moment.',
         metadata:
-          'Matched in file metadata (path, tags, case fields, etc.) â€” not the filename or transcript.',
+          'Matched in file metadata (path, tags, case fields, etc.) — not the filename or transcript.',
       },
     },
     mediaPagination: {
@@ -2591,7 +2591,7 @@ const en = {
     },
     mediaDegraded: {
       filenameOnly:
-        'Transcript search and rich metadata are not available from the server yet â€” results may be filename-only. Client filters still apply.',
+        'Transcript search and rich metadata are not available from the server yet — results may be filename-only. Client filters still apply.',
     },
     transcriptPanel: {
       title: 'Transcript',
@@ -2603,8 +2603,8 @@ const en = {
     },
     voiceSearch: {
       start: 'Voice search',
-      recording: 'Recordingâ€¦ click to stop',
-      transcribing: 'Transcribingâ€¦',
+      recording: 'Recording… click to stop',
+      transcribing: 'Transcribing…',
       browserFallback: 'Using browser speech recognition (POST /search/stt unavailable)',
       error: 'Voice search failed',
     },
@@ -2766,8 +2766,8 @@ const en = {
       permissionHeader: 'Permission',
       accessDeniedMessage:
         'You do not have permission to view the permissions matrix. This feature requires admin-level access.',
-      endpoint403: 'GET /admin/group-rbac/permissions/matrix â†’ HTTP 403 Forbidden',
-      endpoint404: 'GET /admin/group-rbac/permissions/matrix â†’ HTTP 404 Not Found',
+      endpoint403: 'GET /admin/group-rbac/permissions/matrix → HTTP 403 Forbidden',
+      endpoint404: 'GET /admin/group-rbac/permissions/matrix → HTTP 404 Not Found',
       endpoint404Hint:
         'The permissions matrix endpoint has not been implemented yet or is not routed through the API Gateway.',
     },
@@ -2832,7 +2832,7 @@ const en = {
         'You do not have permission to view the role hierarchy. This feature requires the super-admin role.',
       accessDeniedHint:
         'If you were recently granted super-admin access, sign out and sign in again so your token is refreshed.',
-      endpointLabel: 'GET /admin/rbac/roles/hierarchy â†’ HTTP 403 Forbidden',
+      endpointLabel: 'GET /admin/rbac/roles/hierarchy → HTTP 403 Forbidden',
       sessionRolesLabel: 'Your session roles: {{roles}}',
       tokenRolesLabel: 'Roles reported by API: {{roles}}',
     },
@@ -2891,7 +2891,7 @@ const en = {
       deleteError: 'Failed to delete rate limit',
       roleHeader: 'Role',
       burstLimit: 'Burst Limit',
-      editingMode: 'â€” Editing mode',
+      editingMode: '— Editing mode',
     },
     customRoles: {
       title: 'Custom Roles',
@@ -2935,9 +2935,9 @@ const en = {
       accessDeniedMessage:
         'You do not have permission to view {{view}} events. This feature requires elevated access rights.',
       accessDeniedHint: 'Contact your administrator to request access to the audit log.',
-      endpoint403Admin: 'GET /admin/events/admin â†’ HTTP 403 Forbidden',
-      endpoint403User: 'GET /admin/events/user â†’ HTTP 403 Forbidden',
-      endpoint404: 'GET /admin/events/{{view}} â†’ HTTP 404 Not Found',
+      endpoint403Admin: 'GET /admin/events/admin → HTTP 403 Forbidden',
+      endpoint403User: 'GET /admin/events/user → HTTP 403 Forbidden',
+      endpoint404: 'GET /admin/events/{{view}} → HTTP 404 Not Found',
       hideFilters: 'Hide Filters',
       showFilters: 'Show Filters',
       all: 'All',
@@ -2975,7 +2975,7 @@ const en = {
       resetDefaults: 'Reset to Defaults',
       resetDesc: 'Restore all RBAC settings to factory defaults. This cannot be undone.',
       resetConfirm: 'Are you sure you want to reset all RBAC settings to defaults? This CANNOT be undone.',
-      invalidJson: 'Invalid JSON â€” please check the format and try again.',
+      invalidJson: 'Invalid JSON — please check the format and try again.',
       previewTitle: 'Exported Config Preview',
       exportSuccess: 'RBAC configuration exported',
       exportError: 'Failed to export configuration',
@@ -2999,13 +2999,13 @@ const en = {
     saveSystemSuccess: 'System settings saved',
     saveSystemError: 'Failed to save system settings',
     llmConfig: 'LLM Configuration',
-    llmConfigDesc: 'AI model settings â€” default model, temperature, max tokens',
+    llmConfigDesc: 'AI model settings — default model, temperature, max tokens',
     saveLlm: 'Save LLM Settings',
     saveLlmSuccess: 'LLM settings saved',
     saveLlmError: 'Failed to save LLM settings',
     retry: 'Retry',
     defaultModel: 'Default Model',
-    defaultModelLegacyHint: 'Legacy app default â€” prefer chat.default route in Pipeline Admin.',
+    defaultModelLegacyHint: 'Legacy app default — prefer chat.default route in Pipeline Admin.',
     manageRoutesInstead: 'Manage routes in Pipeline Admin instead',
     temperature: 'Temperature',
     temperatureMin: '0 (Deterministic)',
@@ -3019,7 +3019,7 @@ const en = {
       enabled: 'Enable bug reports',
       enabledHint: 'Show the bug reporter in the header help menu',
       recipient: 'Support recipient',
-      recipientPlaceholder: 'Search users by name or emailâ€¦',
+      recipientPlaceholder: 'Search users by name or email…',
       defaultChannel: 'Default delivery channel',
       save: 'Save Bug Report Settings',
       saveSuccess: 'Bug report settings saved',
@@ -3079,7 +3079,7 @@ const en = {
       avatarUrlPlaceholder: '/logo.png',
       avatarBuilder: 'Avatar Builder',
       avatarBuilderDesc:
-        'Build your profile avatar locally with DiceBear â€” no internet required. Pick a style and customize every detail.',
+        'Build your profile avatar locally with DiceBear — no internet required. Pick a style and customize every detail.',
       rolesAndAccess: 'Roles & Access',
       rolesDesc: 'Roles and access levels are managed by the system administrator.',
       systemRoles: 'System Roles',
@@ -3090,7 +3090,7 @@ const en = {
       saveError: 'Failed to update profile',
       loadError: 'Failed to load profile',
       avatarSaveBackendError:
-        'Could not save avatar â€” backend must accept dicebear: config in avatar_url (REQ-AVATAR-001). See dev panel or backend-requests/AVATAR_BUILDER_BACKEND_REQUIREMENTS.md.',
+        'Could not save avatar — backend must accept dicebear: config in avatar_url (REQ-AVATAR-001). See dev panel or backend-requests/AVATAR_BUILDER_BACKEND_REQUIREMENTS.md.',
       user: 'User',
       usernameHelper: 'Username cannot be changed',
       avatarBackendNote: 'Customize your avatar below, then click Save to apply it across the app.',
@@ -3125,15 +3125,15 @@ const en = {
       randomOption: 'Random',
       seedPlaceholder: 'Seed (unique identifier)',
       previewAlt: 'Avatar preview',
-      localHint: 'Generated fully offline on your device â€” no external API calls.',
+      localHint: 'Generated fully offline on your device — no external API calls.',
       rangeStart: 'Start',
       rangeEnd: 'End',
       changeStyle: 'Change Style',
       changeStyleDesc: 'Pick from 31 avatar styles. All generated locally.',
-      searchStyle: 'Search stylesâ€¦',
+      searchStyle: 'Search styles…',
       noStyleResults: 'No styles match your search.',
       currentStyle: 'Current style',
-      useChangeStyle: 'Use â€œChange Styleâ€ above to switch avatar style.',
+      useChangeStyle: 'Use “Change Style” above to switch avatar style.',
       emptyTab: 'No options in this category for the selected style.',
       selectedOption: 'Selected: {{value}}',
       seedLabel: 'Seed',
@@ -3151,11 +3151,11 @@ const en = {
     },
     devRequirements: {
       toggle: 'Backend integration checklist (dev)',
-      title: 'Profile settings â€” Backend API requirements',
+      title: 'Profile settings — Backend API requirements',
       subtitle:
-        'Contract handoff for auth/gateway team â€” REQ-AVATAR-001 blocks avatar save today',
+        'Contract handoff for auth/gateway team — REQ-AVATAR-001 blocks avatar save today',
       footer:
-        'Full spec: documents/backend-requests/AVATAR_BUILDER_BACKEND_REQUIREMENTS.md Â· config: account-settings/config/profile-backend-capability-gaps.ts',
+        'Full spec: documents/backend-requests/AVATAR_BUILDER_BACKEND_REQUIREMENTS.md · config: account-settings/config/profile-backend-capability-gaps.ts',
       resolved: 'Resolved',
       liveApisTitle: 'APIs in use',
       liveApis: {
@@ -3182,7 +3182,7 @@ const en = {
       gaps: {
         'avatar-dicebear-url': {
           capability: 'Persist dicebear: avatar_url (REQ-AVATAR-001)',
-          acceptance: 'PATCH dicebear string â†’ 200; GET /auth/me returns same value',
+          acceptance: 'PATCH dicebear string → 200; GET /auth/me returns same value',
         },
         'avatar-url-text-column': {
           capability: 'DB column supports long avatar_url strings',
@@ -3308,7 +3308,7 @@ const en = {
     },
     errors: {
       insufficientPermissionsSuperAdmin: 'Not enough permissions (super-admin required)',
-      validationPasswordError: 'Validation error â€” check password requirements',
+      validationPasswordError: 'Validation error — check password requirements',
       insufficientPermissions: 'Not enough permissions',
     },
   },
@@ -3329,7 +3329,7 @@ const en = {
     viewAllUsers: 'View All Users',
     deleteRole: 'Delete Role',
     systemRole: 'System Role',
-    systemRoleCannotModify: 'System role â€” cannot modify',
+    systemRoleCannotModify: 'System role — cannot modify',
     editRole: 'Edit Role',
     totalUsers_one: 'Total {{count}} user',
     totalUsers_other: 'Total {{count}} users',
@@ -3361,8 +3361,8 @@ const en = {
     deleteError: 'Failed to delete group',
     backendNotAvailableTitle: 'Backend Not Available',
     backendNotAvailableMessage:
-      'The Group RBAC service is not available. The API endpoint exists in the OpenAPI spec but is returning 404 â€” the group-rbac microservice may not be running.',
-    endpoint404: 'GET /admin/group-rbac/groups â†’ HTTP 404 Not Found',
+      'The Group RBAC service is not available. The API endpoint exists in the OpenAPI spec but is returning 404 — the group-rbac microservice may not be running.',
+    endpoint404: 'GET /admin/group-rbac/groups → HTTP 404 Not Found',
     retry: 'Retry',
   },
 
@@ -3494,7 +3494,7 @@ const en = {
       statusPendingApproval: 'Pending',
       statusPlaceholder: 'Filter by status',
       rolePlaceholder: 'Filter by Role',
-      searchPlaceholder: 'Search by ID, username, email, roleâ€¦',
+      searchPlaceholder: 'Search by ID, username, email, role…',
       clearButton: 'Clear',
       refreshTooltip: 'Refresh users list',
     },
@@ -3535,8 +3535,8 @@ const en = {
       updateSuccess: 'User "{{username}}" updated',
       updateSuccessFull: 'User "{{username}}" updated successfully',
       updateError: 'Failed to update user',
-      forbiddenError: 'Not enough permissions â€” super-admin access required',
-      unauthorizedError: 'Session expired â€” please sign in again',
+      forbiddenError: 'Not enough permissions — super-admin access required',
+      unauthorizedError: 'Session expired — please sign in again',
     },
     validation: {
       invalidEmail: 'Invalid email',
@@ -3632,7 +3632,7 @@ const en = {
   // ==========================================
   editRoleForm: {
     title: 'Edit Role Permissions',
-    titleWithRole: 'Edit Permissions â€” {{name}}',
+    titleWithRole: 'Edit Permissions — {{name}}',
     systemBadge: 'System',
     loadError: 'Failed to load permissions',
     matrixLoadError: 'Failed to load permissions matrix',
@@ -3685,8 +3685,8 @@ const en = {
     allSpaces: 'All Workspaces',
     workspaceLabel: 'Workspace',
     selectActive: 'Select active workspace',
-    loading: 'Loading workspacesâ€¦',
-    noWorkspacesYet: 'No workspaces yet â€” create one below',
+    loading: 'Loading workspaces…',
+    noWorkspacesYet: 'No workspaces yet — create one below',
     activeLabel: 'Active workspace',
     create: 'Create workspace',
     createSubtitle: 'Set up a new team workspace for cases, files, and modules.',
@@ -3742,7 +3742,7 @@ const en = {
     },
     members: {
       searchUser: 'Search user',
-      searchPlaceholder: 'Username or emailâ€¦',
+      searchPlaceholder: 'Username or email…',
       selectFromResults: 'Pick a user from the search results above',
       addDirect: 'Add member',
       empty: 'No members yet',
@@ -3794,7 +3794,7 @@ const en = {
       action: 'Leave workspace',
       success: 'You left the workspace',
       error: 'Could not leave workspace',
-      checking: 'Checking workspace membershipâ€¦',
+      checking: 'Checking workspace membership…',
       soleAdminTitle: "You're the only admin here",
       soleAdminHint:
         'Promote another member to admin (People tab) before leaving, so this workspace is not left without an admin.',
@@ -3832,7 +3832,7 @@ const en = {
       preview: 'Preview',
       saveTeam: 'Save team layout',
       saveMyShortcuts: 'Save my shortcuts',
-      shortcutsHint: 'Personal pins and hidden items â€” only affects your sidebar',
+      shortcutsHint: 'Personal pins and hidden items — only affects your sidebar',
       teamSaved: 'Team navigation saved',
       userSaved: 'Personal shortcuts saved',
       saveError: 'Failed to save navigation',
@@ -3846,7 +3846,7 @@ const en = {
       workspaceMembers: 'Members',
       tabTeam: 'Team layout',
       tabShortcuts: 'My shortcuts',
-      searchItems: 'Search menu itemsâ€¦',
+      searchItems: 'Search menu items…',
     },
     hub: {
       title: 'Workspace hub',
@@ -3921,16 +3921,16 @@ const en = {
     },
     scopeBanner: {
       allWorkspaces:
-        'All workspaces mode â€” select a workspace to scope cases, files, and chat.',
+        'All workspaces mode — select a workspace to scope cases, files, and chat.',
       active: 'Scoped to workspace: {{name}}',
     },
     pickers: {
       module: 'Module',
-      modulePlaceholder: 'Select a permission moduleâ€¦',
+      modulePlaceholder: 'Select a permission module…',
       case: 'Case',
-      casePlaceholder: 'Search casesâ€¦',
+      casePlaceholder: 'Search cases…',
       file: 'File',
-      filePlaceholder: 'Search filesâ€¦',
+      filePlaceholder: 'Search files…',
       selectedId: 'Selected ID: {{id}}',
     },
     devRequirements: {
@@ -4085,9 +4085,9 @@ const en = {
       passwordRules: {
         title: 'Password must include (minimum {{min}} characters):',
         minLength: 'At least {{min}} characters',
-        uppercase: 'At least one uppercase letter (Aâ€“Z)',
-        lowercase: 'At least one lowercase letter (aâ€“z)',
-        numeric: 'At least one number (0â€“9)',
+        uppercase: 'At least one uppercase letter (A–Z)',
+        lowercase: 'At least one lowercase letter (a–z)',
+        numeric: 'At least one number (0–9)',
       },
       validation: {
         usernameMinLength: 'Username must be at least 3 characters',
@@ -4142,7 +4142,7 @@ const en = {
       tooltip: 'Switch to {{language}}',
     },
     footer: {
-      copyright: 'Â© Copyright 2026. By SGAi, all rights reserved.',
+      copyright: '� Copyright 2026. Holand Platform. All rights reserved.',
       navLabel: 'Legal and help links',
       help: 'Help',
       privacy: 'Privacy',
@@ -4151,7 +4151,7 @@ const en = {
   },
 
   // ==========================================
-  // Legal â€” Terms & Privacy
+  // Legal — Terms & Privacy
   // ==========================================
   legal: {
     breadcrumbLabel: 'Breadcrumb',
@@ -4167,17 +4167,17 @@ const en = {
       title: 'Terms of Service',
       lastUpdated: 'Last updated: July 4, 2026',
       intro:
-        'These Terms of Service ("Terms") govern your access to and use of the SGAi platform and related services. By creating an account or using the service, you agree to these Terms. If you do not agree, do not use the service.',
+        'These Terms of Service ("Terms") govern your access to and use of the Holand Platform platform and related services. By creating an account or using the service, you agree to these Terms. If you do not agree, do not use the service.',
       sections: {
         acceptance: {
           title: '1. Acceptance of Terms',
           body:
-            'By registering, signing in, or otherwise using SGAi, you confirm that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. If you use the service on behalf of an organization, you represent that you have authority to bind that organization.',
+            'By registering, signing in, or otherwise using Holand Platform, you confirm that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. If you use the service on behalf of an organization, you represent that you have authority to bind that organization.',
         },
         service: {
           title: '2. Description of Service',
           body:
-            'SGAi provides an AI-assisted workspace for search, analysis, collaboration, and workflow automation. Features may include conversational AI, document processing, case management, and integrations with organization-managed infrastructure. We may add, modify, or discontinue features with reasonable notice where practicable.',
+            'Holand Platform provides an AI-assisted workspace for search, analysis, collaboration, and workflow automation. Features may include conversational AI, document processing, case management, and integrations with organization-managed infrastructure. We may add, modify, or discontinue features with reasonable notice where practicable.',
         },
         accounts: {
           title: '3. Accounts & Security',
@@ -4192,17 +4192,17 @@ const en = {
         dataAndContent: {
           title: '5. Your Data & Content',
           body:
-            'You retain ownership of content you submit ("User Content"). You grant SGAi a limited license to host, process, transmit, and display User Content solely to operate, secure, and improve the service as described in these Terms and our Privacy Policy. You represent that you have the rights necessary to submit User Content and that it does not violate third-party rights.',
+            'You retain ownership of content you submit ("User Content"). You grant Holand Platform a limited license to host, process, transmit, and display User Content solely to operate, secure, and improve the service as described in these Terms and our Privacy Policy. You represent that you have the rights necessary to submit User Content and that it does not violate third-party rights.',
         },
         modelImprovement: {
           title: '6. Service Improvement & Model Quality',
           body:
-            'To deliver reliable AI capabilities, SGAi may use interaction data and User Content in a controlled manner to maintain, evaluate, and improve models, prompts, retrieval systems, and platform quality. Such use is subject to technical and organizational safeguards designed to protect confidentiality, including access controls, encryption in transit and at rest where applicable, role-based permissions, and minimization of personally identifiable information in training or evaluation datasets.\n\nWhere feasible, we apply de-identification, aggregation, or organization-scoped isolation before use in model improvement workflows. Enterprise or regulated deployments may offer additional contractual controls. We do not sell your personal data. Details on collection, retention, and your choices are set out in the Privacy Policy.',
+            'To deliver reliable AI capabilities, Holand Platform may use interaction data and User Content in a controlled manner to maintain, evaluate, and improve models, prompts, retrieval systems, and platform quality. Such use is subject to technical and organizational safeguards designed to protect confidentiality, including access controls, encryption in transit and at rest where applicable, role-based permissions, and minimization of personally identifiable information in training or evaluation datasets.\n\nWhere feasible, we apply de-identification, aggregation, or organization-scoped isolation before use in model improvement workflows. Enterprise or regulated deployments may offer additional contractual controls. We do not sell your personal data. Details on collection, retention, and your choices are set out in the Privacy Policy.',
         },
         intellectualProperty: {
           title: '7. Intellectual Property',
           body:
-            'SGAi and its licensors own the platform, software, branding, and underlying technology. Except for the limited rights expressly granted, no license is transferred to you. AI-generated outputs may not be unique; similar outputs may be produced for other users. You are responsible for reviewing outputs before relying on them in professional, legal, or safety-critical contexts.',
+            'Holand Platform and its licensors own the platform, software, branding, and underlying technology. Except for the limited rights expressly granted, no license is transferred to you. AI-generated outputs may not be unique; similar outputs may be produced for other users. You are responsible for reviewing outputs before relying on them in professional, legal, or safety-critical contexts.',
         },
         availability: {
           title: '8. Availability & Changes',
@@ -4212,7 +4212,7 @@ const en = {
         liability: {
           title: '9. Disclaimers & Limitation of Liability',
           body:
-            'The service is provided "as is" and "as available" to the fullest extent permitted by law. AI outputs are informational and may be incomplete or inaccurate. SGAi disclaims warranties of merchantability, fitness for a particular purpose, and non-infringement. To the maximum extent permitted by law, SGAi is not liable for indirect, incidental, special, consequential, or punitive damages, or for loss of data, profits, or business arising from use of the service.',
+            'The service is provided "as is" and "as available" to the fullest extent permitted by law. AI outputs are informational and may be incomplete or inaccurate. Holand Platform disclaims warranties of merchantability, fitness for a particular purpose, and non-infringement. To the maximum extent permitted by law, Holand Platform is not liable for indirect, incidental, special, consequential, or punitive damages, or for loss of data, profits, or business arising from use of the service.',
         },
         changes: {
           title: '10. Termination',
@@ -4222,7 +4222,7 @@ const en = {
         contact: {
           title: '11. Contact',
           body:
-            'Questions about these Terms may be directed to your organization administrator or to SGAi support through the channels provided in your deployment.',
+            'Questions about these Terms may be directed to your organization administrator or to Holand Platform support through the channels provided in your deployment.',
         },
       },
     },
@@ -4230,7 +4230,7 @@ const en = {
       title: 'Privacy Policy',
       lastUpdated: 'Last updated: July 4, 2026',
       intro:
-        'This Privacy Policy explains how SGAi collects, uses, shares, and protects information when you use our platform. We design our practices to align with common standards for data-driven AI products while giving organizations configurable controls.',
+        'This Privacy Policy explains how Holand Platform collects, uses, shares, and protects information when you use our platform. We design our practices to align with common standards for data-driven AI products while giving organizations configurable controls.',
       sections: {
         collection: {
           title: '1. Information We Collect',
@@ -4245,7 +4245,7 @@ const en = {
         modelTraining: {
           title: '3. Model Training & Quality Improvement',
           body:
-            'SGAi may use prompts, outputs, feedback, and related technical metadata to evaluate and improve AI models, retrieval pipelines, safety filters, and product features. Processing for this purpose is performed with safeguards intended to preserve confidentiality and data integrity, including:\n\nâ€¢ Access limited to authorized personnel and systems\nâ€¢ Encryption and secure transport where applicable\nâ€¢ Organizational boundaries and permission models\nâ€¢ De-identification, redaction, or aggregation where appropriate\nâ€¢ Retention limits aligned with operational need\n\nWe do not use your content to train public third-party foundation models unless your organization explicitly opts in to such integrations. Regulated or enterprise tenants may receive enhanced isolation, data residency, or contractual data-processing terms.',
+            'Holand Platform may use prompts, outputs, feedback, and related technical metadata to evaluate and improve AI models, retrieval pipelines, safety filters, and product features. Processing for this purpose is performed with safeguards intended to preserve confidentiality and data integrity, including:\n\n• Access limited to authorized personnel and systems\n• Encryption and secure transport where applicable\n• Organizational boundaries and permission models\n• De-identification, redaction, or aggregation where appropriate\n• Retention limits aligned with operational need\n\nWe do not use your content to train public third-party foundation models unless your organization explicitly opts in to such integrations. Regulated or enterprise tenants may receive enhanced isolation, data residency, or contractual data-processing terms.',
         },
         retention: {
           title: '4. Data Retention',
@@ -4265,7 +4265,7 @@ const en = {
         rights: {
           title: '7. Your Rights & Choices',
           body:
-            'Depending on your jurisdiction and organization settings, you may have rights to access, correct, delete, restrict, or export personal data, and to object to certain processing. Contact your administrator or SGAi support to exercise these rights. Some requests may require identity verification.',
+            'Depending on your jurisdiction and organization settings, you may have rights to access, correct, delete, restrict, or export personal data, and to object to certain processing. Contact your administrator or Holand Platform support to exercise these rights. Some requests may require identity verification.',
         },
         transfers: {
           title: '8. International Transfers',
@@ -4285,7 +4285,7 @@ const en = {
         contact: {
           title: '11. Contact',
           body:
-            'For privacy inquiries, contact your organization administrator or SGAi support through the channels configured for your deployment.',
+            'For privacy inquiries, contact your organization administrator or Holand Platform support through the channels configured for your deployment.',
         },
       },
     },
@@ -4293,12 +4293,12 @@ const en = {
       title: 'Help Center',
       lastUpdated: 'Last updated: July 4, 2026',
       intro:
-        'Quick answers for signing in, creating an account, and getting started with SGAi. For organization-specific policies, contact your administrator.',
+        'Quick answers for signing in, creating an account, and getting started with Holand Platform. For organization-specific policies, contact your administrator.',
       sections: {
         gettingStarted: {
           title: 'Getting started',
           body:
-            'SGAi is an AI-assisted workspace for search, analysis, and team workflows. After sign-in you can access modules enabled by your organizationâ€”such as AI chat, case tools, and file explorerâ€”from the main navigation.',
+            'Holand Platform is an AI-assisted workspace for search, analysis, and team workflows. After sign-in you can access modules enabled by your organization—such as AI chat, case tools, and file explorer—from the main navigation.',
         },
         signIn: {
           title: 'Sign in',
@@ -4313,7 +4313,7 @@ const en = {
         forgotPassword: {
           title: 'Forgot password',
           body:
-            'Use Forgot Password, enter your registered email, and follow the reset link sent to your inbox. If you do not receive an email, check spam folders or contact your administratorâ€”self-service reset may be disabled in your organization.',
+            'Use Forgot Password, enter your registered email, and follow the reset link sent to your inbox. If you do not receive an email, check spam folders or contact your administrator—self-service reset may be disabled in your organization.',
         },
         language: {
           title: 'Language',
@@ -4375,14 +4375,14 @@ const en = {
   },
 
   commandPalette: {
-    searchTrigger: 'Search pages and contentâ€¦',
+    searchTrigger: 'Search pages and content…',
     tabs: {
       pages: 'Pages',
       oneSearch: 'One Search',
     },
-    placeholderPages: 'Jump to a page or actionâ€¦',
-    placeholderOneSearch: 'Search across cases, files, chatsâ€¦',
-    placeholderUnified: 'Search pages, actions, or contentâ€¦',
+    placeholderPages: 'Jump to a page or action…',
+    placeholderOneSearch: 'Search across cases, files, chats…',
+    placeholderUnified: 'Search pages, actions, or content…',
     quickActions: 'Quick actions',
     noResults: 'No results found',
     sections: {
@@ -4401,7 +4401,7 @@ const en = {
     },
     oneSearch: {
       searchEverything: 'Search everything',
-      searchEverythingWithQuery: 'Search everything for â€œ{{q}}â€',
+      searchEverythingWithQuery: 'Search everything for “{{q}}”',
       hint: 'Opens One Search (/one-search)',
       lanesTitle: 'Search in lane',
       laneAll: 'All content',
@@ -4437,7 +4437,7 @@ const en = {
     contextTitle: 'Page context',
     contextPath: 'Path',
     noteLabel: 'Note for the model',
-    notePlaceholder: 'Optional instructionsâ€¦',
+    notePlaceholder: 'Optional instructions…',
     previewPayload: 'Preview payload',
     hidePayload: 'Hide payload',
     previewHint: 'Merged into ChatRequest.context for POST /chat (non-streaming in this dock).',
@@ -4523,7 +4523,7 @@ const en = {
       },
     },
     showSidebar: 'Show sidebar',
-    loadingConversation: 'Loading conversationâ€¦',
+    loadingConversation: 'Loading conversation…',
     newChat: 'New chat',
     shareConversation: 'Share conversation',
     contentWidth: {
@@ -4541,7 +4541,7 @@ const en = {
     search: {
       title: 'Search conversations',
       shortcut: 'Search (Ctrl+K)',
-      placeholder: 'Search chats, messages & filesâ€¦',
+      placeholder: 'Search chats, messages & files…',
       noResults: 'No results found',
       expand: 'Expand search',
       expandedTitle: 'Search conversations',
@@ -4565,7 +4565,7 @@ const en = {
     },
     inThreadFind: {
       title: 'Find in conversation',
-      placeholder: 'Find in this chatâ€¦',
+      placeholder: 'Find in this chat…',
       count: '{{current}} of {{total}}',
       noMatches: 'No matches',
       prev: 'Previous match',
@@ -4601,7 +4601,7 @@ const en = {
       },
       download: 'Download backup',
       progress: 'Processing {{current}} / {{total}}: {{title}}',
-      zipping: 'Creating ZIPâ€¦',
+      zipping: 'Creating ZIP…',
       success: 'Backup downloaded',
       failed: 'Backup failed',
       cancelled: 'Backup cancelled',
@@ -4610,14 +4610,14 @@ const en = {
       action: 'Continue in new chat from here',
       success: 'New branch created',
       failed: 'Could not fork conversation',
-      pendingBackend: 'Fork requires backend API â€” see dev checklist',
+      pendingBackend: 'Fork requires backend API — see dev checklist',
     },
     sharedViewer: {
       title: 'Shared conversation',
-      loading: 'Loading shared conversationâ€¦',
+      loading: 'Loading shared conversation…',
       expired: 'This share link has expired or been revoked.',
       error: 'Could not load shared conversation.',
-      readOnlyBanner: 'Read-only shared view â€” you cannot send messages.',
+      readOnlyBanner: 'Read-only shared view — you cannot send messages.',
       readOnlyHint: 'You can view this conversation but cannot send messages.',
       messageCount: '{{count}} messages',
     },
@@ -4655,14 +4655,14 @@ const en = {
       format: 'Export format',
       sessionFilesGroup: 'Session files',
       packaging: 'File packaging',
-      assetInline: 'Embed in file (base64 â€” fully offline)',
+      assetInline: 'Embed in file (base64 — fully offline)',
       assetZip: 'ZIP bundle (files in a files/ folder, relative links)',
       assetNone: 'No session files',
       includeFiles: 'Include session files in the export',
       zipHint:
         'Downloads a single ZIP with the document plus a files/ folder. After extracting, every link and attachment opens offline.',
       inlineHint:
-        'All files are stored as base64 inside the document â€” one standalone, fully offline file (larger size).',
+        'All files are stored as base64 inside the document — one standalone, fully offline file (larger size).',
       content: 'Export content',
       includeMetadata: 'Metadata',
       includeThinking: 'Model thinking',
@@ -4670,18 +4670,18 @@ const en = {
       includeArtifacts: 'Message attachments',
       cancel: 'Cancel',
       download: 'Download export',
-      exporting: 'Preparingâ€¦',
+      exporting: 'Preparing…',
     },
     sessionFiles: 'Session Files',
     aiMemory: 'AI Memory',
     scrollToTop: 'Scroll to top',
     scrollToBottom: 'Scroll to bottom',
-    autoScrollPaused: 'Auto-scroll paused â€” click to resume',
+    autoScrollPaused: 'Auto-scroll paused — click to resume',
     selectModel: 'Select AI model',
     chatModelLabel: 'Chat model: {{model}}',
     chatModelHint:
       'Model from admin LLM route service.orchestrator.chat (/admin/llm/routes)',
-    chatModelSingleHint: 'Only one model is available â€” selection is managed by the platform.',
+    chatModelSingleHint: 'Only one model is available — selection is managed by the platform.',
     modelNotConfigured: 'Chat model not configured',
     collapseRightRail: 'Collapse files & memory panel',
     expandRightRail: 'Show files & memory panel',
@@ -4692,13 +4692,13 @@ const en = {
     referenceFloatRestore: 'Restore',
     referenceFloatClose: 'Close',
     referenceFloatResize: 'Resize panel',
-    generatingAnswer: 'Generating answerâ€¦',
+    generatingAnswer: 'Generating answer…',
     feedback: {
-      notPersisted: 'Feedback saved locally â€” backend API not available yet',
+      notPersisted: 'Feedback saved locally — backend API not available yet',
     },
     tools: {
       backendUnavailable: 'Tools catalog is not available on the gateway yet',
-      fallbackNotice: 'Sample tools shown â€” API not active',
+      fallbackNotice: 'Sample tools shown — API not active',
       fallback: {
         webSearch: { name: 'Web Search', description: 'Search the web for current information' },
         codeInterpreter: { name: 'Code Interpreter', description: 'Run Python code in a sandbox' },
@@ -4756,8 +4756,8 @@ const en = {
     },
     devRequirements: {
       toggle: 'Backend integration checklist (dev)',
-      title: 'AI Chat â€” Backend API requirements',
-      subtitle: 'Contract handoff for gateway team â€” expand rows for request/response samples',
+      title: 'AI Chat — Backend API requirements',
+      subtitle: 'Contract handoff for gateway team — expand rows for request/response samples',
       footer: 'Source: src/app/shared/ai-chat/config/backend-capability-gaps.ts',
       resolved: 'Resolved',
       reProbe: 'Re-probe APIs',
@@ -4953,7 +4953,7 @@ const en = {
     share: 'Share',
     delete: 'Delete',
     foldersHint:
-      'Organize chats in folders â€” public hub chats, page dock sessions, and your custom folders.',
+      'Organize chats in folders — public hub chats, page dock sessions, and your custom folders.',
     foldersTitle: 'Folders',
     folders: {
       systemPublic: 'Public',
@@ -4970,7 +4970,7 @@ const en = {
     newProject: 'New project',
     projectSettings: 'Project settings',
     projectNamePlaceholder: 'Project name',
-    projectRulesPlaceholder: 'System rules for this projectâ€¦',
+    projectRulesPlaceholder: 'System rules for this project…',
     projectKnowledgeHint: 'Knowledge file upload will use session artifacts when the API is ready.',
     allProjects: 'All projects',
     backupFolder: 'Backup folder',
@@ -5048,7 +5048,7 @@ const en = {
     deleted: '"{{filename}}" deleted',
     errorDelete: 'Failed to delete file',
     downloaded: '"{{filename}}" downloaded',
-    errorDownloadBackend: 'Download not available â€” backend file-serving endpoint not implemented',
+    errorDownloadBackend: 'Download not available — backend file-serving endpoint not implemented',
     ariaLabel: 'Session artifacts',
     title: 'Session Files',
     close: 'Close artifacts panel',
@@ -5090,7 +5090,7 @@ const en = {
     expiresOn: 'Expires on',
     readOnly: 'Link is read-only. Viewers cannot send messages.',
     regenerate: 'Generate new link with {{label}} expiry',
-    generating: 'Generating linkâ€¦',
+    generating: 'Generating link…',
     generate: 'Generate Share Link',
     errorGenerate: 'Failed to generate share link. Please try again.',
     successCopy: 'Link copied to clipboard',
@@ -5100,13 +5100,13 @@ const en = {
     expiry3d: '3 days',
     expiry1w: '1 week',
     expiry1m: '1 month',
-    searchUsersPlaceholder: 'Search by name or emailâ€¦',
+    searchUsersPlaceholder: 'Search by name or email…',
     noUsersFound: 'No users found',
     userSearchFailed: 'User search failed',
     shareWithUsers: 'Share with selected users',
-    sharing: 'Sharingâ€¦',
+    sharing: 'Sharing…',
     shareSuccess: 'Conversation shared with selected users',
-    shareFailed: 'Could not share â€” backend API not available yet',
+    shareFailed: 'Could not share — backend API not available yet',
     pendingBackend: 'User sharing requires backend APIs. See the developer checklist below.',
     openDevChecklist: 'Open backend checklist',
     currentRecipients: 'People with access',
@@ -5135,7 +5135,7 @@ const en = {
   // Tool Run Item
   // ==========================================
   toolRunItem: {
-    emptyValue: 'â€”',
+    emptyValue: '—',
     fieldsSuffix: 'field(s)',
     outputLabel: 'Output:',
     input: 'Input',
@@ -5166,7 +5166,7 @@ const en = {
     output: 'Output',
     toolsCount: 'Tools ({{count}})',
     toolInput: 'Input',
-    toolResult: 'Result â†’ LLM',
+    toolResult: 'Result → LLM',
     title: 'Agent Trace',
     stepSingular: 'step',
     stepPlural: 'steps',
@@ -5180,7 +5180,7 @@ const en = {
     viewDetail: 'Detail',
     viewDetailTitle: 'Detailed view',
     planPrefix: 'Plan:',
-    error404: 'Trace not found â€” this query may not have generated a trace',
+    error404: 'Trace not found — this query may not have generated a trace',
     error5xx: 'Trace service temporarily unavailable',
     errorGeneral: 'Failed to load trace',
   },
@@ -5200,9 +5200,9 @@ const en = {
   // Thinking Steps
   // ==========================================
   thinkingSteps: {
-    thinkingActive: 'Thinkingâ€¦',
+    thinkingActive: 'Thinking…',
     thinkingDone: 'Analyzed',
-    answerActive: 'Generating answerâ€¦',
+    answerActive: 'Generating answer…',
     answerDone: 'Answer',
     stepFallback: 'Step',
     headerStreaming: 'Thinking...',
@@ -5212,9 +5212,9 @@ const en = {
     toolPlural: 'tools',
     runningTool: 'Running {{toolName}}...',
     viewSummary: 'Summary',
-    viewSummaryTitle: 'Summary view â€” compact step overview',
+    viewSummaryTitle: 'Summary view — compact step overview',
     viewDetailed: 'Detailed',
-    viewDetailedTitle: 'Detailed view â€” full reasoning timeline',
+    viewDetailedTitle: 'Detailed view — full reasoning timeline',
     statusFailed: 'failed',
     statusDone: 'done',
     nodeLabel: 'Node',
@@ -5233,7 +5233,7 @@ const en = {
     evalScore: 'Score',
     evalFeedback: 'Feedback',
     evalSuggestions: 'Suggestions',
-    loadingTrace: 'Loading thought processâ€¦',
+    loadingTrace: 'Loading thought process…',
   },
   // ==========================================
   permissionsPage: {
@@ -5250,10 +5250,10 @@ const en = {
     errorExport: 'Failed to export RBAC configuration',
     rbacTitle: 'RBAC Configuration',
     exportTooltip: 'Download full RBAC config as JSON',
-    exporting: 'Exportingâ€¦',
+    exporting: 'Exporting…',
     export: 'Export',
     invalidateCacheTooltip: 'Clear RBAC permission cache',
-    invalidating: 'Invalidatingâ€¦',
+    invalidating: 'Invalidating…',
     invalidateCache: 'Invalidate Cache',
     refresh: 'Refresh',
     definedRoles: 'Defined Roles',
@@ -5356,7 +5356,7 @@ const en = {
       },
       inactive_pending: {
         label: 'Inactive until activation',
-        desc: 'Same as pending approval â€” account disabled on register.',
+        desc: 'Same as pending approval — account disabled on register.',
       },
       active_restricted: {
         label: 'Active with restricted role',
@@ -5394,10 +5394,10 @@ const en = {
     statisticsDesc: 'System overview & sessions',
     settingsDesc: 'System & LLM config',
     settingsMovedTitle: 'System settings live on a dedicated page',
-    settingsMovedDesc: 'Avoid duplicate forms â€” open System Settings for maintenance mode, LLM legacy defaults, and bug report delivery.',
+    settingsMovedDesc: 'Avoid duplicate forms — open System Settings for maintenance mode, LLM legacy defaults, and bug report delivery.',
     openSystemSettings: 'Open System Settings',
     manageLlmRoutes: 'Manage LLM routes in Pipeline Admin',
-    subtitle: 'Live gateway data â€” customize layout in Carbon',
+    subtitle: 'Live gateway data — customize layout in Carbon',
     refresh: 'Refresh',
     lastRefresh: 'Last refresh',
     status: {
@@ -5444,7 +5444,7 @@ const en = {
     empty: {
       noStorageData: 'No storage facet data available',
       noQuota: 'Quota endpoint unavailable',
-      noHistogram: 'Date histogram empty â€” backend may need artifact indexing',
+      noHistogram: 'Date histogram empty — backend may need artifact indexing',
       noFolders: 'No folders returned from file manager plugin',
       noFiles: 'No recent files',
       noCases: 'No import cases yet',
@@ -5453,7 +5453,7 @@ const en = {
       noTraces: 'No traces available',
       noSettings: 'Settings unavailable',
       noGpu: 'GPU status unavailable',
-      sessionStatsBlocked: 'Session stats unavailable â€” auth-service proxy blocked',
+      sessionStatsBlocked: 'Session stats unavailable — auth-service proxy blocked',
       noAuthActivity: 'Auth activity feed unavailable',
       noTransferActivity: 'Transfer activity data unavailable',
     },
@@ -5481,9 +5481,9 @@ const en = {
       fileManager: 'File manager',
     },
     demo: {
-      ribbon: 'Preview mode â€” some widgets show sample data until backend APIs are ready.',
+      ribbon: 'Preview mode — some widgets show sample data until backend APIs are ready.',
       forceMockRibbon:
-        'Visual QA mode â€” all widgets use professional mock data (gateway bypassed). Set NEXT_PUBLIC_DASHBOARD_FORCE_MOCK=false to use live APIs.',
+        'Visual QA mode — all widgets use professional mock data (gateway bypassed). Set NEXT_PUBLIC_DASHBOARD_FORCE_MOCK=false to use live APIs.',
       scenario: 'Scenario',
       scenarios: {
         default: 'Default',
@@ -5539,13 +5539,13 @@ const en = {
     picker: {
       title: 'Widget catalog',
       subtitle: 'Show or hide widgets on your dashboard',
-      search: 'Search widgetsâ€¦',
+      search: 'Search widgets…',
       filter: { all: 'All', live: 'Live', mock: 'Mock / blocked' },
     },
     manifest: {
       toggle: 'Dashboard API manifest (dev)',
-      intro: 'Widget â†’ API contract for backend coordination. Dev-only panel.',
-      widgetMapping: 'Widget â†’ API mapping',
+      intro: 'Widget → API contract for backend coordination. Dev-only panel.',
+      widgetMapping: 'Widget → API mapping',
       partialBlocked: 'Partial / Blocked',
       mockWidgets: 'Mock widgets',
       proposed: 'Proposed backend APIs',
@@ -5837,19 +5837,19 @@ const en = {
       backendInfo: 'Load graph data from Neo4j via graph_explorer plugins (cases, artifacts, case_graph, subgraph).',
       caseListTitle: 'Cases in Neo4j',
       caseListHint: 'Click a row to fill the Case ID field below, then press Load from Backend. Cases are listed from `POST /tools/plugin_graph_explorer_cases/execute` (distinct case_id values with node counts).',
-      caseListSearchPlaceholder: 'Search by Case IDâ€¦',
+      caseListSearchPlaceholder: 'Search by Case ID…',
       caseListNodeCount: '{{count}} nodes',
-      overviewBanner: 'Graph explorer connected Â· {{labels}} labels Â· {{graphrag}}',
+      overviewBanner: 'Graph explorer connected · {{labels}} labels · {{graphrag}}',
       overviewGraphragReady: 'GraphRAG indexes ready',
       overviewGraphragPending: 'GraphRAG indexes pending',
       artifactListTitle: 'Artifacts for {{caseId}}',
       artifactListHint: 'Click a row to scope the load to that artifact (optional). Listed from `POST /tools/plugin_graph_explorer_artifacts/execute`.',
-      artifactListSearchPlaceholder: 'Search by artifact ID or labelâ€¦',
+      artifactListSearchPlaceholder: 'Search by artifact ID or label…',
       artifactListEmpty: 'No artifacts with artifact_id found for this case in Neo4j.',
       artifactListNoMatches: 'No artifacts match your search.',
       caseListRateLimited: 'Too many requests (429). Wait a few seconds and use Refresh, or reduce parallel tabs.',
       caseListGraphSummary: '{{ready}} of {{total}} listed cases have Neo4j subgraph data.',
-      caseListProbePending: 'Checkingâ€¦',
+      caseListProbePending: 'Checking…',
       caseListNoSearchMatches: 'No cases match your search.',
       caseListNoMatches: 'No cases match the current filters.',
       addArtifactId: 'Add another Artifact ID',
@@ -5857,7 +5857,7 @@ const en = {
       multiSeedArtifactConflict:
         'When loading multiple elementIds, Artifact ID rows are ignored. Clear artifacts or use a single elementId.',
       caseListRefresh: 'Refresh list',
-      caseListLoading: 'Loading case listâ€¦',
+      caseListLoading: 'Loading case list…',
       caseListEmpty: 'No cases to show.',
       caseListError: 'Could not load case list',
       artifactIdLabel: 'Artifact ID (optional)',
@@ -5865,7 +5865,7 @@ const en = {
       artifactHint:
         'To scope the graph to one file/artifact, enter its UUID (sent as artifact_id). Neo4j elementId usually appears on nodes inside the JSON payload, not as a separate HTTP path unless the backend adds one.',
       neoElementIdLabel: 'Neo4j elementId (optional)',
-      neoElementIdPlaceholder: 'e.g. 4:x:y â€” copy from Browser node inspector',
+      neoElementIdPlaceholder: 'e.g. 4:x:y — copy from Browser node inspector',
       neoElementIdHint:
         'If set, used as the seed for gateway subgraph (overrides case/artifact match). Leave empty to load by case_id (and optional artifact_id) via the graph_explorer.subgraph plugin.',
       caseNotFound404: 'This Case ID was not found on the gateway (404). If it appears in the list, check group / token; otherwise verify API_GATEWAY_URL and that the case exists on the server.',
@@ -5904,7 +5904,7 @@ const en = {
       encodingIso88596Desc: 'Legacy Arabic encoding',
       supportedFormatsTitle: 'Supported Formats',
       dropFiles: 'Drop files here or click to browse',
-      supportedFormats: 'JSON, CSV, TSV, TXT â€” supports graph data, edge lists, and node lists',
+      supportedFormats: 'JSON, CSV, TSV, TXT — supports graph data, edge lists, and node lists',
       selectedFiles: 'Selected files',
       parseAndLoad: 'Parse & Load Graph',
       parseFailed: 'Failed to parse file data',
@@ -5916,7 +5916,7 @@ const en = {
       fetchAndLoad: 'Fetch & Load Graph',
       fetchFailed: 'Failed to fetch data from URL',
       // Path tab
-      pathNotAvailable: 'Server File Path â€” Coming Soon',
+      pathNotAvailable: 'Server File Path — Coming Soon',
       pathNotAvailableDesc: 'This feature requires a backend endpoint to read graph files from the server filesystem.',
       // Common
       loaded: 'Graph data loaded successfully',
@@ -5955,20 +5955,20 @@ const en = {
       loadConfig: 'Load Config',
       recordActions: 'Record',
       recordingOn: 'Recording',
-      recordingStarted: 'Recording started â€” your next preprocess actions are captured.',
+      recordingStarted: 'Recording started — your next preprocess actions are captured.',
       recordingPaused: '{{count}} step(s) recorded. Export recipe to save.',
       recordActionsHint:
-        'Captures semantic steps: entity/relation type chips, isolated-nodes toggle, and (after a short delay) filter/transform rule tables. Bulk row include/exclude in the table is not recorded â€” use type chips for portable recipes across cases.',
+        'Captures semantic steps: entity/relation type chips, isolated-nodes toggle, and (after a short delay) filter/transform rule tables. Bulk row include/exclude in the table is not recorded — use type chips for portable recipes across cases.',
       exportRecipe: 'Export recipe',
       exportRecipeHint:
         'Download a portable recipe JSON (kind: graphExplorer.preprocessRecipe). Use Load Config on another case to replay the same logical pipeline.',
       showConfigDocs: 'Format help',
       hideConfigDocs: 'Hide format',
       configDocsTitle: 'Config & recipe files (JSON)',
-      configDocsSnapshotHeading: '1) Snapshot â€” same graph (exact IDs and full UI state)',
+      configDocsSnapshotHeading: '1) Snapshot — same graph (exact IDs and full UI state)',
       configDocsSnapshotBody:
         'From Save Config: `schemaVersion`, `kind`: graphExplorer.preprocessSnapshot, and `draft` (excluded IDs, filterRules, transformRules, overrides, searches, layout). Older exports may only have `draft` or top-level `version: 1`; they still import.',
-      configDocsRecipeHeading: '2) Recipe â€” other cases (semantic steps)',
+      configDocsRecipeHeading: '2) Recipe — other cases (semantic steps)',
       configDocsRecipeBody:
         'kind: graphExplorer.preprocessRecipe with a `steps` array. Steps: clear_exclusions, set_exclude_isolated, exclude_entity_types / include_entity_types, exclude_relation_types / include_relation_types, set_filter_rules, set_transform_rules. Load Config applies the recipe from a clean slate for the current dataset.',
       configDocsExampleToggle: 'Example recipe JSON',
@@ -5976,7 +5976,7 @@ const en = {
       entitiesTab: 'Entities',
       relationshipsTab: 'Relationships',
       transformTab: 'Transform',
-      bulkChangeType: 'Bulk change typeâ€¦',
+      bulkChangeType: 'Bulk change type…',
       bulkChangeTypeHint:
         'Apply an entity type to every visible row that is not excluded from the graph.',
       includeAllShown: 'Include all',
@@ -6006,10 +6006,10 @@ const en = {
       sourceEntityRequired: 'Source Entity *',
       relationTypeRequired: 'Relation Type *',
       targetEntityRequired: 'Target Entity *',
-      selectSource: 'Select sourceâ€¦',
-      selectType: 'Select typeâ€¦',
-      selectTarget: 'Select targetâ€¦',
-      strengthRange: 'Strength (1â€“10)',
+      selectSource: 'Select source…',
+      selectType: 'Select type…',
+      selectTarget: 'Select target…',
+      strengthRange: 'Strength (1–10)',
       descriptionOptional: 'Description (optional)',
       noEntitiesMatch: 'No entities match your search',
       noRelationshipsFound: 'No Relationships Found',
@@ -6169,7 +6169,7 @@ const en = {
     },
     pathfinding: {
       hidePanel: 'Hide pathfinding panel (session stays)',
-      showPanel: 'Open pathfinding panel â€” new destination or clear session',
+      showPanel: 'Open pathfinding panel — new destination or clear session',
       fromSelected: 'Pathfinding from selected node',
     },
     pathResultsSummary: {
@@ -6249,14 +6249,14 @@ const en = {
       notePlaceholder: 'Optional: what you are investigating, hypothesis, etc.',
       attachHeavyLabel: 'Include technical payload (stats, meta, selection)',
       attachHeavyHint:
-        'Adds the `heavy` block from the contract â€” larger request; enable when the model needs structured fields beyond labels.',
+        'Adds the `heavy` block from the contract — larger request; enable when the model needs structured fields beyond labels.',
       previewPayload: 'Preview JSON payload',
       hidePayload: 'Hide JSON payload',
       previewHint: 'Exact object nested under ChatRequest.context for the gateway.',
       assistantStub:
-        'Streaming is not wired from this panel yet â€” UI only. The draft envelope is logged to the browser console (see context.graph_visual_explorer_v1).',
+        'Streaming is not wired from this panel yet — UI only. The draft envelope is logged to the browser console (see context.graph_visual_explorer_v1).',
       emptyHint: 'Ask about nodes, paths, or communities on this graph.',
-      nodesLinks: '{{nodes}} nodes Â· {{links}} links visible',
+      nodesLinks: '{{nodes}} nodes · {{links}} links visible',
     },
   },
 
@@ -6298,9 +6298,9 @@ const en = {
     modelVram: 'VRAM',
     gpuLive: 'Live',
     gpuPolling: 'Polling (REST)',
-    gpuWsUnavailable: 'Live stream unavailable â€” showing last snapshot from REST.',
+    gpuWsUnavailable: 'Live stream unavailable — showing last snapshot from REST.',
     gpuDisconnected: 'Disconnected',
-    gpuReconnecting: 'Reconnectingâ€¦',
+    gpuReconnecting: 'Reconnecting…',
     gpuUtilization: 'Utilization',
     gpuTemp: 'Temperature',
     gpuConsumers: 'Consumers',
@@ -6308,7 +6308,7 @@ const en = {
     start: 'Start',
     stop: 'Stop',
     openRegistry: 'Open Model Registry',
-    gpuDisclaimer: 'This is node deploy/runtime GPU â€” not the tool-runner VRAM page at /admin/gpu.',
+    gpuDisclaimer: 'This is node deploy/runtime GPU — not the tool-runner VRAM page at /admin/gpu.',
     register: 'Register node',
     registerTitle: 'Register GPU node',
     registerSuccess: 'Node registered',
@@ -6325,7 +6325,7 @@ const en = {
     agentToken: 'Agent token (optional)',
     bootstrapTitle: 'Agent bootstrap',
     bootstrapHint: 'Run the agent on a GPU host, then register it here with host/port and node ID.',
-    bootstrapLoading: 'Loading bootstrapâ€¦',
+    bootstrapLoading: 'Loading bootstrap…',
     bootstrapUnavailable: 'Bootstrap command not available from API.',
     bootstrapDocs: 'Documentation',
     copied: 'Copied',
@@ -6334,10 +6334,10 @@ const en = {
     scanFailed: 'Scan failed',
     viewInPipeline: 'View in pipeline',
     deployModalTitle: 'Deploy model',
-    deployInProgress: 'Deploy in progressâ€¦',
+    deployInProgress: 'Deploy in progress…',
     deployWsLive: 'Live stream',
-    deployWsConnecting: 'Connectingâ€¦',
-    deployLogWaiting: 'Waiting for container logsâ€¦',
+    deployWsConnecting: 'Connecting…',
+    deployLogWaiting: 'Waiting for container logs…',
     deployStage: {
       accepted: 'Accepted',
       resolved: 'Runtime resolved',
@@ -6363,10 +6363,10 @@ const en = {
     bindRoute: 'Bind route',
     priority: 'Priority',
     setAsDefault: 'Set as default',
-    inspecting: 'Inspectingâ€¦',
+    inspecting: 'Inspecting…',
     containerLogs: 'Container logs',
     allContainers: 'All containers',
-    selectContainer: 'Select containerâ€¦',
+    selectContainer: 'Select container…',
     logScopeAll: 'All containers',
     logScopeInference: 'Inference only',
     logScopeStack: 'Stack (agent/scanner)',
@@ -6393,7 +6393,7 @@ const en = {
     modelRerun: 'Rerun',
     modelActions: 'Model actions',
     viewOnBoardHint: 'Open the pipeline topology board focused on this GPU node.',
-    viewPoolOnBoardHint: 'Open the topology board focused on this nodeâ€™s model pool / logical route.',
+    viewPoolOnBoardHint: 'Open the topology board focused on this node’s model pool / logical route.',
     gpuClusterSummary: '{{count}} GPU(s) total',
     gpuMemoryFree: 'Free VRAM',
     gpuDriver: 'Driver',
@@ -6476,7 +6476,7 @@ const en = {
       api: 'API Type',
       pipelineTag: 'Pipeline Tag',
       capability: 'Capability',
-      capabilityHint: 'Inference capability type (chat, embed, image, â€¦)',
+      capabilityHint: 'Inference capability type (chat, embed, image, …)',
       runsOn: 'Runs on',
       lifecycle: 'Lifecycle',
       lifecycle_registered: 'Registered',
@@ -6487,7 +6487,7 @@ const en = {
       showTopology: 'Show in Topology',
       probe: 'Probe health',
       probeDone: 'Health check complete',
-      deleteBlocked: 'Cannot delete â€” model is referenced by routes or bindings',
+      deleteBlocked: 'Cannot delete — model is referenced by routes or bindings',
       logicalId: 'Logical ID',
       physicalName: 'Physical name',
       upstreamModel: 'Upstream model',
@@ -6499,7 +6499,7 @@ const en = {
       poolPolicy: 'Pool policy',
       poolPolicyDefault: 'default',
       poolPoliciesHint:
-        'Pool policies are read-only â€” routing strategy is managed by the control plane.',
+        'Pool policies are read-only — routing strategy is managed by the control plane.',
       viewGrouped: 'By logical ID',
       viewFlat: 'All replicas',
       viewTable: 'Table',
@@ -6607,11 +6607,11 @@ const en = {
     settings: {
       required: 'Required',
       addTitle: 'Configure before add',
-      noSchema: 'No schema â€” entity will be added with defaults.',
+      noSchema: 'No schema — entity will be added with defaults.',
       advancedTitle: 'Node Settings',
       expand: 'Advanced',
       primary: 'Primary',
-      loadingSchema: 'Loading schemaâ€¦',
+      loadingSchema: 'Loading schema…',
     },
     bindingDrawer: {
       title: 'Edit binding',
@@ -6620,7 +6620,7 @@ const en = {
       open: 'Bind',
     },
     errors: {
-      discovery_blocked_host: 'Use a LAN IP reachable from the API gateway â€” localhost is blocked.',
+      discovery_blocked_host: 'Use a LAN IP reachable from the API gateway — localhost is blocked.',
       endpoint_not_found: 'Endpoint not found. Refresh the list.',
       no_models_to_import: 'Select at least one model to import.',
       binding_failed: 'Binding failed: {{detail}}',
@@ -6702,7 +6702,7 @@ const en = {
     },
     topology: {
       title: 'Routing Topology',
-      subtitle: 'Routes Â· Tools Â· Bindings Â· Role assign â€” unified list and visual board.',
+      subtitle: 'Routes · Tools · Bindings · Role assign — unified list and visual board.',
       hint: 'Use the 2D board for visual authoring. List view supports inline CRUD.',
       listView: 'List',
       graphView: 'Graph',
@@ -6747,7 +6747,7 @@ const en = {
         viewRoute: 'View route',
       },
       assignBanner:
-        'Assign chat persona models â€” separate from technical route table entries.',
+        'Assign chat persona models — separate from technical route table entries.',
       rack: {
         title: 'Pipeline Rack',
         edit: 'Edit',
@@ -6761,7 +6761,7 @@ const en = {
         switch2d: '2D Board',
         deploy: 'Deploy / Host',
         focus: 'Focus',
-        loading: 'Loading minimal rackâ€¦',
+        loading: 'Loading minimal rack…',
         hint: 'Add nodes on the 2D board or drop entities from the palette.',
         layers: 'Layers',
         nodeCount: '{{count}} nodes',
@@ -6798,13 +6798,13 @@ const en = {
         multiSelect: '{{count}} items selected',
         simulateSubgraph: 'Simulate subgraph',
         simScope: 'Scope',
-        simScopeHint: '{{nodes}} nodes Â· {{routes}} routes in subgraph',
+        simScopeHint: '{{nodes}} nodes · {{routes}} routes in subgraph',
         minimap: 'Minimap',
         minimapNodes: 'nodes',
         minimapEdges: 'edges',
         minimapShowNodes: 'Show nodes',
         minimapShowEdges: 'Show edges',
-        searchNodes: 'Search nodesâ€¦',
+        searchNodes: 'Search nodes…',
         inspector: 'Inspector',
         inspectorEmpty: 'Select a node or edge to view and edit settings.',
         edgeInspector: 'Connection',
@@ -6831,13 +6831,13 @@ const en = {
         view3dHint: 'Use the 2D topology board for visual wiring.',
         layoutRack: 'Layout Rack',
         connections: 'connections',
-        apiProbe: 'Checking API capabilitiesâ€¦',
+        apiProbe: 'Checking API capabilities…',
         apiStatus: 'API capability status',
         backendGaps: 'Backend gaps (UI uses local layout until ready):',
         zenMode: 'Zen mode',
         fullscreen: 'Fullscreen',
         layoutGap: 'See admin-pipeline-topology-backend-gaps.md',
-        loading: 'Loading topologyâ€¦',
+        loading: 'Loading topology…',
         validate: 'Validate',
         validateOk: 'Graph validation passed',
         import: 'Import',
@@ -6913,7 +6913,7 @@ const en = {
           bypass: 'Toggle bypass',
           duplicate: 'Duplicate',
           duplicateDisabled:
-            'API-backed nodes cannot be duplicated â€” use groups for visual clusters',
+            'API-backed nodes cannot be duplicated — use groups for visual clusters',
           delete: 'Delete node',
           group: 'Group selection (Ctrl+G)',
           toggleLoop: 'Toggle primary / loop',
@@ -6979,7 +6979,7 @@ const en = {
       bulkSuggest: 'Bulk Suggest',
       bindingSuccess: 'Binding saved successfully',
       visualWiring: 'Visual wiring',
-      patchPanelHint: 'Click a tool in the map or list â€” selected tool stays vivid; others fade. Drag to a model to wire.',
+      patchPanelHint: 'Click a tool in the map or list — selected tool stays vivid; others fade. Drag to a model to wire.',
       connectionList: 'Connection list',
       connectValidation: 'API/task mismatch for this model',
     },
@@ -7011,7 +7011,7 @@ const en = {
     },
     header: 'Model & Tool Routing (LLM Pipeline)',
     description:
-      'Chat roles, route paths, and tool-to-model bindings â€” the same configuration that orchestrator and tool-runner read from the gateway.',
+      'Chat roles, route paths, and tool-to-model bindings — the same configuration that orchestrator and tool-runner read from the gateway.',
     refresh: 'Refresh',
     tabs: {
       roles: 'Chat Roles',
@@ -7026,7 +7026,7 @@ const en = {
       assignFailed: 'Model assignment failed',
     },
     routes: {
-      toolRoutes: '{{count}} tool-related route(s) Â· {{total}} total route(s)',
+      toolRoutes: '{{count}} tool-related route(s) · {{total}} total route(s)',
       routeKey: 'route_key',
       model: 'model',
       fallback: 'fallback',
@@ -7036,7 +7036,7 @@ const en = {
       searchPlaceholder: 'Search tools...',
       selectTool: 'Select a tool to configure its model',
       suggestModel: 'Auto-suggest profile',
-      suggestionApplied: 'Profile suggestion applied â€” pick a model and save',
+      suggestionApplied: 'Profile suggestion applied — pick a model and save',
       noSuggestion: 'No suggestion received from server',
       modelLabel: 'Model (from catalog)',
       modelCustomLabel: 'Or type logical_id manually',
@@ -7056,7 +7056,7 @@ const en = {
       registryCount: '{{shown}} / {{total}} tools',
       llmOnlyFilter: 'LLM tools only',
       llmOnlyFilterHint:
-        'All tools are marked uses_llm=true in the registry â€” filter has no effect until the backend sets uses_llm=false for non-LLM tools.',
+        'All tools are marked uses_llm=true in the registry — filter has no effect until the backend sets uses_llm=false for non-LLM tools.',
       noTools: 'No tools in registry',
       noBinding: 'Unbound',
       noLlm: 'No LLM',
@@ -7320,7 +7320,7 @@ const en = {
     hub: {
       title: 'My boards',
       subtitle: 'Personal visual workspaces for analysis, mind maps, and collaboration',
-      search: 'Search boardsâ€¦',
+      search: 'Search boards…',
       empty: 'No boards yet. Create one to start.',
       create: 'Create board',
     },
@@ -7366,7 +7366,7 @@ const en = {
     },
     checkpoints: {
       title: 'Checkpoints',
-      placeholder: 'Labelâ€¦',
+      placeholder: 'Label…',
       save: 'Save',
       restore: 'Restore',
       delete: 'Delete',
@@ -7381,8 +7381,8 @@ const en = {
       all: 'All roles',
     },
     import: {
-      label: 'Import JSONâ€¦',
-      hubLabel: 'Import boardâ€¦',
+      label: 'Import JSON…',
+      hubLabel: 'Import board…',
       success: 'Board imported',
       failed: 'Invalid board file',
     },
@@ -7441,10 +7441,10 @@ const en = {
       strokeColor: 'Stroke',
       stroke: { solid: 'Solid', dashed: 'Dashed', dotted: 'Dotted' },
       arrow: {
-        forward: 'Forward â†’',
-        backward: 'Backward â†',
-        both: 'Both â†”',
-        none: 'None â€”',
+        forward: 'Forward →',
+        backward: 'Backward ←',
+        both: 'Both ↔',
+        none: 'None —',
       },
       stickyInk: 'Handwriting & drawings',
       inkStrokeCount: 'strokes',
@@ -7475,7 +7475,7 @@ const en = {
       emptyHintEdges: 'Connect nodes with the Connect tool or anchor links in the inspector',
       summaryTitle: 'Topology summary',
       independentLayout: 'Layout is independent from the canvas spatial view',
-      stats: '{{nodes}} nodes Â· {{edges}} edges',
+      stats: '{{nodes}} nodes · {{edges}} edges',
       toolbarHint: 'Topology tools are in the graph panel below',
       fit: 'Fit',
       layoutTree: 'Tree',
@@ -7533,7 +7533,7 @@ const en = {
       editLabel: 'Edit label',
       changeShape: 'Change shape',
       addFrame: 'Add frame here',
-      importShape: 'Import shapeâ€¦',
+      importShape: 'Import shape…',
       editPath: 'Edit points',
       convertToNode: 'Convert to node',
     },
@@ -7569,7 +7569,7 @@ const en = {
     vector: {
       imported: 'Shape imported',
       importFailed: 'Could not read shape from SVG',
-      importLabel: 'Import SVG shapeâ€¦',
+      importLabel: 'Import SVG shape…',
       epsHint: 'Export EPS to SVG from Illustrator or XD, then import the SVG file.',
       converted: 'Converted to node',
     },
@@ -7599,7 +7599,7 @@ const en = {
       copied: 'Color copied',
       copyFailed: 'Could not copy',
       eyedropper: 'Pick from page',
-      eyedropperHint: 'Tap or click to pick Â· Esc to cancel',
+      eyedropperHint: 'Tap or click to pick · Esc to cancel',
       eyedropperUnsupported: 'Could not start color picker in this browser.',
     },
     grid: {
@@ -7615,7 +7615,7 @@ const en = {
     },
     sticky: {
       label: 'Sticky',
-      placeholder: 'Write a noteâ€¦',
+      placeholder: 'Write a note…',
       toolsMenu: 'Note tools',
       ink: {
         text: 'Text',
@@ -7640,7 +7640,7 @@ const en = {
       history: 'History',
       system: 'System',
     },
-    legalHoldBlock: 'Board is on legal hold â€” editing disabled',
+    legalHoldBlock: 'Board is on legal hold — editing disabled',
     panel: {
       selection: 'Selection',
       settings: 'Board settings',
@@ -7662,7 +7662,7 @@ const en = {
       tabSystem: 'System files',
       hint: 'Link storage artifacts or upload files.',
       caseHint: 'Case',
-      search: 'Search libraryâ€¦',
+      search: 'Search library…',
       previewIcons: 'Show icons only',
       previewLive: 'Show live thumbnails',
       filterAll: 'All',
@@ -7674,8 +7674,8 @@ const en = {
       filterOther: 'Other',
       sortAddedDesc: 'Newest',
       sortAddedAsc: 'Oldest',
-      sortNameAsc: 'Name Aâ€“Z',
-      sortNameDesc: 'Name Zâ€“A',
+      sortNameAsc: 'Name A–Z',
+      sortNameDesc: 'Name Z–A',
       sortSizeDesc: 'Largest',
       sortType: 'Type',
       selectedCount: '{{count}} selected',
@@ -7705,12 +7705,12 @@ const en = {
       refreshFailed: 'Could not refresh metadata',
       unavailable: 'Unavailable',
       showTextHead: 'Preview text',
-      libraryPage: 'Showing {{from}}â€“{{to}} of {{total}}',
+      libraryPage: 'Showing {{from}}–{{to}} of {{total}}',
       migrateBlobs: 'Migrate local media',
       migrateNone: 'No local media to migrate',
       migrateDone: 'Migrated {{n}} file(s) to cloud',
       systemTitle: 'Cloud files',
-      systemSearch: 'Search filesâ€¦',
+      systemSearch: 'Search files…',
       systemLoadFailed: 'Failed to load files',
       systemEmpty: 'No accessible files found.',
       caseFilesEmpty: 'No case files found for this board.',
@@ -7723,8 +7723,8 @@ const en = {
       pageOf: 'Page {{page}} of {{total}}',
       addSelected: 'Add to board ({{count}})',
       openExplorer: 'Open in File Explorer',
-      casePrefixInvalid: 'Case ID is empty or invalid â€” case-scoped files may not appear.',
-      folderUp: 'â†‘ Up',
+      casePrefixInvalid: 'Case ID is empty or invalid — case-scoped files may not appear.',
+      folderUp: '↑ Up',
       noFolders: 'No subfolders',
       filterAllTypes: 'All types',
       filterAllMimes: 'All MIME',
@@ -7735,7 +7735,7 @@ const en = {
       title: 'Comments',
       open: 'Comments',
       newPin: 'New pin at',
-      placeholder: 'Write a commentâ€¦',
+      placeholder: 'Write a comment…',
       add: 'Add comment',
       empty: 'No comments yet.',
       resolve: 'Resolve',
@@ -7762,7 +7762,7 @@ const en = {
     canEdit: 'Can edit',
     shareUsers: 'User IDs (comma-separated)',
     shareSuccess: 'Share link created',
-    shareMock: 'Backend not ready â€” local link only',
+    shareMock: 'Backend not ready — local link only',
     openOneSearch: 'Visual search',
     commentPrompt: 'Comment text',
     footprint: {
@@ -7835,3 +7835,4 @@ const en = {
 };
 
 export default en;
+

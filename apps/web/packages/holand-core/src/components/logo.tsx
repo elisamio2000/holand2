@@ -4,9 +4,9 @@ interface IconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   noDarkInvert?: boolean;
 }
 
-/** Full wordmark — ERMINE logo with text (public as `brand-wordmark.svg`). */
+/** Full wordmark — Holand logo with text (public as `brand-wordmark.svg`). */
 export const BRAND_LOGO_SRC = '/brand/brand-wordmark.svg';
-/** Compact square mark — ERMINE icon (public as `brand-mark-4x.png` / `ai-assistant-mark.svg`). */
+/** Compact square mark — Holand icon (public as `brand-mark-4x.png` / `ai-assistant-mark.svg`). */
 export const BRAND_MARK_SRC = '/brand/ai-assistant-mark.svg';
 export const BRAND_MARK_ON_DARK_SRC = '/brand/ai-assistant-mark-on-dark.svg';
 
@@ -19,7 +19,7 @@ export const BRAND_MARK_HEIGHT = 80;
 export default function Logo({
   iconOnly = false,
   noDarkInvert = false,
-  alt = 'ERMINE',
+  alt = 'Holand',
   className,
   ...props
 }: IconProps) {

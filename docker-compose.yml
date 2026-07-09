@@ -26,7 +26,7 @@ services:
     container_name: holand-redis
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -58,7 +58,7 @@ services:
       JWT_REFRESH_TOKEN_EXPIRE_DAYS: "7"
       CORS_ORIGINS: "http://localhost:3000,http://web:3000"
     ports:
-      - "8000:8000"
+      - "8001:8000"
     volumes:
       - ./apps/api:/app
       - api_storage:/app/storage
@@ -81,22 +81,21 @@ services:
         condition: service_healthy
     environment:
       PORT: "3000"
+      CI: "true"
       NODE_ENV: development
       NEXTAUTH_SECRET: dev-nextauth-secret-change-in-production
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_URL_INTERNAL: http://web:3000
       NEXTAUTH_TRUST_HOST: "true"
       AUTH_API_URL: http://api:8000
-      NEXT_PUBLIC_API_GATEWAY_URL: http://localhost:8000
+      AUTH_DEV_BYPASS: "true"
+      NEXT_PUBLIC_API_GATEWAY_URL: http://localhost:8001
       API_GATEWAY_URL: http://api:8000
+      REDIS_URL: redis://redis:6379/0
     ports:
       - "3000:3000"
-    volumes:
-      - ./apps/web:/app
-      - /app/node_modules
-      - /app/apps/holand-web-app/.next
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
       interval: 15s
       timeout: 10s
       retries: 5

@@ -12,7 +12,6 @@ from starlette.responses import JSONResponse
 from .config import get_settings
 from .database import engine
 from .monitoring import RequestObservabilityMiddleware, init_sentry_hooks
-from .recommendations import build_recommendations
 from .routers.admin_rbac import router as admin_rbac_router
 from .routers.admin_users import router as admin_users_router
 from .routers.admin_versions import router as admin_versions_router
@@ -31,8 +30,6 @@ from .schemas import (
     HollandResult,
     MbtiRequest,
     MbtiResult,
-    RecommendationRequest,
-    RecommendationResponse,
 )
 from .scoring import score_holland, score_mbti
 from .security import BodySizeLimitMiddleware, SecurityHeadersMiddleware, limiter
@@ -134,10 +131,4 @@ def mbti_score(payload: MbtiRequest) -> MbtiResult:
         quality_score=quality_score,
         quality_band=quality_band,
     )
-
-
-@app.post("/recommendations", response_model=RecommendationResponse, tags=["Recommendations"])
-def recommendations(payload: RecommendationRequest) -> RecommendationResponse:
-    careers, majors = build_recommendations(payload.holland_code, payload.mbti_type)
-    return RecommendationResponse(careers=careers, majors=majors)
 

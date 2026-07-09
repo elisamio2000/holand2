@@ -1,6 +1,6 @@
 const siteConfig = {
-  title: 'Map Service',
-  description: 'Geo-location & Offline Map',
+  title: 'Holand Platform',
+  description: 'Assessment and guidance platform',
   logo: '/brand/brand-wordmark.svg',
 };
 export default siteConfig;

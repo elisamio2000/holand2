@@ -44,7 +44,7 @@ export default function AuthWrapperThree({
         >
           <div className="flex flex-col items-center">
             <Link href={'/'} className="mb-7 inline-block max-w-[64px] lg:mb-9">
-              <Logo iconOnly alt="ERMINE" className="h-10 w-auto" />
+              <Logo iconOnly alt="Holand" className="h-10 w-auto" />
             </Link>
             <Title
               as="h2"
