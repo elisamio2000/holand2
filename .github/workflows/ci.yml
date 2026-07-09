@@ -35,18 +35,37 @@ jobs:
             app/main.py \
             app/scoring.py \
             app/schemas.py \
+            app/schemas_assessment.py \
             app/security.py \
             app/models/__init__.py \
             app/models/analytics.py \
+            app/models/assessment.py \
             app/models/expert_lab.py \
+            app/routers/admin_versions.py \
             app/routers/analytics.py \
             app/routers/expert_lab.py \
+            app/routers/reports.py \
+            app/routers/sessions.py \
+            app/services/assessment_scoring.py \
             app/services/analytics.py \
             app/services/expert_lab.py \
+            app/services/formula_engine.py \
+            app/services/question_bank_quality.py \
+            tests/test_phase2_phase3_api.py \
+            tests/test_formula_engine.py \
+            tests/test_reports_api.py \
             tests/test_scoring.py \
             tests/test_analytics.py \
             tests/test_expert_lab.py \
             tests/test_security.py
+
+      - name: Pytest assessment quality gates
+        run: |
+          pytest -q \
+            tests/test_scoring.py \
+            tests/test_phase2_phase3_api.py \
+            tests/test_formula_engine.py \
+            tests/test_reports_api.py
 
       - name: Pytest
         run: pytest -q
@@ -84,6 +103,7 @@ jobs:
         run: |
           pnpm --filter holand-web-app exec vitest run \
             src/services/analytics.service.test.ts \
+            src/services/assessment.service.test.ts \
             src/services/expert-lab.service.test.ts \
             src/hooks/use-funnel-tracking.test.ts \
             src/app/shared/expert-lab/__tests__/status-badge.test.tsx \
