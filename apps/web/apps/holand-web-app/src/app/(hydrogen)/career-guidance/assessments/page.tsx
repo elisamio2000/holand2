@@ -1,4 +1,5 @@
 import { metaObject } from '@/config/site.config';
+import Link from 'next/link';
 
 export const metadata = {
   ...metaObject('Assessment Engine'),
@@ -40,6 +41,21 @@ export default function AssessmentDesignPage() {
           </article>
         ))}
       </section>
+
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link
+          href="/career-guidance/assessments/start"
+          className="inline-block rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+        >
+          شروع آزمون
+        </Link>
+        <Link
+          href="/career-guidance/assessments/history"
+          className="inline-block rounded-lg border border-muted bg-white px-5 py-2.5 text-sm font-semibold text-gray-800 shadow-sm transition hover:bg-gray-50"
+        >
+          تاریخچه آزمون‌های من
+        </Link>
+      </div>
     </main>
   );
 }
