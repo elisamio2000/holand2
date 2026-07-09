@@ -221,6 +221,26 @@ class VersionAuditLog(Base):
     )
 
 
+class VersionValidationReport(Base):
+    """Persisted validation diagnostics for governance publish checks."""
+
+    __tablename__ = "version_validation_reports"
+
+    id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
+    entity_type: Mapped[VersionEntityType] = mapped_column(
+        Enum(VersionEntityType, name="version_entity_type_enum"), nullable=False
+    )
+    entity_id: Mapped[str] = mapped_column(Uuid(as_uuid=False), nullable=False, index=True)
+    gate: Mapped[str] = mapped_column(String(50), nullable=False)
+    target_status: Mapped[str] = mapped_column(String(50), nullable=False)
+    ok: Mapped[bool] = mapped_column(default=False, nullable=False)
+    report: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False)
+    actor: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
 __all__ = [
     "AssessmentType",
     "VersionStatus",
@@ -231,4 +251,5 @@ __all__ = [
     "ScoringFormulaVersion",
     "VersionEntityType",
     "VersionAuditLog",
+    "VersionValidationReport",
 ]

@@ -174,6 +174,15 @@ async def test_formula_publish_is_blocked_when_unit_tests_fail(client) -> None:
     assert "publish gate failed" in publish.json()["detail"].lower()
     assert "unit_tests" in publish.json()["detail"]
 
+    reports = await client.get(
+        f"/admin/version-validation-reports?entity_id={formula_id}&entity_type=formula_version"
+    )
+    assert reports.status_code == 200
+    payload = reports.json()
+    assert payload
+    assert payload[0]["ok"] is False
+    assert payload[0]["gate"] == "formula_publish"
+
 
 @pytest.mark.asyncio
 async def test_formula_publish_is_blocked_by_validation_rule_bounds(client) -> None:
@@ -329,6 +338,15 @@ async def test_assessment_publish_is_blocked_by_quality_gate(client) -> None:
     detail = publish.json()["detail"].lower()
     assert "publish gate failed" in detail
     assert "duplicate_question_text" in detail
+
+    reports = await client.get(
+        f"/admin/version-validation-reports?entity_id={version_id}&entity_type=assessment_version"
+    )
+    assert reports.status_code == 200
+    payload = reports.json()
+    assert payload
+    assert payload[0]["ok"] is False
+    assert payload[0]["gate"] == "question_bank_quality"
 
 
 @pytest.mark.asyncio

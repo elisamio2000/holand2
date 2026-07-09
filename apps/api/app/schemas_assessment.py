@@ -204,3 +204,17 @@ class AuditLogEntryOut(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class ValidationReportOut(BaseModel):
+    id: str
+    entity_type: str
+    entity_id: str
+    gate: str
+    target_status: str
+    ok: bool
+    report: dict[str, Any]
+    actor: str | None
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
