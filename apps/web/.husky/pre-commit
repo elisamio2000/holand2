@@ -1,0 +1,1 @@
+pnpm --filter holand-web-app check:fast

@@ -1,0 +1,50 @@
+﻿{
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "target": "ES2015",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@public/*": ["public/*"],
+      "@shared/*": ["src/app/shared*"],
+      "@core/*": ["../../packages/holand-core/src/*"],
+      "tailwind-config": ["../../packages/config-tailwind/tailwind.config.ts"],
+      "typescript-config": ["../../packages/config-typescript"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "playwright.config.ts",
+    "e2e",
+    "src/app/shared/ai-chat/export/test-export.ts",
+    "src/app/shared/ai-chat/export/test-offline.ts"
+  ]
+}
+

@@ -1,0 +1,36 @@
+{
+  "name": "holand-web",
+  "version": "0.1.0",
+  "description": "Holand Platform web monorepo (Holland/MBTI career and education guidance)",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "build": "turbo build",
+    "start": "turbo start",
+    "clean": "turbo clean && rm -rf node_modules .turbo",
+    "cache:clean": "turbo cache:clean && rm -rf .turbo",
+    "web:dev": "turbo dev --filter=holand-web-app",
+    "web:lint": "turbo lint --filter=holand-web-app",
+    "web:build": "turbo build --filter=holand-web-app",
+    "web:check:fast": "pnpm --filter holand-web-app check:fast",
+    "web:check": "pnpm --filter holand-web-app check",
+    "web:check:ci": "pnpm --filter holand-web-app check:ci",
+    "web:start": "turbo start --filter=holand-web-app",
+    "web:clean": "turbo clean --filter=holand-web-app",
+    "gen-icons": "turbo gen-icons --filter=core",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "eslint": "8.57.0",
+    "husky": "^9.1.6",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "turbo": "2.1.3",
+    "typescript-config": "workspace:*"
+  },
+  "packageManager": "pnpm@9.1.4",
+  "engines": {
+    "node": ">=18"
+  }
+}

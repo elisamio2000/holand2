@@ -1,0 +1,799 @@
+﻿// ============================================
+// GeoFilterPanel — Redesigned advanced filter controls
+// Auto-apply, categorized MIME pills, colored tags, searchable cases
+// ============================================
+'use client';
+
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { Text, Badge, ActionIcon } from 'rizzui';
+import {
+  PiFunnelBold,
+  PiXBold,
+  PiMagnifyingGlassBold,
+  PiTagBold,
+  PiFoldersBold,
+  PiCameraBold,
+  PiCalendarBlankBold,
+  PiTextTBold,
+  PiDesktopBold,
+  PiGpsBold,
+  PiImageBold,
+  PiVideoCameraBold,
+  PiSpeakerHighBold,
+  PiFileBold,
+  PiCaretDownBold,
+} from 'react-icons/pi';
+import cn from '@core/utils/class-names';
+import type { AdvancedGeoFilter, MongoGeoStats } from '@/types/geo-location.types';
+import { DEFAULT_ADVANCED_FILTER } from '@/types/geo-location.types';
+import { getMimeDisplayInfo, compactNumber, getTagColor } from '@/utils/mime-helpers';
+import type { MimeCategory } from '@/utils/mime-helpers';
+
+export interface GeoFilterPanelProps {
+  /** Current filter values */
+  filters: AdvancedGeoFilter;
+  /** Called when filters change (auto-apply on every change) */
+  onApply: (filters: AdvancedGeoFilter) => void;
+  /** Stats data — used to populate dynamic filter options */
+  stats: MongoGeoStats | null;
+  /** Loading state */
+  loading?: boolean;
+  /** Whether the panel is expanded */
+  expanded: boolean;
+  /** Toggle expand/collapse */
+  onToggle: () => void;
+}
+
+/**
+ * GeoFilterPanel — Redesigned advanced filter controls.
+ *
+ * Changes from v1:
+ * - Auto-apply: No "Apply" button; toggles apply immediately,
+ *   text inputs debounce at 500ms
+ * - MIME types: Uses actual MIME types from stats (not image.format)
+ *   with human-readable labels and category colors
+ * - Tags: Colored pills with deterministic hash-based colors and counts
+ * - Cases: Improved searchable dropdown with better chip styling
+ * - Layout: Collapsible sections, better visual hierarchy
+ *
+ * Filter execution strategy — all server-side (MongoDB):
+ * - GPS status → indexed existence check
+ * - MIME types → $in on file_meta.mime_type
+ * - Camera → $regex on Make/Model
+ * - Date range → $gte/$lte on DateTime
+ * - Tags → $in on tags array (OR logic)
+ * - Case IDs → $in on case_id (OR logic)
+ * - Hostname/Filename → $regex (case-insensitive)
+ *
+ * @requires geo-location.types — AdvancedGeoFilter, MongoGeoStats
+ * @requires mime-helpers — getMimeDisplayInfo, compactNumber, getTagColor
+ *
+ * @example
+ * ```tsx
+ * <GeoFilterPanel
+ *   filters={currentFilters}
+ *   onApply={handleFilterApply}
+ *   stats={mongoStats}
+ *   expanded={showFilters}
+ *   onToggle={() => setShowFilters(v => !v)}
+ * />
+ * ```
+ */
+export default function GeoFilterPanel({
+  filters,
+  onApply,
+  stats,
+  loading,
+  expanded,
+  onToggle,
+}: GeoFilterPanelProps) {
+  const [local, setLocal] = useState<AdvancedGeoFilter>(filters);
+
+  // Debounce timer ref for text inputs
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Section collapse state
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
+
+  // Sync local state when external filters change (e.g., parent reset)
+  useEffect(() => {
+    setLocal(filters);
+  }, [filters]);
+
+  // ==========================================
+  // Derived filter options from stats
+  // ==========================================
+
+  // WHY mimeTypes instead of formats: The old code used stats.formats
+  // (image metadata format field like "JPEG"), but filter queries file_meta.mime_type
+  // (like "image/jpeg"). This mismatch meant format filters never matched.
+  const availableMimeTypes = useMemo(() => {
+    if (!stats?.mimeTypes) return [];
+    return stats.mimeTypes.filter((m) => m.type && m.count > 0);
+  }, [stats]);
+
+  // Group MIME types by category for visual organization
+  const mimeTypesByCategory = useMemo(() => {
+    const groups: Record<MimeCategory, Array<{ type: string; count: number }>> = {
+      image: [], video: [], audio: [], document: [], archive: [], other: [],
+    };
+    for (const m of availableMimeTypes) {
+      const info = getMimeDisplayInfo(m.type);
+      groups[info.category].push(m);
+    }
+    return groups;
+  }, [availableMimeTypes]);
+
+  const availableCameras = useMemo(() => {
+    if (!stats) return [];
+    return stats.cameras.map((c) => c.name).filter(Boolean);
+  }, [stats]);
+
+  const availableTags = useMemo(() => {
+    if (!stats?.tags) return [];
+    return stats.tags.filter((t) => t.name && t.count > 0);
+  }, [stats]);
+
+  const availableCases = useMemo(() => {
+    if (!stats?.cases) return [];
+    return stats.cases;
+  }, [stats]);
+
+  // Count active filters
+  const activeCount = useMemo(() => {
+    let count = 0;
+    if (local.hasGps !== DEFAULT_ADVANCED_FILTER.hasGps) count++;
+    if (local.mimeTypes.length > 0) count++;
+    if (local.camera) count++;
+    if (local.dateStart) count++;
+    if (local.dateEnd) count++;
+    if (local.filenameSearch) count++;
+    if (local.hostname) count++;
+    if (local.tags && local.tags.length > 0) count++;
+    if (local.caseIds && local.caseIds.length > 0) count++;
+    return count;
+  }, [local]);
+
+  // ==========================================
+  // Auto-apply helpers
+  // ==========================================
+
+  /** Apply immediately (for toggles, selects, multi-selects). */
+  const applyNow = useCallback((updated: AdvancedGeoFilter) => {
+    console.info('[GeoFilterPanel] Auto-applying filter:', { filters: updated });
+    setLocal(updated);
+    onApply(updated);
+  }, [onApply]);
+
+  /** Apply with 500ms debounce (for text inputs). */
+  const applyDebounced = useCallback((updated: AdvancedGeoFilter) => {
+    setLocal(updated);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      console.info('[GeoFilterPanel] Debounced apply:', { filters: updated });
+      onApply(updated);
+    }, 500);
+  }, [onApply]);
+
+  // Cleanup debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
+
+  const handleClear = useCallback(() => {
+    console.info('[GeoFilterPanel] Clearing all filters');
+    const cleared = { ...DEFAULT_ADVANCED_FILTER };
+    setLocal(cleared);
+    onApply(cleared);
+  }, [onApply]);
+
+  // ==========================================
+  // Filter change handlers
+  // ==========================================
+
+  const handleGpsChange = useCallback((val: 'all' | 'true' | 'false') => {
+    applyNow({ ...local, hasGps: val });
+  }, [local, applyNow]);
+
+  const handleMimeToggle = useCallback((mime: string) => {
+    const updated = {
+      ...local,
+      mimeTypes: local.mimeTypes.includes(mime)
+        ? local.mimeTypes.filter((m) => m !== mime)
+        : [...local.mimeTypes, mime],
+    };
+    applyNow(updated);
+  }, [local, applyNow]);
+
+  const handleCameraChange = useCallback((camera: string) => {
+    applyNow({ ...local, camera: camera || undefined });
+  }, [local, applyNow]);
+
+  const handleDateStartChange = useCallback((val: string) => {
+    applyNow({ ...local, dateStart: val || undefined });
+  }, [local, applyNow]);
+
+  const handleDateEndChange = useCallback((val: string) => {
+    applyNow({ ...local, dateEnd: val || undefined });
+  }, [local, applyNow]);
+
+  const handleFilenameChange = useCallback((val: string) => {
+    applyDebounced({ ...local, filenameSearch: val || undefined });
+  }, [local, applyDebounced]);
+
+  const handleHostnameChange = useCallback((val: string) => {
+    applyDebounced({ ...local, hostname: val || undefined });
+  }, [local, applyDebounced]);
+
+  const handleTagToggle = useCallback((tag: string) => {
+    const current = local.tags || [];
+    const updated = {
+      ...local,
+      tags: current.includes(tag) ? current.filter((t) => t !== tag) : [...current, tag],
+    };
+    applyNow(updated);
+  }, [local, applyNow]);
+
+  const handleCaseChange = useCallback((ids: string[]) => {
+    applyNow({ ...local, caseIds: ids });
+  }, [local, applyNow]);
+
+  // ==========================================
+  // Section toggle
+  // ==========================================
+  const toggleSection = useCallback((key: string) => {
+    setCollapsedSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  }, []);
+
+  // ==========================================
+  // Render — collapsed state
+  // ==========================================
+  if (!expanded) {
+    return (
+      <button
+        onClick={onToggle}
+        className={cn(
+          'flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-medium transition-colors',
+          activeCount > 0
+            ? 'border-primary/30 bg-primary/5 text-primary'
+            : 'border-muted bg-gray-0 text-gray-600 hover:bg-gray-50 dark:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-100'
+        )}
+      >
+        <PiFunnelBold className="h-3.5 w-3.5" />
+        Filters
+        {activeCount > 0 && (
+          <Badge variant="flat" color="primary" size="sm" className="ml-0.5">
+            {activeCount}
+          </Badge>
+        )}
+      </button>
+    );
+  }
+
+  // ==========================================
+  // Render — expanded panel
+  // ==========================================
+
+  /** Category icon for MIME type groups */
+  const categoryIcon = (cat: MimeCategory) => {
+    switch (cat) {
+      case 'image': return <PiImageBold className="h-3 w-3" />;
+      case 'video': return <PiVideoCameraBold className="h-3 w-3" />;
+      case 'audio': return <PiSpeakerHighBold className="h-3 w-3" />;
+      default: return <PiFileBold className="h-3 w-3" />;
+    }
+  };
+
+  const categoryLabel: Record<MimeCategory, string> = {
+    image: 'Images', video: 'Videos', audio: 'Audio',
+    document: 'Documents', archive: 'Archives', other: 'Other',
+  };
+
+  return (
+    <div className="overflow-hidden rounded-lg border border-muted bg-gray-0 dark:bg-gray-50">
+      {/* ── Header ── */}
+      <div className="flex items-center justify-between border-b border-muted px-4 py-2.5">
+        <div className="flex items-center gap-2">
+          <PiFunnelBold className="h-4 w-4 text-primary" />
+          <Text className="text-sm font-semibold">Filters</Text>
+          {activeCount > 0 && (
+            <Badge variant="flat" color="primary" size="sm">{activeCount} active</Badge>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5">
+          {activeCount > 0 && (
+            <button
+              onClick={handleClear}
+              className="rounded px-2 py-1 text-[11px] font-medium text-red-500 transition-colors hover:bg-red-50 dark:hover:bg-red-950/30"
+            >
+              Clear all
+            </button>
+          )}
+          <ActionIcon variant="text" size="sm" onClick={onToggle} className="text-gray-400">
+            <PiXBold className="h-3.5 w-3.5" />
+          </ActionIcon>
+        </div>
+      </div>
+
+      <div className="space-y-0 divide-y divide-muted">
+        {/* ── Row 1: GPS + Date Range + Camera + Text Filters ── */}
+        <div className="flex flex-wrap items-start gap-x-6 gap-y-3 px-4 py-3">
+          {/* GPS Status */}
+          <div className="min-w-[140px]">
+            <FilterLabel icon={<PiGpsBold />} label="GPS Status" />
+            <div className="flex gap-1">
+              {([
+                { val: 'all' as const, label: 'All' },
+                { val: 'true' as const, label: 'With GPS' },
+                { val: 'false' as const, label: 'No GPS' },
+              ]).map(({ val, label }) => (
+                <button
+                  key={val}
+                  onClick={() => handleGpsChange(val)}
+                  className={cn(
+                    'rounded-md px-2.5 py-1 text-[11px] font-medium transition-all',
+                    local.hasGps === val
+                      ? 'bg-primary text-white shadow-sm'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-300'
+                  )}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Date Range */}
+          <div className="min-w-[240px]">
+            <FilterLabel icon={<PiCalendarBlankBold />} label="Date Range" />
+            <div className="flex items-center gap-1.5">
+              <input
+                type="date"
+                value={local.dateStart || ''}
+                onChange={(e) => handleDateStartChange(e.target.value)}
+                disabled={loading}
+                className="h-7 rounded border border-muted bg-transparent px-2 text-[11px] focus:border-primary focus:outline-none dark:border-gray-400"
+              />
+              <span className="text-[10px] text-gray-400">to</span>
+              <input
+                type="date"
+                value={local.dateEnd || ''}
+                onChange={(e) => handleDateEndChange(e.target.value)}
+                disabled={loading}
+                className="h-7 rounded border border-muted bg-transparent px-2 text-[11px] focus:border-primary focus:outline-none dark:border-gray-400"
+              />
+            </div>
+          </div>
+
+          {/* Camera */}
+          {availableCameras.length > 0 && (
+            <div className="min-w-[160px]">
+              <FilterLabel icon={<PiCameraBold />} label="Camera" />
+              <select
+                value={local.camera || ''}
+                onChange={(e) => handleCameraChange(e.target.value)}
+                disabled={loading}
+                className="h-7 w-full rounded border border-muted bg-transparent px-2 text-[11px] focus:border-primary focus:outline-none dark:border-gray-400"
+              >
+                <option value="">All cameras</option>
+                {availableCameras.map((cam) => (
+                  <option key={cam} value={cam}>{cam}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Filename */}
+          <div className="min-w-[160px]">
+            <FilterLabel icon={<PiTextTBold />} label="Filename" />
+            <div className="relative">
+              <PiMagnifyingGlassBold className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-gray-400" />
+              <input
+                value={local.filenameSearch || ''}
+                onChange={(e) => handleFilenameChange(e.target.value)}
+                disabled={loading}
+                placeholder="Search files..."
+                className="h-7 w-full rounded border border-muted bg-transparent pl-6 pr-2 text-[11px] placeholder:text-gray-400 focus:border-primary focus:outline-none dark:border-gray-400"
+              />
+            </div>
+          </div>
+
+          {/* Hostname */}
+          <div className="min-w-[140px]">
+            <FilterLabel icon={<PiDesktopBold />} label="Hostname" />
+            <input
+              value={local.hostname || ''}
+              onChange={(e) => handleHostnameChange(e.target.value)}
+              disabled={loading}
+              placeholder="Device..."
+              className="h-7 w-full rounded border border-muted bg-transparent px-2 text-[11px] placeholder:text-gray-400 focus:border-primary focus:outline-none dark:border-gray-400"
+            />
+          </div>
+        </div>
+
+        {/* ── Row 2: File Types (MIME) ── */}
+        {availableMimeTypes.length > 0 && (
+          <CollapsibleSection
+            title="File Types"
+            icon={<PiImageBold />}
+            count={local.mimeTypes.length}
+            collapsed={collapsedSections['mimeTypes']}
+            onToggle={() => toggleSection('mimeTypes')}
+          >
+            <div className="space-y-2">
+              {(Object.entries(mimeTypesByCategory) as [MimeCategory, Array<{ type: string; count: number }>][])
+                .filter(([, items]) => items.length > 0)
+                .map(([cat, items]) => (
+                  <div key={cat} className="flex flex-wrap items-center gap-1.5">
+                    <span className="flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-gray-400">
+                      {categoryIcon(cat)}
+                      {categoryLabel[cat]}
+                    </span>
+                    {items.map((m) => {
+                      const info = getMimeDisplayInfo(m.type);
+                      const isActive = local.mimeTypes.includes(m.type);
+                      return (
+                        <button
+                          key={m.type}
+                          onClick={() => handleMimeToggle(m.type)}
+                          title={m.type}
+                          className={cn(
+                            'inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium transition-all',
+                            isActive ? info.pillActiveClass : info.pillClass,
+                            'hover:shadow-sm'
+                          )}
+                        >
+                          {info.label}
+                          <span className={cn('text-[9px]', isActive ? 'opacity-80' : 'opacity-60')}>
+                            {compactNumber(m.count)}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                ))}
+            </div>
+          </CollapsibleSection>
+        )}
+
+        {/* ── Row 3: Tags ── */}
+        {availableTags.length > 0 && (
+          <CollapsibleSection
+            title="Tags"
+            icon={<PiTagBold />}
+            count={(local.tags || []).length}
+            collapsed={collapsedSections['tags']}
+            onToggle={() => toggleSection('tags')}
+          >
+            <TagFilterSection
+              tags={availableTags}
+              selected={local.tags || []}
+              onToggle={handleTagToggle}
+            />
+          </CollapsibleSection>
+        )}
+
+        {/* ── Row 4: Cases ── */}
+        {availableCases.length > 0 && (
+          <CollapsibleSection
+            title="Cases"
+            icon={<PiFoldersBold />}
+            count={(local.caseIds || []).length}
+            collapsed={collapsedSections['cases']}
+            onToggle={() => toggleSection('cases')}
+          >
+            <CaseSelectDropdown
+              available={availableCases}
+              selected={local.caseIds || []}
+              onChange={handleCaseChange}
+            />
+          </CollapsibleSection>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// Sub-Components
+// ==========================================
+
+/**
+ * FilterLabel — Tiny label with icon for filter sections.
+ */
+function FilterLabel({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <div className="mb-1.5 flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+      <span className="[&>svg]:h-3 [&>svg]:w-3">{icon}</span>
+      {label}
+    </div>
+  );
+}
+
+/**
+ * CollapsibleSection — Expandable filter section with title, icon, and active count.
+ */
+function CollapsibleSection({
+  title,
+  icon,
+  count,
+  collapsed,
+  onToggle,
+  children,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  count: number;
+  collapsed?: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <button
+        onClick={onToggle}
+        className="flex w-full items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-gray-50 dark:hover:bg-gray-100"
+      >
+        <PiCaretDownBold
+          className={cn(
+            'h-3 w-3 text-gray-400 transition-transform',
+            collapsed && '-rotate-90'
+          )}
+        />
+        <span className="[&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:text-gray-500">{icon}</span>
+        <Text className="text-xs font-semibold">{title}</Text>
+        {count > 0 && (
+          <Badge variant="flat" color="primary" size="sm" className="ml-auto h-4 min-w-[16px] px-1 text-[10px]">
+            {count}
+          </Badge>
+        )}
+      </button>
+      {!collapsed && (
+        <div className="px-4 pb-3">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ==========================================
+// TagFilterSection — Colored tag pills with search
+// ==========================================
+
+/**
+ * TagFilterSection — Renders tag pills with deterministic colors and counts.
+ *
+ * Features:
+ * - Colored pills based on tag name hash
+ * - Count badge per tag
+ * - Search box when >8 tags
+ * - Selected tags shown first
+ *
+ * @param tags - Available tags with counts from stats
+ * @param selected - Currently selected tag names
+ * @param onToggle - Called when a tag is toggled
+ */
+function TagFilterSection({
+  tags,
+  selected,
+  onToggle,
+}: {
+  tags: Array<{ name: string; count: number }>;
+  selected: string[];
+  onToggle: (tag: string) => void;
+}) {
+  const [search, setSearch] = useState('');
+
+  const filtered = useMemo(() => {
+    const term = search.toLowerCase();
+    const sorted = [...tags].sort((a, b) => {
+      // Selected tags first, then by count descending
+      const aSelected = selected.includes(a.name) ? 1 : 0;
+      const bSelected = selected.includes(b.name) ? 1 : 0;
+      if (aSelected !== bSelected) return bSelected - aSelected;
+      return b.count - a.count;
+    });
+    if (!term) return sorted;
+    return sorted.filter((t) => t.name.toLowerCase().includes(term));
+  }, [tags, selected, search]);
+
+  return (
+    <div>
+      {/* Search box for >8 tags */}
+      {tags.length > 8 && (
+        <div className="relative mb-2">
+          <PiMagnifyingGlassBold className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-gray-400" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={`Search ${tags.length} tags...`}
+            className="h-7 w-full max-w-xs rounded border border-muted bg-transparent pl-6 pr-2 text-[11px] placeholder:text-gray-400 focus:border-primary focus:outline-none dark:border-gray-400"
+          />
+        </div>
+      )}
+      <div className="flex flex-wrap gap-1.5">
+        {filtered.map((tag) => {
+          const isActive = selected.includes(tag.name);
+          const color = getTagColor(tag.name);
+          return (
+            <button
+              key={tag.name}
+              onClick={() => onToggle(tag.name)}
+              className={cn(
+                'inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium transition-all',
+                isActive
+                  ? color.active
+                  : `${color.bg} ${color.text}`,
+                'hover:shadow-sm'
+              )}
+            >
+              <PiTagBold className="h-2.5 w-2.5" />
+              {tag.name}
+              <span className={cn('text-[9px]', isActive ? 'opacity-80' : 'opacity-60')}>
+                {compactNumber(tag.count)}
+              </span>
+            </button>
+          );
+        })}
+        {filtered.length === 0 && search && (
+          <Text className="text-[11px] text-gray-400">No tags match &ldquo;{search}&rdquo;</Text>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// CaseSelectDropdown — Redesigned searchable multi-select
+// ==========================================
+
+/**
+ * CaseSelectDropdown — Searchable combobox for selecting multiple case IDs.
+ *
+ * Redesigned features:
+ * - Styled chips with case count badges
+ * - Scrollable horizontal chip area
+ * - Click on chip removes it
+ * - Dropdown with checkboxes and file counts
+ * - Click-outside closes dropdown
+ *
+ * @param available - All case IDs with counts from stats aggregation
+ * @param selected - Currently selected case IDs
+ * @param onChange - Called when selection changes
+ */
+function CaseSelectDropdown({
+  available,
+  selected,
+  onChange,
+}: {
+  available: Array<{ id: string; count: number }>;
+  selected: string[];
+  onChange: (ids: string[]) => void;
+}) {
+  const [search, setSearch] = useState('');
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+        setSearch('');
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open]);
+
+  const filtered = useMemo(
+    () => available.filter((c) => c.id.toLowerCase().includes(search.toLowerCase())),
+    [available, search]
+  );
+
+  const toggle = (id: string) => {
+    onChange(selected.includes(id) ? selected.filter((s) => s !== id) : [...selected, id]);
+  };
+
+  return (
+    <div ref={containerRef} className="relative max-w-lg">
+      {/* Selected chips */}
+      {selected.length > 0 && (
+        <div className="mb-2 flex items-center gap-1.5">
+          <div className="flex flex-1 flex-wrap items-center gap-1">
+            {selected.map((id) => {
+              const caseInfo = available.find((c) => c.id === id);
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => toggle(id)}
+                  className="group flex items-center gap-1 rounded-md border border-primary/20 bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
+                >
+                  <PiFoldersBold className="h-3 w-3 shrink-0" />
+                  <span className="max-w-[120px] truncate">{id}</span>
+                  {caseInfo && (
+                    <span className="text-[9px] opacity-60">{compactNumber(caseInfo.count)}</span>
+                  )}
+                  <PiXBold className="h-2.5 w-2.5 shrink-0 opacity-40 group-hover:opacity-100" />
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => { onChange([]); setSearch(''); }}
+            className="shrink-0 rounded px-1.5 py-0.5 text-[10px] text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-200"
+          >
+            Clear
+          </button>
+        </div>
+      )}
+
+      {/* Search input */}
+      <div className="relative">
+        <PiMagnifyingGlassBold className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-gray-400" />
+        <input
+          className="h-7 w-full rounded border border-muted bg-transparent pl-6 pr-16 text-[11px] placeholder:text-gray-400 focus:border-primary focus:outline-none dark:border-gray-400"
+          placeholder={selected.length > 0 ? `${selected.length} case${selected.length > 1 ? 's' : ''} selected` : 'Search cases...'}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onFocus={() => setOpen(true)}
+        />
+        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-gray-400">
+          {filtered.length}/{available.length}
+        </span>
+      </div>
+
+      {/* Dropdown */}
+      {open && (
+        <div className="absolute top-full z-50 mt-1 max-h-56 w-full overflow-auto rounded-lg border border-muted bg-gray-0 shadow-lg dark:bg-gray-50">
+          {filtered.length === 0 ? (
+            <div className="px-3 py-2.5 text-[11px] text-gray-400">
+              No cases match &ldquo;{search}&rdquo;
+            </div>
+          ) : (
+            filtered.map((c) => {
+              const isSelected = selected.includes(c.id);
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => toggle(c.id)}
+                  className={cn(
+                    'flex w-full items-center gap-2 px-3 py-2 text-left transition-colors',
+                    'hover:bg-gray-50 dark:hover:bg-gray-100',
+                    isSelected && 'bg-primary/5'
+                  )}
+                >
+                  {/* Checkbox visual */}
+                  <span
+                    className={cn(
+                      'flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border transition-colors',
+                      isSelected ? 'border-primary bg-primary' : 'border-gray-300 dark:border-gray-500'
+                    )}
+                  >
+                    {isSelected && (
+                      <svg viewBox="0 0 10 8" className="h-2 w-2" fill="none">
+                        <path d="M1 4l2.5 2.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </span>
+                  <PiFoldersBold className="h-3 w-3 shrink-0 text-gray-400" />
+                  <Text className="flex-1 truncate text-[11px]" title={c.id}>{c.id}</Text>
+                  <Badge variant="flat" className="ml-auto h-4 shrink-0 px-1.5 text-[9px]">
+                    {compactNumber(c.count)} files
+                  </Badge>
+                </button>
+              );
+            })
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

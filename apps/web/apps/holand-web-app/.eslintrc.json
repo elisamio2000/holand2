@@ -1,0 +1,24 @@
+{
+  "extends": "next/core-web-vitals",
+  "ignorePatterns": ["src/env.mjs"],
+  "rules": {
+    // "no-undef": "error",
+    // "no-unused-vars": "warn",
+    "no-duplicate-imports": "warn",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "rizzui",
+            "importNames": ["Tooltip"],
+            "message": "Use @/components/tooltip (SmartTooltip) instead of rizzui Tooltip."
+          }
+        ]
+      }
+    ],
+    // "import/no-unresolved": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/no-unknown-property": "error"
+  }
+}

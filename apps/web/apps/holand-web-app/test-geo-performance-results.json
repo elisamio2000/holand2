@@ -1,0 +1,36 @@
+﻿{
+    "timestamp":  "2026-04-12T04:58:40.5495634-07:00",
+    "tests":  {
+                  "concurrent":  {
+                                     "cacheHitRate":  0,
+                                     "totalRequests":  10,
+                                     "successCount":  0,
+                                     "throughput":  4.66,
+                                     "avgDuration":  null,
+                                     "totalDuration":  2146.3594000000003
+                                 },
+                  "endpoints":  [
+                                    {
+                                        "duration":  null,
+                                        "name":  "Health Check",
+                                        "success":  false
+                                    },
+                                    {
+                                        "duration":  null,
+                                        "name":  "Geo Files (page 1)",
+                                        "success":  false
+                                    },
+                                    {
+                                        "duration":  null,
+                                        "name":  "Geo Cluster",
+                                        "success":  false
+                                    }
+                                ],
+                  "filterStats":  {
+                                      "tests":  [
+
+                                                ],
+                                      "uniqueHashes":  0
+                                  }
+              }
+}

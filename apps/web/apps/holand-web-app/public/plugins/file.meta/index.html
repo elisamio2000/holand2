@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>file.meta</title>
+    <link rel="stylesheet" href="ui.css" />
+
+    <!-- React 18 — local/offline (no CDN) -->
+    <script src="react.production.min.js"></script>
+    <script src="react-dom.production.min.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- Plugin UI (sets window.ToolUI) -->
+    <script src="tool.js"></script>
+
+    <!-- PostMessage bridge for PluginViewer integration -->
+    <script>
+      (function () {
+        'use strict';
+
+        var mountEl = document.getElementById('app');
+
+        /**
+         * Render tool.js UI with the provided run payload.
+         * Waits until window.ToolUI is available (tool.js already loaded synchronously).
+         */
+        function renderWithData(runPayload) {
+          if (window.ToolUI && typeof window.ToolUI.render === 'function') {
+            console.log('[file.meta] Rendering with data', { ok: runPayload && runPayload.ok });
+            window.ToolUI.render({ mount: mountEl, run: runPayload });
+          } else {
+            console.error('[file.meta] ToolUI not available — tool.js may have failed to load');
+          }
+        }
+
+        // Listen for data from PluginViewer (parent Next.js frame)
+        window.addEventListener('message', function (event) {
+          if (!event.data || event.data.type !== 'pluginData') return;
+          console.log('[file.meta] postMessage received:', { pluginId: event.data.pluginId });
+          renderWithData(event.data.data);
+        });
+
+        // Notify parent that we are ready (so PluginViewer can send data even if it
+        // sent the message before the iframe finished loading)
+        window.addEventListener('DOMContentLoaded', function () {
+          if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type: 'pluginReady', pluginId: 'file.meta' }, '*');
+            console.log('[file.meta] Sent pluginReady to parent');
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
