@@ -12,8 +12,9 @@ from alembic import context
 # ── Import all models so Alembic can detect them ────────────────────────────
 # Keep this import block up-to-date as new model files are added.
 from app.models.base import Base  # noqa: F401
-# Phase 1 models — uncomment after creating each file:
-# from app.models.user import User  # noqa: F401
+# Phase 1 models:
+from app.models.refresh_token import RefreshToken  # noqa: F401
+from app.models.user import User  # noqa: F401
 # Phase 2 models:
 # from app.models.assessment import (  # noqa: F401
 #     Assessment, AssessmentVersion, Question, QuestionOption, ScoringFormula,
