@@ -1,0 +1,108 @@
+name: holand
+
+services:
+  # ── PostgreSQL ─────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: holand-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: holand_db
+      POSTGRES_USER: holand
+      POSTGRES_PASSWORD: holand_dev_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U holand -d holand_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Redis ──────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: holand-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── FastAPI (apps/api) ─────────────────────────────────────────────────
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: holand-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      DEBUG: "true"
+      APP_SECRET_KEY: dev-secret-key-change-in-production
+      DATABASE_URL: postgresql+asyncpg://holand:holand_dev_pass@postgres:5432/holand_db
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET_KEY: dev-jwt-secret-change-in-production
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "15"
+      JWT_REFRESH_TOKEN_EXPIRE_DAYS: "7"
+      CORS_ORIGINS: "http://localhost:3000,http://web:3000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/app
+      - api_storage:/app/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ── Next.js (apps/web) ─────────────────────────────────────────────────
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: holand-web
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      PORT: "3000"
+      NODE_ENV: development
+      NEXTAUTH_SECRET: dev-nextauth-secret-change-in-production
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_URL_INTERNAL: http://web:3000
+      NEXTAUTH_TRUST_HOST: "true"
+      AUTH_API_URL: http://api:8000
+      NEXT_PUBLIC_API_GATEWAY_URL: http://localhost:8000
+      API_GATEWAY_URL: http://api:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/apps/holand-web-app/.next
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  postgres_data:
+  redis_data:
+  api_storage:
