@@ -265,6 +265,18 @@ class FunnelSummaryResponse(BaseModel):
     drop_off_rate: dict[str, float]
 
 
+class ReportQualityStepSummary(BaseModel):
+    step: str
+    event_count: int
+    unique_sessions: int
+    avg_duration_ms: float | None
+
+
+class ReportQualitySummaryResponse(BaseModel):
+    total_sessions: int
+    steps: list[ReportQualityStepSummary]
+
+
 # ── Expert Lab (draft / review / publish workflow) ──────────────────────────
 
 
@@ -347,4 +359,3 @@ class MonitoringMetricsResponse(BaseModel):
     requests_total: int
     error_responses_total: int
     by_path: dict[str, int]
-

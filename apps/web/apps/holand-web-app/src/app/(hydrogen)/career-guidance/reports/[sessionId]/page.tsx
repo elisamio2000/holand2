@@ -11,20 +11,15 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { Badge, Text, Title } from 'rizzui';
 import WidgetCard from '@core/components/cards/widget-card';
-import DimensionRadarChart from '@/app/shared/assessment/charts/dimension-radar-chart';
-import DimensionBars from '@/app/shared/assessment/charts/dimension-bars';
 import { reportService } from '@/services/report.service';
-import type { AssessmentReport } from '@/types/assessment.types';
+import { analyticsService } from '@/services/analytics.service';
+import type { GeneratedReportResponse } from '@/services/report.service';
 
-const HORIZON_LABEL: Record<string, string> = {
-  '3m': '۳ ماه آینده',
-  '6m': '۶ ماه آینده',
-  '12m': '۱۲ ماه آینده',
-};
+const safeList = (items?: string[]) => (items && items.length ? items : ['—']);
 
 export default function FullReportPage() {
   const params = useParams<{ sessionId: string }>();
-  const [report, setReport] = useState<AssessmentReport | null>(null);
+  const [report, setReport] = useState<GeneratedReportResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +27,7 @@ export default function FullReportPage() {
     let cancelled = false;
     setIsLoading(true);
     reportService
-      .getReport(params.sessionId)
+      .getGeneratedReport(params.sessionId)
       .then((data) => {
         if (!cancelled) setReport(data);
       })
@@ -46,6 +41,37 @@ export default function FullReportPage() {
       cancelled = true;
     };
   }, [params.sessionId]);
+
+  useEffect(() => {
+    analyticsService
+      .trackEvent({
+        session_id: params.sessionId,
+        event_name: 'report_opened',
+        step: 'report_opened',
+      })
+      .catch(() => undefined);
+  }, [params.sessionId]);
+
+  useEffect(() => {
+    if (!report) return;
+    Promise.allSettled([
+      analyticsService.trackEvent({
+        session_id: params.sessionId,
+        event_name: 'report_interpretation_viewed',
+        step: 'report_interpretation_viewed',
+      }),
+      analyticsService.trackEvent({
+        session_id: params.sessionId,
+        event_name: 'report_action_plan_viewed',
+        step: 'report_action_plan_viewed',
+      }),
+      analyticsService.trackEvent({
+        session_id: params.sessionId,
+        event_name: 'report_recommendations_viewed',
+        step: 'report_recommendations_viewed',
+      }),
+    ]).catch(() => undefined);
+  }, [params.sessionId, report]);
 
   if (isLoading) {
     return (
@@ -68,123 +94,156 @@ export default function FullReportPage() {
       <Title as="h1" className="text-2xl font-bold text-gray-900 sm:text-3xl">
         گزارش کامل هدایت شغلی
       </Title>
+      <Text className="mt-3 text-sm leading-7 text-gray-600">{report.summary_card.headline_fa}</Text>
       <div className="mt-3 flex flex-wrap gap-3">
-        {report.holland && (
-          <Badge variant="flat" color="success" className="px-4 py-2 text-sm">
-            کد هالند: {report.holland.top3Code}
-          </Badge>
-        )}
-        {report.mbti && (
-          <Badge variant="flat" color="info" className="px-4 py-2 text-sm">
-            تیپ MBTI: {report.mbti.typeCode}
-          </Badge>
-        )}
+        <Badge variant="flat" color="success" className="px-4 py-2 text-sm">
+          کد هالند: {report.holland_code}
+        </Badge>
+        <Badge variant="flat" color="info" className="px-4 py-2 text-sm">
+          تیپ MBTI: {report.mbti_type}
+        </Badge>
+        <Badge variant="flat" color="secondary" className="px-4 py-2 text-sm">
+          گروه سنی: {report.age_band}
+        </Badge>
       </div>
 
-      {/* Dimension charts */}
-      <section className="mt-8 grid gap-6 lg:grid-cols-2">
-        {report.holland && (
-          <>
-            <DimensionRadarChart title="نمودار هالند (RIASEC)" dimensions={report.holland.dimensions} />
-            <WidgetCard title="جزئیات ابعاد هالند">
-              <div className="mt-5">
-                <DimensionBars dimensions={report.holland.dimensions} />
-              </div>
-            </WidgetCard>
-          </>
-        )}
-        {report.mbti && (
-          <>
-            <DimensionRadarChart title="نمودار MBTI" dimensions={report.mbti.dimensions} />
-            <WidgetCard title="جزئیات ابعاد MBTI">
-              <div className="mt-5">
-                <DimensionBars dimensions={report.mbti.dimensions} barColorClassName="bg-indigo-500" />
-              </div>
-            </WidgetCard>
-          </>
-        )}
-      </section>
-
-      {/* Strengths / growth areas */}
       <section className="mt-8 grid gap-6 sm:grid-cols-2">
-        <WidgetCard title="نقاط قوت">
+        <WidgetCard title="خلاصه پیشنهادهای شغلی">
           <ul className="mt-4 space-y-2 text-sm leading-6 text-gray-700">
-            {report.strengths.map((item) => (
-              <li key={item} className="rounded-lg bg-emerald-50 px-4 py-3">
+            {safeList(report.summary_card.top_careers_fa).map((item, idx) => (
+              <li key={`${item}-${idx}`} className="rounded-lg bg-emerald-50 px-4 py-3">
                 {item}
               </li>
             ))}
           </ul>
         </WidgetCard>
-        <WidgetCard title="نقاط قابل رشد">
+        <WidgetCard title="خلاصه پیشنهادهای تحصیلی">
           <ul className="mt-4 space-y-2 text-sm leading-6 text-gray-700">
-            {report.growthAreas.length ? (
-              report.growthAreas.map((item) => (
-                <li key={item} className="rounded-lg bg-amber-50 px-4 py-3">
-                  {item}
+            {safeList(report.summary_card.top_majors_fa).map((item, idx) => (
+              <li key={`${item}-${idx}`} className="rounded-lg bg-indigo-50 px-4 py-3">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </WidgetCard>
+      </section>
+
+      <section className="mt-8 grid gap-6 sm:grid-cols-2">
+        <WidgetCard title="تفسیر روان‌سنجی">
+          <Text className="mt-3 text-sm leading-7 text-gray-700">
+            {report.detailed_interpretation.psychometric_fa || '—'}
+          </Text>
+        </WidgetCard>
+        <WidgetCard title="تناسب رفتاری و محیط کاری">
+          <Text className="mt-3 text-sm leading-7 text-gray-700">
+            {report.detailed_interpretation.behavioral_fit_fa || '—'}
+          </Text>
+        </WidgetCard>
+      </section>
+
+      <section className="mt-8 grid gap-6 sm:grid-cols-2">
+        <WidgetCard title="تحلیل مسیر شغلی/تحصیلی">
+          <Text className="mt-3 text-sm leading-7 text-gray-700">
+            {report.detailed_interpretation.career_major_fa || '—'}
+          </Text>
+        </WidgetCard>
+        <WidgetCard title="رشد مهارتی">
+          <Text className="mt-3 text-sm leading-7 text-gray-700">
+            {report.detailed_interpretation.skill_growth_fa || '—'}
+          </Text>
+        </WidgetCard>
+      </section>
+
+      <section className="mt-8 grid gap-6 sm:grid-cols-2">
+        <WidgetCard title="پیشنهاد مسیرهای شغلی">
+          <ul className="mt-4 space-y-3">
+            {(report.recommendations.careers.length ? report.recommendations.careers : []).map(
+              (item) => (
+                <li key={item.title_fa} className="rounded-lg border border-muted p-4">
+                  <div className="flex items-center justify-between">
+                    <Text className="font-semibold text-gray-900">{item.title_fa}</Text>
+                    <Text className="text-xs font-semibold text-emerald-700">
+                      {Math.round(item.fit_score)}٪ تطابق
+                    </Text>
+                  </div>
+                  <Text className="mt-1 text-xs leading-5 text-gray-500">{item.why_fa}</Text>
                 </li>
-              ))
-            ) : (
+              )
+            )}
+            {!report.recommendations.careers.length && (
+              <li className="rounded-lg bg-gray-50 px-4 py-3 text-gray-500">موردی ثبت نشده است.</li>
+            )}
+          </ul>
+        </WidgetCard>
+        <WidgetCard title="پیشنهاد رشته‌های تحصیلی">
+          <ul className="mt-4 space-y-3">
+            {(report.recommendations.majors.length ? report.recommendations.majors : []).map((item) => (
+              <li key={item.title_fa} className="rounded-lg border border-muted p-4">
+                <div className="flex items-center justify-between">
+                  <Text className="font-semibold text-gray-900">{item.title_fa}</Text>
+                  <Text className="text-xs font-semibold text-indigo-700">
+                    {Math.round(item.fit_score)}٪ تطابق
+                  </Text>
+                </div>
+                <Text className="mt-1 text-xs leading-5 text-gray-500">{item.why_fa}</Text>
+              </li>
+            ))}
+            {!report.recommendations.majors.length && (
               <li className="rounded-lg bg-gray-50 px-4 py-3 text-gray-500">موردی ثبت نشده است.</li>
             )}
           </ul>
         </WidgetCard>
       </section>
 
-      {/* Recommendations */}
-      <section className="mt-8 grid gap-6 sm:grid-cols-2">
-        <WidgetCard title="پیشنهاد مسیرهای شغلی">
-          <ul className="mt-4 space-y-3">
-            {report.careers.map((item) => (
-              <li key={item.title} className="rounded-lg border border-muted p-4">
-                <div className="flex items-center justify-between">
-                  <Text className="font-semibold text-gray-900">{item.title}</Text>
-                  <Text className="text-xs font-semibold text-emerald-700">
-                    {Math.round(item.fitScore * 100)}٪ تطابق
-                  </Text>
-                </div>
-                <Text className="mt-1 text-xs leading-5 text-gray-500">{item.why}</Text>
-              </li>
-            ))}
-          </ul>
-        </WidgetCard>
-        <WidgetCard title="پیشنهاد رشته‌های تحصیلی">
-          <ul className="mt-4 space-y-3">
-            {report.majors.map((item) => (
-              <li key={item.title} className="rounded-lg border border-muted p-4">
-                <div className="flex items-center justify-between">
-                  <Text className="font-semibold text-gray-900">{item.title}</Text>
-                  <Text className="text-xs font-semibold text-indigo-700">
-                    {Math.round(item.fitScore * 100)}٪ تطابق
-                  </Text>
-                </div>
-                <Text className="mt-1 text-xs leading-5 text-gray-500">{item.why}</Text>
-              </li>
-            ))}
-          </ul>
-        </WidgetCard>
-      </section>
-
-      {/* Action plan */}
       <section className="mt-8">
         <WidgetCard title="برنامه اقدام مرحله‌ای">
           <div className="mt-5 grid gap-4 sm:grid-cols-3">
-            {report.actionPlan.map((step) => (
-              <div key={step.horizon} className="rounded-xl border border-muted p-4">
-                <Text className="text-xs font-semibold uppercase tracking-wide text-emerald-700">
-                  {HORIZON_LABEL[step.horizon] ?? step.horizon}
-                </Text>
-                <Text className="mt-2 font-semibold text-gray-900">{step.title}</Text>
-                <Text className="mt-1 text-xs leading-5 text-gray-500">{step.description}</Text>
-              </div>
-            ))}
+            <div className="rounded-xl border border-muted p-4">
+              <Text className="text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                ۳ ماه آینده
+              </Text>
+              <ul className="mt-2 space-y-2 text-xs leading-5 text-gray-600">
+                {safeList(report.action_plan.short_term_3_months_fa).map((item, idx) => (
+                  <li key={`st-${idx}`}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl border border-muted p-4">
+              <Text className="text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                ۶ ماه آینده
+              </Text>
+              <ul className="mt-2 space-y-2 text-xs leading-5 text-gray-600">
+                {safeList(report.action_plan.mid_term_6_months_fa).map((item, idx) => (
+                  <li key={`mt-${idx}`}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl border border-muted p-4">
+              <Text className="text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                ۱۲ ماه آینده
+              </Text>
+              <ul className="mt-2 space-y-2 text-xs leading-5 text-gray-600">
+                {safeList(report.action_plan.long_term_12_months_fa).map((item, idx) => (
+                  <li key={`lt-${idx}`}>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </WidgetCard>
       </section>
 
-      {/* Disclaimer */}
       <section className="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-5">
-        <Text className="text-xs leading-6 text-amber-800">⚠️ {report.disclaimer}</Text>
+        <ul className="space-y-2 text-xs leading-6 text-amber-800">
+          {safeList(report.risk_flags).map((flag, idx) => (
+            <li key={`risk-${idx}`}>⚠️ {flag}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-4 rounded-xl border border-muted bg-white p-5">
+        <Text className="text-xs leading-6 text-gray-700">
+          امتیاز اطمینان گزارش: <span className="font-semibold">{Math.round(report.confidence_score)}٪</span>
+        </Text>
       </section>
     </main>
   );

@@ -12,8 +12,6 @@ Output shape: Summary Card, Detailed Interpretation, Action Plan
 cautious, non-deterministic language (section 7.3 / job-taxonomy doc section 7).
 """
 
-from typing import Dict
-
 from ..schemas import (
     ActionPlan,
     LayeredInterpretation,
@@ -61,13 +59,28 @@ _AGE_BAND_NOTE_FA = {
 }
 
 
-def _certainty_avg(certainty: Dict[str, float]) -> float:
+def _certainty_avg(certainty: dict[str, float]) -> float:
     if not certainty:
         return 50.0
     return sum(certainty.values()) / len(certainty)
 
 
-def _describe_holland(top3_code: str, normalized_scores: Dict[str, float]) -> str:
+def _mbti_borderline_pairs(certainty: dict[str, float]) -> list[str]:
+    borderline: list[str] = []
+    for pair, value in certainty.items():
+        if abs(value - 50.0) <= 5.0:
+            borderline.append(pair)
+    return borderline
+
+
+def _holland_is_flat(normalized_scores: dict[str, float]) -> bool:
+    if not normalized_scores:
+        return True
+    values = [float(v) for v in normalized_scores.values()]
+    return (max(values) - min(values)) < 12.0
+
+
+def _describe_holland(top3_code: str, normalized_scores: dict[str, float]) -> str:
     parts = []
     for letter in top3_code:
         pct = normalized_scores.get(letter)
@@ -83,7 +96,7 @@ def _describe_holland(top3_code: str, normalized_scores: Dict[str, float]) -> st
     )
 
 
-def _describe_mbti(mbti_type: str, certainty: Dict[str, float]) -> str:
+def _describe_mbti(mbti_type: str, certainty: dict[str, float]) -> str:
     letters = list(mbti_type)
     descs = [_MBTI_LETTER_FA.get(letter, letter) for letter in letters]
     avg_certainty = _certainty_avg(certainty)
@@ -164,17 +177,31 @@ def _skill_growth_fa(recommendations: RecommendationResponseV2) -> str:
 
 def build_interpretation(
     holland_code: str,
-    normalized_scores: Dict[str, float],
+    normalized_scores: dict[str, float],
     mbti_type: str,
-    mbti_certainty: Dict[str, float],
+    mbti_certainty: dict[str, float],
     age_band: str,
     recommendations: RecommendationResponseV2,
 ) -> LayeredInterpretation:
+    borderline_pairs = _mbti_borderline_pairs(mbti_certainty)
+    borderline_note = (
+        " در برخی دوگانه‌ها پاسخ‌ها به مرز نزدیک بوده‌اند؛ نتیجه بهتر است همراه با مشاهده رفتار واقعی شما تفسیر شود."
+        if borderline_pairs
+        else ""
+    )
+    holland_flat_note = (
+        " پراکندگی رغبت‌ها نسبتا یکنواخت است؛ بنابراین بهتر است این نتیجه را بیشتر به‌عنوان نقشه اکتشافی اولیه ببینید."
+        if _holland_is_flat(normalized_scores)
+        else ""
+    )
+
     return LayeredInterpretation(
         psychometric_fa=(
             _describe_holland(holland_code, normalized_scores)
             + " "
             + _describe_mbti(mbti_type, mbti_certainty)
+            + borderline_note
+            + holland_flat_note
         ),
         behavioral_fit_fa=_behavioral_fit_fa(holland_code, mbti_type),
         career_major_fa=_career_major_fa(recommendations) + " " + _AGE_BAND_NOTE_FA.get(age_band, ""),
@@ -232,9 +259,12 @@ def build_action_plan(recommendations: RecommendationResponseV2, age_band: str) 
 
 def build_risk_flags(
     holland_certainty_avg: float,
-    mbti_certainty: Dict[str, float],
+    mbti_certainty: dict[str, float],
     age_band: str,
     recommendations: RecommendationResponseV2,
+    normalized_scores: dict[str, float] | None = None,
+    holland_quality_score: float | None = None,
+    mbti_quality_score: float | None = None,
 ) -> list[str]:
     flags = [
         "این ابزار یک غربالگری روان‌سنجی است، نه یک تشخیص قطعی یا حکم نهایی درباره آینده شما.",
@@ -247,6 +277,18 @@ def build_risk_flags(
         )
     if holland_certainty_avg < 60:
         flags.append("پراکندگی نمرات رغبت نسبتا کم است؛ توصیه می‌شود بعدا دوباره آزمون را تکمیل کنید.")
+    if normalized_scores is not None and _holland_is_flat(normalized_scores):
+        flags.append(
+            "نمرات رغبت شما به هم نزدیک هستند؛ برای تصمیم‌گیری دقیق‌تر، تجربه‌های عملی کوتاه‌مدت را هم به ارزیابی اضافه کنید."
+        )
+    if _mbti_borderline_pairs(mbti_certainty):
+        flags.append(
+            "در بخشی از دوگانه‌های شخصیتی پاسخ‌ها نزدیک مرز بوده‌اند؛ نتیجه MBTI باید با احتیاط و همراه با بازبینی دوره‌ای تفسیر شود."
+        )
+    if holland_quality_score is not None and holland_quality_score < 45:
+        flags.append("کیفیت سیگنال پاسخ‌های رغبت پایین است؛ تکرار آزمون در شرایط تمرکز بهتر توصیه می‌شود.")
+    if mbti_quality_score is not None and mbti_quality_score < 45:
+        flags.append("کیفیت سیگنال پاسخ‌های شخصیت پایین است؛ بهتر است آزمون MBTI در زمان دیگری دوباره تکمیل شود.")
 
     if age_band == "13-17":
         flags.append(_AGE_BAND_NOTE_FA["13-17"])
@@ -263,9 +305,30 @@ def build_risk_flags(
 
 def build_confidence_score(
     holland_certainty_avg: float,
-    mbti_certainty: Dict[str, float],
+    mbti_certainty: dict[str, float],
     recommendations_confidence: float,
+    holland_quality_score: float | None = None,
+    mbti_quality_score: float | None = None,
 ) -> float:
     avg_mbti_certainty = _certainty_avg(mbti_certainty)
-    combined = (holland_certainty_avg + avg_mbti_certainty + recommendations_confidence) / 3
-    return round(min(max(combined, 20.0), 99.0), 1)
+    signal_quality = (
+        (holland_quality_score + mbti_quality_score) / 2
+        if holland_quality_score is not None and mbti_quality_score is not None
+        else 50.0
+    )
+    weighted = (
+        holland_certainty_avg * 0.30
+        + avg_mbti_certainty * 0.30
+        + recommendations_confidence * 0.25
+        + signal_quality * 0.15
+    )
+
+    penalty = 0.0
+    if avg_mbti_certainty < 60 or holland_certainty_avg < 60:
+        penalty += 6.0
+    if signal_quality < 45:
+        penalty += 8.0
+    if _mbti_borderline_pairs(mbti_certainty):
+        penalty += 4.0
+
+    return round(min(max(weighted - penalty, 20.0), 95.0), 1)
