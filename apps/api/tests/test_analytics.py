@@ -52,3 +52,27 @@ class TestFunnelEvents:
         assert steps_by_name["start"]["unique_sessions"] == 2
         assert steps_by_name["complete"]["unique_sessions"] == 1
         assert body["drop_off_rate"]["start->in_progress"] == 100.0
+
+    @pytest.mark.asyncio
+    async def test_report_quality_summary_filters_report_steps(self, client):
+        await client.post(
+            "/analytics/events",
+            json={"session_id": "r1", "event_name": "view", "step": "report_opened"},
+        )
+        await client.post(
+            "/analytics/events",
+            json={"session_id": "r1", "event_name": "view", "step": "report_action_plan_viewed"},
+        )
+        await client.post(
+            "/analytics/events",
+            json={"session_id": "f1", "event_name": "view", "step": "start"},
+        )
+
+        response = await client.get("/analytics/report-quality")
+        assert response.status_code == 200
+        body = response.json()
+        assert body["total_sessions"] == 1
+        steps_by_name = {s["step"]: s for s in body["steps"]}
+        assert steps_by_name["report_opened"]["event_count"] == 1
+        assert steps_by_name["report_action_plan_viewed"]["event_count"] == 1
+        assert steps_by_name["report_recommendations_viewed"]["event_count"] == 0

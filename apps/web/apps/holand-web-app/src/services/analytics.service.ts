@@ -3,7 +3,12 @@
 // ============================================
 
 import { holandApiClient } from './holand-api-client';
-import type { FunnelEvent, FunnelEventCreateInput, FunnelSummaryResponse } from '@/types/analytics.types';
+import type {
+  FunnelEvent,
+  FunnelEventCreateInput,
+  FunnelSummaryResponse,
+  ReportQualitySummaryResponse,
+} from '@/types/analytics.types';
 
 export const analyticsService = {
   async trackEvent(payload: FunnelEventCreateInput): Promise<FunnelEvent> {
@@ -13,6 +18,13 @@ export const analyticsService = {
 
   async getFunnelSummary(): Promise<FunnelSummaryResponse> {
     const { data } = await holandApiClient.get<FunnelSummaryResponse>('/analytics/funnel');
+    return data;
+  },
+
+  async getReportQualitySummary(): Promise<ReportQualitySummaryResponse> {
+    const { data } = await holandApiClient.get<ReportQualitySummaryResponse>(
+      '/analytics/report-quality'
+    );
     return data;
   },
 };
