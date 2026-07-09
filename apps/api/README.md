@@ -19,6 +19,14 @@ uvicorn app.main:app --reload --port 8000
 - POST /assessments/holland/score
 - POST /assessments/mbti/score
 - POST /recommendations
+- GET /recommendations/catalog/jobs
+- GET /recommendations/catalog/majors
+- POST /reports/generate
+- GET /reports/{report_id}
+
+## Seed taxonomy dataset
+
+python -m app.scripts.seed_jobs
 
 Swagger UI:
 

@@ -32,11 +32,25 @@ async def db_session():
 
     TestSession = async_sessionmaker(engine, expire_on_commit=False)
     async with TestSession() as session:
+        await _seed_taxonomy(session)
         yield session
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
     await engine.dispose()
+
+
+async def _seed_taxonomy(session: AsyncSession) -> None:
+    """Seed the jobs/majors taxonomy so recommendation/report tests have data."""
+    from app.data.jobs_dataset import JOBS_DATASET
+    from app.data.majors_dataset import MAJORS_DATASET
+    from app.models.job import Job, Major
+
+    for entry in JOBS_DATASET:
+        session.add(Job(**entry))
+    for entry in MAJORS_DATASET:
+        session.add(Major(**entry))
+    await session.commit()
 
 
 @pytest_asyncio.fixture(scope="function")

@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
 from .database import engine
-from .recommendations import build_recommendations
+from .routers.recommendations import router as reco_router
+from .routers.reports import router as reports_router
 from .scoring import score_holland, score_mbti
 from .schemas import (
     HealthResponse,
@@ -15,8 +16,6 @@ from .schemas import (
     HollandResult,
     MbtiRequest,
     MbtiResult,
-    RecommendationRequest,
-    RecommendationResponse,
 )
 
 settings = get_settings()
@@ -57,8 +56,9 @@ app.add_middleware(
 # Phase 1: from .routers.auth import router as auth_router; app.include_router(auth_router)
 # Phase 1: from .routers.users import router as users_router; app.include_router(users_router)
 # Phase 3: from .routers.sessions import router as sessions_router; app.include_router(sessions_router)
-# Phase 4: from .routers.recommendations import router as reco_router; app.include_router(reco_router)
-# Phase 5: from .routers.reports import router as reports_router; app.include_router(reports_router)
+
+app.include_router(reco_router)
+app.include_router(reports_router)
 
 
 @app.get("/health", response_model=HealthResponse, tags=["System"])
@@ -82,9 +82,3 @@ def mbti_score(payload: MbtiRequest) -> MbtiResult:
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     return MbtiResult(type_code=type_code, certainty=certainty)
-
-
-@app.post("/recommendations", response_model=RecommendationResponse, tags=["Recommendations"])
-def recommendations(payload: RecommendationRequest) -> RecommendationResponse:
-    careers, majors = build_recommendations(payload.holland_code, payload.mbti_type)
-    return RecommendationResponse(careers=careers, majors=majors)

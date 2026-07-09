@@ -20,11 +20,10 @@ from app.models.base import Base  # noqa: F401
 # )
 # Phase 3 models:
 # from app.models.session import AssessmentSession, SessionAnswer, SessionResult  # noqa: F401
-# Phase 4 models:
-# from app.models.job import Job, Major  # noqa: F401
-# from app.models.recommendation import Recommendation  # noqa: F401
+from app.models.job import Job, Major  # noqa: F401
+from app.models.recommendation import Recommendation  # noqa: F401
 # Phase 5 models:
-# from app.models.report import Report  # noqa: F401
+from app.models.report import Report  # noqa: F401
 # Phase 9 models:
 # from app.models.event import Event  # noqa: F401
 
