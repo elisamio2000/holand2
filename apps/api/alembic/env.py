@@ -3,23 +3,31 @@
 import asyncio
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from alembic import context
+from app.config import get_settings
+
+# Phase 1 models — uncomment after creating each file:
+# from app.models.user import User  # noqa: F401
+# Phase 2 models:
+from app.models.assessment import (  # noqa: F401
+    AssessmentVersion,
+    Question,
+    QuestionOption,
+    ScoringFormulaVersion,
+    VersionAuditLog,
+)
 
 # ── Import all models so Alembic can detect them ────────────────────────────
 # Keep this import block up-to-date as new model files are added.
 from app.models.base import Base  # noqa: F401
-# Phase 1 models — uncomment after creating each file:
-# from app.models.user import User  # noqa: F401
-# Phase 2 models:
-# from app.models.assessment import (  # noqa: F401
-#     Assessment, AssessmentVersion, Question, QuestionOption, ScoringFormula,
-# )
+
 # Phase 3 models:
-# from app.models.session import AssessmentSession, SessionAnswer, SessionResult  # noqa: F401
+from app.models.session import AssessmentSession, SessionAnswer, SessionResult  # noqa: F401
+
 # Phase 4 models:
 # from app.models.job import Job, Major  # noqa: F401
 # from app.models.recommendation import Recommendation  # noqa: F401
@@ -33,10 +41,6 @@ config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
-
-# Override URL from app settings (reads .env)
-import os
-from app.config import get_settings
 
 settings = get_settings()
 # Alembic uses sync URL for migrations — swap asyncpg → psycopg2-style
@@ -75,8 +79,10 @@ def do_run_migrations(connection: Connection) -> None:
 
 
 async def run_async_migrations() -> None:
+    # Use the original asyncpg URL here (not the psycopg2-swapped `sync_url`
+    # set on `config` above, which is only valid for offline/`--sql` mode).
     connectable = async_engine_from_config(
-        config.get_section(config.config_ini_section, {}),
+        {"sqlalchemy.url": settings.database_url},
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
