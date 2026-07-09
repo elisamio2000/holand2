@@ -49,7 +49,10 @@ A professional platform for Holland and MBTI assessments with smart guidance for
 - Base route for platform design: /career-guidance
 - Current design modules:
 	- /career-guidance/assessments
+	- /career-guidance/assessments/history
+	- /career-guidance/assessments/compare
 	- /career-guidance/reports
+	- /career-guidance/counselor
 	- /career-guidance/expert-lab
 
 ### Run locally

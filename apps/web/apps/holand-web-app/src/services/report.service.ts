@@ -25,6 +25,21 @@ interface BackendRecommendationItem {
   why_fa: string;
 }
 
+export interface ReportHistoryItem {
+  reportId: string;
+  sessionId?: string;
+  hollandCode: string;
+  mbtiType: string;
+  ageBand: '13-17' | '18-24' | '25-30' | '30+';
+  confidenceScore: number;
+  createdAt: string;
+  topCareersFa: string[];
+  topMajorsFa: string[];
+  compareToReportId?: string;
+  studentId?: string;
+  studentName?: string;
+}
+
 export interface GeneratedReportResponse {
   id?: string;
   holland_code: string;
@@ -120,6 +135,11 @@ async function fetchGeneratedReportBySession(sessionId: string): Promise<Generat
   return fallback.data;
 }
 
+async function fetchGeneratedReportById(reportId: string): Promise<GeneratedReportResponse> {
+  const res = await gatewayClient.get<GeneratedReportResponse>(`/reports/${reportId}`);
+  return res.data;
+}
+
 export const reportService = {
   /**
    * Fetch canonical generated report payload for report pages.
@@ -127,6 +147,44 @@ export const reportService = {
   async getGeneratedReport(sessionId: string): Promise<GeneratedReportResponse> {
     console.info('[ReportService] Fetching generated report:', { sessionId });
     return fetchGeneratedReportBySession(sessionId);
+  },
+
+  async getGeneratedReportById(reportId: string): Promise<GeneratedReportResponse> {
+    console.info('[ReportService] Fetching generated report by id:', { reportId });
+    return fetchGeneratedReportById(reportId);
+  },
+
+  async listHistory(): Promise<ReportHistoryItem[]> {
+    const res = await gatewayClient.get<
+      Array<{
+        report_id: string;
+        session_id?: string;
+        holland_code: string;
+        mbti_type: string;
+        age_band: '13-17' | '18-24' | '25-30' | '30+';
+        confidence_score: number;
+        created_at: string;
+        top_careers_fa: string[];
+        top_majors_fa: string[];
+        compare_to_report_id?: string;
+        student_id?: string;
+        student_name?: string;
+      }>
+    >('/reports/history');
+    return res.data.map((item) => ({
+      reportId: item.report_id,
+      sessionId: item.session_id,
+      hollandCode: item.holland_code,
+      mbtiType: item.mbti_type,
+      ageBand: item.age_band,
+      confidenceScore: item.confidence_score,
+      createdAt: item.created_at,
+      topCareersFa: item.top_careers_fa ?? [],
+      topMajorsFa: item.top_majors_fa ?? [],
+      compareToReportId: item.compare_to_report_id,
+      studentId: item.student_id,
+      studentName: item.student_name,
+    }));
   },
 
   /**
@@ -154,12 +212,10 @@ export const reportService = {
    *
    * @endpoint GET /reports/{sessionId}/pdf
    */
-  async exportReport(sessionId: string, format: 'pdf' | 'html' = 'pdf'): Promise<Blob> {
-    console.info('[ReportService] Exporting report:', { sessionId, format });
-    const endpoint =
-      format === 'pdf' ? `/reports/${sessionId}/pdf` : `/reports/${sessionId}/export`;
-    const res = await gatewayClient.get(endpoint, {
-      ...(format === 'html' ? { params: { format } } : {}),
+  async exportReport(reportId: string, format: 'pdf' | 'html' = 'pdf'): Promise<Blob> {
+    console.info('[ReportService] Exporting report:', { reportId, format });
+    const res = await gatewayClient.get(`/reports/${reportId}/export`, {
+      params: { format },
       responseType: 'blob',
     });
     return res.data;

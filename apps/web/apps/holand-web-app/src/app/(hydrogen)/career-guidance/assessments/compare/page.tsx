@@ -36,8 +36,8 @@ function formatDate(iso?: string): string {
 
 export default function CompareAssessmentsPage() {
   const searchParams = useSearchParams();
-  const idA = searchParams.get('a');
-  const idB = searchParams.get('b');
+  const idA = searchParams.get('ra') ?? searchParams.get('a');
+  const idB = searchParams.get('rb') ?? searchParams.get('b');
 
   const [reportA, setReportA] = useState<AssessmentReport | null>(null);
   const [reportB, setReportB] = useState<AssessmentReport | null>(null);

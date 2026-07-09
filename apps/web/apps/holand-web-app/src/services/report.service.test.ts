@@ -102,5 +102,44 @@ describe('reportService', () => {
     expect(buildMockReportMock).toHaveBeenCalled();
     expect(result.disclaimer).toBe('mock');
   });
-});
 
+  it('listHistory maps backend history payload', async () => {
+    getMock.mockResolvedValueOnce({
+      data: [
+        {
+          report_id: 'r-1',
+          session_id: 's-1',
+          holland_code: 'IRC',
+          mbti_type: 'INTJ',
+          age_band: '18-24',
+          confidence_score: 74.2,
+          created_at: '2026-01-01T00:00:00.000Z',
+          top_careers_fa: ['a'],
+          top_majors_fa: ['b'],
+          compare_to_report_id: 'r-0',
+          student_id: 'u-1',
+          student_name: 'Ali',
+        },
+      ],
+    });
+    const result = await reportService.listHistory();
+    expect(getMock).toHaveBeenCalledWith('/reports/history');
+    expect(result[0]).toMatchObject({
+      reportId: 'r-1',
+      sessionId: 's-1',
+      compareToReportId: 'r-0',
+      studentName: 'Ali',
+    });
+  });
+
+  it('exportReport uses unified export endpoint and format param', async () => {
+    const blob = new Blob(['x'], { type: 'application/pdf' });
+    getMock.mockResolvedValueOnce({ data: blob });
+    const result = await reportService.exportReport('report-9', 'pdf');
+    expect(getMock).toHaveBeenCalledWith('/reports/report-9/export', {
+      params: { format: 'pdf' },
+      responseType: 'blob',
+    });
+    expect(result).toBe(blob);
+  });
+});

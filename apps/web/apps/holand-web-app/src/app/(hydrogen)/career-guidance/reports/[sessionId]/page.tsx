@@ -9,25 +9,27 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { Badge, Text, Title } from 'rizzui';
+import { Badge, Button, Text, Title } from 'rizzui';
 import WidgetCard from '@core/components/cards/widget-card';
-import { reportService } from '@/services/report.service';
+import { reportService, type GeneratedReportResponse } from '@/services/report.service';
 import { analyticsService } from '@/services/analytics.service';
-import type { GeneratedReportResponse } from '@/services/report.service';
 
 const safeList = (items?: string[]) => (items && items.length ? items : ['—']);
 
 export default function FullReportPage() {
   const params = useParams<{ sessionId: string }>();
+  const reportRef = params.sessionId;
   const [report, setReport] = useState<GeneratedReportResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     setIsLoading(true);
     reportService
-      .getGeneratedReport(params.sessionId)
+      .getGeneratedReport(reportRef)
       .then((data) => {
         if (!cancelled) setReport(data);
       })
@@ -40,38 +42,66 @@ export default function FullReportPage() {
     return () => {
       cancelled = true;
     };
-  }, [params.sessionId]);
+  }, [reportRef]);
 
   useEffect(() => {
     analyticsService
       .trackEvent({
-        session_id: params.sessionId,
+        session_id: reportRef,
         event_name: 'report_opened',
         step: 'report_opened',
       })
       .catch(() => undefined);
-  }, [params.sessionId]);
+  }, [reportRef]);
 
   useEffect(() => {
     if (!report) return;
     Promise.allSettled([
       analyticsService.trackEvent({
-        session_id: params.sessionId,
+        session_id: reportRef,
         event_name: 'report_interpretation_viewed',
         step: 'report_interpretation_viewed',
       }),
       analyticsService.trackEvent({
-        session_id: params.sessionId,
+        session_id: reportRef,
         event_name: 'report_action_plan_viewed',
         step: 'report_action_plan_viewed',
       }),
       analyticsService.trackEvent({
-        session_id: params.sessionId,
+        session_id: reportRef,
         event_name: 'report_recommendations_viewed',
         step: 'report_recommendations_viewed',
       }),
     ]).catch(() => undefined);
-  }, [params.sessionId, report]);
+  }, [reportRef, report]);
+
+  async function handleExport() {
+    if (!report?.id) return;
+    setIsExporting(true);
+    setExportError(null);
+    try {
+      let blob: Blob;
+      let extension = 'pdf';
+      try {
+        blob = await reportService.exportReport(report.id, 'pdf');
+      } catch {
+        blob = await reportService.exportReport(report.id, 'html');
+        extension = 'html';
+      }
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `holand-report-${report.id}.${extension}`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      setExportError('دریافت فایل گزارش با خطا مواجه شد.');
+    } finally {
+      setIsExporting(false);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -105,6 +135,12 @@ export default function FullReportPage() {
         <Badge variant="flat" color="secondary" className="px-4 py-2 text-sm">
           گروه سنی: {report.age_band}
         </Badge>
+      </div>
+      <div className="mt-4 flex items-center gap-3">
+        <Button size="sm" variant="outline" isLoading={isExporting} onClick={handleExport}>
+          خروجی گزارش
+        </Button>
+        {exportError && <Text className="text-xs text-red-600">{exportError}</Text>}
       </div>
 
       <section className="mt-8 grid gap-6 sm:grid-cols-2">

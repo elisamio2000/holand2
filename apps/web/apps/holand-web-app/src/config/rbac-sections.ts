@@ -20,6 +20,8 @@ export const RBAC_SECTION_IDS = [
   'projects',
   'reports',
   'calendar',
+  'career-guidance',
+  'counselor',
 ] as const;
 
 export type RbacSectionId = (typeof RBAC_SECTION_IDS)[number];

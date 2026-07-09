@@ -19,6 +19,8 @@ export const NAV_PATH_SECTION_MAP: { prefix: string; section: string }[] = [
   { prefix: '/messages', section: 'messages' },
   { prefix: '/event-calendar', section: 'calendar' },
   { prefix: '/reports', section: 'reports' },
+  { prefix: '/career-guidance/counselor', section: 'counselor' },
+  { prefix: '/career-guidance', section: 'career-guidance' },
   { prefix: '/roles-permissions', section: 'admin' },
   { prefix: '/admin-panel', section: 'admin' },
   { prefix: '/admin', section: 'admin' },
