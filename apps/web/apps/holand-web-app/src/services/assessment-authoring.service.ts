@@ -1,7 +1,9 @@
 import { gatewayClient } from '@/lib/api-client';
 import type {
+  AssessmentVersionDiff,
   AssessmentVersionDetail,
   AssessmentVersionSummary,
+  AuditLogEntry,
   AuthoringAssessmentType,
   FormulaVersion,
   VersionActionInput,
@@ -162,6 +164,17 @@ export const assessmentAuthoringService = {
     return data;
   },
 
+  async diffAssessmentVersions(
+    versionId: string,
+    compareTo: string
+  ): Promise<AssessmentVersionDiff> {
+    const { data } = await gatewayClient.get<AssessmentVersionDiff>(
+      `/admin/assessment-versions/${versionId}/diff`,
+      { params: { compare_to: compareTo } }
+    );
+    return data;
+  },
+
   async reviewAssessmentVersion(versionId: string, action: VersionActionInput): Promise<AssessmentVersionDetail> {
     const { data } = await gatewayClient.post<AssessmentVersionDetail>(
       `/admin/assessment-versions/${versionId}/review`,
@@ -245,6 +258,13 @@ export const assessmentAuthoringService = {
       `/admin/formula-versions/${formulaId}/publish`,
       action
     );
+    return data;
+  },
+
+  async listAuditLogs(entityId?: string): Promise<AuditLogEntry[]> {
+    const { data } = await gatewayClient.get<AuditLogEntry[]>('/admin/version-audit-logs', {
+      params: entityId ? { entity_id: entityId } : undefined,
+    });
     return data;
   },
 };

@@ -71,3 +71,23 @@ export interface VersionActionInput {
   actor: string;
   note?: string;
 }
+
+export interface AssessmentVersionDiff {
+  from_version_id: string;
+  to_version_id: string;
+  added: Array<Record<string, unknown>>;
+  removed: Array<Record<string, unknown>>;
+  changed: Array<Record<string, unknown>>;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  entity_type: string;
+  entity_id: string;
+  action: string;
+  from_status: string | null;
+  to_status: string | null;
+  actor: string | null;
+  note: string | null;
+  created_at: string;
+}

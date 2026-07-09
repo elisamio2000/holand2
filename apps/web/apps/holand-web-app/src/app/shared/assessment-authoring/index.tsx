@@ -2,8 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import type {
+  AssessmentVersionDiff,
   AssessmentVersionDetail,
   AssessmentVersionSummary,
+  AuditLogEntry,
   AuthoringAssessmentType,
   FormulaVersion,
   VersionPreflight,
@@ -35,6 +37,10 @@ export function AssessmentAuthoringDashboard() {
   const [formulaDetail, setFormulaDetail] = useState<FormulaVersion | null>(null);
   const [assessmentPreflight, setAssessmentPreflight] = useState<VersionPreflight | null>(null);
   const [formulaPreflight, setFormulaPreflight] = useState<VersionPreflight | null>(null);
+  const [transitionNote, setTransitionNote] = useState('');
+  const [assessmentDiff, setAssessmentDiff] = useState<AssessmentVersionDiff | null>(null);
+  const [compareAssessmentId, setCompareAssessmentId] = useState<string>('');
+  const [auditEntries, setAuditEntries] = useState<AuditLogEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [actor, setActor] = useState('admin@holand.dev');
@@ -289,14 +295,24 @@ export function AssessmentAuthoringDashboard() {
     setError(null);
     try {
       if (action === 'review') {
-        await assessmentAuthoringService.reviewAssessmentVersion(selectedAssessmentId, { actor: actor.trim() });
+        await assessmentAuthoringService.reviewAssessmentVersion(selectedAssessmentId, {
+          actor: actor.trim(),
+          note: transitionNote.trim() || undefined,
+        });
       } else if (action === 'approve') {
-        await assessmentAuthoringService.approveAssessmentVersion(selectedAssessmentId, { actor: actor.trim() });
+        await assessmentAuthoringService.approveAssessmentVersion(selectedAssessmentId, {
+          actor: actor.trim(),
+          note: transitionNote.trim() || undefined,
+        });
       } else {
-        await assessmentAuthoringService.publishAssessmentVersion(selectedAssessmentId, { actor: actor.trim() });
+        await assessmentAuthoringService.publishAssessmentVersion(selectedAssessmentId, {
+          actor: actor.trim(),
+          note: transitionNote.trim() || undefined,
+        });
       }
       await Promise.all([refreshLists(), refreshAssessmentDetail(selectedAssessmentId)]);
       setAssessmentPreflight(null);
+      setTransitionNote('');
     } catch (err: unknown) {
       setError(toErrorMessage(err));
     }
@@ -359,14 +375,48 @@ export function AssessmentAuthoringDashboard() {
     setError(null);
     try {
       if (action === 'review') {
-        await assessmentAuthoringService.reviewFormulaVersion(selectedFormulaId, { actor: actor.trim() });
+        await assessmentAuthoringService.reviewFormulaVersion(selectedFormulaId, {
+          actor: actor.trim(),
+          note: transitionNote.trim() || undefined,
+        });
       } else if (action === 'approve') {
-        await assessmentAuthoringService.approveFormulaVersion(selectedFormulaId, { actor: actor.trim() });
+        await assessmentAuthoringService.approveFormulaVersion(selectedFormulaId, {
+          actor: actor.trim(),
+          note: transitionNote.trim() || undefined,
+        });
       } else {
-        await assessmentAuthoringService.publishFormulaVersion(selectedFormulaId, { actor: actor.trim() });
+        await assessmentAuthoringService.publishFormulaVersion(selectedFormulaId, {
+          actor: actor.trim(),
+          note: transitionNote.trim() || undefined,
+        });
       }
       await Promise.all([refreshLists(), refreshFormulaDetail(selectedFormulaId)]);
       setFormulaPreflight(null);
+      setTransitionNote('');
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
+    }
+  }
+
+  async function handleAssessmentDiff() {
+    if (!selectedAssessmentId || !compareAssessmentId) return;
+    setError(null);
+    try {
+      const diff = await assessmentAuthoringService.diffAssessmentVersions(
+        selectedAssessmentId,
+        compareAssessmentId
+      );
+      setAssessmentDiff(diff);
+    } catch (err: unknown) {
+      setError(toErrorMessage(err));
+    }
+  }
+
+  async function handleLoadAudit(entityId: string | null) {
+    setError(null);
+    try {
+      const rows = await assessmentAuthoringService.listAuditLogs(entityId ?? undefined);
+      setAuditEntries(rows);
     } catch (err: unknown) {
       setError(toErrorMessage(err));
     }
@@ -400,6 +450,14 @@ export function AssessmentAuthoringDashboard() {
     [assessmentVersions]
   );
   const formulaDrafts = useMemo(() => formulaVersions.filter((x) => x.status === 'draft'), [formulaVersions]);
+  const comparableAssessmentVersions = useMemo(() => {
+    if (!assessmentDetail) return [];
+    return assessmentVersions.filter(
+      (row) =>
+        row.id !== assessmentDetail.id &&
+        row.assessment_type === assessmentDetail.assessment_type
+    );
+  }, [assessmentDetail, assessmentVersions]);
 
   if (isLoading) {
     return (
@@ -423,6 +481,15 @@ export function AssessmentAuthoringDashboard() {
           className="mt-1 w-full max-w-md rounded-lg border border-muted px-3 py-2 text-sm"
           value={actor}
           onChange={(e) => setActor(e.target.value)}
+        />
+      </div>
+      <div className="mt-2">
+        <label className="text-sm text-gray-700">Transition note (optional)</label>
+        <input
+          className="mt-1 w-full max-w-xl rounded-lg border border-muted px-3 py-2 text-sm"
+          value={transitionNote}
+          onChange={(e) => setTransitionNote(e.target.value)}
+          placeholder="Reason or governance note for review/approve/publish"
         />
       </div>
 
@@ -704,6 +771,51 @@ export function AssessmentAuthoringDashboard() {
                   ))}
                 </div>
               )}
+
+              <div className="space-y-2 rounded border border-muted bg-white p-2 text-xs">
+                <p className="font-medium text-gray-700">Version diff + audit</p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <select
+                    className="rounded border border-muted px-2 py-1 text-xs"
+                    value={compareAssessmentId}
+                    onChange={(e) => setCompareAssessmentId(e.target.value)}
+                  >
+                    <option value="">Select compare target</option>
+                    {comparableAssessmentVersions.map((v) => (
+                      <option key={v.id} value={v.id}>
+                        v{v.version} · {v.status} · {v.title}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="rounded border border-muted px-2 py-1"
+                    onClick={handleAssessmentDiff}
+                    disabled={!compareAssessmentId}
+                  >
+                    Compute diff
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded border border-muted px-2 py-1"
+                    onClick={() => handleLoadAudit(assessmentDetail.id)}
+                  >
+                    Load assessment audit
+                  </button>
+                </div>
+                {assessmentDiff && (
+                  <div className="rounded border border-muted bg-gray-50 p-2">
+                    <p>
+                      Diff {assessmentDiff.from_version_id.slice(0, 8)} →{' '}
+                      {assessmentDiff.to_version_id.slice(0, 8)}
+                    </p>
+                    <p>
+                      Added: {assessmentDiff.added.length} · Removed: {assessmentDiff.removed.length} · Changed:{' '}
+                      {assessmentDiff.changed.length}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -851,9 +963,51 @@ export function AssessmentAuthoringDashboard() {
                   ))}
                 </div>
               )}
+
+              <div className="rounded border border-muted bg-white p-2 text-xs">
+                <p className="font-medium text-gray-700">Formula audit</p>
+                <button
+                  type="button"
+                  className="mt-1 rounded border border-muted px-2 py-1"
+                  onClick={() => handleLoadAudit(formulaDetail.id)}
+                >
+                  Load formula audit
+                </button>
+              </div>
             </div>
           )}
         </div>
+      </section>
+
+      <section className="mt-6 rounded-xl border border-muted bg-white p-4 text-xs shadow-sm">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-gray-900">Audit timeline</h3>
+          <button
+            type="button"
+            className="rounded border border-muted px-2 py-1"
+            onClick={() => handleLoadAudit(null)}
+          >
+            Load latest global audit
+          </button>
+        </div>
+        {auditEntries.length === 0 ? (
+          <p className="mt-2 text-gray-500">No audit entries loaded.</p>
+        ) : (
+          <div className="mt-2 max-h-52 space-y-1 overflow-auto">
+            {auditEntries.map((entry) => (
+              <div key={entry.id} className="rounded border border-muted px-2 py-1">
+                <p>
+                  {entry.entity_type} · {entry.action} · {entry.actor ?? 'unknown'} ·{' '}
+                  {new Date(entry.created_at).toLocaleString()}
+                </p>
+                <p className="text-gray-600">
+                  {entry.from_status ?? 'none'} → {entry.to_status ?? 'none'}
+                  {entry.note ? ` · ${entry.note}` : ''}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );
