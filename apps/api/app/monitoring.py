@@ -70,8 +70,20 @@ def init_sentry_hooks() -> None:
         )
 
 
-def _structured_log(payload: dict) -> None:
-    logger.info(json.dumps(payload, ensure_ascii=False))
+def _structured_log(payload: dict, *, level: int = logging.INFO) -> None:
+    logger.log(level, json.dumps(payload, ensure_ascii=False))
+
+
+def emit_operational_alert(payload: dict) -> None:
+    _structured_log(
+        {
+            "event": "ops.alert",
+            "schema_version": "2026-07-beta",
+            "timestamp": datetime.now(timezone.utc).isoformat(),  # noqa: UP017
+            **payload,
+        },
+        level=logging.WARNING,
+    )
 
 
 class RequestObservabilityMiddleware(BaseHTTPMiddleware):
@@ -86,16 +98,19 @@ class RequestObservabilityMiddleware(BaseHTTPMiddleware):
         metrics_baseline.track(request.url.path, response.status_code)
         response.headers["X-Request-Id"] = request_id
 
+        log_level = logging.WARNING if response.status_code >= 500 else logging.INFO
         _structured_log(
             {
                 "event": "http.request",
+                "schema_version": "2026-07-beta",
                 "request_id": request_id,
                 "method": request.method,
                 "path": request.url.path,
                 "status_code": response.status_code,
                 "duration_ms": duration_ms,
                 "timestamp": datetime.now(timezone.utc).isoformat(),  # noqa: UP017
-            }
+            },
+            level=log_level,
         )
         return response
 

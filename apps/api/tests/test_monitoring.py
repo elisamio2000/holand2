@@ -18,3 +18,12 @@ class TestMonitoring:
         response = await client.get("/health")
         assert response.status_code == 200
         assert "x-request-id" in response.headers
+
+    @pytest.mark.asyncio
+    async def test_readiness_endpoint_returns_checklist(self, client):
+        response = await client.get("/monitoring/readiness")
+        assert response.status_code == 200
+        body = response.json()
+        assert body["go_no_go"] in {"go", "no-go"}
+        assert "checks" in body
+        assert "thresholds" in body

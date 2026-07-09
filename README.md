@@ -34,8 +34,17 @@ A professional platform for Holland and MBTI assessments with smart guidance for
 - Optional Sentry hook initialization via environment settings.
 - Baseline metrics endpoint:
   - `GET /monitoring/metrics`
+- Beta readiness gate endpoint:
+  - `GET /monitoring/readiness`
 - Recommendation quality admin alert endpoint:
   - `GET /admin/alerts/recommendation-quality`
+
+### Beta launch gate thresholds
+
+- Completion rate (`BETA_COMPLETION_RATE_THRESHOLD_PERCENT`, default `70`)
+- Minimum started sessions (`BETA_COMPLETION_MIN_SESSIONS`, default `10`)
+- 5xx error rate (`BETA_5XX_ERROR_RATE_THRESHOLD_PERCENT`, default `1`)
+- Recommendation quality alert threshold (`RECOMMENDATION_QUALITY_ALERT_THRESHOLD_PERCENT`, default `35`)
 
 ### Environment keys
 

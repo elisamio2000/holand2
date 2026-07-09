@@ -71,6 +71,9 @@ async def get_quality_alert(db: AsyncSession) -> RecommendationQualityAlert:
 
     return RecommendationQualityAlert(
         alert_triggered=alert_triggered,
+        alert_code=(
+            "RECOMMENDATION_QUALITY_DEGRADED" if alert_triggered else "RECOMMENDATION_QUALITY_OK"
+        ),
         severity=severity,
         threshold_percent=threshold,
         min_samples=min_samples,

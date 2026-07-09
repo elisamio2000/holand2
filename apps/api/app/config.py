@@ -60,6 +60,16 @@ class Settings(BaseSettings):
     recommendation_quality_alert_threshold_percent: float = 35.0
     recommendation_quality_alert_min_samples: int = 10
 
+    # Beta launch readiness thresholds
+    beta_completion_rate_threshold_percent: float = 70.0
+    beta_completion_min_sessions: int = 10
+    beta_5xx_error_rate_threshold_percent: float = 1.0
+
+    # Beta launch ownership
+    beta_owner_sre: str = "sre-oncall"
+    beta_owner_backend: str = "backend-oncall"
+    beta_owner_product: str = "product-oncall"
+
     # Monitoring / observability
     observability_log_level: str = "INFO"
     sentry_dsn: str | None = None
@@ -73,3 +83,19 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+
+
+def get_operational_env_issues(settings: Settings | None = None) -> list[str]:
+    current = settings or get_settings()
+    issues: list[str] = []
+    env = current.app_env.lower()
+
+    if env in {"staging", "production"}:
+        if len(current.app_secret_key) < 32 or current.app_secret_key.startswith("change-this-"):
+            issues.append("APP_SECRET_KEY must be set to a non-default value with at least 32 chars.")
+        if len(current.jwt_secret_key) < 32 or current.jwt_secret_key.startswith("change-this-"):
+            issues.append("JWT_SECRET_KEY must be set to a non-default value with at least 32 chars.")
+        if "*" in current.allowed_hosts_list:
+            issues.append("ALLOWED_HOSTS must be explicitly set (wildcard host is not allowed).")
+
+    return issues
