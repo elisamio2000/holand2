@@ -52,8 +52,8 @@ async def generate_report(
     session: DbSession,
 ) -> ReportResponse:
     try:
-        normalized_scores, holland_code = score_holland(payload.holland_scores)
-        mbti_type, mbti_certainty = score_mbti(payload.mbti_scores)
+        normalized_scores, holland_code, _, _ = score_holland(payload.holland_scores)
+        mbti_type, mbti_certainty, _, _ = score_mbti(payload.mbti_scores)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 

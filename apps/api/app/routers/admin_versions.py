@@ -28,6 +28,7 @@ from ..schemas_assessment import (
     AssessmentVersionDraftIn,
     AssessmentVersionOut,
     AuditLogEntryOut,
+    QuestionBankQualityReportOut,
     RollbackIn,
     ScoringFormulaDraftIn,
     ScoringFormulaVersionOut,
@@ -40,6 +41,7 @@ from ..schemas_assessment import (
 )
 from ..services.assessment_scoring import compute_session_result
 from ..services.formula_engine import FormulaError, evaluate_formula, validate_formula
+from ..services.question_bank_quality import build_quality_report
 from ..services.versioning import VersioningError, assert_transition_allowed, log_transition
 
 router = APIRouter(prefix="/admin", tags=["Question Bank Governance"])
@@ -187,6 +189,18 @@ async def get_assessment_version(
     version_id: str, db: Annotated[AsyncSession, Depends(get_db)]
 ) -> AssessmentVersion:
     return await _get_assessment_version(db, version_id)
+
+
+@router.get(
+    "/assessment-versions/{version_id}/quality-report",
+    response_model=QuestionBankQualityReportOut,
+)
+async def get_assessment_version_quality_report(
+    version_id: str, db: Annotated[AsyncSession, Depends(get_db)]
+) -> QuestionBankQualityReportOut:
+    version = await _get_assessment_version(db, version_id)
+    report = build_quality_report(version.assessment_type, version.questions)
+    return QuestionBankQualityReportOut.model_validate(report)
 
 
 # ── Assessment versions: workflow transitions ────────────────────────────────

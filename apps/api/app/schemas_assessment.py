@@ -137,6 +137,21 @@ class SimulateResultOut(BaseModel):
     certainty: dict[str, float] | None = None
 
 
+class QualityIssueOut(BaseModel):
+    code: str
+    severity: str
+    message: str
+    context: dict[str, Any] = Field(default_factory=dict)
+
+
+class QuestionBankQualityReportOut(BaseModel):
+    ok: bool
+    error_count: int
+    warning_count: int
+    issues: list[QualityIssueOut]
+    metrics: dict[str, Any]
+
+
 # ── Scoring formulas ──────────────────────────────────────────────────────────
 class ScoringFormulaVersionOut(BaseModel):
     id: str

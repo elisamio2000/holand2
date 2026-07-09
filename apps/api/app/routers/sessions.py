@@ -15,6 +15,7 @@ from ..database import get_db
 from ..models.assessment import (
     AssessmentVersion,
     Question,
+    QuestionKind,
     QuestionOption,
     ScoringFormulaVersion,
     VersionStatus,
@@ -35,6 +36,25 @@ router = APIRouter(prefix="/sessions", tags=["Assessment Sessions"])
 
 def _now() -> datetime:
     return datetime.now(timezone.utc)  # noqa: UP017
+
+
+def _score_option(question: Question, selected_option: QuestionOption) -> float:
+    if not question.is_reverse_scored or question.kind != QuestionKind.LIKERT:
+        return selected_option.weight
+
+    ordered_options = sorted(question.options, key=lambda opt: opt.order_index)
+    selected_index = next(
+        (idx for idx, option in enumerate(ordered_options) if option.id == selected_option.id),
+        None,
+    )
+    if selected_index is None:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Assessment data integrity error: option {selected_option.id} "
+            f"is not linked to question {question.id}",
+        )
+    mirrored_option = ordered_options[len(ordered_options) - 1 - selected_index]
+    return mirrored_option.weight
 
 
 async def _get_published_version(db: AsyncSession, assessment_type) -> AssessmentVersion:
@@ -206,15 +226,40 @@ async def complete_session(
             detail=f"Session incomplete: {len(session.answers)}/{len(version.questions)} answered",
         )
 
-    options_by_id: dict[str, QuestionOption] = {
-        o.id: o for q in version.questions for o in q.options
-    }
+    questions_by_id = {q.id: q for q in version.questions}
+    options_by_id: dict[str, QuestionOption] = {o.id: o for q in version.questions for o in q.options}
     raw_totals: dict[str, float] = {}
     for ans in session.answers:
         option = options_by_id.get(ans.option_id)
         if option is None:
-            continue
-        raw_totals[option.pole] = raw_totals.get(option.pole, 0.0) + option.weight
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "Assessment data integrity error: "
+                    f"option {ans.option_id} referenced by answer {ans.id} not found in version "
+                    f"{version.id}"
+                ),
+            )
+        question = questions_by_id.get(ans.question_id)
+        if question is None:
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "Assessment data integrity error: "
+                    f"question {ans.question_id} referenced by answer {ans.id} not found in version "
+                    f"{version.id}"
+                ),
+            )
+        if option.question_id != question.id:
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "Assessment data integrity error: "
+                    f"option {option.id} does not belong to question {question.id}"
+                ),
+            )
+        contribution = _score_option(question, option)
+        raw_totals[option.pole] = raw_totals.get(option.pole, 0.0) + contribution
 
     formula_result = await db.execute(
         select(ScoringFormulaVersion).where(
