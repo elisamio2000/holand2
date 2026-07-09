@@ -168,12 +168,16 @@ def _rank_majors(majors: list[Major], holland_code: str, mbti_type: str) -> list
 
 def _job_to_schema(ranked: _RankedJob) -> JobRecommendation:
     job = ranked.job
+    why_fa = (
+        job.why_fa
+        or "این گزینه به دلیل همخوانی مناسب با الگوی رغبت/شخصیت شما و وضعیت تقاضای بازار در فهرست پیشنهادها قرار گرفته است."
+    )
     return JobRecommendation(
         title=job.canonical_title,
         title_fa=job.canonical_title_fa,
         fit_score=ranked.fit_score,
         confidence=ranked.confidence,
-        why_fa=job.why_fa or "",
+        why_fa=why_fa,
         taxonomy_source=job.taxonomy_source,
         taxonomy_code=job.taxonomy_code,
         education_level=job.education_level,
@@ -187,12 +191,16 @@ def _job_to_schema(ranked: _RankedJob) -> JobRecommendation:
 
 def _major_to_schema(ranked: _RankedMajor) -> MajorRecommendation:
     major = ranked.major
+    why_fa = (
+        major.why_fa
+        or "این رشته بر اساس همخوانی با علایق و تیپ شخصیتی شما و چشم‌انداز بازار کار پیشنهاد شده است."
+    )
     return MajorRecommendation(
         title=major.canonical_title,
         title_fa=major.canonical_title_fa,
         fit_score=ranked.fit_score,
         confidence=ranked.confidence,
-        why_fa=major.why_fa or "",
+        why_fa=why_fa,
         degree_level=major.degree_level,
         market_demand_score=major.market_demand_score,
         future_outlook=major.future_outlook,

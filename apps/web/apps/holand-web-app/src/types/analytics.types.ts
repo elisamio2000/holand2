@@ -31,3 +31,15 @@ export interface FunnelSummaryResponse {
   steps: FunnelStepSummary[];
   drop_off_rate: Record<string, number>;
 }
+
+export interface ReportQualityStepSummary {
+  step: string;
+  event_count: number;
+  unique_sessions: number;
+  avg_duration_ms: number | null;
+}
+
+export interface ReportQualitySummaryResponse {
+  total_sessions: number;
+  steps: ReportQualityStepSummary[];
+}

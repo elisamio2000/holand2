@@ -5,7 +5,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..config import get_settings
 from ..database import get_db
-from ..schemas import FunnelEventCreate, FunnelEventOut, FunnelSummaryResponse
+from ..schemas import (
+    FunnelEventCreate,
+    FunnelEventOut,
+    FunnelSummaryResponse,
+    ReportQualitySummaryResponse,
+)
 from ..security import limiter
 from ..services import analytics as analytics_service
 
@@ -25,3 +30,8 @@ async def create_event(
 @router.get("/funnel", response_model=FunnelSummaryResponse)
 async def funnel_summary(db: AsyncSession = Depends(get_db)) -> FunnelSummaryResponse:
     return await analytics_service.get_funnel_summary(db)
+
+
+@router.get("/report-quality", response_model=ReportQualitySummaryResponse)
+async def report_quality_summary(db: AsyncSession = Depends(get_db)) -> ReportQualitySummaryResponse:
+    return await analytics_service.get_report_quality_summary(db)

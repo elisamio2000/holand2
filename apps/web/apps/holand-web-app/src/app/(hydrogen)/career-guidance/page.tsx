@@ -11,7 +11,7 @@ const links = [
   { href: '/career-guidance/assessments/history', label: 'تاریخچه آزمون‌های من' },
   { href: '/career-guidance/reports', label: 'Reporting & Interpretation' },
   { href: '/career-guidance/counselor', label: 'داشبورد مشاور' },
-  { href: '/career-guidance/expert-lab', label: 'Expert Analyst Lab' },
+  { href: '/career-guidance/expert-lab', label: 'Assessment Authoring Console' },
   { href: '/career-guidance/analytics', label: 'Funnel Analytics' },
 ];
 

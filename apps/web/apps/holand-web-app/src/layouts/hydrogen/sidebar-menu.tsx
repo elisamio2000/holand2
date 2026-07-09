@@ -6,64 +6,27 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { Title, Collapse } from 'rizzui';
 import cn from '@core/utils/class-names';
-import { PiCaretDownBold, PiStarFill } from 'react-icons/pi';
+import { PiCaretDownBold } from 'react-icons/pi';
 import { menuItems } from '@/layouts/hydrogen/menu-items';
 import StatusBadge from '@core/components/get-status-badge';
 import { usePermissions } from '@/hooks/use-permissions';
 import { useAdminRoutePrefetch } from '@/hooks/use-admin-route-prefetch';
-import { useWorkspaceNavigation } from '@/hooks/use-workspace-navigation';
-import { useWorkspace } from '@/contexts/workspace-context';
-import { useSession } from 'next-auth/react';
 
 export function SidebarMenu() {
   const pathname = usePathname();
   const { t } = useTranslation();
   const { canAccessSection, isLoading: isPermissionsLoading } = usePermissions();
   const prefetchAdminRoute = useAdminRoutePrefetch();
-  const { activeWorkspace } = useWorkspace();
-  const { data: session } = useSession();
-
-  const workspaceModules = resolveWorkspaceModules(activeWorkspace?.id, session);
 
   const rbacFiltered = menuItems.filter((item) => {
     if (!item.section) return true;
     if (isPermissionsLoading) return true;
     return canAccessSection(item.section);
   });
-
-  const { resolvedMenuItems, pinnedLinks } = useWorkspaceNavigation(
-    rbacFiltered,
-    workspaceModules
-  );
-
-  const visibleItems = resolvedMenuItems;
+  const visibleItems = rbacFiltered;
 
   return (
     <div className="mt-4 pb-3 3xl:mt-6">
-      {pinnedLinks.length > 0 && (
-        <div className="mb-3 px-3 2xl:px-5">
-          <Title
-            as="h6"
-            className="mb-2 truncate px-3 text-[10px] font-semibold uppercase tracking-widest text-primary"
-          >
-            {t('workspace.nav.favorites')}
-          </Title>
-          {pinnedLinks.map((item) => (
-            <Link
-              key={`pin-${item.name}`}
-              href={item.href!}
-              className={cn(
-                'mx-0 flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100',
-                pathname === item.href && 'text-primary'
-              )}
-            >
-              <PiStarFill className="h-4 w-4 shrink-0 text-amber-500" />
-              <span className="truncate">{t(item.name)}</span>
-            </Link>
-          ))}
-        </div>
-      )}
-
       {visibleItems.map((item, index) => {
         const isActive =
           pathname === (item?.href as string) ||
@@ -204,15 +167,4 @@ export function SidebarMenu() {
       })}
     </div>
   );
-}
-
-function resolveWorkspaceModules(
-  workspaceId: string | undefined,
-  session: ReturnType<typeof useSession>['data']
-): string[] | null {
-  if (!workspaceId || !session?.user) return null;
-  const groups = (session.user as Record<string, unknown>).groups as
-    | Record<string, { modules?: string[] }>
-    | undefined;
-  return groups?.[workspaceId]?.modules ?? null;
 }

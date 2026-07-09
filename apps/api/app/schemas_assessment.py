@@ -89,6 +89,40 @@ class QuestionDraftIn(BaseModel):
     options: list[QuestionOptionDraftIn]
 
 
+class QuestionDraftPatchIn(BaseModel):
+    kind: QuestionKind | None = None
+    dimension: str | None = Field(default=None, min_length=1, max_length=4)
+    text: str | None = None
+    order_index: int | None = None
+    is_reverse_scored: bool | None = None
+
+
+class QuestionOrderItemIn(BaseModel):
+    question_id: str
+    order_index: int
+
+
+class QuestionReorderIn(BaseModel):
+    items: list[QuestionOrderItemIn] = Field(default_factory=list)
+
+
+class QuestionOptionDraftPatchIn(BaseModel):
+    label: str | None = None
+    value: int | None = None
+    pole: str | None = Field(default=None, min_length=1, max_length=1)
+    weight: float | None = None
+    order_index: int | None = None
+
+
+class OptionOrderItemIn(BaseModel):
+    option_id: str
+    order_index: int
+
+
+class OptionReorderIn(BaseModel):
+    items: list[OptionOrderItemIn] = Field(default_factory=list)
+
+
 class AssessmentVersionDraftIn(BaseModel):
     assessment_type: AssessmentType
     title: str
@@ -103,13 +137,13 @@ class AssessmentVersionDraftIn(BaseModel):
 
 
 class VersionActionIn(BaseModel):
-    actor: str | None = None
+    actor: str = Field(..., min_length=1, max_length=200)
     note: str | None = None
 
 
 class RollbackIn(BaseModel):
     target_version_id: str = Field(..., description="Version id to roll back to")
-    actor: str | None = None
+    actor: str = Field(..., min_length=1, max_length=200)
     note: str | None = None
 
 
@@ -135,6 +169,21 @@ class SimulateResultOut(BaseModel):
     normalized_scores: dict[str, float]
     code: str
     certainty: dict[str, float] | None = None
+
+
+class QualityIssueOut(BaseModel):
+    code: str
+    severity: str
+    message: str
+    context: dict[str, Any] = Field(default_factory=dict)
+
+
+class QuestionBankQualityReportOut(BaseModel):
+    ok: bool
+    error_count: int
+    warning_count: int
+    issues: list[QualityIssueOut]
+    metrics: dict[str, Any]
 
 
 # ── Scoring formulas ──────────────────────────────────────────────────────────
@@ -169,12 +218,34 @@ class ScoringFormulaDraftIn(BaseModel):
     created_by: str | None = None
 
 
+class ScoringFormulaDraftPatchIn(BaseModel):
+    expression: dict[str, Any] | None = None
+    input_variables: list[str] | None = None
+    output_metric: str | None = None
+    validation_rules: dict[str, Any] | None = None
+    unit_tests: list[dict[str, Any]] | None = None
+
+
 class SimulateFormulaIn(BaseModel):
     variables: dict[str, float]
 
 
 class SimulateFormulaOut(BaseModel):
     result: float
+
+
+class PreflightIssueOut(BaseModel):
+    code: str
+    message: str
+    blocking: bool
+    path: str | None = None
+
+
+class VersionPreflightOut(BaseModel):
+    ready_to_publish: bool
+    blocking_issue_count: int
+    warning_count: int
+    issues: list[PreflightIssueOut]
 
 
 class AuditLogEntryOut(BaseModel):
@@ -186,6 +257,20 @@ class AuditLogEntryOut(BaseModel):
     to_status: str | None
     actor: str | None
     note: str | None
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class ValidationReportOut(BaseModel):
+    id: str
+    entity_type: str
+    entity_id: str
+    gate: str
+    target_status: str
+    ok: bool
+    report: dict[str, Any]
+    actor: str | None
     created_at: datetime
 
     model_config = {"from_attributes": True}

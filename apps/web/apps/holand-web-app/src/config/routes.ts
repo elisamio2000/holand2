@@ -193,6 +193,7 @@ export const routes = {
     profile: '/account/profile',
     security: '/account/security',
     activity: '/account/activity',
+    appearance: '/account/appearance',
   },
   profile: '/profile',
   forms: {

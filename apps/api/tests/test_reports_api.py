@@ -60,12 +60,14 @@ class TestReportsApi:
         assert 0 <= body["confidence_score"] <= 100
 
     async def test_generate_then_fetch_report(self, client):
+        session_id = "session-report-fetch-01"
         payload = {
             "holland_scores": {"R": 5, "I": 10, "A": 30, "S": 20, "E": 10, "C": 5},
             "mbti_scores": {
                 "E": 60, "I": 40, "S": 30, "N": 70, "T": 30, "F": 70, "J": 30, "P": 70
             },
             "age": 16,
+            "session_id": session_id,
         }
         create_response = await client.post("/reports/generate", json=payload)
         assert create_response.status_code == 200
@@ -75,6 +77,29 @@ class TestReportsApi:
         assert get_response.status_code == 200
         assert get_response.json()["id"] == report_id
         assert get_response.json()["age_band"] == "13-17"
+
+    async def test_generate_then_fetch_report_by_session(self, client):
+        session_id = "session-report-fetch-02"
+        payload = {
+            "holland_scores": {"R": 15, "I": 20, "A": 10, "S": 25, "E": 20, "C": 10},
+            "mbti_scores": {
+                "E": 40, "I": 60, "S": 55, "N": 45, "T": 50, "F": 50, "J": 65, "P": 35
+            },
+            "age": 24,
+            "session_id": session_id,
+        }
+        create_response = await client.post("/reports/generate", json=payload)
+        assert create_response.status_code == 200
+
+        get_response = await client.get(f"/reports/by-session/{session_id}")
+        assert get_response.status_code == 200
+        body = get_response.json()
+        assert body["id"] == create_response.json()["id"]
+        assert body["age_band"] == "18-24"
+
+    async def test_get_report_by_session_missing_returns_404(self, client):
+        response = await client.get("/reports/by-session/no-such-session")
+        assert response.status_code == 404
 
     async def test_get_missing_report_returns_404(self, client):
         response = await client.get("/reports/does-not-exist")
@@ -94,3 +119,17 @@ class TestReportsApi:
         }
         response = await client.post("/reports/generate", json=payload)
         assert response.status_code == 400
+
+    async def test_generate_report_confidence_is_capped_for_uncertain_profile(self, client):
+        payload = {
+            "holland_scores": {"R": 20, "I": 20, "A": 20, "S": 20, "E": 20, "C": 20},
+            "mbti_scores": {
+                "E": 51, "I": 49, "S": 50, "N": 50, "T": 52, "F": 48, "J": 51, "P": 49
+            },
+            "age": 22,
+        }
+        response = await client.post("/reports/generate", json=payload)
+        assert response.status_code == 200
+        body = response.json()
+        assert 20 <= body["confidence_score"] <= 95
+        assert isinstance(body["risk_flags"], list) and len(body["risk_flags"]) >= 2

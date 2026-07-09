@@ -3,7 +3,7 @@
 import { Avatar } from 'rizzui';
 import cn from '@core/utils/class-names';
 import { useMemo } from 'react';
-import { resolveAvatarSrc } from '@/utils/dicebear/dicebear-avatar-url';
+import { resolveAvatarSrc } from '@/utils/avatar/resolve-avatar-src';
 
 export interface UserAvatarProps {
   avatarUrl?: string | null;
@@ -14,7 +14,7 @@ export interface UserAvatarProps {
 }
 
 /**
- * Renders a user avatar from avatar_url (including dicebear: config) or a deterministic fallback.
+ * Renders a user avatar from avatar_url with a stable local fallback.
  */
 export default function UserAvatar({
   avatarUrl,

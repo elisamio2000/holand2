@@ -21,35 +21,35 @@ export function profileGapI18nKey(id: string) {
 
 export const PROFILE_BACKEND_CAPABILITY_GAPS: ProfileBackendCapabilityGap[] = [
   {
-    id: 'avatar-dicebear-url',
-    capability: 'Persist dicebear: avatar_url on user profile',
+    id: 'avatar-url-upload',
+    capability: 'Persist uploaded avatar_url on user profile',
     feWorkaround:
-      'Avatar builder renders locally; Save sends dicebear:<base64(JSON)> in avatar_url',
-    requiredApi: 'UserUpdate.avatar_url: str | null (max ~2048, not HttpUrl)',
+      'Client uploads image through gateway endpoint and stores returned avatar_url',
+    requiredApi: 'UserUpdate.avatar_url: str | null (http/https path)',
     feRequest: `PATCH /admin/users/{user_id}
 {
   "display_name": "Alex",
   "email": "user@example.com",
-  "avatar_url": "dicebear:eyJ2IjoxLCJzdHlsZSI6ImFkdmVudHVyZXIi..."
+  "avatar_url": "https://cdn.example.com/avatars/user-123.png"
 }`,
     expectedResponse: `HTTP 200
 {
   "id": "user-uuid",
-  "avatar_url": "dicebear:eyJ2IjoxLCJzdHlsZSI6ImFkdmVudHVyZXIi..."
+  "avatar_url": "https://cdn.example.com/avatars/user-123.png"
 }`,
     acceptance:
-      'PATCH with dicebear string returns 200; GET /auth/me returns same avatar_url; legacy https URLs still work',
+      'PATCH with uploaded URL returns 200 and GET /auth/me returns same avatar_url',
     priority: 'P0',
     uiSurface: 'avatar',
   },
   {
     id: 'avatar-url-text-column',
-    capability: 'DB column supports long avatar_url config strings',
+    capability: 'DB column supports standard avatar URL length',
     feWorkaround: 'None — Save fails with HTTP 422 today',
-    requiredApi: 'users.avatar_url TEXT (not VARCHAR(255))',
+    requiredApi: 'users.avatar_url VARCHAR/TEXT for standard URL sizes',
     feRequest: 'Auth Service UserUpdate + DB migration',
-    expectedResponse: 'Stores 300–2048 char dicebear: payloads without validation error',
-    acceptance: 'No 422 on dicebear payloads up to 2048 chars',
+    expectedResponse: 'Stores regular uploaded/avatar CDN URLs without validation error',
+    acceptance: 'No 422 on valid avatar URLs',
     priority: 'P0',
     uiSurface: 'avatar',
   },

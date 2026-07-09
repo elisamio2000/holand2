@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import { useLayout } from '@/layouts/use-layout';
 import { LAYOUT_OPTIONS } from '@/config/enums';
 import { useBerylliumSidebars } from '@/layouts/beryllium/beryllium-utils';
+import { routes } from '@/config/routes';
 
 /**
  * DEV NOTE: Navigation tabs
@@ -35,6 +36,10 @@ export default function ProfileSettingsNav() {
     {
       label: t('account.navigation.password'),
       value: '/account/security',
+    },
+    {
+      label: t('adminSettings.tabAppearance'),
+      value: routes.account.appearance,
     },
   ];
   const { layout } = useLayout();
@@ -109,4 +114,3 @@ export default function ProfileSettingsNav() {
     </div>
   );
 }
-

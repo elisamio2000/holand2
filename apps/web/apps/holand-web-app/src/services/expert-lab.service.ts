@@ -1,5 +1,7 @@
 // ============================================
-// Expert Lab service — draft/review/publish workflow client
+// Expert Lab service — legacy draft/review/publish workflow client.
+// Canonical assessment authoring/version governance is now served by
+// /admin/assessment-versions and /admin/formula-versions.
 // ============================================
 
 import { holandApiClient } from './holand-api-client';

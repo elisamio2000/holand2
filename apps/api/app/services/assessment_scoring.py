@@ -40,7 +40,8 @@ def compute_holland_result(
     for dim in RIASEC_DIMENSIONS:
         raw_totals.setdefault(dim, 0.0)
     if formula is None:
-        return score_holland(raw_totals)
+        normalized, code, _, _ = score_holland(raw_totals)
+        return normalized, code
 
     total = sum(max(v, 0.0) for v in raw_totals.values())
     expr = _expression_of(formula)
@@ -60,7 +61,8 @@ def compute_mbti_result(
     raw_totals: dict[str, float], formula: ScoringFormulaVersion | None = None
 ) -> tuple[str, dict[str, float]]:
     if formula is None:
-        return score_mbti(raw_totals)
+        code, certainty, _, _ = score_mbti(raw_totals)
+        return code, certainty
 
     expr = _expression_of(formula)
     type_letters: list[str] = []

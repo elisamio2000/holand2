@@ -4,7 +4,6 @@ import Link from 'next/link';
 import cn from '@core/utils/class-names';
 import SimpleBar from '@core/ui/simplebar';
 import Logo from '@core/components/logo';
-import WorkspaceSidebarIdentity from '@/app/shared/workspace/components/workspace-sidebar-identity';
 import { SidebarMenu } from './sidebar-menu';
 
 export default function Sidebar({ className }: { className?: string }) {
@@ -25,7 +24,6 @@ export default function Sidebar({ className }: { className?: string }) {
             <Logo className="max-w-[155px]" />
           </Link>
         </div>
-        <WorkspaceSidebarIdentity className="pb-2" />
       </div>
 
       <div className="h-full min-h-0 overflow-hidden">

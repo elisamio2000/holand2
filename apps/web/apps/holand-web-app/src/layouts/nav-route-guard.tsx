@@ -12,7 +12,7 @@ import { routes } from '@/config/routes';
 
 /**
  * Redirects authenticated users away from routes they lack section access for.
- * Pending users are sent to workspace preferences (profile).
+ * Pending users are sent to account profile.
  */
 export default function NavRouteGuard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -43,7 +43,7 @@ export default function NavRouteGuard({ children }: { children: React.ReactNode 
     console.info('[NavRouteGuard] Access denied:', { pathname, requiredSection });
     const fallback =
       canAccessSection('profile')
-        ? routes.workspace.preferences
+        ? routes.account.profile
         : routes.accessDenied ?? '/access-denied';
     router.replace(fallback);
   }, [

@@ -38,4 +38,13 @@ describe('analyticsService', () => {
     expect(getMock).toHaveBeenCalledWith('/analytics/funnel');
     expect(result.total_sessions).toBe(0);
   });
+
+  it('getReportQualitySummary fetches /analytics/report-quality', async () => {
+    getMock.mockResolvedValue({ data: { total_sessions: 2, steps: [] } });
+
+    const result = await analyticsService.getReportQualitySummary();
+
+    expect(getMock).toHaveBeenCalledWith('/analytics/report-quality');
+    expect(result.total_sessions).toBe(2);
+  });
 });

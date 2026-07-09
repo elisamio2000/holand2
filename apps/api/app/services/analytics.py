@@ -8,10 +8,22 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models.analytics import FunnelEvent
-from ..schemas import FunnelEventCreate, FunnelStepSummary, FunnelSummaryResponse
+from ..schemas import (
+    FunnelEventCreate,
+    FunnelStepSummary,
+    FunnelSummaryResponse,
+    ReportQualityStepSummary,
+    ReportQualitySummaryResponse,
+)
 
 # Canonical funnel step order used to compute sequential drop-off rates.
 DEFAULT_FUNNEL_STEPS = ["start", "in_progress", "review", "complete"]
+DEFAULT_REPORT_QUALITY_STEPS = [
+    "report_opened",
+    "report_interpretation_viewed",
+    "report_action_plan_viewed",
+    "report_recommendations_viewed",
+]
 
 
 async def record_event(db: AsyncSession, payload: FunnelEventCreate) -> FunnelEvent:
@@ -81,3 +93,39 @@ async def get_funnel_summary(
         steps=step_summaries,
         drop_off_rate=drop_off_rate,
     )
+
+
+async def get_report_quality_summary(
+    db: AsyncSession, steps: list[str] | None = None
+) -> ReportQualitySummaryResponse:
+    steps = steps or DEFAULT_REPORT_QUALITY_STEPS
+    result = await db.execute(
+        select(
+            FunnelEvent.step,
+            func.count(FunnelEvent.id),
+            func.count(func.distinct(FunnelEvent.session_id)),
+            func.avg(FunnelEvent.duration_ms),
+        )
+        .where(FunnelEvent.step.in_(steps))
+        .group_by(FunnelEvent.step)
+    )
+    rows = {row[0]: row for row in result.all()}
+
+    total_sessions_result = await db.execute(
+        select(func.count(func.distinct(FunnelEvent.session_id))).where(FunnelEvent.step.in_(steps))
+    )
+    total_sessions = total_sessions_result.scalar_one() or 0
+
+    step_summaries: list[ReportQualityStepSummary] = []
+    for step in steps:
+        row = rows.get(step)
+        step_summaries.append(
+            ReportQualityStepSummary(
+                step=step,
+                event_count=(row[1] if row else 0),
+                unique_sessions=(row[2] if row else 0),
+                avg_duration_ms=(float(row[3]) if row and row[3] is not None else None),
+            )
+        )
+
+    return ReportQualitySummaryResponse(total_sessions=total_sessions, steps=step_summaries)

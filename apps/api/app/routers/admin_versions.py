@@ -1,6 +1,9 @@
-"""Versioning / governance API for the question bank & scoring formulas
-(Phase 2) — see docs/technical-architecture-fa.md #7 for the endpoint list
-this implements (draft/simulate/review/approve/publish/rollback/diff)."""
+"""Canonical versioning/governance API for assessment authoring.
+
+`/admin/assessment-versions` and `/admin/formula-versions` are the canonical
+authoring workflow surfaces for create/edit/version/publish of Holland/MBTI
+content. The `/expert-lab` routes are not canonical for runtime governance.
+"""
 
 from __future__ import annotations
 
@@ -13,6 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from ..database import get_db
+from ..deps import require_admin
 from ..models.assessment import (
     AssessmentType,
     AssessmentVersion,
@@ -22,27 +26,50 @@ from ..models.assessment import (
     VersionAuditLog,
     VersionEntityType,
     VersionStatus,
+    VersionValidationReport,
 )
 from ..schemas_assessment import (
     AssessmentVersionDetailOut,
     AssessmentVersionDraftIn,
     AssessmentVersionOut,
     AuditLogEntryOut,
+    QuestionBankQualityReportOut,
+    OptionReorderIn,
+    PreflightIssueOut,
+    QuestionDraftIn,
+    QuestionDraftPatchIn,
+    QuestionOptionDraftIn,
+    QuestionOptionDraftPatchIn,
+    QuestionReorderIn,
     RollbackIn,
     ScoringFormulaDraftIn,
+    ScoringFormulaDraftPatchIn,
     ScoringFormulaVersionOut,
     SimulateAssessmentVersionIn,
     SimulateFormulaIn,
     SimulateFormulaOut,
     SimulateResultOut,
+    ValidationReportOut,
     VersionActionIn,
     VersionDiffOut,
+    VersionPreflightOut,
 )
 from ..services.assessment_scoring import compute_session_result
-from ..services.formula_engine import FormulaError, evaluate_formula, validate_formula
+from ..services.formula_engine import (
+    FormulaError,
+    evaluate_formula,
+    validate_formula,
+    validate_formula_drift,
+    validate_formula_version_payload,
+)
+from ..services.question_bank_quality import build_quality_report
 from ..services.versioning import VersioningError, assert_transition_allowed, log_transition
 
-router = APIRouter(prefix="/admin", tags=["Question Bank Governance"])
+router = APIRouter(
+    prefix="/admin",
+    tags=["Question Bank Governance"],
+    dependencies=[Depends(require_admin)],
+)
 
 
 def _now() -> datetime:
@@ -62,6 +89,14 @@ async def _get_assessment_version(db: AsyncSession, version_id: str) -> Assessme
     return version
 
 
+def _ensure_assessment_version_editable(version: AssessmentVersion) -> None:
+    if version.status != VersionStatus.DRAFT:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Version {version.version} is '{version.status.value}' and not editable",
+        )
+
+
 async def _get_formula_version(db: AsyncSession, formula_id: str) -> ScoringFormulaVersion:
     result = await db.execute(
         select(ScoringFormulaVersion).where(ScoringFormulaVersion.id == formula_id)
@@ -72,6 +107,14 @@ async def _get_formula_version(db: AsyncSession, formula_id: str) -> ScoringForm
     return formula
 
 
+def _ensure_formula_version_editable(formula: ScoringFormulaVersion) -> None:
+    if formula.status != VersionStatus.DRAFT:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Formula version {formula.version} is '{formula.status.value}' and not editable",
+        )
+
+
 async def _next_version_number(
     db: AsyncSession, model, filter_col, filter_value
 ) -> int:
@@ -80,6 +123,31 @@ async def _next_version_number(
     )
     latest = result.scalars().first()
     return (latest or 0) + 1
+
+
+async def _record_validation_report(
+    db: AsyncSession,
+    *,
+    entity_type: VersionEntityType,
+    entity_id: str,
+    gate: str,
+    target_status: VersionStatus,
+    ok: bool,
+    report: dict,
+    actor: str | None,
+) -> VersionValidationReport:
+    entry = VersionValidationReport(
+        entity_type=entity_type,
+        entity_id=entity_id,
+        gate=gate,
+        target_status=target_status.value,
+        ok=ok,
+        report=report,
+        actor=actor,
+    )
+    db.add(entry)
+    await db.flush()
+    return entry
 
 
 # ── Assessment versions: create / read ───────────────────────────────────────
@@ -189,6 +257,346 @@ async def get_assessment_version(
     return await _get_assessment_version(db, version_id)
 
 
+@router.get(
+    "/assessment-versions/{version_id}/quality-report",
+    response_model=QuestionBankQualityReportOut,
+)
+async def get_assessment_version_quality_report(
+    version_id: str, db: Annotated[AsyncSession, Depends(get_db)]
+) -> QuestionBankQualityReportOut:
+    version = await _get_assessment_version(db, version_id)
+    report = build_quality_report(version.assessment_type, version.questions)
+    return QuestionBankQualityReportOut.model_validate(report)
+
+
+def _apply_question_fields(question: Question, payload: QuestionDraftPatchIn) -> None:
+    data = payload.model_dump(exclude_unset=True)
+    for field, value in data.items():
+        setattr(question, field, value)
+
+
+def _apply_option_fields(option: QuestionOption, payload: QuestionOptionDraftPatchIn) -> None:
+    data = payload.model_dump(exclude_unset=True)
+    for field, value in data.items():
+        setattr(option, field, value)
+
+
+@router.post(
+    "/assessment-versions/{version_id}/questions",
+    response_model=AssessmentVersionDetailOut,
+    status_code=201,
+)
+async def add_question_to_assessment_version(
+    version_id: str,
+    payload: QuestionDraftIn,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+
+    question = Question(
+        assessment_version_id=version.id,
+        kind=payload.kind,
+        dimension=payload.dimension,
+        text=payload.text,
+        order_index=payload.order_index,
+        is_reverse_scored=payload.is_reverse_scored,
+    )
+    db.add(question)
+    await db.flush()
+    for opt in payload.options:
+        db.add(
+            QuestionOption(
+                question_id=question.id,
+                label=opt.label,
+                value=opt.value,
+                pole=opt.pole,
+                weight=opt.weight,
+                order_index=opt.order_index,
+            )
+        )
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+@router.patch(
+    "/assessment-versions/{version_id}/questions/{question_id}",
+    response_model=AssessmentVersionDetailOut,
+)
+async def update_question_in_assessment_version(
+    version_id: str,
+    question_id: str,
+    payload: QuestionDraftPatchIn,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+    question = next((q for q in version.questions if q.id == question_id), None)
+    if question is None:
+        raise HTTPException(status_code=404, detail="Question not found in this assessment version")
+
+    _apply_question_fields(question, payload)
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+@router.delete(
+    "/assessment-versions/{version_id}/questions/{question_id}",
+    response_model=AssessmentVersionDetailOut,
+)
+async def delete_question_from_assessment_version(
+    version_id: str,
+    question_id: str,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+    question = next((q for q in version.questions if q.id == question_id), None)
+    if question is None:
+        raise HTTPException(status_code=404, detail="Question not found in this assessment version")
+    await db.delete(question)
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+@router.post(
+    "/assessment-versions/{version_id}/questions/reorder",
+    response_model=AssessmentVersionDetailOut,
+)
+async def reorder_questions_in_assessment_version(
+    version_id: str,
+    payload: QuestionReorderIn,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+    by_id = {q.id: q for q in version.questions}
+    for item in payload.items:
+        question = by_id.get(item.question_id)
+        if question is None:
+            raise HTTPException(status_code=404, detail=f"Question {item.question_id} not found in version")
+        question.order_index = item.order_index
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+@router.post(
+    "/assessment-versions/{version_id}/questions/{question_id}/options",
+    response_model=AssessmentVersionDetailOut,
+    status_code=201,
+)
+async def add_option_to_question(
+    version_id: str,
+    question_id: str,
+    payload: QuestionOptionDraftIn,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+    question = next((q for q in version.questions if q.id == question_id), None)
+    if question is None:
+        raise HTTPException(status_code=404, detail="Question not found in this assessment version")
+    db.add(
+        QuestionOption(
+            question_id=question.id,
+            label=payload.label,
+            value=payload.value,
+            pole=payload.pole,
+            weight=payload.weight,
+            order_index=payload.order_index,
+        )
+    )
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+@router.patch(
+    "/assessment-versions/{version_id}/questions/{question_id}/options/{option_id}",
+    response_model=AssessmentVersionDetailOut,
+)
+async def update_option_in_question(
+    version_id: str,
+    question_id: str,
+    option_id: str,
+    payload: QuestionOptionDraftPatchIn,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+    question = next((q for q in version.questions if q.id == question_id), None)
+    if question is None:
+        raise HTTPException(status_code=404, detail="Question not found in this assessment version")
+    option = next((o for o in question.options if o.id == option_id), None)
+    if option is None:
+        raise HTTPException(status_code=404, detail="Option not found in this question")
+    _apply_option_fields(option, payload)
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+@router.delete(
+    "/assessment-versions/{version_id}/questions/{question_id}/options/{option_id}",
+    response_model=AssessmentVersionDetailOut,
+)
+async def delete_option_from_question(
+    version_id: str,
+    question_id: str,
+    option_id: str,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+    question = next((q for q in version.questions if q.id == question_id), None)
+    if question is None:
+        raise HTTPException(status_code=404, detail="Question not found in this assessment version")
+    option = next((o for o in question.options if o.id == option_id), None)
+    if option is None:
+        raise HTTPException(status_code=404, detail="Option not found in this question")
+    await db.delete(option)
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+@router.post(
+    "/assessment-versions/{version_id}/questions/{question_id}/options/reorder",
+    response_model=AssessmentVersionDetailOut,
+)
+async def reorder_question_options(
+    version_id: str,
+    question_id: str,
+    payload: OptionReorderIn,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> AssessmentVersion:
+    version = await _get_assessment_version(db, version_id)
+    _ensure_assessment_version_editable(version)
+    question = next((q for q in version.questions if q.id == question_id), None)
+    if question is None:
+        raise HTTPException(status_code=404, detail="Question not found in this assessment version")
+    by_id = {o.id: o for o in question.options}
+    for item in payload.items:
+        option = by_id.get(item.option_id)
+        if option is None:
+            raise HTTPException(status_code=404, detail=f"Option {item.option_id} not found in question")
+        option.order_index = item.order_index
+    await db.flush()
+    return await _get_assessment_version(db, version.id)
+
+
+def _assessment_preflight_issues(version: AssessmentVersion) -> list[PreflightIssueOut]:
+    issues: list[PreflightIssueOut] = []
+    if not version.questions:
+        issues.append(
+            PreflightIssueOut(
+                code="no_questions",
+                message="Assessment draft must include at least one question",
+                blocking=True,
+                path="questions",
+            )
+        )
+        return issues
+
+    for q_idx, question in enumerate(version.questions):
+        path = f"questions[{q_idx}]"
+        if not question.text.strip():
+            issues.append(
+                PreflightIssueOut(
+                    code="question_text_empty",
+                    message="Question text cannot be empty",
+                    blocking=True,
+                    path=f"{path}.text",
+                )
+            )
+        if len(question.options) < 2:
+            issues.append(
+                PreflightIssueOut(
+                    code="question_options_too_few",
+                    message="Each question must have at least 2 options",
+                    blocking=True,
+                    path=f"{path}.options",
+                )
+            )
+
+        if version.assessment_type == AssessmentType.HOLLAND:
+            if question.dimension not in {"R", "I", "A", "S", "E", "C"}:
+                issues.append(
+                    PreflightIssueOut(
+                        code="invalid_holland_dimension",
+                        message="Holland question dimension must be one of R, I, A, S, E, C",
+                        blocking=True,
+                        path=f"{path}.dimension",
+                    )
+                )
+            if question.kind != "likert":
+                issues.append(
+                    PreflightIssueOut(
+                        code="invalid_holland_question_kind",
+                        message="Holland questions must use likert kind",
+                        blocking=True,
+                        path=f"{path}.kind",
+                    )
+                )
+        elif version.assessment_type == AssessmentType.MBTI:
+            if question.dimension not in {"EI", "SN", "TF", "JP"}:
+                issues.append(
+                    PreflightIssueOut(
+                        code="invalid_mbti_dimension",
+                        message="MBTI question dimension must be one of EI, SN, TF, JP",
+                        blocking=True,
+                        path=f"{path}.dimension",
+                    )
+                )
+            if question.kind != "forced_choice":
+                issues.append(
+                    PreflightIssueOut(
+                        code="invalid_mbti_question_kind",
+                        message="MBTI questions must use forced_choice kind",
+                        blocking=True,
+                        path=f"{path}.kind",
+                    )
+                )
+            if len(question.options) != 2:
+                issues.append(
+                    PreflightIssueOut(
+                        code="invalid_mbti_option_count",
+                        message="MBTI forced-choice questions must have exactly 2 options",
+                        blocking=True,
+                        path=f"{path}.options",
+                    )
+                )
+
+        for o_idx, option in enumerate(question.options):
+            if not option.label.strip():
+                issues.append(
+                    PreflightIssueOut(
+                        code="option_label_empty",
+                        message="Option label cannot be empty",
+                        blocking=True,
+                        path=f"{path}.options[{o_idx}].label",
+                    )
+                )
+    return issues
+
+
+@router.get(
+    "/assessment-versions/{version_id}/preflight",
+    response_model=VersionPreflightOut,
+)
+async def preflight_assessment_version(
+    version_id: str,
+    db: Annotated[AsyncSession, Depends(get_db)],
+) -> VersionPreflightOut:
+    version = await _get_assessment_version(db, version_id)
+    issues = _assessment_preflight_issues(version)
+    blocking = sum(1 for issue in issues if issue.blocking)
+    warnings = len(issues) - blocking
+    return VersionPreflightOut(
+        ready_to_publish=blocking == 0,
+        blocking_issue_count=blocking,
+        warning_count=warnings,
+        issues=issues,
+    )
+
+
 # ── Assessment versions: workflow transitions ────────────────────────────────
 async def _transition_assessment_version(
     db: AsyncSession, version_id: str, target: VersionStatus, payload: VersionActionIn
@@ -204,6 +612,29 @@ async def _transition_assessment_version(
     if target == VersionStatus.APPROVED:
         version.approved_by = payload.actor
     if target == VersionStatus.PUBLISHED:
+        quality_report = build_quality_report(version.assessment_type, version.questions)
+        await _record_validation_report(
+            db,
+            entity_type=VersionEntityType.ASSESSMENT_VERSION,
+            entity_id=version.id,
+            gate="question_bank_quality",
+            target_status=target,
+            ok=quality_report["error_count"] == 0,
+            report=quality_report,
+            actor=payload.actor,
+        )
+        if quality_report["error_count"] > 0:
+            error_codes = ", ".join(
+                issue["code"] for issue in quality_report["issues"] if issue["severity"] == "error"
+            )
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Assessment publish gate failed: "
+                    f"quality report contains blocking errors ({error_codes})"
+                ),
+            )
+
         # Archive any currently-published version of the same assessment type.
         result = await db.execute(
             select(AssessmentVersion).where(
@@ -244,30 +675,36 @@ async def _transition_assessment_version(
 @router.post("/assessment-versions/{version_id}/review", response_model=AssessmentVersionDetailOut)
 async def review_assessment_version(
     version_id: str,
-    payload: VersionActionIn | None = None,
+    payload: VersionActionIn,
     db: Annotated[AsyncSession, Depends(get_db)] = None,
 ) -> AssessmentVersion:
-    payload = payload or VersionActionIn()
     return await _transition_assessment_version(db, version_id, VersionStatus.REVIEWED, payload)
 
 
 @router.post("/assessment-versions/{version_id}/approve", response_model=AssessmentVersionDetailOut)
 async def approve_assessment_version(
     version_id: str,
-    payload: VersionActionIn | None = None,
+    payload: VersionActionIn,
     db: Annotated[AsyncSession, Depends(get_db)] = None,
 ) -> AssessmentVersion:
-    payload = payload or VersionActionIn()
     return await _transition_assessment_version(db, version_id, VersionStatus.APPROVED, payload)
 
 
 @router.post("/assessment-versions/{version_id}/publish", response_model=AssessmentVersionDetailOut)
 async def publish_assessment_version(
     version_id: str,
-    payload: VersionActionIn | None = None,
+    payload: VersionActionIn,
     db: Annotated[AsyncSession, Depends(get_db)] = None,
 ) -> AssessmentVersion:
-    payload = payload or VersionActionIn()
+    preflight = await preflight_assessment_version(version_id=version_id, db=db)
+    if preflight.blocking_issue_count > 0:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "message": "Assessment version is not ready to publish",
+                "blocking_issues": [issue.model_dump() for issue in preflight.issues if issue.blocking],
+            },
+        )
     return await _transition_assessment_version(db, version_id, VersionStatus.PUBLISHED, payload)
 
 
@@ -324,7 +761,8 @@ async def rollback_assessment_version(
                 )
             )
 
-    if current.status == VersionStatus.PUBLISHED:
+    current_status = current.status
+    if current_status == VersionStatus.PUBLISHED:
         current.status = VersionStatus.ARCHIVED
         current.effective_to = _now()
 
@@ -333,7 +771,7 @@ async def rollback_assessment_version(
         entity_type=VersionEntityType.ASSESSMENT_VERSION,
         entity_id=new_version.id,
         action="rollback",
-        from_status=current.status,
+        from_status=current_status,
         to_status=VersionStatus.PUBLISHED,
         actor=payload.actor,
         note=f"Rolled back to content of version {target.version}",
@@ -467,6 +905,30 @@ async def create_formula_version_draft(
     return draft
 
 
+@router.patch("/formula-versions/{formula_id}", response_model=ScoringFormulaVersionOut)
+async def update_formula_version_draft(
+    formula_id: str,
+    payload: ScoringFormulaDraftPatchIn,
+    db: Annotated[AsyncSession, Depends(get_db)] = None,
+) -> ScoringFormulaVersion:
+    formula = await _get_formula_version(db, formula_id)
+    _ensure_formula_version_editable(formula)
+    updates = payload.model_dump(exclude_unset=True)
+    expression = updates.get("expression", formula.expression)
+    input_variables = updates.get("input_variables", formula.input_variables)
+    expr = expression.get("expr", "") if isinstance(expression, dict) else ""
+    try:
+        validate_formula(expr, input_variables)
+    except FormulaError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    for field, value in updates.items():
+        setattr(formula, field, value)
+    await db.flush()
+    await db.refresh(formula)
+    return formula
+
+
 @router.get("/formula-versions", response_model=list[ScoringFormulaVersionOut])
 async def list_formula_versions(
     formula_key: Annotated[str | None, Query()] = None,
@@ -505,14 +967,96 @@ async def _transition_formula_version(
     if target == VersionStatus.APPROVED:
         formula.approved_by = payload.actor
     if target == VersionStatus.PUBLISHED:
-        result = await db.execute(
+        existing_published_result = await db.execute(
             select(ScoringFormulaVersion).where(
                 ScoringFormulaVersion.formula_key == formula.formula_key,
                 ScoringFormulaVersion.status == VersionStatus.PUBLISHED,
                 ScoringFormulaVersion.id != formula.id,
             )
         )
-        for prev in result.scalars().all():
+        existing_published = list(existing_published_result.scalars().all())
+
+        expr = formula.expression.get("expr", "") if isinstance(formula.expression, dict) else ""
+        try:
+            validate_formula_version_payload(
+                expression=expr,
+                input_variables=formula.input_variables,
+                validation_rules=formula.validation_rules,
+                unit_tests=formula.unit_tests,
+            )
+            max_drift = None
+            if isinstance(formula.validation_rules, dict):
+                max_drift = formula.validation_rules.get("max_drift")
+            if max_drift is not None:
+                if not isinstance(max_drift, int | float):
+                    raise FormulaError("validation_rules.max_drift must be numeric when provided")
+                sample_variables = [
+                    case.get("variables")
+                    for case in (formula.unit_tests or [])
+                    if isinstance(case, dict) and isinstance(case.get("variables"), dict)
+                ]
+                for prev in existing_published:
+                    prev_expr = prev.expression.get("expr", "") if isinstance(prev.expression, dict) else ""
+                    validate_formula_drift(
+                        previous_expression=prev_expr,
+                        candidate_expression=expr,
+                        samples=sample_variables,
+                        max_drift=float(max_drift),
+                    )
+            await _record_validation_report(
+                db,
+                entity_type=VersionEntityType.FORMULA_VERSION,
+                entity_id=formula.id,
+                gate="formula_publish",
+                target_status=target,
+                ok=True,
+                report={
+                    "ok": True,
+                    "error_count": 0,
+                    "warning_count": 0,
+                    "issues": [],
+                    "metrics": {
+                        "unit_test_count": len(formula.unit_tests or []),
+                        "validation_rules": formula.validation_rules or {},
+                        "compared_published_versions": len(existing_published),
+                    },
+                },
+                actor=payload.actor,
+            )
+        except FormulaError as exc:
+            await _record_validation_report(
+                db,
+                entity_type=VersionEntityType.FORMULA_VERSION,
+                entity_id=formula.id,
+                gate="formula_publish",
+                target_status=target,
+                ok=False,
+                report={
+                    "ok": False,
+                    "error_count": 1,
+                    "warning_count": 0,
+                    "issues": [
+                        {
+                            "code": "formula_publish_gate_failed",
+                            "severity": "error",
+                            "message": str(exc),
+                            "context": {},
+                        }
+                    ],
+                    "metrics": {
+                        "unit_test_count": len(formula.unit_tests or []),
+                        "validation_rules": formula.validation_rules or {},
+                        "compared_published_versions": len(existing_published),
+                    },
+                },
+                actor=payload.actor,
+            )
+            raise HTTPException(
+                status_code=409,
+                detail=f"Formula publish gate failed: {exc}",
+            ) from exc
+
+        for prev in existing_published:
             prev.status = VersionStatus.ARCHIVED
             prev.effective_to = _now()
             await log_transition(
@@ -545,30 +1089,36 @@ async def _transition_formula_version(
 @router.post("/formula-versions/{formula_id}/review", response_model=ScoringFormulaVersionOut)
 async def review_formula_version(
     formula_id: str,
-    payload: VersionActionIn | None = None,
+    payload: VersionActionIn,
     db: Annotated[AsyncSession, Depends(get_db)] = None,
 ) -> ScoringFormulaVersion:
-    payload = payload or VersionActionIn()
     return await _transition_formula_version(db, formula_id, VersionStatus.REVIEWED, payload)
 
 
 @router.post("/formula-versions/{formula_id}/approve", response_model=ScoringFormulaVersionOut)
 async def approve_formula_version(
     formula_id: str,
-    payload: VersionActionIn | None = None,
+    payload: VersionActionIn,
     db: Annotated[AsyncSession, Depends(get_db)] = None,
 ) -> ScoringFormulaVersion:
-    payload = payload or VersionActionIn()
     return await _transition_formula_version(db, formula_id, VersionStatus.APPROVED, payload)
 
 
 @router.post("/formula-versions/{formula_id}/publish", response_model=ScoringFormulaVersionOut)
 async def publish_formula_version(
     formula_id: str,
-    payload: VersionActionIn | None = None,
+    payload: VersionActionIn,
     db: Annotated[AsyncSession, Depends(get_db)] = None,
 ) -> ScoringFormulaVersion:
-    payload = payload or VersionActionIn()
+    preflight = await preflight_formula_version(formula_id=formula_id, db=db)
+    if preflight.blocking_issue_count > 0:
+        raise HTTPException(
+            status_code=409,
+            detail={
+                "message": "Formula version is not ready to publish",
+                "blocking_issues": [issue.model_dump() for issue in preflight.issues if issue.blocking],
+            },
+        )
     return await _transition_formula_version(db, formula_id, VersionStatus.PUBLISHED, payload)
 
 
@@ -604,7 +1154,8 @@ async def rollback_formula_version(
     db.add(new_formula)
     await db.flush()
 
-    if current.status == VersionStatus.PUBLISHED:
+    current_status = current.status
+    if current_status == VersionStatus.PUBLISHED:
         current.status = VersionStatus.ARCHIVED
         current.effective_to = _now()
 
@@ -613,7 +1164,7 @@ async def rollback_formula_version(
         entity_type=VersionEntityType.FORMULA_VERSION,
         entity_id=new_formula.id,
         action="rollback",
-        from_status=current.status,
+        from_status=current_status,
         to_status=VersionStatus.PUBLISHED,
         actor=payload.actor,
         note=f"Rolled back to content of version {target.version}",
@@ -638,6 +1189,72 @@ async def simulate_formula_version(
     return SimulateFormulaOut(result=value)
 
 
+def _formula_preflight_issues(formula: ScoringFormulaVersion) -> list[PreflightIssueOut]:
+    issues: list[PreflightIssueOut] = []
+    expr = formula.expression.get("expr", "") if isinstance(formula.expression, dict) else ""
+    if not expr.strip():
+        issues.append(
+            PreflightIssueOut(
+                code="formula_expression_empty",
+                message="Formula expression cannot be empty",
+                blocking=True,
+                path="expression.expr",
+            )
+        )
+        return issues
+
+    try:
+        validate_formula(expr, formula.input_variables)
+    except FormulaError as exc:
+        issues.append(
+            PreflightIssueOut(
+                code="formula_validation_failed",
+                message=str(exc),
+                blocking=True,
+                path="expression",
+            )
+        )
+
+    if not formula.input_variables:
+        issues.append(
+            PreflightIssueOut(
+                code="formula_input_variables_empty",
+                message="Formula must declare at least one input variable",
+                blocking=True,
+                path="input_variables",
+            )
+        )
+
+    if not formula.output_metric.strip():
+        issues.append(
+            PreflightIssueOut(
+                code="formula_output_metric_empty",
+                message="Formula output metric cannot be empty",
+                blocking=True,
+                path="output_metric",
+            )
+        )
+
+    return issues
+
+
+@router.get("/formula-versions/{formula_id}/preflight", response_model=VersionPreflightOut)
+async def preflight_formula_version(
+    formula_id: str,
+    db: Annotated[AsyncSession, Depends(get_db)] = None,
+) -> VersionPreflightOut:
+    formula = await _get_formula_version(db, formula_id)
+    issues = _formula_preflight_issues(formula)
+    blocking = sum(1 for issue in issues if issue.blocking)
+    warnings = len(issues) - blocking
+    return VersionPreflightOut(
+        ready_to_publish=blocking == 0,
+        blocking_issue_count=blocking,
+        warning_count=warnings,
+        issues=issues,
+    )
+
+
 # ── Audit log ─────────────────────────────────────────────────────────────────
 @router.get("/version-audit-logs", response_model=list[AuditLogEntryOut])
 async def list_audit_logs(
@@ -647,5 +1264,20 @@ async def list_audit_logs(
     stmt = select(VersionAuditLog).order_by(VersionAuditLog.created_at.desc())
     if entity_id is not None:
         stmt = stmt.where(VersionAuditLog.entity_id == entity_id)
+    result = await db.execute(stmt)
+    return list(result.scalars().all())
+
+
+@router.get("/version-validation-reports", response_model=list[ValidationReportOut])
+async def list_validation_reports(
+    entity_id: Annotated[str | None, Query()] = None,
+    entity_type: Annotated[VersionEntityType | None, Query()] = None,
+    db: Annotated[AsyncSession, Depends(get_db)] = None,
+) -> list[VersionValidationReport]:
+    stmt = select(VersionValidationReport).order_by(VersionValidationReport.created_at.desc())
+    if entity_id is not None:
+        stmt = stmt.where(VersionValidationReport.entity_id == entity_id)
+    if entity_type is not None:
+        stmt = stmt.where(VersionValidationReport.entity_type == entity_type)
     result = await db.execute(stmt)
     return list(result.scalars().all())
