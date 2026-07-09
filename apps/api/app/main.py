@@ -2,16 +2,25 @@
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from starlette.responses import JSONResponse
 
 from .config import get_settings
 from .database import engine
+from .monitoring import RequestObservabilityMiddleware, init_sentry_hooks
 from .recommendations import build_recommendations
 from .routers.admin_rbac import router as admin_rbac_router
 from .routers.admin_users import router as admin_users_router
 from .routers.admin_versions import router as admin_versions_router
+from .routers.analytics import router as analytics_router
 from .routers.auth import router as auth_router
+from .routers.expert_lab import router as expert_lab_router
+from .routers.monitoring import router as monitoring_router
+from .routers.recommendation_quality import router as recommendation_quality_router
 from .routers.recommendations import router as reco_router
 from .routers.reports import router as reports_router
 from .routers.sessions import router as sessions_router
@@ -22,10 +31,14 @@ from .schemas import (
     HollandResult,
     MbtiRequest,
     MbtiResult,
+    RecommendationRequest,
+    RecommendationResponse,
 )
 from .scoring import score_holland, score_mbti
+from .security import BodySizeLimitMiddleware, SecurityHeadersMiddleware, limiter
 
 settings = get_settings()
+
 
 
 @asynccontextmanager
@@ -51,6 +64,20 @@ app = FastAPI(
     redoc_url="/redoc" if settings.debug else None,
 )
 
+app.state.limiter = limiter
+
+
+async def _rate_limit_handler(request: Request, exc: RateLimitExceeded) -> JSONResponse:
+    return _rate_limit_exceeded_handler(request, exc)
+
+
+app.add_exception_handler(RateLimitExceeded, _rate_limit_handler)
+
+# ── Security middleware (order matters: outermost added last runs first) ────
+app.add_middleware(RequestObservabilityMiddleware)
+app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(BodySizeLimitMiddleware)
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.allowed_hosts_list)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins_list,
@@ -68,6 +95,12 @@ app.include_router(admin_versions_router)
 app.include_router(sessions_router)
 app.include_router(reco_router)
 app.include_router(reports_router)
+app.include_router(analytics_router)
+app.include_router(expert_lab_router)
+app.include_router(recommendation_quality_router)
+app.include_router(monitoring_router)
+
+init_sentry_hooks()
 
 
 @app.get("/health", response_model=HealthResponse, tags=["System"])
@@ -78,16 +111,33 @@ async def health() -> HealthResponse:
 @app.post("/assessments/holland/score", response_model=HollandResult, tags=["Assessments"])
 def holland_score(payload: HollandRequest) -> HollandResult:
     try:
-        normalized_scores, top3_code = score_holland(payload.scores)
+        normalized_scores, top3_code, quality_score, quality_band = score_holland(payload.scores)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
-    return HollandResult(normalized_scores=normalized_scores, top3_code=top3_code)
+    return HollandResult(
+        normalized_scores=normalized_scores,
+        top3_code=top3_code,
+        quality_score=quality_score,
+        quality_band=quality_band,
+    )
 
 
 @app.post("/assessments/mbti/score", response_model=MbtiResult, tags=["Assessments"])
 def mbti_score(payload: MbtiRequest) -> MbtiResult:
     try:
-        type_code, certainty = score_mbti(payload.scores)
+        type_code, certainty, quality_score, quality_band = score_mbti(payload.scores)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
-    return MbtiResult(type_code=type_code, certainty=certainty)
+    return MbtiResult(
+        type_code=type_code,
+        certainty=certainty,
+        quality_score=quality_score,
+        quality_band=quality_band,
+    )
+
+
+@app.post("/recommendations", response_model=RecommendationResponse, tags=["Recommendations"])
+def recommendations(payload: RecommendationRequest) -> RecommendationResponse:
+    careers, majors = build_recommendations(payload.holland_code, payload.mbti_type)
+    return RecommendationResponse(careers=careers, majors=majors)
+

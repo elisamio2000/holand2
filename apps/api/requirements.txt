@@ -23,6 +23,10 @@ redis[hiredis]==5.2.1
 # HTTP client
 httpx==0.28.1
 
+# Security / rate limiting
+slowapi==0.1.9
+sentry-sdk==2.10.0
+
 # PDF generation (Phase 5)
 weasyprint==65.0
 

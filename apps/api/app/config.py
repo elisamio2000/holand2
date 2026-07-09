@@ -1,6 +1,7 @@
 """App-wide settings loaded from environment / .env file."""
 
 from functools import lru_cache
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -41,9 +42,28 @@ class Settings(BaseSettings):
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
+    # Trusted hosts (comma-separated). "*" disables the check (dev default).
+    allowed_hosts: str = "*"
+
+    @property
+    def allowed_hosts_list(self) -> list[str]:
+        return [h.strip() for h in self.allowed_hosts.split(",") if h.strip()]
+
     # Rate Limiting
     rate_limit_login_per_minute: int = 5
     rate_limit_assessment_start_per_hour: int = 10
+    rate_limit_analytics_events_per_minute: int = 60
+    rate_limit_expert_lab_writes_per_minute: int = 30
+    rate_limit_recommendation_feedback_per_minute: int = 30
+
+    # Recommendation quality monitor
+    recommendation_quality_alert_threshold_percent: float = 35.0
+    recommendation_quality_alert_min_samples: int = 10
+
+    # Monitoring / observability
+    observability_log_level: str = "INFO"
+    sentry_dsn: str | None = None
+    sentry_traces_sample_rate: float = 0.1
 
     # Storage
     storage_backend: str = "local"

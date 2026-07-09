@@ -13,6 +13,7 @@ export const routes = {
     assessments: '/career-guidance/assessments',
     reports: '/career-guidance/reports',
     expertLab: '/career-guidance/expert-lab',
+    analytics: '/career-guidance/analytics',
   },
 
   // ==========================================

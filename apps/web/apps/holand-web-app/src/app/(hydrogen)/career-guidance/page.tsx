@@ -12,6 +12,7 @@ const links = [
   { href: '/career-guidance/reports', label: 'Reporting & Interpretation' },
   { href: '/career-guidance/counselor', label: 'داشبورد مشاور' },
   { href: '/career-guidance/expert-lab', label: 'Expert Analyst Lab' },
+  { href: '/career-guidance/analytics', label: 'Funnel Analytics' },
 ];
 
 export default function CareerGuidanceModulePage() {
