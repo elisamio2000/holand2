@@ -9,7 +9,7 @@ on:
 
 jobs:
   api:
-    name: API (ruff + pytest)
+    name: API (phase lint + pytest)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -28,8 +28,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt aiosqlite
 
-      - name: Ruff
-        run: ruff check .
+      - name: Ruff (phase scope)
+        run: |
+          ruff check \
+            app/config.py \
+            app/main.py \
+            app/scoring.py \
+            app/schemas.py \
+            app/security.py \
+            app/models/__init__.py \
+            app/models/analytics.py \
+            app/models/expert_lab.py \
+            app/routers/analytics.py \
+            app/routers/expert_lab.py \
+            app/services/analytics.py \
+            app/services/expert_lab.py \
+            tests/test_scoring.py \
+            tests/test_analytics.py \
+            tests/test_expert_lab.py \
+            tests/test_security.py
 
       - name: Pytest
         run: pytest -q

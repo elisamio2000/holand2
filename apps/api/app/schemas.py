@@ -1,8 +1,6 @@
 from datetime import datetime
-from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
-
 
 RIASEC_DIMENSIONS = ["R", "I", "A", "S", "E", "C"]
 MBTI_DIMENSIONS = ["E", "I", "S", "N", "T", "F", "J", "P"]
@@ -13,25 +11,29 @@ class HealthResponse(BaseModel):
 
 
 class HollandRequest(BaseModel):
-    scores: Dict[str, float] = Field(
+    scores: dict[str, float] = Field(
         ..., description="RIASEC scores keyed by R, I, A, S, E, C"
     )
 
 
 class HollandResult(BaseModel):
-    normalized_scores: Dict[str, float]
+    normalized_scores: dict[str, float]
     top3_code: str
+    quality_score: float
+    quality_band: str
 
 
 class MbtiRequest(BaseModel):
-    scores: Dict[str, float] = Field(
+    scores: dict[str, float] = Field(
         ..., description="MBTI dimension scores keyed by E, I, S, N, T, F, J, P"
     )
 
 
 class MbtiResult(BaseModel):
     type_code: str
-    certainty: Dict[str, float]
+    certainty: dict[str, float]
+    quality_score: float
+    quality_band: str
 
 
 class RecommendationRequest(BaseModel):
@@ -46,8 +48,8 @@ class RecommendationItem(BaseModel):
 
 
 class RecommendationResponse(BaseModel):
-    careers: List[RecommendationItem]
-    majors: List[RecommendationItem]
+    careers: list[RecommendationItem]
+    majors: list[RecommendationItem]
 
 
 # ── Analytics (funnel instrumentation) ──────────────────────────────────────
@@ -57,8 +59,8 @@ class FunnelEventCreate(BaseModel):
     session_id: str = Field(..., min_length=1, max_length=64)
     event_name: str = Field(..., min_length=1, max_length=64)
     step: str = Field(..., min_length=1, max_length=64)
-    duration_ms: Optional[float] = Field(default=None, ge=0)
-    metadata_json: Optional[str] = Field(default=None, max_length=2000)
+    duration_ms: float | None = Field(default=None, ge=0)
+    metadata_json: str | None = Field(default=None, max_length=2000)
 
 
 class FunnelEventOut(BaseModel):
@@ -66,7 +68,7 @@ class FunnelEventOut(BaseModel):
     session_id: str
     event_name: str
     step: str
-    duration_ms: Optional[float]
+    duration_ms: float | None
     created_at: datetime
 
     model_config = {"from_attributes": True}
@@ -76,13 +78,13 @@ class FunnelStepSummary(BaseModel):
     step: str
     event_count: int
     unique_sessions: int
-    avg_duration_ms: Optional[float]
+    avg_duration_ms: float | None
 
 
 class FunnelSummaryResponse(BaseModel):
     total_sessions: int
-    steps: List[FunnelStepSummary]
-    drop_off_rate: Dict[str, float]
+    steps: list[FunnelStepSummary]
+    drop_off_rate: dict[str, float]
 
 
 # ── Expert Lab (draft / review / publish workflow) ──────────────────────────
@@ -107,8 +109,8 @@ class ContentVersionOut(BaseModel):
     status: str
     body: str
     author: str
-    reviewer: Optional[str]
-    review_notes: Optional[str]
+    reviewer: str | None
+    review_notes: str | None
     created_at: datetime
     updated_at: datetime
 
@@ -119,11 +121,11 @@ class ContentDraftOut(BaseModel):
     id: str
     kind: str
     title: str
-    versions: List[ContentVersionOut]
+    versions: list[ContentVersionOut]
 
     model_config = {"from_attributes": True}
 
 
 class ReviewDecision(BaseModel):
     reviewer: str = Field(..., min_length=1, max_length=255)
-    notes: Optional[str] = Field(default=None, max_length=4000)
+    notes: str | None = Field(default=None, max_length=4000)

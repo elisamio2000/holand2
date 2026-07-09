@@ -1,5 +1,8 @@
+'use client';
+
 import { metaObject } from '@/config/site.config';
 import { AssessmentFunnelBeacon } from '@/app/shared/assessment-funnel/assessment-funnel-beacon';
+import { useTranslation } from 'react-i18next';
 
 export const metadata = {
   ...metaObject('Assessment Engine'),
@@ -24,6 +27,8 @@ const items = [
 ];
 
 export default function AssessmentDesignPage() {
+  const { t } = useTranslation();
+
   return (
     <main className="mx-auto w-full max-w-7xl p-6 sm:p-8 lg:p-10">
       <AssessmentFunnelBeacon />
@@ -41,6 +46,16 @@ export default function AssessmentDesignPage() {
             <p className="mt-2 text-sm leading-6 text-gray-600">{item.detail}</p>
           </article>
         ))}
+      </section>
+
+      <section className="mt-8 rounded-xl border border-muted bg-white p-5 shadow-sm">
+        <h2 className="text-base font-semibold text-gray-900">{t('assessmentQuality.title')}</h2>
+        <p className="mt-2 text-sm leading-6 text-gray-600">{t('assessmentQuality.subtitle')}</p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{t('assessmentQuality.low')}</div>
+          <div className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800">{t('assessmentQuality.medium')}</div>
+          <div className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">{t('assessmentQuality.high')}</div>
+        </div>
       </section>
     </main>
   );

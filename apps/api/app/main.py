@@ -91,19 +91,29 @@ async def health() -> HealthResponse:
 @app.post("/assessments/holland/score", response_model=HollandResult, tags=["Assessments"])
 def holland_score(payload: HollandRequest) -> HollandResult:
     try:
-        normalized_scores, top3_code = score_holland(payload.scores)
+        normalized_scores, top3_code, quality_score, quality_band = score_holland(payload.scores)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
-    return HollandResult(normalized_scores=normalized_scores, top3_code=top3_code)
+    return HollandResult(
+        normalized_scores=normalized_scores,
+        top3_code=top3_code,
+        quality_score=quality_score,
+        quality_band=quality_band,
+    )
 
 
 @app.post("/assessments/mbti/score", response_model=MbtiResult, tags=["Assessments"])
 def mbti_score(payload: MbtiRequest) -> MbtiResult:
     try:
-        type_code, certainty = score_mbti(payload.scores)
+        type_code, certainty, quality_score, quality_band = score_mbti(payload.scores)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
-    return MbtiResult(type_code=type_code, certainty=certainty)
+    return MbtiResult(
+        type_code=type_code,
+        certainty=certainty,
+        quality_score=quality_score,
+        quality_band=quality_band,
+    )
 
 
 @app.post("/recommendations", response_model=RecommendationResponse, tags=["Recommendations"])

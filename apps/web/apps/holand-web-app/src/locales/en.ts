@@ -7825,7 +7825,13 @@ const en = {
     steps: { start: 'Start', in_progress: 'In progress', review: 'Review', complete: 'Complete' },
     empty: 'No events recorded yet.',
   },
+  assessmentQuality: {
+    title: 'Assessment quality scoring',
+    subtitle: 'Signal strength of answers is classified into low / medium / high quality bands.',
+    low: 'Low quality signal',
+    medium: 'Medium quality signal',
+    high: 'High quality signal',
+  },
 };
 
 export default en;
-
