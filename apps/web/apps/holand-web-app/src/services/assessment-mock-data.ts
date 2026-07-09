@@ -7,6 +7,7 @@
 // ============================================
 
 import type {
+  AssessmentHistoryItem,
   AssessmentQuestion,
   AssessmentReport,
   AssessmentResult,
@@ -266,3 +267,36 @@ export function buildMockCounselorDashboard(): CounselorDashboardData {
     students,
   };
 }
+
+/** Demo history entries shown when the user has no local/backend history yet. */
+export function buildMockHistory(): AssessmentHistoryItem[] {
+  const entries: { testType: TestType; ageBand: AgeBand; status: 'completed' | 'in_progress'; daysAgo: number }[] = [
+    { testType: 'combined', ageBand: '18-24', status: 'completed', daysAgo: 21 },
+    { testType: 'holland', ageBand: '18-24', status: 'completed', daysAgo: 60 },
+    { testType: 'mbti', ageBand: '18-24', status: 'in_progress', daysAgo: 1 },
+  ];
+
+  return entries.map((entry, i) => {
+    const sessionId = `demo-history-${i + 1}`;
+    const rand = seededRandom(hashSeed(sessionId));
+    const startedAt = new Date(Date.now() - entry.daysAgo * 86400000);
+    const topCode =
+      entry.status === 'completed'
+        ? entry.testType === 'mbti'
+          ? typeCodeFromMbti(buildMbtiDimensions(rand))
+          : top3FromDimensions(buildHollandDimensions(rand))
+        : undefined;
+
+    return {
+      sessionId,
+      testType: entry.testType,
+      ageBand: entry.ageBand,
+      status: entry.status,
+      progressPercent: entry.status === 'completed' ? 100 : 55,
+      topCode,
+      startedAt: startedAt.toISOString(),
+      completedAt: entry.status === 'completed' ? startedAt.toISOString() : undefined,
+    };
+  });
+}
+

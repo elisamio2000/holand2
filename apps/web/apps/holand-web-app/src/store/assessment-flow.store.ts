@@ -13,6 +13,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { assessmentService } from '@/services/assessment.service';
+import { useAssessmentHistoryStore } from '@/store/assessment-history.store';
 import type {
   AgeBand,
   AssessmentQuestion,
@@ -78,6 +79,14 @@ export const useAssessmentFlowStore = create<AssessmentFlowState>()(
             status: 'in_progress',
             result: null,
           });
+          useAssessmentHistoryStore.getState().upsertEntry({
+            sessionId: session.sessionId,
+            testType: session.testType,
+            ageBand: session.ageBand,
+            status: 'in_progress',
+            progressPercent: Math.round((1 / Math.max(1, session.questions.length)) * 100),
+            startedAt: session.createdAt,
+          });
           return session.sessionId;
         } catch (error: unknown) {
           console.error('[AssessmentFlowStore] Failed to start session:', error);
@@ -104,6 +113,21 @@ export const useAssessmentFlowStore = create<AssessmentFlowState>()(
           // error here would break the flow for a non-critical sync issue.
           console.warn('[AssessmentFlowStore] Failed to sync answer (kept locally):', error);
         }
+
+        const { testType, ageBand } = get();
+        if (testType && ageBand) {
+          const existing = useAssessmentHistoryStore
+            .getState()
+            .entries.find((e) => e.sessionId === sessionId);
+          useAssessmentHistoryStore.getState().upsertEntry({
+            sessionId,
+            testType,
+            ageBand,
+            status: 'in_progress',
+            progressPercent: Math.round(((currentIndex + 1) / questions.length) * 100),
+            startedAt: existing?.startedAt ?? new Date().toISOString(),
+          });
+        }
       },
 
       goToPrevious() {
@@ -117,12 +141,27 @@ export const useAssessmentFlowStore = create<AssessmentFlowState>()(
       },
 
       async completeAssessment() {
-        const { sessionId } = get();
+        const { sessionId, testType, ageBand } = get();
         if (!sessionId) return null;
         set({ status: 'submitting', error: null });
         try {
           const result = await assessmentService.completeSession(sessionId);
           set({ status: 'completed', result });
+          if (testType && ageBand) {
+            const existing = useAssessmentHistoryStore
+              .getState()
+              .entries.find((e) => e.sessionId === sessionId);
+            useAssessmentHistoryStore.getState().upsertEntry({
+              sessionId,
+              testType,
+              ageBand,
+              status: 'completed',
+              progressPercent: 100,
+              topCode: result.holland?.top3Code ?? result.mbti?.typeCode,
+              startedAt: existing?.startedAt ?? new Date().toISOString(),
+              completedAt: result.completedAt,
+            });
+          }
           return result;
         } catch (error: unknown) {
           console.error('[AssessmentFlowStore] Failed to complete session:', error);

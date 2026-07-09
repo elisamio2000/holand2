@@ -12,16 +12,19 @@
 
 import { gatewayClient } from '@/lib/api-client';
 import type {
+  AssessmentHistoryItem,
   AssessmentResult,
   AssessmentSession,
   StartAssessmentRequest,
   SubmitAnswerRequest,
 } from '@/types/assessment.types';
 import {
+  buildMockHistory,
   buildMockResult,
   buildMockSession,
   generateMockSessionId,
 } from './assessment-mock-data';
+import { useAssessmentHistoryStore } from '@/store/assessment-history.store';
 
 const mockSessions = new Map<string, AssessmentSession>();
 
@@ -141,6 +144,28 @@ export const assessmentService = {
       const cached = mockSessions.get(sessionId);
       console.warn('[AssessmentService] Backend unavailable — returning mock result.', error);
       return buildMockResult(sessionId, cached?.testType ?? 'combined', cached?.ageBand ?? '18-24');
+    }
+  },
+
+  /**
+   * List the current user's assessment sessions (in-progress + completed),
+   * used by the "My Assessments" history page.
+   *
+   * @endpoint GET /assessments/sessions/mine
+   */
+  async listMySessions(): Promise<AssessmentHistoryItem[]> {
+    console.info('[AssessmentService] Fetching my assessment history...');
+    try {
+      const res = await gatewayClient.get<AssessmentHistoryItem[]>('/assessments/sessions/mine');
+      return res.data;
+    } catch (error: unknown) {
+      if (!isBackendUnavailable(error)) throw error;
+      console.warn(
+        '[AssessmentService] Backend unavailable — returning local/demo history.',
+        error
+      );
+      const local = useAssessmentHistoryStore.getState().entries;
+      return local.length ? local : buildMockHistory();
     }
   },
 };

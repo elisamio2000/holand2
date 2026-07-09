@@ -101,6 +101,19 @@ export interface RecommendationItem {
   why: string;
 }
 
+/** Row shown on the current user's "My Assessments" history page. */
+export interface AssessmentHistoryItem {
+  sessionId: string;
+  testType: TestType;
+  ageBand: AgeBand;
+  status: AssessmentSessionStatus;
+  progressPercent: number;
+  topCode?: string;
+  startedAt: string;
+  completedAt?: string;
+}
+
+
 export interface ActionPlanStep {
   horizon: '3m' | '6m' | '12m';
   title: string;
