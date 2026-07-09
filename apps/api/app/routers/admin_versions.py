@@ -82,6 +82,7 @@ async def _get_assessment_version(db: AsyncSession, version_id: str) -> Assessme
         select(AssessmentVersion)
         .options(selectinload(AssessmentVersion.questions).selectinload(Question.options))
         .where(AssessmentVersion.id == version_id)
+        .execution_options(populate_existing=True)
     )
     version = result.scalar_one_or_none()
     if version is None:

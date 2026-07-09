@@ -23,7 +23,14 @@ import {
 import { useAssessmentHistoryStore } from '@/store/assessment-history.store';
 
 const mockSessions = new Map<string, AssessmentSession>();
-const sessionMeta = new Map<string, { testType: TestType; ageBand: AssessmentSession['ageBand'] }>();
+const sessionMeta = new Map<
+  string,
+  {
+    testType: TestType;
+    ageBand: AssessmentSession['ageBand'];
+    optionLookup: Map<string, Map<string, string>>;
+  }
+>();
 
 interface ApiQuestionOption {
   id: string;
@@ -126,7 +133,7 @@ export const assessmentService = {
       const sessionId = generateMockSessionId();
       const session = buildMockSession(sessionId, data.testType, data.ageBand);
       mockSessions.set(sessionId, session);
-      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand });
+      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand, optionLookup: new Map() });
       return session;
     }
 
@@ -144,14 +151,27 @@ export const assessmentService = {
         questions: api.questions.map((q) => mapApiQuestionToUi(q, api.assessment_type)),
         createdAt: api.started_at,
       };
-      sessionMeta.set(mapped.sessionId, { testType: mapped.testType, ageBand: mapped.ageBand });
+      const optionLookup = new Map<string, Map<string, string>>();
+      for (const question of api.questions) {
+        const lookupByValue = new Map<string, string>();
+        for (const option of question.options) {
+          lookupByValue.set(String(option.id), option.id);
+          lookupByValue.set(String(option.value), option.id);
+        }
+        optionLookup.set(question.id, lookupByValue);
+      }
+      sessionMeta.set(mapped.sessionId, {
+        testType: mapped.testType,
+        ageBand: mapped.ageBand,
+        optionLookup,
+      });
       return mapped;
     } catch (error: unknown) {
       if (!isBackendUnavailable(error)) throw error;
       const sessionId = generateMockSessionId();
       const session = buildMockSession(sessionId, data.testType, data.ageBand);
       mockSessions.set(sessionId, session);
-      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand });
+      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand, optionLookup: new Map() });
       return session;
     }
   },
@@ -169,6 +189,20 @@ export const assessmentService = {
     const summaryRes = await gatewayClient.get<{ status: AssessmentSession['status']; started_at: string }>(
       `/sessions/${sessionId}`
     );
+    const optionLookup = new Map<string, Map<string, string>>();
+    for (const question of questionsRes.data) {
+      const lookupByValue = new Map<string, string>();
+      for (const option of question.options) {
+        lookupByValue.set(String(option.id), option.id);
+        lookupByValue.set(String(option.value), option.id);
+      }
+      optionLookup.set(question.id, lookupByValue);
+    }
+    sessionMeta.set(sessionId, {
+      testType: meta.testType,
+      ageBand: meta.ageBand,
+      optionLookup,
+    });
 
     return {
       sessionId,
@@ -183,8 +217,15 @@ export const assessmentService = {
 
   async submitAnswer(payload: SubmitAnswerRequest): Promise<{ accepted: true }> {
     try {
+      const meta = sessionMeta.get(payload.sessionId);
+      const optionId =
+        meta?.optionLookup.get(payload.questionId)?.get(String(payload.value)) ??
+        (typeof payload.value === 'string' ? payload.value : null);
+      if (!optionId) {
+        throw new Error(`Could not resolve option id for question ${payload.questionId}`);
+      }
       await gatewayClient.post(`/sessions/${payload.sessionId}/answers`, {
-        answers: [{ question_id: payload.questionId, option_id: String(payload.value) }],
+        answers: [{ question_id: payload.questionId, option_id: optionId }],
       });
       return { accepted: true };
     } catch (error: unknown) {

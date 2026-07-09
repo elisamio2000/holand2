@@ -178,8 +178,8 @@ async def test_formula_workflow_and_simulate(admin_client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_formula_publish_is_blocked_when_unit_tests_fail(client) -> None:
-    create = await client.post(
+async def test_formula_publish_is_blocked_when_unit_tests_fail(admin_client) -> None:
+    create = await admin_client.post(
         "/admin/formula-versions/draft",
         json={
             "formula_key": "mbti_preference_percentage",
@@ -196,21 +196,21 @@ async def test_formula_publish_is_blocked_when_unit_tests_fail(client) -> None:
     assert create.status_code == 201
     formula_id = create.json()["id"]
 
-    review = await client.post(f"/admin/formula-versions/{formula_id}/review", json={"actor": "qa"})
+    review = await admin_client.post(f"/admin/formula-versions/{formula_id}/review", json={"actor": "qa"})
     assert review.status_code == 200
-    approve = await client.post(
+    approve = await admin_client.post(
         f"/admin/formula-versions/{formula_id}/approve", json={"actor": "qa"}
     )
     assert approve.status_code == 200
 
-    publish = await client.post(
+    publish = await admin_client.post(
         f"/admin/formula-versions/{formula_id}/publish", json={"actor": "qa"}
     )
     assert publish.status_code == 409
     assert "publish gate failed" in publish.json()["detail"].lower()
     assert "unit_tests" in publish.json()["detail"]
 
-    reports = await client.get(
+    reports = await admin_client.get(
         f"/admin/version-validation-reports?entity_id={formula_id}&entity_type=formula_version"
     )
     assert reports.status_code == 200
@@ -221,8 +221,8 @@ async def test_formula_publish_is_blocked_when_unit_tests_fail(client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_formula_publish_is_blocked_by_validation_rule_bounds(client) -> None:
-    create = await client.post(
+async def test_formula_publish_is_blocked_by_validation_rule_bounds(admin_client) -> None:
+    create = await admin_client.post(
         "/admin/formula-versions/draft",
         json={
             "formula_key": "mbti_preference_percentage",
@@ -237,14 +237,14 @@ async def test_formula_publish_is_blocked_by_validation_rule_bounds(client) -> N
     )
     assert create.status_code == 201
     formula_id = create.json()["id"]
-    review = await client.post(f"/admin/formula-versions/{formula_id}/review", json={"actor": "qa"})
+    review = await admin_client.post(f"/admin/formula-versions/{formula_id}/review", json={"actor": "qa"})
     assert review.status_code == 200
-    approve = await client.post(
+    approve = await admin_client.post(
         f"/admin/formula-versions/{formula_id}/approve", json={"actor": "qa"}
     )
     assert approve.status_code == 200
 
-    publish = await client.post(
+    publish = await admin_client.post(
         f"/admin/formula-versions/{formula_id}/publish", json={"actor": "qa"}
     )
     assert publish.status_code == 409
@@ -253,8 +253,8 @@ async def test_formula_publish_is_blocked_by_validation_rule_bounds(client) -> N
 
 
 @pytest.mark.asyncio
-async def test_formula_publish_is_blocked_by_drift_threshold(client) -> None:
-    base = await client.post(
+async def test_formula_publish_is_blocked_by_drift_threshold(admin_client) -> None:
+    base = await admin_client.post(
         "/admin/formula-versions/draft",
         json={
             "formula_key": "mbti_preference_percentage",
@@ -268,12 +268,12 @@ async def test_formula_publish_is_blocked_by_drift_threshold(client) -> None:
     )
     assert base.status_code == 201
     base_id = base.json()["id"]
-    await client.post(f"/admin/formula-versions/{base_id}/review", json={"actor": "qa"})
-    await client.post(f"/admin/formula-versions/{base_id}/approve", json={"actor": "qa"})
-    base_publish = await client.post(f"/admin/formula-versions/{base_id}/publish", json={"actor": "qa"})
+    await admin_client.post(f"/admin/formula-versions/{base_id}/review", json={"actor": "qa"})
+    await admin_client.post(f"/admin/formula-versions/{base_id}/approve", json={"actor": "qa"})
+    base_publish = await admin_client.post(f"/admin/formula-versions/{base_id}/publish", json={"actor": "qa"})
     assert base_publish.status_code == 200
 
-    candidate = await client.post(
+    candidate = await admin_client.post(
         "/admin/formula-versions/draft",
         json={
             "formula_key": "mbti_preference_percentage",
@@ -288,10 +288,10 @@ async def test_formula_publish_is_blocked_by_drift_threshold(client) -> None:
     )
     assert candidate.status_code == 201
     candidate_id = candidate.json()["id"]
-    await client.post(f"/admin/formula-versions/{candidate_id}/review", json={"actor": "qa"})
-    await client.post(f"/admin/formula-versions/{candidate_id}/approve", json={"actor": "qa"})
+    await admin_client.post(f"/admin/formula-versions/{candidate_id}/review", json={"actor": "qa"})
+    await admin_client.post(f"/admin/formula-versions/{candidate_id}/approve", json={"actor": "qa"})
 
-    publish = await client.post(f"/admin/formula-versions/{candidate_id}/publish", json={"actor": "qa"})
+    publish = await admin_client.post(f"/admin/formula-versions/{candidate_id}/publish", json={"actor": "qa"})
     assert publish.status_code == 409
     detail = publish.json()["detail"].lower()
     assert "max_drift" in detail
@@ -336,16 +336,16 @@ async def test_session_api_start_answer_complete_result(admin_client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_assessment_quality_report_flags_missing_dimensions_and_duplicates(client) -> None:
+async def test_assessment_quality_report_flags_missing_dimensions_and_duplicates(admin_client) -> None:
     payload = _holland_draft_payload()
     payload["questions"][1]["dimension"] = "R"
     payload["questions"][1]["text"] = payload["questions"][0]["text"]
 
-    create = await client.post("/admin/assessment-versions/draft", json=payload)
+    create = await admin_client.post("/admin/assessment-versions/draft", json=payload)
     assert create.status_code == 201
     version_id = create.json()["id"]
 
-    report = await client.get(f"/admin/assessment-versions/{version_id}/quality-report")
+    report = await admin_client.get(f"/admin/assessment-versions/{version_id}/quality-report")
     assert report.status_code == 200
     body = report.json()
     assert body["ok"] is False
@@ -478,29 +478,29 @@ async def test_formula_update_preflight_and_publish_gate(admin_client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_assessment_publish_is_blocked_by_quality_gate(client) -> None:
+async def test_assessment_publish_is_blocked_by_quality_gate(admin_client) -> None:
     payload = _holland_draft_payload()
     payload["questions"][1]["dimension"] = "R"
     payload["questions"][1]["text"] = payload["questions"][0]["text"]
 
-    create = await client.post("/admin/assessment-versions/draft", json=payload)
+    create = await admin_client.post("/admin/assessment-versions/draft", json=payload)
     assert create.status_code == 201
     version_id = create.json()["id"]
 
-    review = await client.post(f"/admin/assessment-versions/{version_id}/review", json={"actor": "qa"})
+    review = await admin_client.post(f"/admin/assessment-versions/{version_id}/review", json={"actor": "qa"})
     assert review.status_code == 200
-    approve = await client.post(
+    approve = await admin_client.post(
         f"/admin/assessment-versions/{version_id}/approve", json={"actor": "qa"}
     )
     assert approve.status_code == 200
 
-    publish = await client.post(f"/admin/assessment-versions/{version_id}/publish", json={"actor": "qa"})
+    publish = await admin_client.post(f"/admin/assessment-versions/{version_id}/publish", json={"actor": "qa"})
     assert publish.status_code == 409
     detail = publish.json()["detail"].lower()
     assert "publish gate failed" in detail
     assert "duplicate_question_text" in detail
 
-    reports = await client.get(
+    reports = await admin_client.get(
         f"/admin/version-validation-reports?entity_id={version_id}&entity_type=assessment_version"
     )
     assert reports.status_code == 200
@@ -511,46 +511,46 @@ async def test_assessment_publish_is_blocked_by_quality_gate(client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_reverse_scored_likert_uses_mirrored_weight(client) -> None:
-    create = await client.post("/admin/assessment-versions/draft", json=_reverse_scored_holland_payload())
+async def test_reverse_scored_likert_uses_mirrored_weight(admin_client) -> None:
+    create = await admin_client.post("/admin/assessment-versions/draft", json=_reverse_scored_holland_payload())
     assert create.status_code == 201
     version_id = create.json()["id"]
-    await client.post(f"/admin/assessment-versions/{version_id}/review", json={"actor": "r"})
-    await client.post(f"/admin/assessment-versions/{version_id}/approve", json={"actor": "a"})
-    await client.post(f"/admin/assessment-versions/{version_id}/publish", json={"actor": "p"})
+    await admin_client.post(f"/admin/assessment-versions/{version_id}/review", json={"actor": "r"})
+    await admin_client.post(f"/admin/assessment-versions/{version_id}/approve", json={"actor": "a"})
+    await admin_client.post(f"/admin/assessment-versions/{version_id}/publish", json={"actor": "p"})
 
-    start = await client.post("/sessions/start", json={"assessment_type": "holland"})
+    start = await admin_client.post("/sessions/start", json={"assessment_type": "holland"})
     assert start.status_code == 201
     body = start.json()
     session_id = body["session_id"]
     question = body["questions"][0]
 
-    submit = await client.post(
+    submit = await admin_client.post(
         f"/sessions/{session_id}/answers",
         json={"answers": [{"question_id": question["id"], "option_id": question["options"][0]["id"]}]},
     )
     assert submit.status_code == 200
 
-    complete = await client.post(f"/sessions/{session_id}/complete")
+    complete = await admin_client.post(f"/sessions/{session_id}/complete")
     assert complete.status_code == 200
     assert complete.json()["raw_scores"]["R"] == 5.0
 
 
 @pytest.mark.asyncio
-async def test_complete_session_returns_integrity_error_for_missing_option(client, db_session) -> None:
-    create = await client.post("/admin/assessment-versions/draft", json=_holland_draft_payload())
+async def test_complete_session_returns_integrity_error_for_missing_option(admin_client, db_session) -> None:
+    create = await admin_client.post("/admin/assessment-versions/draft", json=_holland_draft_payload())
     assert create.status_code == 201
     version_id = create.json()["id"]
-    await client.post(f"/admin/assessment-versions/{version_id}/review", json={"actor": "r"})
-    await client.post(f"/admin/assessment-versions/{version_id}/approve", json={"actor": "a"})
-    await client.post(f"/admin/assessment-versions/{version_id}/publish", json={"actor": "p"})
+    await admin_client.post(f"/admin/assessment-versions/{version_id}/review", json={"actor": "r"})
+    await admin_client.post(f"/admin/assessment-versions/{version_id}/approve", json={"actor": "a"})
+    await admin_client.post(f"/admin/assessment-versions/{version_id}/publish", json={"actor": "p"})
 
-    start = await client.post("/sessions/start", json={"assessment_type": "holland"})
+    start = await admin_client.post("/sessions/start", json={"assessment_type": "holland"})
     session = start.json()
     session_id = session["session_id"]
     selected_option_id = session["questions"][0]["options"][0]["id"]
 
-    submit = await client.post(
+    submit = await admin_client.post(
         f"/sessions/{session_id}/answers",
         json={"answers": [{"question_id": q["id"], "option_id": q["options"][0]["id"]} for q in session["questions"]]},
     )
@@ -559,6 +559,6 @@ async def test_complete_session_returns_integrity_error_for_missing_option(clien
     await db_session.execute(delete(QuestionOption).where(QuestionOption.id == selected_option_id))
     await db_session.commit()
 
-    complete = await client.post(f"/sessions/{session_id}/complete")
+    complete = await admin_client.post(f"/sessions/{session_id}/complete")
     assert complete.status_code == 500
     assert "data integrity error" in complete.json()["detail"].lower()
