@@ -42,6 +42,7 @@ from .base import Base, TimestampMixin, new_uuid
 class AssessmentType(str, enum.Enum):
     HOLLAND = "holland"
     MBTI = "mbti"
+    COMBINED = "combined"
 
 
 class VersionStatus(str, enum.Enum):

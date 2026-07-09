@@ -57,9 +57,13 @@ class SessionResultOut(BaseModel):
     session_id: str
     assessment_type: AssessmentType
     assessment_version: int
+    secondary_assessment_version: int | None = None
     formula_version: int | None
+    secondary_formula_version: int | None = None
     raw_scores: dict[str, float]
     normalized_scores: dict[str, Any]
     code: str
-    certainty: dict[str, float] | None
+    certainty: dict[str, Any] | None
+    holland: dict[str, Any] | None = None
+    mbti: dict[str, Any] | None = None
     computed_at: datetime

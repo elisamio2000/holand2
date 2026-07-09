@@ -13,6 +13,7 @@ from sqlalchemy.orm import selectinload
 
 from ..database import get_db
 from ..models.assessment import (
+    AssessmentType,
     AssessmentVersion,
     Question,
     QuestionKind,
@@ -29,7 +30,11 @@ from ..schemas_session import (
     SubmitAnswersIn,
     SubmitAnswersOut,
 )
-from ..services.assessment_scoring import compute_session_result
+from ..services.assessment_scoring import (
+    compute_holland_result,
+    compute_mbti_result,
+    compute_session_result,
+)
 
 router = APIRouter(prefix="/sessions", tags=["Assessment Sessions"])
 
@@ -75,6 +80,17 @@ async def _get_published_version(db: AsyncSession, assessment_type) -> Assessmen
     return version
 
 
+async def _get_published_versions_for_start(
+    db: AsyncSession, assessment_type: AssessmentType
+) -> tuple[AssessmentVersion, AssessmentVersion | None]:
+    if assessment_type == AssessmentType.COMBINED:
+        holland_version = await _get_published_version(db, AssessmentType.HOLLAND)
+        mbti_version = await _get_published_version(db, AssessmentType.MBTI)
+        return holland_version, mbti_version
+    version = await _get_published_version(db, assessment_type)
+    return version, None
+
+
 async def _get_session(db: AsyncSession, session_id: str) -> AssessmentSession:
     result = await db.execute(
         select(AssessmentSession)
@@ -99,17 +115,40 @@ async def _get_version_with_questions(db: AsyncSession, version_id: str) -> Asse
     return version
 
 
+async def _get_session_versions(
+    db: AsyncSession, session: AssessmentSession
+) -> tuple[AssessmentVersion, AssessmentVersion | None]:
+    primary_version = await _get_version_with_questions(db, session.assessment_version_id)
+    secondary_version = None
+    if session.secondary_assessment_version_id:
+        secondary_version = await _get_version_with_questions(db, session.secondary_assessment_version_id)
+    if session.assessment_type == AssessmentType.COMBINED and secondary_version is None:
+        raise HTTPException(status_code=500, detail="Combined session is missing MBTI version linkage")
+    return primary_version, secondary_version
+
+
+def _build_question_map(*versions: AssessmentVersion) -> dict[str, Question]:
+    return {q.id: q for version in versions for q in version.questions}
+
+
+def _count_total_questions(*versions: AssessmentVersion | None) -> int:
+    return sum(len(version.questions) for version in versions if version is not None)
+
+
 @router.post("/start", response_model=StartSessionOut, status_code=201)
 async def start_session(
     payload: StartSessionIn,
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> StartSessionOut:
-    version = await _get_published_version(db, payload.assessment_type)
+    primary_version, secondary_version = await _get_published_versions_for_start(
+        db, payload.assessment_type
+    )
 
     session = AssessmentSession(
         user_id=payload.user_id,
         assessment_type=payload.assessment_type,
-        assessment_version_id=version.id,
+        assessment_version_id=primary_version.id,
+        secondary_assessment_version_id=secondary_version.id if secondary_version else None,
         status=SessionStatus.IN_PROGRESS,
         started_at=_now(),
     )
@@ -119,10 +158,13 @@ async def start_session(
     return StartSessionOut(
         session_id=session.id,
         assessment_type=session.assessment_type,
-        assessment_version=version.version,
+        assessment_version=primary_version.version,
         status=session.status,
         started_at=session.started_at,
-        questions=version.questions,
+        questions=[
+            *primary_version.questions,
+            *(secondary_version.questions if secondary_version else []),
+        ],
     )
 
 
@@ -131,7 +173,7 @@ async def get_session(
     session_id: str, db: Annotated[AsyncSession, Depends(get_db)]
 ) -> SessionOut:
     session = await _get_session(db, session_id)
-    version = await _get_version_with_questions(db, session.assessment_version_id)
+    version, secondary_version = await _get_session_versions(db, session)
     return SessionOut(
         session_id=session.id,
         assessment_type=session.assessment_type,
@@ -140,7 +182,7 @@ async def get_session(
         started_at=session.started_at,
         completed_at=session.completed_at,
         answered_count=len(session.answers),
-        total_questions=len(version.questions),
+        total_questions=_count_total_questions(version, secondary_version),
     )
 
 
@@ -149,10 +191,11 @@ async def get_session_questions(
     session_id: str, db: Annotated[AsyncSession, Depends(get_db)]
 ):
     session = await _get_session(db, session_id)
-    version = await _get_version_with_questions(db, session.assessment_version_id)
+    version, secondary_version = await _get_session_versions(db, session)
     from ..schemas_assessment import QuestionOut
 
-    return [QuestionOut.model_validate(q) for q in version.questions]
+    all_questions = [*version.questions, *(secondary_version.questions if secondary_version else [])]
+    return [QuestionOut.model_validate(q) for q in all_questions]
 
 
 @router.post("/{session_id}/answers", response_model=SubmitAnswersOut)
@@ -165,8 +208,10 @@ async def submit_answers(
     if session.status != SessionStatus.IN_PROGRESS:
         raise HTTPException(status_code=409, detail=f"Session is '{session.status.value}', not in progress")
 
-    version = await _get_version_with_questions(db, session.assessment_version_id)
-    questions_by_id = {q.id: q for q in version.questions}
+    version, secondary_version = await _get_session_versions(db, session)
+    questions_by_id = _build_question_map(
+        version, *([secondary_version] if secondary_version is not None else [])
+    )
 
     existing_result = await db.execute(
         select(SessionAnswer).where(SessionAnswer.session_id == session.id)
@@ -204,7 +249,7 @@ async def submit_answers(
     return SubmitAnswersOut(
         session_id=session.id,
         answered_count=len(answers_by_question),
-        total_questions=len(version.questions),
+        total_questions=_count_total_questions(version, secondary_version),
         status=session.status,
     )
 
@@ -219,15 +264,17 @@ async def complete_session(
     if session.status != SessionStatus.IN_PROGRESS:
         raise HTTPException(status_code=409, detail=f"Session is '{session.status.value}'")
 
-    version = await _get_version_with_questions(db, session.assessment_version_id)
-    if len(session.answers) < len(version.questions):
+    version, secondary_version = await _get_session_versions(db, session)
+    total_questions = _count_total_questions(version, secondary_version)
+    if len(session.answers) < total_questions:
         raise HTTPException(
             status_code=400,
-            detail=f"Session incomplete: {len(session.answers)}/{len(version.questions)} answered",
+            detail=f"Session incomplete: {len(session.answers)}/{total_questions} answered",
         )
 
-    questions_by_id = {q.id: q for q in version.questions}
-    options_by_id: dict[str, QuestionOption] = {o.id: o for q in version.questions for o in q.options}
+    all_versions = [version, *([secondary_version] if secondary_version is not None else [])]
+    questions_by_id = _build_question_map(*all_versions)
+    options_by_id: dict[str, QuestionOption] = {o.id: o for v in all_versions for q in v.questions for o in q.options}
     raw_totals: dict[str, float] = {}
     for ans in session.answers:
         option = options_by_id.get(ans.option_id)
@@ -237,7 +284,7 @@ async def complete_session(
                 detail=(
                     "Assessment data integrity error: "
                     f"option {ans.option_id} referenced by answer {ans.id} not found in version "
-                    f"{version.id}"
+                    f"{session.assessment_version_id}"
                 ),
             )
         question = questions_by_id.get(ans.question_id)
@@ -247,7 +294,7 @@ async def complete_session(
                 detail=(
                     "Assessment data integrity error: "
                     f"question {ans.question_id} referenced by answer {ans.id} not found in version "
-                    f"{version.id}"
+                    f"{session.assessment_version_id}"
                 ),
             )
         if option.question_id != question.id:
@@ -261,19 +308,44 @@ async def complete_session(
         contribution = _score_option(question, option)
         raw_totals[option.pole] = raw_totals.get(option.pole, 0.0) + contribution
 
-    formula_result = await db.execute(
+    primary_formula_result = await db.execute(
         select(ScoringFormulaVersion).where(
-            ScoringFormulaVersion.assessment_type == session.assessment_type,
+            ScoringFormulaVersion.assessment_type
+            == (AssessmentType.HOLLAND if session.assessment_type == AssessmentType.COMBINED else session.assessment_type),
             ScoringFormulaVersion.status == VersionStatus.PUBLISHED,
         )
     )
-    formula = formula_result.scalars().first()
+    primary_formula = primary_formula_result.scalars().first()
 
-    computed = compute_session_result(session.assessment_type, raw_totals, formula)
+    secondary_formula = None
+    if session.assessment_type == AssessmentType.COMBINED:
+        secondary_formula_result = await db.execute(
+            select(ScoringFormulaVersion).where(
+                ScoringFormulaVersion.assessment_type == AssessmentType.MBTI,
+                ScoringFormulaVersion.status == VersionStatus.PUBLISHED,
+            )
+        )
+        secondary_formula = secondary_formula_result.scalars().first()
+
+    if session.assessment_type == AssessmentType.COMBINED:
+        holland_raw = {dim: raw_totals.get(dim, 0.0) for dim in ("R", "I", "A", "S", "E", "C")}
+        mbti_raw = {dim: raw_totals.get(dim, 0.0) for dim in ("E", "I", "S", "N", "T", "F", "J", "P")}
+        holland_normalized, holland_code = compute_holland_result(holland_raw, primary_formula)
+        mbti_code, mbti_certainty = compute_mbti_result(mbti_raw, secondary_formula)
+        computed = {
+            "normalized_scores": {"holland": holland_normalized, "mbti": mbti_raw},
+            "code": f"{holland_code}-{mbti_code}",
+            "certainty": {"mbti": mbti_certainty},
+            "holland": {"code": holland_code, "normalized_scores": holland_normalized},
+            "mbti": {"code": mbti_code, "normalized_scores": mbti_raw, "certainty": mbti_certainty},
+        }
+    else:
+        computed = compute_session_result(session.assessment_type, raw_totals, primary_formula)
 
     session_result = SessionResult(
         session_id=session.id,
-        formula_version_id=formula.id if formula else None,
+        formula_version_id=primary_formula.id if primary_formula else None,
+        secondary_formula_version_id=secondary_formula.id if secondary_formula else None,
         raw_scores=raw_totals,
         normalized_scores=computed["normalized_scores"],
         code=computed["code"],
@@ -290,11 +362,15 @@ async def complete_session(
         session_id=session.id,
         assessment_type=session.assessment_type,
         assessment_version=version.version,
-        formula_version=formula.version if formula else None,
+        secondary_assessment_version=secondary_version.version if secondary_version else None,
+        formula_version=primary_formula.version if primary_formula else None,
+        secondary_formula_version=secondary_formula.version if secondary_formula else None,
         raw_scores=raw_totals,
         normalized_scores=computed["normalized_scores"],
         code=computed["code"],
         certainty=computed["certainty"],
+        holland=computed.get("holland"),
+        mbti=computed.get("mbti"),
         computed_at=session_result.computed_at,
     )
 
@@ -307,7 +383,7 @@ async def _build_result_out(db: AsyncSession, session: AssessmentSession) -> Ses
     if session_result is None:
         raise HTTPException(status_code=404, detail="Result not found for this session")
 
-    version = await _get_version_with_questions(db, session.assessment_version_id)
+    version, secondary_version = await _get_session_versions(db, session)
     formula_version_number = None
     if session_result.formula_version_id:
         f = await db.execute(
@@ -317,16 +393,49 @@ async def _build_result_out(db: AsyncSession, session: AssessmentSession) -> Ses
         )
         formula = f.scalar_one_or_none()
         formula_version_number = formula.version if formula else None
+    secondary_formula_version_number = None
+    if session_result.secondary_formula_version_id:
+        sf = await db.execute(
+            select(ScoringFormulaVersion).where(
+                ScoringFormulaVersion.id == session_result.secondary_formula_version_id
+            )
+        )
+        secondary_formula = sf.scalar_one_or_none()
+        secondary_formula_version_number = secondary_formula.version if secondary_formula else None
+
+    holland = None
+    mbti = None
+    if session.assessment_type == AssessmentType.COMBINED and isinstance(session_result.normalized_scores, dict):
+        holland_scores = session_result.normalized_scores.get("holland")
+        mbti_scores = session_result.normalized_scores.get("mbti")
+        if isinstance(holland_scores, dict):
+            holland = {
+                "code": session_result.code.split("-", 1)[0],
+                "normalized_scores": holland_scores,
+            }
+        if isinstance(mbti_scores, dict):
+            mbti_code = session_result.code.split("-", 1)[1] if "-" in session_result.code else session_result.code
+            mbti = {
+                "code": mbti_code,
+                "normalized_scores": mbti_scores,
+                "certainty": session_result.certainty.get("mbti")
+                if isinstance(session_result.certainty, dict)
+                else None,
+            }
 
     return SessionResultOut(
         session_id=session.id,
         assessment_type=session.assessment_type,
         assessment_version=version.version,
+        secondary_assessment_version=secondary_version.version if secondary_version else None,
         formula_version=formula_version_number,
+        secondary_formula_version=secondary_formula_version_number,
         raw_scores=session_result.raw_scores,
         normalized_scores=session_result.normalized_scores,
         code=session_result.code,
         certainty=session_result.certainty,
+        holland=holland,
+        mbti=mbti,
         computed_at=session_result.computed_at,
     )
 

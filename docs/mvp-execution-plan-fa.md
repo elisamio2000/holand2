@@ -83,6 +83,17 @@
 
 ریسک های وابستگی بین فازی:
 
-- **وابستگی Web به endpointهای سازگاری:** تا زمان پوشش کامل `combined` در backend، مسیر fallback باید فعال بماند.
+- **وابستگی Web به endpointهای سازگاری:** این ریسک با پشتیبانی native مسیر `combined` روی قرارداد canonical (`/sessions/*`) رفع شد؛ fallback فقط برای خطای عدم‌دسترسی backend نگه داشته می‌شود.
 - **وابستگی داده تاریخی به Gateهای سخت‌گیرانه:** نسخه هایی که قبلا منتشر شده‌اند ممکن است با قواعد جدید ناسازگار باشند؛ Gateها فقط روی publish جدید enforce می‌شوند.
 - **وابستگی CI به محیط:** اجرای lint/test وب نیازمند `NEXTAUTH_SECRET` و `NEXTAUTH_URL` است (مانند پیکربندی workflow).
+
+### یادداشت قرارداد Runtime (Phase D)
+
+از این فاز، قرارداد canonical مسیرهای زیر برای `holland`، `mbti` و `combined` یکسان است:
+
+- `POST /sessions/start`
+- `POST /sessions/{id}/answers`
+- `POST /sessions/{id}/complete`
+- `GET /sessions/{id}/result`
+
+در حالت `combined`، backend یک session واحد با سوالات هر دو آزمون برمی‌گرداند و خروجی نتیجه شامل بخش‌های تفکیک‌شده `holland` و `mbti` است تا وب بدون مسیر mock اختصاصی اجرا شود.
