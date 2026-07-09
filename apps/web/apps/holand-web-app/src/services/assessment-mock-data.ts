@@ -241,6 +241,7 @@ export function buildMockCounselorDashboard(): CounselorDashboardData {
     const dims = buildHollandDimensions(rand);
     return {
       sessionId: `student-session-${i + 1}`,
+      studentId: `student-${i + 1}`,
       studentName: `دانش‌آموز ${i + 1}`,
       ageBand: (['13-17', '18-24', '25-30', '30+'] as AgeBand[])[i % 4],
       testType: 'combined' as TestType,
@@ -248,6 +249,10 @@ export function buildMockCounselorDashboard(): CounselorDashboardData {
       progressPercent: status === 'completed' ? 100 : 40 + (i % 3) * 15,
       topCode: status === 'completed' ? top3FromDimensions(dims) : undefined,
       updatedAt: new Date(Date.now() - i * 86400000).toISOString(),
+      latestReportId: status === 'completed' ? `mock-report-${i + 1}` : undefined,
+      latestConfidenceScore: status === 'completed' ? Math.round(65 + rand() * 30) : undefined,
+      confidenceDelta: status === 'completed' ? Math.round((rand() * 16 - 8) * 10) / 10 : undefined,
+      compareReportId: status === 'completed' ? `mock-report-prev-${i + 1}` : undefined,
     };
   });
 
@@ -299,4 +304,3 @@ export function buildMockHistory(): AssessmentHistoryItem[] {
     };
   });
 }
-

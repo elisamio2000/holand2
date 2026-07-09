@@ -21,6 +21,7 @@ class Report(Base, TimestampMixin):
     recommendation_id: Mapped[str | None] = mapped_column(
         String(36), ForeignKey("recommendations.id"), nullable=True
     )
+    user_id: Mapped[str | None] = mapped_column(String(36), nullable=True, index=True)
     session_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
 
     holland_code: Mapped[str] = mapped_column(String(3), nullable=False)

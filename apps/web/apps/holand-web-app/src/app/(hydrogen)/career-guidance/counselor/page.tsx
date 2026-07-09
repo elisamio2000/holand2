@@ -92,7 +92,8 @@ export default function CounselorDashboardPage() {
                   <th className="py-2 pe-4 font-medium">وضعیت</th>
                   <th className="py-2 pe-4 font-medium">پیشرفت</th>
                   <th className="py-2 pe-4 font-medium">کد نتیجه</th>
-                  <th className="py-2 font-medium">گزارش</th>
+                  <th className="py-2 pe-4 font-medium">روند اطمینان</th>
+                  <th className="py-2 font-medium">اقدام</th>
                 </tr>
               </thead>
               <tbody>
@@ -116,14 +117,50 @@ export default function CounselorDashboardPage() {
                         </div>
                       </td>
                       <td className="py-3 pe-4 text-gray-600">{student.topCode ?? '—'}</td>
+                      <td className="py-3 pe-4">
+                        {student.latestConfidenceScore != null ? (
+                          <div className="flex items-center gap-2">
+                            <Text className="text-xs text-gray-700">
+                              {Math.round(student.latestConfidenceScore)}%
+                            </Text>
+                            {student.confidenceDelta != null && (
+                              <Badge
+                                variant="flat"
+                                color={
+                                  student.confidenceDelta > 0
+                                    ? 'success'
+                                    : student.confidenceDelta < 0
+                                      ? 'danger'
+                                      : 'secondary'
+                                }
+                              >
+                                {student.confidenceDelta > 0 ? '+' : ''}
+                                {student.confidenceDelta.toFixed(1)}%
+                              </Badge>
+                            )}
+                          </div>
+                        ) : (
+                          <Text className="text-gray-400">—</Text>
+                        )}
+                      </td>
                       <td className="py-3">
                         {student.status === 'completed' ? (
-                          <Link
-                            href={`/career-guidance/reports/${student.sessionId}`}
-                            className="text-emerald-700 hover:underline"
-                          >
-                            مشاهده گزارش
-                          </Link>
+                          <div className="flex items-center gap-3">
+                            <Link
+                              href={`/career-guidance/reports/${student.latestReportId ?? student.sessionId}`}
+                              className="text-emerald-700 hover:underline"
+                            >
+                              مشاهده گزارش
+                            </Link>
+                            {student.latestReportId && student.compareReportId && (
+                              <Link
+                                href={`/career-guidance/assessments/compare?ra=${student.compareReportId}&rb=${student.latestReportId}`}
+                                className="text-xs text-indigo-700 hover:underline"
+                              >
+                                مقایسه روند
+                              </Link>
+                            )}
+                          </div>
                         ) : (
                           <Text className="text-gray-400">—</Text>
                         )}

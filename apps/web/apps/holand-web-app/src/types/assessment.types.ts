@@ -131,6 +131,7 @@ export interface AssessmentReport extends AssessmentResult {
 
 export interface CounselorStudentSummary {
   sessionId: string;
+  studentId?: string;
   studentName: string;
   ageBand: AgeBand;
   testType: TestType;
@@ -138,6 +139,10 @@ export interface CounselorStudentSummary {
   progressPercent: number;
   topCode?: string;
   updatedAt: string;
+  latestReportId?: string;
+  latestConfidenceScore?: number;
+  confidenceDelta?: number;
+  compareReportId?: string;
 }
 
 export interface CounselorDashboardStats {
