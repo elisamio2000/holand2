@@ -8,7 +8,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import get_settings
 from .database import engine
 from .recommendations import build_recommendations
-from .scoring import score_holland, score_mbti
+from .routers.admin_rbac import router as admin_rbac_router
+from .routers.admin_users import router as admin_users_router
+from .routers.auth import router as auth_router
+from .routers.users import router as users_router
 from .schemas import (
     HealthResponse,
     HollandRequest,
@@ -18,6 +21,7 @@ from .schemas import (
     RecommendationRequest,
     RecommendationResponse,
 )
+from .scoring import score_holland, score_mbti
 
 settings = get_settings()
 
@@ -54,8 +58,10 @@ app.add_middleware(
 )
 
 # ── Routers (uncommented as each phase is implemented) ───────────────────────
-# Phase 1: from .routers.auth import router as auth_router; app.include_router(auth_router)
-# Phase 1: from .routers.users import router as users_router; app.include_router(users_router)
+app.include_router(auth_router)
+app.include_router(users_router)
+app.include_router(admin_users_router)
+app.include_router(admin_rbac_router)
 # Phase 3: from .routers.sessions import router as sessions_router; app.include_router(sessions_router)
 # Phase 4: from .routers.recommendations import router as reco_router; app.include_router(reco_router)
 # Phase 5: from .routers.reports import router as reports_router; app.include_router(reports_router)
