@@ -4,6 +4,12 @@
 وضعیت فعلی: آماده ارائه نیست (Release Blocked)
 هدف: تبدیل مسائل جاری به برنامه اجرایی دقیق، موازی‌پذیر و قابل تحویل.
 
+### Phase A — Identity & RBAC Foundation (اجرا شده)
+- RBAC چهار نقش پایه (super_admin, admin, analyst, user) در backend اضافه شد و مسیرهای ادمین برای super_admin نیز مجاز شدند.
+- قرارداد ثبت‌نام با فیلدهای اجباری هویتی (first_name, last_name, national_id, mobile_number, center_name) هم‌راستا شد.
+- seed پیش‌فرض کاربران به‌صورت idempotent برای superadmin/admin/analyst/user اعمال شد.
+- تنظیمات config-first برای فعال/غیرفعال‌سازی اعتبارسنجی‌های external identity (full_name, national_id, mobile) و placeholderهای provider اضافه شد.
+
 ## 1) وضعیت بلوکه‌کننده فعلی (Release Blockers)
 
 - BLK-01: تنظیمات حساب و آواتار پایدار نیست (بارگذاری/ذخیره تصویر)

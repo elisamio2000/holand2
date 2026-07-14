@@ -11,7 +11,7 @@ from ..database import get_db
 from ..deps import get_current_user
 from ..models.counselor_assignment import CounselorAssignment
 from ..models.report import Report
-from ..models.user import User, UserRole
+from ..models.user import User, has_admin_access, has_counselor_access
 from ..schemas import CounselorDashboardResponse, CounselorDashboardStats, CounselorStudentSummary
 
 router = APIRouter(prefix="/counselor", tags=["Counselor"])
@@ -50,11 +50,11 @@ async def get_dashboard(
     current_user: CurrentUser,
     counselor_id: str | None = Query(default=None),
 ) -> CounselorDashboardResponse:
-    if current_user.role not in {UserRole.COUNSELOR, UserRole.ADMIN}:
+    if not has_counselor_access(current_user.role):
         raise HTTPException(status_code=403, detail="Insufficient permissions for this action")
 
     target_counselor_id = counselor_id or current_user.id
-    if current_user.role != UserRole.ADMIN and target_counselor_id != current_user.id:
+    if not has_admin_access(current_user.role) and target_counselor_id != current_user.id:
         raise HTTPException(status_code=403, detail="Counselors can only view their own dashboard")
 
     assignment_result = await session.execute(

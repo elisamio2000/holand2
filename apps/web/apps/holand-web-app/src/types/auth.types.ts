@@ -21,13 +21,14 @@ export interface LoginResponse {
 export interface LoginUser {
   id: string;
   username: string;
-  email: string;
+  email?: string;
   display_name?: string;
   role?: string;
   roles?: string[];
   realm_roles?: string[];
   permissions?: string[];
   is_admin?: boolean;
+  is_super_admin?: boolean;
 }
 
 export interface TokenRefreshRequest {
@@ -50,33 +51,40 @@ export interface RegisterRequest {
   username: string; // minLength: 3, maxLength: 50
   email: string;
   password: string; // minLength: 8
-  first_name?: string | null;
-  last_name?: string | null;
-  accepted_terms?: boolean;
+  first_name: string;
+  last_name: string;
+  national_id: string;
+  mobile_number: string;
+  center_name: string;
 }
 
 export interface RegisterResponse {
-  id: string;
-  username: string;
-  email: string;
-  display_name?: string | null;
-  message?: string;
-  status?: 'active' | 'pending_approval';
-  can_login?: boolean;
-  assigned_role?: string;
-  requires_admin_activation?: boolean;
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+  token_type?: string;
+  user: LoginUser;
 }
 
 /** Public metadata from GET /auth/registration-info */
 export interface RegistrationInfoResponse {
+  allow_registration: boolean;
+  can_self_register: boolean;
   policy: string;
   terms_version: string;
   require_terms: boolean;
   default_role: string;
-  post_approval_role_hint: string;
+  post_approval_role_hint?: string;
   can_login_after_register: boolean;
   requires_admin_activation: boolean;
-  can_self_register: boolean;
+  required_fields: string[];
+  identity_validation: {
+    full_name_enabled: boolean;
+    national_id_enabled: boolean;
+    mobile_number_enabled: boolean;
+    provider_base_url?: string | null;
+    provider_timeout_seconds: number;
+  };
 }
 
 // ---- Users ----
@@ -236,13 +244,13 @@ export interface SectionAccess {
 }
 
 export interface PermissionsResponse {
-  user_id: string;
-  username: string;
+  user_id?: string;
+  username?: string;
   realm_roles: string[];
   /** Per-section access detail keyed by section ID (e.g. 'chat', 'admin', 'database') */
-  sections: Record<string, SectionAccess>;
-  is_admin: boolean;
-  is_super_admin: boolean;
+  sections?: Record<string, SectionAccess>;
+  is_admin?: boolean;
+  is_super_admin?: boolean;
   allowed_sections: string[];
 }
 
@@ -654,4 +662,3 @@ export interface SectionPermissionsResponse {
 export interface SectionPermissionsUpdate {
   permissions: Record<string, string[]>; // role â†’ sections[]
 }
-

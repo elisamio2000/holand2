@@ -10,14 +10,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
 from ..deps import get_current_user
-from ..models.user import User, UserRole
+from ..models.user import User, has_admin_access
 from ..schemas import UserResponse, UserUpdate
 
 router = APIRouter(prefix="/admin/users", tags=["Admin"])
 
 
 def _ensure_self_or_admin(target_id: str, user: User) -> None:
-    if user.id != target_id and user.role != UserRole.ADMIN:
+    if user.id != target_id and not has_admin_access(user.role):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Only admins can view or edit other users",
@@ -50,7 +50,7 @@ async def update_user(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
     data = payload.model_dump(exclude_unset=True)
-    if "is_active" in data and current_user.role != UserRole.ADMIN:
+    if "is_active" in data and not has_admin_access(current_user.role):
         # Non-admins can't change their own active status.
         data.pop("is_active")
 

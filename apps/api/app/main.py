@@ -1,6 +1,6 @@
 """Holand Guidance API — application entry point."""
 
-import os
+import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -40,6 +40,7 @@ from .scoring import score_holland, score_mbti
 from .security import BodySizeLimitMiddleware, SecurityHeadersMiddleware, limiter
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
 
 
 
@@ -47,47 +48,105 @@ settings = get_settings()
 async def lifespan(app: FastAPI):
     """Verify DB connection on startup; seed default users; clean up on shutdown."""
     from sqlalchemy import text
+
     try:
         async with engine.connect() as conn:
             await conn.execute(text("SELECT 1"))
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.warning("Startup database connectivity check failed: %s", exc)
 
     # Seed default users on first startup
     try:
         await _seed_default_users()
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.exception("Default user seeding failed: %s", exc)
 
     yield
     await engine.dispose()
 
 
 async def _seed_default_users() -> None:
-    """Create default superadmin / admin / user accounts if they don't yet exist."""
+    """Create default superadmin / admin / analyst / user accounts if absent."""
     from sqlalchemy import select
+
     from .database import AsyncSessionLocal
     from .models.user import User, UserRole
     from .services.auth_service import hash_password
 
     defaults = [
-        {"username": "superadmin", "email": "superadmin@holand.dev",
-         "display_name": "Super Admin", "password": "superadmin123", "role": UserRole.ADMIN},
-        {"username": "admin", "email": "admin@holand.dev",
-         "display_name": "Holand Admin", "password": "admin123", "role": UserRole.ADMIN},
-        {"username": "user", "email": "user@holand.dev",
-         "display_name": "Demo User", "password": "user123", "role": UserRole.USER},
+        {
+            "username": "superadmin",
+            "email": "superadmin@holand.dev",
+            "display_name": "Holand Super Admin",
+            "first_name": "Holand",
+            "last_name": "SuperAdmin",
+            "national_id": "seed-superadmin-001",
+            "mobile_number": "+989100000001",
+            "center_name": "Holand HQ",
+            "password": "superadmin123",
+            "role": UserRole.SUPER_ADMIN,
+        },
+        {
+            "username": "admin",
+            "email": "admin@holand.dev",
+            "display_name": "Holand Admin",
+            "first_name": "Holand",
+            "last_name": "Admin",
+            "national_id": "seed-admin-001",
+            "mobile_number": "+989100000002",
+            "center_name": "Holand HQ",
+            "password": "admin123",
+            "role": UserRole.ADMIN,
+        },
+        {
+            "username": "analyst",
+            "email": "analyst@holand.dev",
+            "display_name": "Holand Analyst",
+            "first_name": "Holand",
+            "last_name": "Analyst",
+            "national_id": "seed-analyst-001",
+            "mobile_number": "+989100000003",
+            "center_name": "Holand Guidance",
+            "password": "analyst123",
+            "role": UserRole.ANALYST,
+        },
+        {
+            "username": "user",
+            "email": "user@holand.dev",
+            "display_name": "Demo User",
+            "first_name": "Demo",
+            "last_name": "User",
+            "national_id": "seed-user-001",
+            "mobile_number": "+989100000004",
+            "center_name": "Holand Guidance",
+            "password": "user123",
+            "role": UserRole.USER,
+        },
     ]
 
     async with AsyncSessionLocal() as db:
         for d in defaults:
             existing = await db.execute(select(User).where(User.username == d["username"]))
-            if existing.scalar_one_or_none() is not None:
+            existing_user = existing.scalar_one_or_none()
+            if existing_user is not None:
+                existing_user.role = d["role"]
+                existing_user.display_name = d["display_name"]
+                existing_user.first_name = d["first_name"]
+                existing_user.last_name = d["last_name"]
+                existing_user.national_id = d["national_id"]
+                existing_user.mobile_number = d["mobile_number"]
+                existing_user.center_name = d["center_name"]
+                existing_user.is_active = True
                 continue
             db.add(User(
                 username=d["username"],
                 email=d["email"],
                 display_name=d["display_name"],
+                first_name=d["first_name"],
+                last_name=d["last_name"],
+                national_id=d["national_id"],
+                mobile_number=d["mobile_number"],
+                center_name=d["center_name"],
                 hashed_password=hash_password(d["password"]),
                 role=d["role"],
                 is_active=True,

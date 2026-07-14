@@ -35,6 +35,13 @@ class Settings(BaseSettings):
     jwt_access_token_expire_minutes: int = 15
     jwt_refresh_token_expire_days: int = 7
 
+    # External identity validation (config-first; optional in v1)
+    identity_validation_full_name_enabled: bool = False
+    identity_validation_national_id_enabled: bool = False
+    identity_validation_mobile_number_enabled: bool = False
+    identity_validation_provider_base_url: str | None = None
+    identity_validation_provider_timeout_seconds: int = 5
+
     # CORS
     cors_origins: str = "http://localhost:3000"
 

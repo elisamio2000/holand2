@@ -13,6 +13,11 @@ async def _register(client, username: str):
             "username": username,
             "password": "correct-horse",
             "email": f"{username}@example.com",
+            "first_name": "Test",
+            "last_name": username.title(),
+            "national_id": f"nid-{username}",
+            "mobile_number": f"mobile-{username}",
+            "center_name": "Counselor Test Center",
         },
     )
     assert response.status_code == 201
@@ -69,4 +74,3 @@ class TestCounselorDashboardApi:
         assert student["latest_report_id"]
         assert student["compare_report_id"]
         assert student["confidence_delta"] is not None
-

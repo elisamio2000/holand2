@@ -104,6 +104,11 @@ class TestReportsApi:
                 "username": username,
                 "password": "correct-horse",
                 "email": f"{username}@example.com",
+                "first_name": "Test",
+                "last_name": username.title(),
+                "national_id": f"nid-{username}",
+                "mobile_number": f"mobile-{username}",
+                "center_name": "Reports Test Center",
             },
         )
         assert reg.status_code == 201
