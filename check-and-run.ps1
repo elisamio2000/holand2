@@ -17,6 +17,8 @@
     .\check-and-run.ps1 -RebuildServices api,web -Services api,web
     .\check-and-run.ps1 -Status
     .\check-and-run.ps1 -Logs api
+    .\check-and-run.ps1 -Gate
+    .\check-and-run.ps1 -Gate -GateOutput gate-summary.json
 #>
 
 [CmdletBinding()]
@@ -39,6 +41,8 @@ param(
     [switch]$Help,
     [string]$Logs,
     [switch]$ResetDb,
+    [switch]$Gate,
+    [string]$GateOutput,
     [int]$HealthTimeout = 5,
     [int]$GatewayWaitMinutes = 6
 )
@@ -374,6 +378,82 @@ function Show-Status {
     [void](Invoke-Compose -ComposeArgs @('ps', '-a'))
 }
 
+function Invoke-GateMode {
+    <#
+    .SYNOPSIS
+        Non-interactive "DevOps assistant gate" for CI/release pipelines.
+    .DESCRIPTION
+        Runs prerequisites + a non-destructive port audit + health checks against an
+        already-running stack, emits a machine-readable JSON summary (stdout and/or
+        -GateOutput file), and returns a deterministic exit code:
+          0 = all required checks passed
+          1 = one or more required checks failed
+        Never prompts and never force-kills processes (AutoYes defaults to "no" for any
+        would-be destructive action), so it is safe to run unattended in a pipeline step.
+    #>
+    Write-Header 'Gate Mode: DevOps Assistant Readiness Check'
+
+    $checks = [ordered]@{}
+
+    $prereqOk = Test-Prerequisites
+    $checks['prerequisites'] = @{ passed = [bool]$prereqOk }
+
+    $portOk = $null
+    if ($prereqOk) {
+        $portOk = Invoke-PortAudit
+        $checks['portAudit'] = @{ passed = [bool]$portOk }
+    } else {
+        $checks['portAudit'] = @{ passed = $false; skipped = $true; reason = 'prerequisites failed' }
+    }
+
+    $healthChecks = @()
+    foreach ($ep in $Script:HealthEndpoints) {
+        $probe = Test-HttpHealth -Url $ep.Url -TimeoutSec $HealthTimeout
+        $healthChecks += [ordered]@{
+            name     = $ep.Name
+            url      = $ep.Url
+            required = [bool]$ep.Required
+            ok       = [bool]$probe.Ok
+            status   = $probe.Status
+        }
+        if ($ep.Required -and -not $probe.Ok) {
+            Write-Fail "$($ep.Name) health failed: $($probe.Error)"
+        } elseif ($probe.Ok) {
+            Write-Pass "$($ep.Name): $($ep.Url)"
+        } else {
+            Write-Warn "$($ep.Name) unavailable: $($probe.Error)"
+        }
+    }
+    $checks['health'] = $healthChecks
+
+    # Recompute the deterministic gate result from the checks themselves (not global
+    # mutable state) so the JSON summary and the process exit code can never disagree.
+    $gatePassed = $prereqOk -and ($portOk -ne $false) -and -not ($healthChecks | Where-Object { $_.required -and -not $_.ok })
+    $Script:ExitCode = if ($gatePassed) { 0 } else { 1 }
+
+    $summary = [ordered]@{
+        timestamp = (Get-Date).ToUniversalTime().ToString('o')
+        overall   = if ($gatePassed) { 'pass' } else { 'fail' }
+        exitCode  = $Script:ExitCode
+        checks    = $checks
+    }
+
+    $json = $summary | ConvertTo-Json -Depth 8
+    if ($GateOutput) {
+        $json | Out-File -FilePath $GateOutput -Encoding utf8
+        Write-Info "Gate summary written to $GateOutput"
+    }
+    Write-Host ''
+    Write-Host $json
+
+    Write-Header 'Gate Summary'
+    if ($gatePassed) {
+        Write-Pass 'Gate PASSED'
+    } else {
+        Write-Fail 'Gate FAILED'
+    }
+}
+
 function Show-Logs {
     param([string]$Service)
     Write-Header 'Logs'
@@ -398,6 +478,9 @@ Common switches:
   -ForceRecreate -NoRecreate -BuildOnly
   -ResetDb -SkipMigrate -SkipHealth
   -Logs api
+  -Gate [-GateOutput path.json]   # non-interactive DevOps/CI readiness gate,
+                                  # deterministic exit code + JSON summary,
+                                  # never prompts, never force-kills processes
 "@ | Write-Host
 }
 
@@ -412,6 +495,12 @@ $plannedStart = Get-StartTargets
 
 if ($Logs) { Show-Logs -Service $Logs; exit 0 }
 if ($Status) { Show-Status; exit 0 }
+
+if ($Gate) {
+    $AutoYes = $true
+    Invoke-GateMode
+    exit $Script:ExitCode
+}
 
 if ($HealthOnly) {
     if (-not (Test-Prerequisites)) { exit 1 }
