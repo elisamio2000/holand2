@@ -1,10 +1,10 @@
-export const messagesData = [
+﻿export const messagesData = [
   {
     id: 1,
     message: `It is nice to be chatting with you. Omnis,
         quidem non. Sint inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
-    avatar: ['/logo.png'],
+    avatar: ['/brand/brand-mark-4x.svg'],
     name: 'Wade Warren',
     unRead: true,
     sendTime: '2023-06-01T09:35:31.820Z',
@@ -13,7 +13,7 @@ export const messagesData = [
     id: 2,
     message: ` Oh... Let's move on to something else for a bit. Sint inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
-    avatar: ['/logo.png'],
+    avatar: ['/brand/brand-mark-4x.svg'],
     name: 'Jane Cooper',
     unRead: true,
     sendTime: '2023-05-30T09:35:31.820Z',
@@ -23,7 +23,7 @@ export const messagesData = [
     message: `You: I never received any phone calls about it. Omnis,
         quidem non. Sint inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
-    avatar: ['/logo.png'],
+    avatar: ['/brand/brand-mark-4x.svg'],
     name: 'Leslie Alexander',
     unRead: false,
     sendTime: '2023-06-01T09:35:31.820Z',
@@ -33,7 +33,7 @@ export const messagesData = [
     message: `You: But you'll need to type in every possible word. Omnis,
         quidem non. Sint inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
-    avatar: ['/logo.png'],
+    avatar: ['/brand/brand-mark-4x.svg'],
     name: 'John Doe',
     unRead: false,
     sendTime: '2023-05-21T09:35:31.820Z',
@@ -43,8 +43,8 @@ export const messagesData = [
     message: `They were delighted and set to work immediately. Sint inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
     avatar: [
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     name: 'Design & Frontend',
     unRead: true,
@@ -56,8 +56,8 @@ export const messagesData = [
         quidem non. Sint inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
     avatar: [
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     name: 'Laravel',
     unRead: true,
@@ -68,8 +68,8 @@ export const messagesData = [
 
     name: 'WordPress',
     avatar: [
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     unRead: false,
     sendTime: '2023-05-16T09:35:31.820Z',
@@ -78,7 +78,7 @@ export const messagesData = [
     id: 8,
     message: `You: which is actually pretty clever and funny, inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
-    avatar: ['/logo.png'],
+    avatar: ['/brand/brand-mark-4x.svg'],
     name: 'Jenny Doe',
     unRead: false,
     sendTime: '2023-05-01T09:35:31.820Z',
@@ -88,9 +88,10 @@ export const messagesData = [
     message: `You could try ELIZA bot, it was a software tween herself. Omnis,
         quidem non. Sint inventore quasi temporibus architecto eaque,
         natus aspernatur minus?`,
-    avatar: ['/logo.png'],
+    avatar: ['/brand/brand-mark-4x.svg'],
     name: 'Bruce Warren',
     unRead: true,
     sendTime: '2023-04-01T09:35:31.820Z',
   },
 ];
+

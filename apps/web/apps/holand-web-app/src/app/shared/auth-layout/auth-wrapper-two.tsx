@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -147,7 +147,7 @@ function IntroBannerBlock() {
           fill
           priority
           src={
-            '/logo.png'
+            '/brand/brand-mark-4x.svg'
           }
           alt="Sign Up Thumbnail"
           sizes="(max-width: 768px) 100vw"
@@ -183,27 +183,27 @@ function IntroBannerBlock() {
 const socialLinks = [
   {
     title: 'Facebook',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     icon: <PiFacebookLogo className="h-auto w-4" />,
   },
   {
     title: 'Twitter',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     icon: <PiTwitterLogo className="h-auto w-4" />,
   },
   {
     title: 'Instagram',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     icon: <PiInstagramLogo className="h-auto w-4" />,
   },
   {
     title: 'Linkedin',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     icon: <PiLinkedinLogo className="h-auto w-4" />,
   },
   {
     title: 'Dribbble',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     icon: <PiDribbbleLogo className="h-auto w-4" />,
   },
 ];
@@ -226,11 +226,11 @@ function SocialLinks() {
 }
 
 const members = [
-  '/logo.png',
-  '/logo.png',
-  '/logo.png',
-  '/logo.png',
-  '/logo.png',
+  '/brand/brand-mark-4x.svg',
+  '/brand/brand-mark-4x.svg',
+  '/brand/brand-mark-4x.svg',
+  '/brand/brand-mark-4x.svg',
+  '/brand/brand-mark-4x.svg',
 ];
 function JoinedMember() {
   return (
@@ -252,3 +252,4 @@ function JoinedMember() {
     </div>
   );
 }
+

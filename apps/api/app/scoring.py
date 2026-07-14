@@ -1,6 +1,80 @@
 
 from .schemas import MBTI_DIMENSIONS, RIASEC_DIMENSIONS
 
+# Holland hexagon order (RIASEC) — adjacent types are most similar.
+# Persian mapping: و=R, ج=I, ه=A, ا/الف=S, م=E, ق=C
+# Source: Dr. Amir Tajallinia (دکتر امیر تجلی‌نیا) Holland scoring methodology
+_RIASEC_ORDER = ['R', 'I', 'A', 'S', 'E', 'C']
+
+
+def _hexagon_distance(t1: str, t2: str) -> int:
+    """Shortest distance between two RIASEC types on the Holland hexagon (0-3)."""
+    i1, i2 = _RIASEC_ORDER.index(t1), _RIASEC_ORDER.index(t2)
+    diff = abs(i1 - i2)
+    return min(diff, 6 - diff)
+
+
+def _congruence_score(type_: str, top_type: str) -> int:
+    """
+    Congruence score from the hexagon adjacency matrix (تجلی‌نیا methodology):
+    same type → 4, adjacent (1 step) → 3, two steps → 2, opposite (3 steps) → 1
+    """
+    return 4 - _hexagon_distance(type_, top_type)
+
+
+def compute_holland_field_scores(normalized_scores: dict[str, float]) -> dict:
+    """
+    Compute Holland congruence-adjusted standardized scores and Iranian educational
+    field scores using the Tajallinia (دکتر امیر تجلی‌نیا) methodology.
+
+    نمره همخوانی: adjacency-based congruence from the hexagon matrix
+    نمره میزان شده: rank + congruence
+    Educational field formulas (از کارنامه آزمون هالند):
+      ریاضی فیزیک = (R_std + I_std) / 2
+      علوم تجربی  = (S_std + I_std) / 2
+      علوم انسانی = (A_std + E_std + C_std + S_std×2) / 5
+      خدمات       = (C_std + R_std + علوم_انسانی) / 3
+      صنعت        = (C_std + R_std + ریاضی_فیزیک) / 3
+      کشاورزی     = (C_std + R_std + علوم_تجربی) / 3
+    """
+    dims = _RIASEC_ORDER
+    # Rank from 1 (lowest score) to 6 (highest score)
+    sorted_types = sorted(dims, key=lambda t: normalized_scores.get(t, 0.0))
+    ranks = {t: i + 1 for i, t in enumerate(sorted_types)}
+    top_type = sorted_types[-1]
+
+    congruence = {t: _congruence_score(t, top_type) for t in dims}
+    standardized = {t: ranks[t] + congruence[t] for t in dims}
+
+    r, i, a, s, e, c = [standardized[d] for d in dims]
+
+    math_physics = (r + i) / 2
+    natural_science = (s + i) / 2
+    humanities = (a + e + c + s * 2) / 5
+    services = (c + r + humanities) / 3
+    industry = (c + r + math_physics) / 3
+    agriculture = (c + r + natural_science) / 3
+
+    raw_field_scores = {
+        'ریاضی_فیزیک': math_physics,
+        'علوم_تجربی': natural_science,
+        'علوم_انسانی': humanities,
+        'خدمات': services,
+        'صنعت': industry,
+        'کشاورزی': agriculture,
+    }
+
+    field_ranking = sorted(raw_field_scores, key=lambda k: raw_field_scores[k], reverse=True)
+
+    return {
+        'top_type': top_type,
+        'ranks': ranks,
+        'congruence_scores': congruence,
+        'standardized_scores': standardized,
+        'field_scores': {k: round(v, 2) for k, v in raw_field_scores.items()},
+        'field_ranking': field_ranking,
+    }
+
 
 def _quality_band(score: float) -> str:
     if score >= 70:

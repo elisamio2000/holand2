@@ -1,4 +1,4 @@
-import RcTable from "rc-table";
+﻿import RcTable from "rc-table";
 import cn from "@core/utils/class-names";
 import { PiTextColumns } from "react-icons/pi";
 import { addSpacesToCamelCase } from "@core/utils/add-spaces-to-camel-case";
@@ -43,7 +43,7 @@ export interface TableProps extends Omit<RCTableProps, "className" | "emptyText"
 
 /**
  *  React table component with useful functions. Under the hood we are using `rc-table` package,
- * you can check their official documentation for more details -> /logo.png
+ * you can check their official documentation for more details -> /brand/brand-mark-4x.svg
  */
 export default function LegacyTable({
   striped,
@@ -220,3 +220,4 @@ export function ToggleColumns<T>({
     </div>
   );
 }
+

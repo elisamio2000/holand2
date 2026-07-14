@@ -24,7 +24,7 @@ export default function SignUp() {
         <div className="relative mx-auto aspect-[1/1.015] w-[540px] xl:w-[600px] 2xl:w-[636px]">
           <Image
             src={
-              '/logo.png'
+              '/brand/brand-mark-4x.svg'
             }
             fill
             priority
@@ -40,3 +40,4 @@ export default function SignUp() {
     </AuthWrapperFive>
   );
 }
+

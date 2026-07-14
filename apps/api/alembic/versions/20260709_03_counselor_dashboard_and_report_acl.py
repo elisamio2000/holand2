@@ -1,6 +1,6 @@
 """add counselor assignments and report user ownership
 
-Revision ID: 20260709_03
+Revision ID: 20260709_03_counselor
 Revises: 20260709_02
 Create Date: 2026-07-09 09:45:00.000000
 """
@@ -11,10 +11,10 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision: str = "20260709_03"
+revision: str = "20260709_03_counselor"
 down_revision: str | None = "20260709_02"
 branch_labels: str | Sequence[str] | None = None
-depends_on: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = "f66a241cdea3"
 
 
 def upgrade() -> None:

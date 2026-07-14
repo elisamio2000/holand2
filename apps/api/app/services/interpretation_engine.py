@@ -138,27 +138,58 @@ def _behavioral_fit_fa(top3_code: str, mbti_type: str) -> str:
     )
 
 
-def _career_major_fa(recommendations: RecommendationResponseV2) -> str:
-    if not recommendations.careers and not recommendations.majors:
-        return "داده کافی برای پیشنهاد مشخص شغلی یا رشته در حال حاضر موجود نیست."
+def _career_major_fa(
+    recommendations: RecommendationResponseV2,
+    field_scores: dict | None = None,
+    age_band: str = "18-24",
+) -> str:
+    # --- Educational field scores from Tajallinia Holland methodology ---
+    field_lines: list[str] = []
+    if field_scores:
+        ranking = sorted(field_scores.items(), key=lambda x: x[1], reverse=True)
+        top_fields = ranking[:3]
+        _field_fa = {
+            'ریاضی_فیزیک': 'ریاضی فیزیک',
+            'علوم_تجربی': 'علوم تجربی',
+            'علوم_انسانی': 'علوم انسانی',
+            'خدمات': 'خدمات',
+            'صنعت': 'صنعت و فنی',
+            'کشاورزی': 'کشاورزی و محیط زیست',
+        }
+        top_names = [_field_fa.get(f, f) for f, _ in top_fields]
+        if age_band == "13-17":
+            field_lines.append(
+                f"بر اساس نمره میزان‌شده هالند (روش تجلی‌نیا)، گروه‌های درسی «{' ، '.join(top_names)}» "
+                "با ویژگی‌های رغبتی شما بیشترین همخوانی دارند. این می‌تواند در انتخاب رشته دوره متوسطه راهنما باشد."
+            )
+        else:
+            field_lines.append(
+                f"محاسبه نمره همخوانی آموزشی (روش تجلی‌نیا) نشان می‌دهد «{' ، '.join(top_names)}» "
+                "مسیرهای تحصیلی/شغلی با بالاترین تطابق با کد رغبت شما هستند."
+            )
 
-    bits = []
-    if recommendations.careers:
-        top_job = recommendations.careers[0]
+    # --- Standard career/major recommendations ---
+    bits = list(field_lines)
+    if not recommendations.careers and not recommendations.majors:
+        if not bits:
+            bits.append("داده کافی برای پیشنهاد مشخص شغلی یا رشته در حال حاضر موجود نیست.")
+    else:
+        if recommendations.careers:
+            top_job = recommendations.careers[0]
+            bits.append(
+                f"در میان مشاغل، «{top_job.title_fa}» با میزان همخوانی {top_job.fit_score:.0f}٪ "
+                f"در اولویت قرار دارد؛ دلیل اصلی: {top_job.why_fa}."
+            )
+        if recommendations.majors:
+            top_major = recommendations.majors[0]
+            bits.append(
+                f"در میان رشته‌های تحصیلی، «{top_major.title_fa}» با میزان همخوانی "
+                f"{top_major.fit_score:.0f}٪ در اولویت قرار دارد؛ دلیل اصلی: {top_major.why_fa}."
+            )
         bits.append(
-            f"در میان مشاغل، «{top_job.title_fa}» با میزان همخوانی {top_job.fit_score:.0f}٪ "
-            f"در اولویت قرار دارد؛ دلیل اصلی: {top_job.why_fa}."
+            "این پیشنهادها بر پایه رده‌بندی استاندارد مشاغل و وضعیت تقاضای بازار تنظیم شده‌اند "
+            "و باید همراه با گفتگو با مشاور و بررسی علاقه شخصی نهایی شوند."
         )
-    if recommendations.majors:
-        top_major = recommendations.majors[0]
-        bits.append(
-            f"در میان رشته‌های تحصیلی، «{top_major.title_fa}» با میزان همخوانی "
-            f"{top_major.fit_score:.0f}٪ در اولویت قرار دارد؛ دلیل اصلی: {top_major.why_fa}."
-        )
-    bits.append(
-        "این پیشنهادها بر پایه رده‌بندی استاندارد مشاغل و وضعیت تقاضای بازار تنظیم شده‌اند "
-        "و باید همراه با گفتگو با مشاور و بررسی علاقه شخصی نهایی شوند."
-    )
     return " ".join(bits)
 
 
@@ -182,6 +213,9 @@ def build_interpretation(
     mbti_certainty: dict[str, float],
     age_band: str,
     recommendations: RecommendationResponseV2,
+    field_scores: dict | None = None,
+    raw_scores: dict[str, float] | None = None,
+    max_raw_per_dimension: float | None = None,
 ) -> LayeredInterpretation:
     borderline_pairs = _mbti_borderline_pairs(mbti_certainty)
     borderline_note = (
@@ -195,16 +229,33 @@ def build_interpretation(
         else ""
     )
 
+    # STRONG interest-level banding (precise per-theme scores + educational-field
+    # fit) — data-grounded and shown up front in the psychometric layer.
+    strong_block = ""
+    if raw_scores:
+        from .strong_scoring import (
+            band_educational_fields,
+            build_strong_summary_fa,
+            compute_interest_levels,
+        )
+
+        interest_levels = compute_interest_levels(raw_scores, max_raw_per_dimension)
+        banded_fields = band_educational_fields(field_scores or {})
+        strong_block = build_strong_summary_fa(interest_levels, banded_fields) + "\n\n"
+
     return LayeredInterpretation(
         psychometric_fa=(
-            _describe_holland(holland_code, normalized_scores)
+            strong_block
+            + _describe_holland(holland_code, normalized_scores)
             + " "
             + _describe_mbti(mbti_type, mbti_certainty)
             + borderline_note
             + holland_flat_note
         ),
         behavioral_fit_fa=_behavioral_fit_fa(holland_code, mbti_type),
-        career_major_fa=_career_major_fa(recommendations) + " " + _AGE_BAND_NOTE_FA.get(age_band, ""),
+        career_major_fa=_career_major_fa(recommendations, field_scores=field_scores, age_band=age_band)
+        + " "
+        + _AGE_BAND_NOTE_FA.get(age_band, ""),
         skill_growth_fa=_skill_growth_fa(recommendations),
     )
 

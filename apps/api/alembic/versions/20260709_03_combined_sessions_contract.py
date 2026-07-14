@@ -1,6 +1,6 @@
 """add combined assessment type and session version pinning fields
 
-Revision ID: 20260709_03
+Revision ID: 20260709_03_combined
 Revises: 20260709_02
 Create Date: 2026-07-09 10:10:00.000000
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision: str = "20260709_03"
+revision: str = "20260709_03_combined"
 down_revision: str | None = "20260709_02"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
@@ -21,7 +21,8 @@ def _add_enum_value_if_needed(enum_name: str, value: str) -> None:
     bind = op.get_bind()
     if bind.dialect.name != "postgresql":
         return
-    op.execute(sa.text(f"ALTER TYPE {enum_name} ADD VALUE IF NOT EXISTS :value").bindparams(value=value))
+    # PostgreSQL enum ALTER TYPE does not accept bind params for the value literal.
+    op.execute(sa.text(f"ALTER TYPE {enum_name} ADD VALUE IF NOT EXISTS '{value}'"))
 
 
 def upgrade() -> None:

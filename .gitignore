@@ -15,6 +15,9 @@ htmlcov/
 node_modules/
 .next/
 out/
+.turbo/
+coverage/
+dist/
 *.tsbuildinfo
 .eslintcache
 pnpm-debug.log*
@@ -23,6 +26,10 @@ pnpm-debug.log*
 .env
 .env.*
 !.env*.example
+
+# Local project artifacts
+apps/api/storage/
+apps/web/documents/dev-logs/
 
 # IDE
 .vscode/

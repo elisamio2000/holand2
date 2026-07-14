@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { Button, Title } from 'rizzui';
@@ -14,17 +14,17 @@ import { PiPlusBold } from 'react-icons/pi';
 const currentActiveTeams = [
   {
     name: 'GitHub',
-    url: '/logo.png',
+    url: '/brand/brand-mark-4x.svg',
     icon: <GithubIcon className="h-6 w-6" />,
   },
   {
     name: 'Teams',
-    url: '/logo.png',
+    url: '/brand/brand-mark-4x.svg',
     icon: <TeamsIcon className="h-6 w-6" />,
   },
   {
     name: 'Figma',
-    url: '/logo.png',
+    url: '/brand/brand-mark-4x.svg',
     icon: <FigmaIcon className="h-6 w-6" />,
   },
 ];
@@ -58,7 +58,7 @@ export default function TeamSettingsView() {
         className="pb-0 sm:pb-10"
         childrenWrapperClassName="gap-0 @lg:gap-0"
         title="On Teams"
-        description="You’re currently on these teams."
+        description="Youâ€™re currently on these teams."
       >
         {currentActiveTeams.map((currentTeam, index) => {
           return (
@@ -96,8 +96,8 @@ export default function TeamSettingsView() {
 
       <HorizontalFormBlockWrapper
         childrenWrapperClassName="gap-0 @lg:gap-0"
-        title="Where you’re logged in"
-        description="We’ll alert you via olivia@untitledui.com if there is any unusual activity on your account."
+        title="Where youâ€™re logged in"
+        description="Weâ€™ll alert you via olivia@untitledui.com if there is any unusual activity on your account."
         descriptionClassName="max-w-[352px]"
         className="border-0 pb-0"
       >
@@ -106,3 +106,4 @@ export default function TeamSettingsView() {
     </div>
   );
 }
+

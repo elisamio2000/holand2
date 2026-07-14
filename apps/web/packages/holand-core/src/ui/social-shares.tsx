@@ -1,4 +1,4 @@
-import {
+﻿import {
   PiFacebookLogoFill,
   PiInstagramLogoFill,
   PiTwitterLogoFill,
@@ -9,22 +9,22 @@ const socialData = [
   {
     title: 'Facebook',
     icon: <PiFacebookLogoFill className="h-auto w-4" />,
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
   },
   {
     title: 'Twitter',
     icon: <PiTwitterLogoFill className="h-auto w-4" />,
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
   },
   {
     title: 'Instagram',
     icon: <PiInstagramLogoFill className="h-auto w-4" />,
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
   },
   {
     title: 'Youtube',
     icon: <PiYoutubeLogoFill className="h-auto w-4" />,
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
   },
 ];
 
@@ -45,3 +45,4 @@ export default function SocialItems() {
     </div>
   );
 }
+

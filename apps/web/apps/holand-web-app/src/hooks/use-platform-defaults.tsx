@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import { useTranslation } from 'react-i18next';
 import { LAYOUT_OPTIONS } from '@/config/enums';
@@ -16,16 +16,21 @@ const LAYOUT_APPLIED_KEY = 'platform-defaults-layout-applied';
  */
 export function usePlatformDefaults(): void {
   const { setTheme, theme, systemTheme } = useTheme();
-  const { setLayout, layout } = useLayout();
+  const { setLayout } = useLayout();
   const { i18n } = useTranslation();
+  const attemptedRef = useRef(false);
 
   useEffect(() => {
+    if (attemptedRef.current) return;
+    attemptedRef.current = true;
+
     let cancelled = false;
 
     async function applyDefaults() {
       try {
         const defaults = await platformService.getDefaults();
         if (cancelled) return;
+        if (!defaults) return;
 
         const storedLanguage =
           typeof window !== 'undefined' ? localStorage.getItem(LANGUAGE_KEY) : null;
@@ -60,7 +65,7 @@ export function usePlatformDefaults(): void {
     return () => {
       cancelled = true;
     };
-  }, [i18n, layout, setLayout, setTheme, systemTheme, theme]);
+  }, [i18n, setLayout, setTheme, systemTheme, theme]);
 }
 
 /**

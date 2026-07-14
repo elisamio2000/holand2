@@ -16,7 +16,7 @@ export const invoiceData = [
     name: 'Francis Sanford MD',
     userName: 'George33',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Maryam.Barrows@yahoo.com',
     dueDate: '2023-10-18T13:24:00.760Z',
     amount: '544.00',
@@ -28,7 +28,7 @@ export const invoiceData = [
     name: 'Lucia Kshlerin',
     userName: 'Kenyon_Goldner56',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Mason_Davis4@yahoo.com',
     dueDate: '2023-07-18T01:06:16.095Z',
     amount: '560.00',
@@ -40,7 +40,7 @@ export const invoiceData = [
     name: 'Byron Hoppe III',
     userName: 'Walton.Hane98',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Jayda_Schiller35@yahoo.com',
     dueDate: '2024-12-18T15:32:21.317Z',
     amount: '249.00',
@@ -52,7 +52,7 @@ export const invoiceData = [
     name: 'Camille Jenkins',
     userName: 'Dalton_Von55',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Retha.Lehner47@hotmail.com',
     dueDate: '2024-06-30T19:06:03.018Z',
     amount: '255.00',
@@ -64,7 +64,7 @@ export const invoiceData = [
     name: 'Kelli Mitchell',
     userName: 'Iva.Denesik',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Guiseppe.Champlin@hotmail.com',
     dueDate: '2025-07-24T18:45:02.179Z',
     amount: '329.00',
@@ -76,7 +76,7 @@ export const invoiceData = [
     name: 'Randall Kuhic',
     userName: 'Henry_Quigley0',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Simeon93@yahoo.com',
     dueDate: '2023-11-02T00:20:47.253Z',
     amount: '402.00',
@@ -88,7 +88,7 @@ export const invoiceData = [
     name: 'Jody Carroll',
     userName: 'Lavon32',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Frieda_Renner@gmail.com',
     dueDate: '2024-01-03T02:53:29.596Z',
     amount: '977.00',
@@ -100,7 +100,7 @@ export const invoiceData = [
     name: 'Jill Russel',
     userName: 'Abdiel.Terry',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Cleora.Murray@hotmail.com',
     dueDate: '2025-01-23T08:52:39.081Z',
     amount: '736.00',
@@ -112,7 +112,7 @@ export const invoiceData = [
     name: 'Genevieve Hammes',
     userName: 'Kian_Huels',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Bernard63@yahoo.com',
     dueDate: '2024-07-29T18:18:19.193Z',
     amount: '755.00',
@@ -124,7 +124,7 @@ export const invoiceData = [
     name: 'Alejandro Reichert',
     userName: 'Timothy91',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Wava.Muller47@gmail.com',
     dueDate: '2023-05-04T04:33:47.908Z',
     amount: '240.00',
@@ -136,7 +136,7 @@ export const invoiceData = [
     name: 'Ricardo Kling',
     userName: 'Celia.Shanahan86',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Gene73@yahoo.com',
     dueDate: '2025-04-16T11:49:15.276Z',
     amount: '852.00',
@@ -148,7 +148,7 @@ export const invoiceData = [
     name: 'Carl Bode',
     userName: 'Pablo_Thompson',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Virgil.Skiles@hotmail.com',
     dueDate: '2024-05-28T04:44:49.629Z',
     amount: '295.00',
@@ -160,7 +160,7 @@ export const invoiceData = [
     name: 'Sherry Weber',
     userName: 'Shane39',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Aidan22@hotmail.com',
     dueDate: '2025-11-30T00:34:34.822Z',
     amount: '318.00',
@@ -172,7 +172,7 @@ export const invoiceData = [
     name: "Erika O'Reilly",
     userName: 'Hazle_Bednar95',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Ardith57@yahoo.com',
     dueDate: '2024-05-17T06:24:33.253Z',
     amount: '463.00',
@@ -184,7 +184,7 @@ export const invoiceData = [
     name: 'Lillian Anderson',
     userName: 'Cyrus_Hettinger',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Aletha_Waters87@gmail.com',
     dueDate: '2023-12-29T04:41:54.007Z',
     amount: '196.00',
@@ -196,7 +196,7 @@ export const invoiceData = [
     name: 'Connie Braun',
     userName: 'Ramona99',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Mervin.Rutherford@hotmail.com',
     dueDate: '2024-12-27T21:39:17.142Z',
     amount: '384.00',
@@ -208,7 +208,7 @@ export const invoiceData = [
     name: 'Mattie Miller',
     userName: 'Madison_MacGyver-Lesch52',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Bianka30@yahoo.com',
     dueDate: '2025-06-27T15:53:33.802Z',
     amount: '812.00',
@@ -220,7 +220,7 @@ export const invoiceData = [
     name: 'Shelley Lind-VonRueden',
     userName: 'Issac_West',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Destini_Williamson34@yahoo.com',
     dueDate: '2024-12-29T09:04:48.858Z',
     amount: '596.00',
@@ -232,7 +232,7 @@ export const invoiceData = [
     name: 'Manuel Langworth',
     userName: 'Kelley71',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Philip.OKeefe94@gmail.com',
     dueDate: '2025-12-20T09:41:31.402Z',
     amount: '545.00',
@@ -244,7 +244,7 @@ export const invoiceData = [
     name: 'Dr. Guillermo Huels Jr.',
     userName: 'Linnie.Hane',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Ricky41@yahoo.com',
     dueDate: '2023-03-26T14:06:10.093Z',
     amount: '537.00',
@@ -252,3 +252,4 @@ export const invoiceData = [
     createdAt: '2023-01-19T08:56:14.820Z',
   },
 ];
+

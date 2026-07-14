@@ -92,7 +92,7 @@ export const customerListData = [
   {
     id: 1,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -102,7 +102,7 @@ export const customerListData = [
   {
     id: 2,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -112,7 +112,7 @@ export const customerListData = [
   {
     id: 3,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -122,7 +122,7 @@ export const customerListData = [
   {
     id: 4,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -132,7 +132,7 @@ export const customerListData = [
   {
     id: 5,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -142,7 +142,7 @@ export const customerListData = [
   {
     id: 6,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -152,7 +152,7 @@ export const customerListData = [
   {
     id: 7,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -162,7 +162,7 @@ export const customerListData = [
   {
     id: 8,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -172,7 +172,7 @@ export const customerListData = [
   {
     id: 9,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -182,7 +182,7 @@ export const customerListData = [
   {
     id: 10,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -192,7 +192,7 @@ export const customerListData = [
   {
     id: 11,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -202,7 +202,7 @@ export const customerListData = [
   {
     id: 12,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     customerName: 'Gina Vanleuven',
     salesRepresentative: 'Gina Vanleuven',
     type: 'Platinum',
@@ -242,7 +242,7 @@ export const reportAnalyticsData = [
   {
     id: 1,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Tasty Metal Shirt',
     soldAmount: 145.25,
     unitPrice: 125.22,
@@ -252,7 +252,7 @@ export const reportAnalyticsData = [
   {
     id: 2,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Modern Gloves',
     soldAmount: 245.25,
     unitPrice: 222.59,
@@ -262,7 +262,7 @@ export const reportAnalyticsData = [
   {
     id: 3,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Rustic Watch',
     soldAmount: 156.25,
     unitPrice: 110.25,
@@ -272,7 +272,7 @@ export const reportAnalyticsData = [
   {
     id: 4,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Cheese Perfume',
     soldAmount: 145.25,
     unitPrice: 110.89,
@@ -280,3 +280,4 @@ export const reportAnalyticsData = [
     rating: 3,
   },
 ];
+

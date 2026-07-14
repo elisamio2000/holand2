@@ -507,7 +507,7 @@ export default function FloatingGraphAiChat({
         if (res.session_id && !dock.sessionId) {
           void dock.loadDock();
         }
-        const answer = (res.answer ?? '').trim() || t('nativeAiChat.emptyAnswerFallback');
+        const answer = (res.answer ?? '').trim() || t('contextualAssistant.emptyAnswerFallback');
         dock.setMessages((prev) => [
           ...prev,
           {
@@ -527,8 +527,8 @@ export default function FloatingGraphAiChat({
           detail = err.message;
         }
         const msg = detail.trim()
-          ? t('nativeAiChat.gatewayErrorWithDetail', { detail })
-          : t('nativeAiChat.gatewayError');
+          ? t('contextualAssistant.gatewayErrorWithDetail', { detail })
+          : t('contextualAssistant.gatewayError');
         dock.setMessages((prev) => [
           ...prev,
           {
@@ -578,14 +578,14 @@ export default function FloatingGraphAiChat({
         >
           <div className="flex items-start justify-between gap-2 border-b border-muted bg-gradient-to-l from-primary/10 to-transparent px-3 py-2.5">
             <div className="flex min-w-0 flex-1 items-start gap-2">
-              <Tooltip content={t('nativeAiChat.dragHandleTooltip')} placement="bottom">
+              <Tooltip content={t('contextualAssistant.dragHandleTooltip')} placement="bottom">
                 <button
                   type="button"
                   onPointerDown={handlePanelHandlePointerDown}
                   onPointerMove={handlePanelHandlePointerMove}
                   onPointerUp={handlePanelHandlePointerUp}
                   onPointerCancel={handlePanelHandlePointerUp}
-                  aria-label={t('nativeAiChat.dragHandleAria')}
+                  aria-label={t('contextualAssistant.dragHandleAria')}
                   style={{ touchAction: 'none' }}
                   className={cn(
                     'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary',
@@ -608,11 +608,11 @@ export default function FloatingGraphAiChat({
               </div>
             </div>
             <div className="flex shrink-0 items-center gap-0.5">
-              <Tooltip content={t('nativeAiChat.hideLauncherTooltip')} placement="bottom">
+              <Tooltip content={t('contextualAssistant.hideLauncherTooltip')} placement="bottom">
                 <ActionIcon
                   variant="text"
                   size="sm"
-                  aria-label={t('nativeAiChat.hideLauncherTooltip')}
+                  aria-label={t('contextualAssistant.hideLauncherTooltip')}
                   onClick={hideLauncher}
                 >
                   <PiEyeSlash className="h-4 w-4" />
@@ -789,7 +789,7 @@ export default function FloatingGraphAiChat({
                 onClick={handleNewConversation}
                 disabled={dock.isLoading || isSending}
               >
-                {t('nativeAiChat.newConversation')}
+                {t('contextualAssistant.newConversation')}
               </Button>
             </div>
             <ChatInput
@@ -802,10 +802,10 @@ export default function FloatingGraphAiChat({
             />
           </div>
 
-          <Tooltip content={t('nativeAiChat.resizeHandleTooltip')} placement="left">
+          <Tooltip content={t('contextualAssistant.resizeHandleTooltip')} placement="left">
             <div
               role="separator"
-              aria-label={t('nativeAiChat.resizeHandleAria')}
+              aria-label={t('contextualAssistant.resizeHandleAria')}
               onPointerDown={handleResizePointerDown}
               onPointerMove={handleResizePointerMove}
               onPointerUp={handleResizePointerUp}

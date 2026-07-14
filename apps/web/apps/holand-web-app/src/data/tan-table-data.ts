@@ -13,7 +13,7 @@ export const defaultData = [
     name: 'Francis Sanford MD',
     userName: 'George33',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Maryam.Barrows@yahoo.com',
     dueDate: '2023-10-18T13:24:00.760Z',
     amount: '544.00',
@@ -25,7 +25,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -34,7 +34,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -43,7 +43,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -54,7 +54,7 @@ export const defaultData = [
     name: 'Lucia Kshlerin',
     userName: 'Kenyon_Goldner56',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Mason_Davis4@yahoo.com',
     dueDate: '2023-07-18T01:06:16.095Z',
     amount: '560.00',
@@ -66,7 +66,7 @@ export const defaultData = [
         name: 'Licensed Concrete Cheese',
         category: 'Shirt',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -75,7 +75,7 @@ export const defaultData = [
         name: 'Gorgeous Bronze Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -86,7 +86,7 @@ export const defaultData = [
     name: 'Byron Hoppe III',
     userName: 'Walton.Hane98',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Jayda_Schiller35@yahoo.com',
     dueDate: '2024-12-18T15:32:21.317Z',
     amount: '249.00',
@@ -98,7 +98,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -109,7 +109,7 @@ export const defaultData = [
     name: 'Camille Jenkins',
     userName: 'Dalton_Von55',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Retha.Lehner47@hotmail.com',
     dueDate: '2024-06-30T19:06:03.018Z',
     amount: '255.00',
@@ -121,7 +121,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -130,7 +130,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -139,7 +139,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -150,7 +150,7 @@ export const defaultData = [
     name: 'Kelli Mitchell',
     userName: 'Iva.Denesik',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Guiseppe.Champlin@hotmail.com',
     dueDate: '2025-07-24T18:45:02.179Z',
     amount: '329.00',
@@ -162,7 +162,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -171,7 +171,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -182,7 +182,7 @@ export const defaultData = [
     name: 'Randall Kuhic',
     userName: 'Henry_Quigley0',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Simeon93@yahoo.com',
     dueDate: '2023-11-02T00:20:47.253Z',
     amount: '402.00',
@@ -194,7 +194,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -203,7 +203,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -212,7 +212,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -223,7 +223,7 @@ export const defaultData = [
     name: 'Jody Carroll',
     userName: 'Lavon32',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Frieda_Renner@gmail.com',
     dueDate: '2024-01-03T02:53:29.596Z',
     amount: '977.00',
@@ -235,7 +235,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -244,7 +244,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -255,7 +255,7 @@ export const defaultData = [
     name: 'Jill Russel',
     userName: 'Abdiel.Terry',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Cleora.Murray@hotmail.com',
     dueDate: '2025-01-23T08:52:39.081Z',
     amount: '736.00',
@@ -267,7 +267,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -278,7 +278,7 @@ export const defaultData = [
     name: 'Genevieve Hammes',
     userName: 'Kian_Huels',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Bernard63@yahoo.com',
     dueDate: '2024-07-29T18:18:19.193Z',
     amount: '755.00',
@@ -290,7 +290,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -299,7 +299,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -310,7 +310,7 @@ export const defaultData = [
     name: 'Alejandro Reichert',
     userName: 'Timothy91',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Wava.Muller47@gmail.com',
     dueDate: '2023-05-04T04:33:47.908Z',
     amount: '240.00',
@@ -322,7 +322,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -331,7 +331,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -342,7 +342,7 @@ export const defaultData = [
     name: 'Ricardo Kling',
     userName: 'Celia.Shanahan86',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Gene73@yahoo.com',
     dueDate: '2025-04-16T11:49:15.276Z',
     amount: '852.00',
@@ -354,7 +354,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -363,7 +363,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -372,7 +372,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -383,7 +383,7 @@ export const defaultData = [
     name: 'Carl Bode',
     userName: 'Pablo_Thompson',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Virgil.Skiles@hotmail.com',
     dueDate: '2024-05-28T04:44:49.629Z',
     amount: '295.00',
@@ -395,7 +395,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -406,7 +406,7 @@ export const defaultData = [
     name: 'Sherry Weber',
     userName: 'Shane39',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Aidan22@hotmail.com',
     dueDate: '2025-11-30T00:34:34.822Z',
     amount: '318.00',
@@ -418,7 +418,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -427,7 +427,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -438,7 +438,7 @@ export const defaultData = [
     name: "Erika O'Reilly",
     userName: 'Hazle_Bednar95',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Ardith57@yahoo.com',
     dueDate: '2024-05-17T06:24:33.253Z',
     amount: '463.00',
@@ -450,7 +450,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -459,7 +459,7 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -470,7 +470,7 @@ export const defaultData = [
     name: 'Lillian Anderson',
     userName: 'Cyrus_Hettinger',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Aletha_Waters87@gmail.com',
     dueDate: '2023-12-29T04:41:54.007Z',
     amount: '196.00',
@@ -482,7 +482,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -493,7 +493,7 @@ export const defaultData = [
     name: 'Connie Braun',
     userName: 'Ramona99',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     email: 'Mervin.Rutherford@hotmail.com',
     dueDate: '2024-12-27T21:39:17.142Z',
     amount: '384.00',
@@ -505,7 +505,7 @@ export const defaultData = [
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -514,7 +514,7 @@ export const defaultData = [
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -523,10 +523,11 @@ export const defaultData = [
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
     ],
   },
 ];
+

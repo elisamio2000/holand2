@@ -18,6 +18,11 @@ function isNotFound(error: unknown): boolean {
   return status === 404;
 }
 
+function isFallbackEligible(error: unknown): boolean {
+  const status = (error as { response?: { status?: number } })?.response?.status;
+  return status === 404 || status === 403 || status === 422;
+}
+
 interface BackendRecommendationItem {
   title: string;
   title_fa: string;
@@ -129,7 +134,7 @@ async function fetchGeneratedReportBySession(sessionId: string): Promise<Generat
     const res = await gatewayClient.get<GeneratedReportResponse>(`/reports/by-session/${sessionId}`);
     return res.data;
   } catch (bySessionError: unknown) {
-    if (!isNotFound(bySessionError)) throw bySessionError;
+    if (!isFallbackEligible(bySessionError)) throw bySessionError;
   }
   const fallback = await gatewayClient.get<GeneratedReportResponse>(`/reports/${sessionId}`);
   return fallback.data;

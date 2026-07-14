@@ -21,7 +21,7 @@ export const INVOICE_TABLE_DEFAULT_DATA = [
 export const INVOICE_BUILDER_DEFAULT_VALUE = {
   documentTitle: 'INVOICE',
   company: {
-    name: 'RedQ Tech',
+    name: 'Holand Platform',
   },
   client: {
     name: 'Jhon Doe',

@@ -261,7 +261,7 @@ export const routes = {
     dashboard: '/crm',
   },
   affiliate: {
-    dashboard: '/logo.png',
+    dashboard: '/affiliate',
   },
   executive: {
     dashboard: '/executive',

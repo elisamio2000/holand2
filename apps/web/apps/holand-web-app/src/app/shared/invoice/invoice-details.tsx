@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
@@ -140,7 +140,7 @@ export default function InvoiceDetails() {
             From
           </Title>
           <Text className="mb-1.5 text-sm font-semibold uppercase">
-            REDQ, INC
+            HOLAND PLATFORM
           </Text>
           <Text className="mb-1.5">Jerome Bell</Text>
           <Text className="mb-1.5">
@@ -174,7 +174,7 @@ export default function InvoiceDetails() {
 
         <div className="mt-4 flex sm:mt-6 md:mt-0 md:justify-end">
           <QRCodeSVG
-            value="/logo.png"
+            value="/brand/brand-mark-4x.svg"
             className="h-28 w-28 lg:h-32 lg:w-32"
           />
         </div>
@@ -228,3 +228,4 @@ export default function InvoiceDetails() {
     </div>
   );
 }
+

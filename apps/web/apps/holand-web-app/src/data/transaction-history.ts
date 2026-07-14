@@ -52,7 +52,7 @@ export const transactionHistory = [
     user: {
       name: 'Johnnie Kassulke',
       email: 'johnnie.kassulke@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -71,7 +71,7 @@ export const transactionHistory = [
     user: {
       name: 'Dr. Marcos McGlynn',
       email: 'marcos@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -90,7 +90,7 @@ export const transactionHistory = [
     user: {
       name: 'Omar Haag',
       email: 'omar@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -109,7 +109,7 @@ export const transactionHistory = [
     user: {
       name: 'Susie Beatty',
       email: 'susie@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -129,7 +129,7 @@ export const transactionHistory = [
     user: {
       name: 'Kristie Ziemann',
       email: 'kristie@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -148,7 +148,7 @@ export const transactionHistory = [
     user: {
       name: 'Johnnie Kassulke',
       email: 'johnnie.kassulke@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -167,7 +167,7 @@ export const transactionHistory = [
     user: {
       name: 'Dr. Marcos McGlynn',
       email: 'marcos@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -186,7 +186,7 @@ export const transactionHistory = [
     user: {
       name: 'Omar Haag',
       email: 'omar@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -205,7 +205,7 @@ export const transactionHistory = [
     user: {
       name: 'Susie Beatty',
       email: 'susie@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -224,7 +224,7 @@ export const transactionHistory = [
     user: {
       name: 'Kristie Ziemann',
       email: 'kristie@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -243,7 +243,7 @@ export const transactionHistory = [
     user: {
       name: 'Johnnie Kassulke',
       email: 'johnnie.kassulke@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -262,7 +262,7 @@ export const transactionHistory = [
     user: {
       name: 'Dr. Marcos McGlynn',
       email: 'marcos@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -281,7 +281,7 @@ export const transactionHistory = [
     user: {
       name: 'Omar Haag',
       email: 'omar@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -300,7 +300,7 @@ export const transactionHistory = [
     user: {
       name: 'Susie Beatty',
       email: 'susie@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -319,7 +319,7 @@ export const transactionHistory = [
     user: {
       name: 'Kristie Ziemann',
       email: 'kristie@example.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -334,3 +334,4 @@ export const transactionHistory = [
     },
   },
 ];
+

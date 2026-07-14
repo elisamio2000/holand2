@@ -2,7 +2,7 @@
   {
     id: 1,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Classic Casio Watch',
     description: 'Watch',
     price: '$1,290.00',
@@ -11,7 +11,7 @@
   {
     id: 2,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'New Wireless Headphone',
     description: 'Apple Headphone',
     price: '$1000.00',
@@ -20,7 +20,7 @@
   {
     id: 3,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Marc Jacob’s Decadent',
     description: 'Home Decor',
     price: '$220.00',
@@ -29,7 +29,7 @@
   {
     id: 4,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Classic Heels For Women',
     description: 'Gadgets',
     price: '$150.90',
@@ -38,7 +38,7 @@
   {
     id: 5,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Apple Watch Strap',
     description: 'Accessories',
     price: '$20.00',
@@ -47,7 +47,7 @@
   {
     id: 6,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Nike Air SHoe',
     description: 'Fashion',
     price: '$220.00',
@@ -56,7 +56,7 @@
   {
     id: 7,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Shoes',
     description: 'Fashion',
     price: '$150.90',
@@ -65,7 +65,7 @@
   {
     id: 8,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Perfume',
     description: 'Fashion',
     price: '$70.00',
@@ -77,7 +77,7 @@ export const topProductList = [
   {
     id: 1,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Casio Watch',
     description: 'Watch',
     price: '$1,290.00',
@@ -86,7 +86,7 @@ export const topProductList = [
   {
     id: 2,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Apple Headphone',
     description: 'Apple Headphone',
     price: '$1000.00',
@@ -95,7 +95,7 @@ export const topProductList = [
   {
     id: 3,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Marc Decadent',
     description: 'Home Decor',
     price: '$220.00',
@@ -104,7 +104,7 @@ export const topProductList = [
   {
     id: 4,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Classic Heels',
     description: 'Gadgets',
     price: '$150.90',
@@ -113,7 +113,7 @@ export const topProductList = [
   {
     id: 5,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Apple Watch',
     description: 'Accessories',
     price: '$20.00',
@@ -122,7 +122,7 @@ export const topProductList = [
   {
     id: 6,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Nike Air SHoe',
     description: 'Fashion',
     price: '$220.00',
@@ -131,10 +131,11 @@ export const topProductList = [
   {
     id: 7,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Blue Jacket',
     description: 'Fashion',
     price: '$150.90',
     rating: [4, 4.5, 5],
   },
 ];
+

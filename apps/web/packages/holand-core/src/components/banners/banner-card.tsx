@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import { Title } from 'rizzui';
 import cn from '../../utils/class-names';
 
@@ -23,7 +23,7 @@ export default function BannerCard({
         src={
           bgImage
             ? bgImage
-            : '/logo.png'
+            : '/brand/brand-mark-4x.svg'
         }
         alt="Upgrade Storage"
         fill
@@ -39,3 +39,4 @@ export default function BannerCard({
     </div>
   );
 }
+

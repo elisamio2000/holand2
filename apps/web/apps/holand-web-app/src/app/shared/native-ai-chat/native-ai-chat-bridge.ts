@@ -2,14 +2,21 @@
 // Native AI chat — header ↔ floating panel bridge
 // ============================================
 
-export const NATIVE_AI_CHAT_PANEL_STATE_EVENT = 'native-ai-chat:panel-state';
-export const NATIVE_AI_CHAT_TOGGLE_EVENT = 'native-ai-chat:toggle-panel';
-export const NATIVE_AI_CHAT_MINIMIZE_EVENT = 'native-ai-chat:minimize-panel';
+export const CONTEXTUAL_ASSISTANT_PANEL_STATE_EVENT = 'contextual-assistant:panel-state';
+export const CONTEXTUAL_ASSISTANT_TOGGLE_EVENT = 'contextual-assistant:toggle-panel';
+export const CONTEXTUAL_ASSISTANT_MINIMIZE_EVENT = 'contextual-assistant:minimize-panel';
 /** @deprecated Use panel-state / toggle events */
-export const NATIVE_AI_CHAT_VISIBILITY_EVENT = 'native-ai-chat:launcher-visibility';
-export const NATIVE_AI_CHAT_OPEN_EVENT = 'native-ai-chat:open-panel';
+export const CONTEXTUAL_ASSISTANT_VISIBILITY_EVENT = 'contextual-assistant:launcher-visibility';
+export const CONTEXTUAL_ASSISTANT_OPEN_EVENT = 'contextual-assistant:open-panel';
 
-export type NativeAiChatSurface =
+// Backward-compatible aliases for existing imports during migration.
+export const NATIVE_AI_CHAT_PANEL_STATE_EVENT = CONTEXTUAL_ASSISTANT_PANEL_STATE_EVENT;
+export const NATIVE_AI_CHAT_TOGGLE_EVENT = CONTEXTUAL_ASSISTANT_TOGGLE_EVENT;
+export const NATIVE_AI_CHAT_MINIMIZE_EVENT = CONTEXTUAL_ASSISTANT_MINIMIZE_EVENT;
+export const NATIVE_AI_CHAT_VISIBILITY_EVENT = CONTEXTUAL_ASSISTANT_VISIBILITY_EVENT;
+export const NATIVE_AI_CHAT_OPEN_EVENT = CONTEXTUAL_ASSISTANT_OPEN_EVENT;
+
+export type ContextualAssistantSurface =
   | 'general'
   | 'file_explorer'
   | 'offline_map'
@@ -19,7 +26,9 @@ export type NativeAiChatSurface =
   | 'graph_visual_explorer'
   | 'messages';
 
-export type NativeAiChatAnchorRect = {
+export type NativeAiChatSurface = ContextualAssistantSurface;
+
+export type ContextualAssistantAnchorRect = {
   left: number;
   top: number;
   right: number;
@@ -28,28 +37,34 @@ export type NativeAiChatAnchorRect = {
   height: number;
 };
 
-export type NativeAiChatPanelStateDetail = {
+export type NativeAiChatAnchorRect = ContextualAssistantAnchorRect;
+
+export type ContextualAssistantPanelStateDetail = {
   surface: string;
   open: boolean;
   fabPinned: boolean;
 };
 
-export function dispatchNativeAiChatPanelState(
+export type NativeAiChatPanelStateDetail = ContextualAssistantPanelStateDetail;
+
+export function dispatchContextualAssistantPanelState(
   surface: string,
   open: boolean,
   fabPinned: boolean
 ): void {
   if (typeof window === 'undefined') return;
   window.dispatchEvent(
-    new CustomEvent<NativeAiChatPanelStateDetail>(NATIVE_AI_CHAT_PANEL_STATE_EVENT, {
+    new CustomEvent<ContextualAssistantPanelStateDetail>(CONTEXTUAL_ASSISTANT_PANEL_STATE_EVENT, {
       detail: { surface, open, fabPinned },
     })
   );
 }
 
-export function requestNativeAiChatToggle(
-  surface: NativeAiChatSurface,
-  anchorRect?: NativeAiChatAnchorRect | DOMRect | null
+export const dispatchNativeAiChatPanelState = dispatchContextualAssistantPanelState;
+
+export function requestContextualAssistantToggle(
+  surface: ContextualAssistantSurface,
+  anchorRect?: ContextualAssistantAnchorRect | DOMRect | null
 ): void {
   if (typeof window === 'undefined') return;
   const rect = anchorRect
@@ -63,20 +78,24 @@ export function requestNativeAiChatToggle(
       }
     : undefined;
   window.dispatchEvent(
-    new CustomEvent(NATIVE_AI_CHAT_TOGGLE_EVENT, { detail: { surface, anchorRect: rect } })
+    new CustomEvent(CONTEXTUAL_ASSISTANT_TOGGLE_EVENT, { detail: { surface, anchorRect: rect } })
   );
 }
 
-export function requestNativeAiChatMinimize(surface: NativeAiChatSurface): void {
+export const requestNativeAiChatToggle = requestContextualAssistantToggle;
+
+export function requestContextualAssistantMinimize(surface: ContextualAssistantSurface): void {
   if (typeof window === 'undefined') return;
   window.dispatchEvent(
-    new CustomEvent(NATIVE_AI_CHAT_MINIMIZE_EVENT, { detail: { surface } })
+    new CustomEvent(CONTEXTUAL_ASSISTANT_MINIMIZE_EVENT, { detail: { surface } })
   );
 }
 
-export function requestNativeAiChatOpen(
-  surface: NativeAiChatSurface,
-  anchorRect?: NativeAiChatAnchorRect | DOMRect | null
+export const requestNativeAiChatMinimize = requestContextualAssistantMinimize;
+
+export function requestContextualAssistantOpen(
+  surface: ContextualAssistantSurface,
+  anchorRect?: ContextualAssistantAnchorRect | DOMRect | null
 ): void {
   if (typeof window === 'undefined') return;
   const rect = anchorRect
@@ -90,14 +109,31 @@ export function requestNativeAiChatOpen(
       }
     : undefined;
   window.dispatchEvent(
-    new CustomEvent(NATIVE_AI_CHAT_OPEN_EVENT, { detail: { surface, anchorRect: rect } })
+    new CustomEvent(CONTEXTUAL_ASSISTANT_OPEN_EVENT, { detail: { surface, anchorRect: rect } })
   );
 }
 
-const fabPinnedKey = (surface: string) => `nativeAiChat.fabPinned.${surface}`;
-const hiddenKey = (surface: string) => `nativeAiChat.hidden.${surface}`;
-const fabPosKey = (surface: string) => `nativeAiChat.fabPos.${surface}`;
-const panelSizeKey = (surface: string) => `nativeAiChat.panelSize.${surface}`;
+export const requestNativeAiChatOpen = requestContextualAssistantOpen;
+
+const newFabPinnedKey = (surface: string) => `contextualAssistant.fabPinned.${surface}`;
+const newHiddenKey = (surface: string) => `contextualAssistant.hidden.${surface}`;
+const newFabPosKey = (surface: string) => `contextualAssistant.fabPos.${surface}`;
+const newPanelSizeKey = (surface: string) => `contextualAssistant.panelSize.${surface}`;
+const legacyFabPinnedKey = (surface: string) => `nativeAiChat.fabPinned.${surface}`;
+const legacyHiddenKey = (surface: string) => `nativeAiChat.hidden.${surface}`;
+const legacyFabPosKey = (surface: string) => `nativeAiChat.fabPos.${surface}`;
+const legacyPanelSizeKey = (surface: string) => `nativeAiChat.panelSize.${surface}`;
+
+function readWithLegacyFallback(primaryKey: string, legacyKey: string): string | null {
+  if (typeof window === 'undefined') return null;
+  const next = window.localStorage.getItem(primaryKey);
+  if (next != null) return next;
+  const legacy = window.localStorage.getItem(legacyKey);
+  if (legacy != null) {
+    window.localStorage.setItem(primaryKey, legacy);
+  }
+  return legacy;
+}
 
 /** Default floating panel size (px). */
 export const NATIVE_PANEL_DEFAULT_SIZE = { width: 420, height: 560 } as const;
@@ -124,7 +160,7 @@ export function clampNativePanelSize(
 export function readPanelSize(surface: string): NativePanelSize | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = window.localStorage.getItem(panelSizeKey(surface));
+    const raw = readWithLegacyFallback(newPanelSizeKey(surface), legacyPanelSizeKey(surface));
     if (!raw) return null;
     const p = JSON.parse(raw) as NativePanelSize;
     if (typeof p.width !== 'number' || typeof p.height !== 'number') return null;
@@ -141,13 +177,13 @@ export function writePanelSize(surface: string, size: NativePanelSize): void {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const clamped = clampNativePanelSize(size.width, size.height, vw, vh);
-  window.localStorage.setItem(panelSizeKey(surface), JSON.stringify(clamped));
+  window.localStorage.setItem(newPanelSizeKey(surface), JSON.stringify(clamped));
 }
 
 /** When true, the draggable FAB is shown while the panel is closed. */
 export function readFabPinned(surface: string): boolean {
   if (typeof window === 'undefined') return false;
-  const raw = window.localStorage.getItem(fabPinnedKey(surface));
+  const raw = readWithLegacyFallback(newFabPinnedKey(surface), legacyFabPinnedKey(surface));
   if (raw === '1') return true;
   if (raw === '0') return false;
   if (readLauncherHidden(surface)) return false;
@@ -158,23 +194,24 @@ export function readFabPinned(surface: string): boolean {
 
 export function writeFabPinned(surface: string, pinned: boolean): void {
   if (typeof window === 'undefined') return;
-  window.localStorage.setItem(fabPinnedKey(surface), pinned ? '1' : '0');
-  window.localStorage.removeItem(hiddenKey(surface));
+  window.localStorage.setItem(newFabPinnedKey(surface), pinned ? '1' : '0');
+  window.localStorage.removeItem(newHiddenKey(surface));
 }
 
 /** @deprecated Legacy hide flag — migrated to fabPinned */
 export function readLauncherHidden(surface: string): boolean {
   if (typeof window === 'undefined') return false;
-  return window.localStorage.getItem(hiddenKey(surface)) === '1';
+  const raw = readWithLegacyFallback(newHiddenKey(surface), legacyHiddenKey(surface));
+  return raw === '1';
 }
 
 /** @deprecated */
 export function writeLauncherHidden(surface: string, hidden: boolean): void {
   if (typeof window === 'undefined') return;
-  if (hidden) window.localStorage.setItem(hiddenKey(surface), '1');
-  else window.localStorage.removeItem(hiddenKey(surface));
+  if (hidden) window.localStorage.setItem(newHiddenKey(surface), '1');
+  else window.localStorage.removeItem(newHiddenKey(surface));
   window.dispatchEvent(
-    new CustomEvent(NATIVE_AI_CHAT_VISIBILITY_EVENT, { detail: { surface, hidden } })
+    new CustomEvent(CONTEXTUAL_ASSISTANT_VISIBILITY_EVENT, { detail: { surface, hidden } })
   );
 }
 
@@ -183,7 +220,7 @@ export type FabPos = { left: number; top: number };
 export function readFabPosition(surface: string): FabPos | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = window.localStorage.getItem(fabPosKey(surface));
+    const raw = readWithLegacyFallback(newFabPosKey(surface), legacyFabPosKey(surface));
     if (!raw) return null;
     const p = JSON.parse(raw) as FabPos;
     if (typeof p.left !== 'number' || typeof p.top !== 'number') return null;
@@ -195,7 +232,7 @@ export function readFabPosition(surface: string): FabPos | null {
 
 export function writeFabPosition(surface: string, pos: FabPos): void {
   if (typeof window === 'undefined') return;
-  window.localStorage.setItem(fabPosKey(surface), JSON.stringify(pos));
+  window.localStorage.setItem(newFabPosKey(surface), JSON.stringify(pos));
 }
 
 export function clampFabPosition(
@@ -212,7 +249,7 @@ export function clampFabPosition(
 }
 
 /** Map pathname → surface id for header toggle (longest prefix wins). */
-export function surfaceFromPathname(pathname: string | null): NativeAiChatSurface | null {
+export function contextualAssistantSurfaceFromPathname(pathname: string | null): ContextualAssistantSurface | null {
   if (!pathname) return null;
   if (pathname === '/file-explorer' || pathname.startsWith('/file-explorer/')) {
     return 'file_explorer';
@@ -249,5 +286,10 @@ export function surfaceFromPathname(pathname: string | null): NativeAiChatSurfac
 
 /** Surface for the current page — contextual id or `general` fallback for header/panel. */
 export function resolveNativeAiChatSurface(pathname: string | null): NativeAiChatSurface {
-  return surfaceFromPathname(pathname) ?? 'general';
+  return contextualAssistantSurfaceFromPathname(pathname) ?? 'general';
+}
+
+export const surfaceFromPathname = contextualAssistantSurfaceFromPathname;
+export function resolveContextualAssistantSurface(pathname: string | null): ContextualAssistantSurface {
+  return contextualAssistantSurfaceFromPathname(pathname) ?? 'general';
 }

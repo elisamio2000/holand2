@@ -6,13 +6,13 @@ export const metadata = {
 };
 
 const links = [
-  { href: '/career-guidance/assessments', label: 'Assessment Engine' },
+  { href: '/career-guidance/assessments', label: 'مرکز آزمون‌ها' },
   { href: '/career-guidance/assessments/start', label: 'شروع آزمون جدید' },
   { href: '/career-guidance/assessments/history', label: 'تاریخچه آزمون‌های من' },
-  { href: '/career-guidance/reports', label: 'Reporting & Interpretation' },
+  { href: '/career-guidance/reports', label: 'گزارش و تفسیر' },
   { href: '/career-guidance/counselor', label: 'داشبورد مشاور' },
-  { href: '/career-guidance/expert-lab', label: 'Assessment Authoring Console' },
-  { href: '/career-guidance/analytics', label: 'Funnel Analytics' },
+  { href: '/career-guidance/expert-lab', label: 'آزمایشگاه محتوا' },
+  { href: '/career-guidance/analytics', label: 'تحلیل قیف' },
 ];
 
 export default function CareerGuidanceModulePage() {

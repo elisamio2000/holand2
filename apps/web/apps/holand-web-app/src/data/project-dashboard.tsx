@@ -1,4 +1,4 @@
-import { createId } from '@paralleldrive/cuid2';
+﻿import { createId } from '@paralleldrive/cuid2';
 import SuitcaseIcon from '@core/components/icons/suit-case';
 import CheckCircleIcon from '@core/components/icons/check-circle';
 import HourGlassRoundIcon from '@core/components/icons/hour-glass-round';
@@ -119,7 +119,7 @@ export const ACTIVITIES_COLORS = ['#3AA6B9', '#365486'];
 export const clientList = [
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Gina Vanleuven',
     address: 'USA',
     workType: 'AI App Development',
@@ -127,7 +127,7 @@ export const clientList = [
   },
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Albert Flores',
     address: 'London',
     workType: 'AI App Development',
@@ -135,7 +135,7 @@ export const clientList = [
   },
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Matte Hannery',
     address: 'Spain',
     workType: 'AI App Development',
@@ -143,7 +143,7 @@ export const clientList = [
   },
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Bucky Robert',
     address: 'Canada',
     workType: 'AI App Development',
@@ -151,7 +151,7 @@ export const clientList = [
   },
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Albert Flores',
     address: 'London',
     workType: 'AI App Development',
@@ -159,7 +159,7 @@ export const clientList = [
   },
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Matte Hannery',
     address: 'Spain',
     workType: 'AI App Development',
@@ -167,7 +167,7 @@ export const clientList = [
   },
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Bucky Robert',
     address: 'Canada',
     workType: 'AI App Development',
@@ -175,7 +175,7 @@ export const clientList = [
   },
   {
     id: createId(),
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Albert Flores',
     address: 'London',
     workType: 'AI App Development',
@@ -550,3 +550,4 @@ export const activeTaskViewOptions = [
     value: 'month',
   },
 ];
+

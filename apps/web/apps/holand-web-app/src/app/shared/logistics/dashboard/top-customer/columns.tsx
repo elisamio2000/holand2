@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import { Text, Checkbox, Flex } from 'rizzui';
@@ -74,7 +74,7 @@ export const topCustomersColumns = [
               quality={100}
               alt={`${name} Flag icon`}
               className="object-contain"
-              src={`/logo.png)}.svg`}
+              src={`/brand/brand-mark-4x.svg)}.svg`}
               sizes="(max-width: 768px) 100vw"
             />
           </figure>
@@ -94,3 +94,4 @@ export const topCustomersColumns = [
     ),
   }),
 ];
+

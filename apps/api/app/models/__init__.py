@@ -1,15 +1,20 @@
 """ORM models package. Import all model modules so Base.metadata is fully populated."""
 
+from .ai_provider import AIProviderConfig, LLMPromptTemplate, SessionAIReport
 from .analytics import FunnelEvent
 from .base import Base, TimestampMixin, new_uuid
 from .counselor_assignment import CounselorAssignment
 from .expert_lab import ContentDraft, ContentKind, ContentVersion, DraftStatus
 from .recommendation_quality import RecommendationFeedback
+from .session import AssessmentSession, SessionAnswer, SessionResult
 
 __all__ = [
     "Base",
     "TimestampMixin",
     "new_uuid",
+    "AIProviderConfig",
+    "LLMPromptTemplate",
+    "SessionAIReport",
     "FunnelEvent",
     "CounselorAssignment",
     "ContentDraft",
@@ -17,4 +22,7 @@ __all__ = [
     "ContentVersion",
     "DraftStatus",
     "RecommendationFeedback",
+    "AssessmentSession",
+    "SessionAnswer",
+    "SessionResult",
 ]

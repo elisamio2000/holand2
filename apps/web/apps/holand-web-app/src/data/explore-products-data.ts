@@ -3,11 +3,11 @@
     city: 'Surprise',
     country: 'Aland Islands',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -25,11 +25,11 @@
     city: 'North Traceburgh',
     country: 'Isle of Man',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -47,11 +47,11 @@
     city: 'Watsicaville',
     country: 'Samoa',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -69,11 +69,11 @@
     city: 'Brentwood',
     country: 'Ireland',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -91,11 +91,11 @@
     city: 'New Rochelle',
     country: 'Switzerland',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -113,11 +113,11 @@
     city: 'South Elouise',
     country: 'Cambodia',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -135,11 +135,11 @@
     city: 'Reillyland',
     country: 'Chile',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -157,11 +157,11 @@
     city: 'Port Barrettfield',
     country: 'Antarctica',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -179,11 +179,11 @@
     city: 'Fort Edytheworth',
     country: 'Suriname',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -201,11 +201,11 @@
     city: 'Amieville',
     country: 'Bonaire, Sint Eustatius and Saba',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -223,11 +223,11 @@
     city: 'New Kianfield',
     country: 'Taiwan',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -245,11 +245,11 @@
     city: 'Faheyberg',
     country: 'New Zealand',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -267,11 +267,11 @@
     city: 'Carletonberg',
     country: 'Namibia',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -289,11 +289,11 @@
     city: 'Alecmouth',
     country: 'Panama',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 363,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -311,11 +311,11 @@
     city: 'New Henryport',
     country: 'Cook Islands',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -333,11 +333,11 @@
     city: 'Jordiland',
     country: 'India',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 363,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -355,11 +355,11 @@
     city: 'New Cletus',
     country: 'Togo',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -377,11 +377,11 @@
     city: 'Port Arden',
     country: 'Congo',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -399,11 +399,11 @@
     city: 'Gastonfield',
     country: 'Austria',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -421,11 +421,11 @@
     city: 'Hopeview',
     country: 'Egypt',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -443,11 +443,11 @@
     city: 'Konopelskicester',
     country: 'Equatorial Guinea',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -465,11 +465,11 @@
     city: 'Fort Myrtleview',
     country: 'Palau',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -487,11 +487,11 @@
     city: 'Fort Creolaside',
     country: 'Djibouti',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -509,11 +509,11 @@
     city: 'Kilbackboro',
     country: 'Azerbaijan',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -531,11 +531,11 @@
     city: 'Lavonland',
     country: 'Germany',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -553,11 +553,11 @@
     city: 'Blaine',
     country: 'Papua New Guinea',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -575,11 +575,11 @@
     city: 'Lake Darbyshire',
     country: "Cote d'Ivoire",
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -597,11 +597,11 @@
     city: 'Schowalterburgh',
     country: 'Heard Island and McDonald Islands',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -619,11 +619,11 @@
     city: 'Loveland',
     country: 'Pakistan',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -641,11 +641,11 @@
     city: 'DuBuquestad',
     country: 'Zimbabwe',
     thumbnail: {
-      src: '/logo.png',
+      src: '/brand/brand-mark-4x.svg',
       height: 300,
       width: 364,
       blurDataURL:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
       blurWidth: 8,
       blurHeight: 7,
     },
@@ -660,3 +660,4 @@
     tag: 'Plus',
   },
 ];
+

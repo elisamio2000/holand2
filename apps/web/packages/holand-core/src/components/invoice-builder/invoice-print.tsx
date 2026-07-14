@@ -183,7 +183,7 @@ export const InvoicePrint = forwardRef<HTMLDivElement, InvoicePrintProps>(
             </table>
             {/* powered by section  */}
             <div className="fixed bottom-4 start-0 mt-6 w-full border-t border-muted pt-4 text-center text-gray-900 dark:text-gray-0">
-              Powered By <span className="font-bold">REDQ</span>
+              Powered By <span className="font-bold">Holand</span>
             </div>
             {/* footer gap for every page break end */}
           </div>

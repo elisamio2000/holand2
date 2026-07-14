@@ -2,8 +2,9 @@
 // Assessment History Store (Zustand)
 // Tracks a lightweight local record of assessment sessions the current
 // browser/user has started or completed, persisted to localStorage. Used by
-// the "My Assessments" history page (and as a fallback source when the
-// backend history endpoint isn't available yet).
+// the "My Assessments" history page as a fallback when the backend is
+// unavailable, and as the source for ageBand / progressPercent (fields the
+// backend does not store).
 // ============================================
 
 'use client';
@@ -15,6 +16,8 @@ import type { AssessmentHistoryItem } from '@/types/assessment.types';
 interface AssessmentHistoryState {
   entries: AssessmentHistoryItem[];
   upsertEntry: (entry: AssessmentHistoryItem) => void;
+  /** Remove all entries for sessions no longer present in the backend list. */
+  pruneToIds: (keepIds: Set<string>) => void;
 }
 
 export const useAssessmentHistoryStore = create<AssessmentHistoryState>()(
@@ -31,6 +34,13 @@ export const useAssessmentHistoryStore = create<AssessmentHistoryState>()(
         const next = [...existing];
         next[index] = { ...next[index], ...entry };
         set({ entries: next });
+      },
+      pruneToIds(keepIds) {
+        const current = get().entries;
+        const pruned = current.filter((e) => keepIds.has(e.sessionId));
+        if (pruned.length !== current.length) {
+          set({ entries: pruned });
+        }
       },
     }),
     { name: 'holand-assessment-history' }

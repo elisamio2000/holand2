@@ -60,7 +60,7 @@ export default function ProjectTaskList({ className }: { className?: string }) {
         <div className="@[90rem]:grow">
           <div>
             <Title as="h3" className="font-inter text-base font-semibold">
-              Creating Ai assistant project workspace
+              Creating Holand project workspace
             </Title>
             <Text>UI /UX Designer</Text>
 

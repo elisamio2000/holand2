@@ -467,6 +467,38 @@ export function AssessmentAuthoringDashboard() {
     );
   }
 
+  if (error) {
+    const isAuthError = error.toLowerCase().includes('401') || error.toLowerCase().includes('403') || error.toLowerCase().includes('unauthorized') || error.toLowerCase().includes('forbidden');
+    return (
+      <main className="mx-auto w-full max-w-7xl p-6 sm:p-8 lg:p-10">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-6 dark:border-red-800 dark:bg-red-950">
+          <h2 className="text-base font-semibold text-red-800 dark:text-red-200">
+            {isAuthError ? 'دسترسی رد شد (401/403)' : 'خطا در بارگذاری آزمایشگاه خبره'}
+          </h2>
+          <p className="mt-2 text-sm text-red-700 dark:text-red-300">
+            {isAuthError
+              ? 'شما دسترسی لازم برای مشاهده این بخش را ندارید. لطفاً با مدیر سیستم تماس بگیرید.'
+              : error}
+          </p>
+          {!isAuthError && (
+            <button
+              className="mt-4 rounded-md border border-red-300 px-4 py-2 text-sm text-red-700 hover:bg-red-100 dark:border-red-700 dark:text-red-300 dark:hover:bg-red-900"
+              onClick={() => {
+                setError(null);
+                setIsLoading(true);
+                refreshLists()
+                  .catch((err: unknown) => setError(toErrorMessage(err)))
+                  .finally(() => setIsLoading(false));
+              }}
+            >
+              تلاش مجدد
+            </button>
+          )}
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="mx-auto w-full max-w-7xl p-6 sm:p-8 lg:p-10">
       <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Assessment Authoring Console (Canonical)</h1>

@@ -1,4 +1,4 @@
-import { avatarIds } from '@core/utils/get-avatar';
+﻿import { avatarIds } from '@core/utils/get-avatar';
 import { getRandomArrayElement } from '@core/utils/get-random-array-element';
 
 export const PLAN = {
@@ -39,7 +39,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Thomas Kautzer',
       email: 'johanna26@gmail.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -105,7 +105,7 @@ export const recentCustomers = [
       fullName: 'Billie Blick',
       email: 'francis_stiedemann57@hotmail.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Professional',
     mrr: 279.5092791453935,
@@ -168,7 +168,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Mr. John Hoeger',
       email: 'evan_hudson@yahoo.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -234,7 +234,7 @@ export const recentCustomers = [
       fullName: 'Lynda White',
       email: 'janice_jacobi@hotmail.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Company',
     mrr: 514.4363453749102,
@@ -298,7 +298,7 @@ export const recentCustomers = [
       fullName: 'Madeline Cruickshank Jr.',
       email: 'kelsi.cruickshank@yahoo.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Team',
     mrr: 187.65266591124237,
@@ -361,7 +361,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Pauline Rath',
       email: 'mustafa.hagenes@yahoo.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -427,7 +427,7 @@ export const recentCustomers = [
       fullName: 'Constance Predovic',
       email: 'jamar_purdy22@yahoo.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Company',
     mrr: 213.32488414412364,
@@ -490,7 +490,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Ella Abbott',
       email: 'amaya.koepp90@gmail.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -556,7 +556,7 @@ export const recentCustomers = [
       fullName: "Jodi O'Reilly",
       email: 'name24@gmail.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Basic',
     mrr: 249.5680028880015,
@@ -619,7 +619,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Sheryl Konopelski',
       email: 'parker.harris@gmail.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -684,7 +684,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Tara Hoppe',
       email: 'alex_greenholt83@gmail.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -750,7 +750,7 @@ export const recentCustomers = [
       fullName: 'Mr. Kelvin Koelpin',
       email: 'vickie.pfeffer54@yahoo.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Professional',
     mrr: 759.8048285467084,
@@ -814,7 +814,7 @@ export const recentCustomers = [
       fullName: 'Corey Huels-Marvin',
       email: 'ricky16@hotmail.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Team',
     mrr: 436.5551588071976,
@@ -878,7 +878,7 @@ export const recentCustomers = [
       fullName: 'Leroy Schimmel',
       email: 'darien42@yahoo.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Team',
     mrr: 978.2360064478125,
@@ -941,7 +941,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Meghan Luettgen',
       email: 'titus.thiel19@hotmail.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -1006,7 +1006,7 @@ export const recentCustomers = [
     customer: {
       fullName: 'Jana Volkman-Nader',
       email: 'alva.jenkins@yahoo.com',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -1072,7 +1072,7 @@ export const recentCustomers = [
       fullName: 'Gary Marvin',
       email: 'herminio_dach@hotmail.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Company',
     mrr: 479.40014656540006,
@@ -1136,7 +1136,7 @@ export const recentCustomers = [
       fullName: 'Carol DuBuque',
       email: 'flavie.gorczany@yahoo.com',
       avatar:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     plan: 'Team',
     mrr: 137.8435483125504,
@@ -1195,3 +1195,4 @@ export const recentCustomers = [
     ],
   },
 ];
+

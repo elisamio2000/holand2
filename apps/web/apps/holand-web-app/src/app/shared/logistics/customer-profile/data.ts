@@ -9,7 +9,7 @@ import TurtleIcon from '@core/components/icons/turtle';
 import ShipWithContainer from '@core/components/icons/ship-with-container';
 
 export const customer = {
-  avatar: `/logo.png
+  avatar: `/brand/brand-mark-4x.svg
     avatarIds
   )}.png`,
   name: 'Irene Powlowski',
@@ -33,3 +33,4 @@ export const stats = [
   { icon: TurtleIcon, label: 'Late Delivery', value: 34 },
   { icon: MagnifyingGlassIconColor, label: 'Lost Shipment', value: 2 },
 ];
+

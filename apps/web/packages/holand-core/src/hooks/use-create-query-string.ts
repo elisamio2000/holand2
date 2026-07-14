@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 export function useCreateQueryString() {
   const searchParams = useSearchParams();
 
-  // example /logo.png
+  // example /brand/brand-mark-4x.svg
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
 
@@ -22,3 +22,4 @@ export function useCreateQueryString() {
 
   return { createQueryString };
 }
+

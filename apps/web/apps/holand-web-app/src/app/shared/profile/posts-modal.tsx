@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import ReactPlayer from 'react-player/lazy';
@@ -111,7 +111,7 @@ function ModalCardText() {
             name="Andrei Jackson"
             className="bg-[#F1A74F] tracking-wider text-white"
             initials="AJ"
-            src="/logo.png"
+            src="/brand/brand-mark-4x.svg"
           />
           <div>
             <Title as="h2" className="text-base text-gray-1000">
@@ -128,9 +128,9 @@ function ModalCardText() {
         </Button>
       </div>
       <Text className="py-5 text-sm leading-6 text-gray-500 dark:text-gray-1000 lg:py-7">
-        Hi 👋🏻😊 The passage experienced a surge in popularity during the 1960s
-        😜 when Leeriest used it on their dry-transfer sheets, and again during
-        the 90s 👋🏻😊 as desktop publishers bundled 😜 the text with their
+        Hi ðŸ‘‹ðŸ»ðŸ˜Š The passage experienced a surge in popularity during the 1960s
+        ðŸ˜œ when Leeriest used it on their dry-transfer sheets, and again during
+        the 90s ðŸ‘‹ðŸ»ðŸ˜Š as desktop publishers bundled ðŸ˜œ the text with their
         software.
       </Text>
       <div className="flex items-center justify-between gap-5 border-b border-b-gray-100 pb-6 dark:border-b-gray-400">
@@ -230,3 +230,4 @@ function LikeCounter() {
     </Button>
   );
 }
+

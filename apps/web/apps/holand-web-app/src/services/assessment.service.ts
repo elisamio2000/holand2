@@ -14,15 +14,7 @@ import type {
   SubmitAnswerRequest,
   TestType,
 } from '@/types/assessment.types';
-import {
-  buildMockHistory,
-  buildMockResult,
-  buildMockSession,
-  generateMockSessionId,
-} from './assessment-mock-data';
 import { useAssessmentHistoryStore } from '@/store/assessment-history.store';
-
-const mockSessions = new Map<string, AssessmentSession>();
 const sessionMeta = new Map<
   string,
   {
@@ -72,11 +64,6 @@ interface ApiSessionResultOut {
     certainty?: Record<string, number> | null;
   } | null;
   computed_at: string;
-}
-
-function isBackendUnavailable(error: unknown): boolean {
-  const status = (error as { response?: { status?: number } })?.response?.status;
-  return status === undefined || status === 404 || status === 501;
 }
 
 function mapApiQuestionToUi(question: ApiQuestion, testType: TestType, order: number): AssessmentQuestion {
@@ -174,50 +161,49 @@ function mapApiResultToUi(
 }
 
 export const assessmentService = {
-  async startSession(data: StartAssessmentRequest): Promise<AssessmentSession> {
-    try {
-      const res = await gatewayClient.post<ApiStartSessionOut>('/sessions/start', {
-        assessment_type: data.testType,
-      });
-      const api = res.data;
-      const mapped: AssessmentSession = {
-        sessionId: api.session_id,
-        testType: api.assessment_type,
-        ageBand: data.ageBand,
-        status: api.status,
-        totalQuestions: api.questions.length,
-        questions: api.questions.map((q, index) => mapApiQuestionToUi(q, api.assessment_type, index + 1)),
-        createdAt: api.started_at,
-      };
-      const optionLookup = new Map<string, Map<string, string>>();
-      for (const question of api.questions) {
-        const lookupByValue = new Map<string, string>();
-        for (const option of question.options) {
-          lookupByValue.set(String(option.id), option.id);
-          lookupByValue.set(String(option.value), option.id);
-        }
-        optionLookup.set(question.id, lookupByValue);
-      }
-      sessionMeta.set(mapped.sessionId, {
-        testType: mapped.testType,
-        ageBand: mapped.ageBand,
-        optionLookup,
-      });
-      return mapped;
-    } catch (error: unknown) {
-      if (!isBackendUnavailable(error)) throw error;
-      const sessionId = generateMockSessionId();
-      const session = buildMockSession(sessionId, data.testType, data.ageBand);
-      mockSessions.set(sessionId, session);
-      sessionMeta.set(sessionId, { testType: data.testType, ageBand: data.ageBand, optionLookup: new Map() });
-      return session;
+  resolveOptionId(sessionId: string, questionId: string, value: number | string): string {
+    const meta = sessionMeta.get(sessionId);
+    const optionId =
+      meta?.optionLookup.get(questionId)?.get(String(value)) ??
+      (typeof value === 'string' ? value : null);
+    if (!optionId) {
+      throw new Error(`Could not resolve option id for question ${questionId}`);
     }
+    return optionId;
+  },
+
+  async startSession(data: StartAssessmentRequest): Promise<AssessmentSession> {
+    const res = await gatewayClient.post<ApiStartSessionOut>('/sessions/start', {
+      assessment_type: data.testType,
+    });
+    const api = res.data;
+    const mapped: AssessmentSession = {
+      sessionId: api.session_id,
+      testType: api.assessment_type,
+      ageBand: data.ageBand,
+      status: api.status,
+      totalQuestions: api.questions.length,
+      questions: api.questions.map((q, index) => mapApiQuestionToUi(q, api.assessment_type, index + 1)),
+      createdAt: api.started_at,
+    };
+    const optionLookup = new Map<string, Map<string, string>>();
+    for (const question of api.questions) {
+      const lookupByValue = new Map<string, string>();
+      for (const option of question.options) {
+        lookupByValue.set(String(option.id), option.id);
+        lookupByValue.set(String(option.value), option.id);
+      }
+      optionLookup.set(question.id, lookupByValue);
+    }
+    sessionMeta.set(mapped.sessionId, {
+      testType: mapped.testType,
+      ageBand: mapped.ageBand,
+      optionLookup,
+    });
+    return mapped;
   },
 
   async getSession(sessionId: string): Promise<AssessmentSession> {
-    const cached = mockSessions.get(sessionId);
-    if (cached) return cached;
-
     const meta = sessionMeta.get(sessionId);
     if (!meta) {
       throw new Error('Session metadata not available for this client');
@@ -254,58 +240,89 @@ export const assessmentService = {
   },
 
   async submitAnswer(payload: SubmitAnswerRequest): Promise<{ accepted: true }> {
-    try {
-      const meta = sessionMeta.get(payload.sessionId);
-      const optionId =
-        meta?.optionLookup.get(payload.questionId)?.get(String(payload.value)) ??
-        (typeof payload.value === 'string' ? payload.value : null);
-      if (!optionId) {
-        throw new Error(`Could not resolve option id for question ${payload.questionId}`);
-      }
-      await gatewayClient.post(`/sessions/${payload.sessionId}/answers`, {
-        answers: [{ question_id: payload.questionId, option_id: optionId }],
-      });
-      return { accepted: true };
-    } catch (error: unknown) {
-      if (!isBackendUnavailable(error)) throw error;
-      return { accepted: true };
+    const optionId = this.resolveOptionId(payload.sessionId, payload.questionId, payload.value);
+    await gatewayClient.post(`/sessions/${payload.sessionId}/answers`, {
+      answers: [{ question_id: payload.questionId, option_id: optionId }],
+    });
+    return { accepted: true };
+  },
+
+  async submitAnswers(
+    sessionId: string,
+    answers: Array<{ questionId: string; value: number | string }>
+  ): Promise<{ accepted: true; sent: number }> {
+    if (!answers.length) {
+      return { accepted: true, sent: 0 };
     }
+
+    const payload = answers.map((answer) => ({
+      question_id: answer.questionId,
+      option_id: this.resolveOptionId(sessionId, answer.questionId, answer.value),
+    }));
+
+    await gatewayClient.post(`/sessions/${sessionId}/answers`, { answers: payload });
+    return { accepted: true, sent: payload.length };
   },
 
   async completeSession(sessionId: string): Promise<AssessmentResult> {
     const meta = sessionMeta.get(sessionId);
     if (!meta) {
-      const cached = mockSessions.get(sessionId);
-      return buildMockResult(sessionId, cached?.testType ?? 'combined', cached?.ageBand ?? '18-24');
+      throw new Error('Session metadata not available for completion');
     }
 
-    try {
-      const res = await gatewayClient.post<ApiSessionResultOut>(`/sessions/${sessionId}/complete`);
-      return mapApiResultToUi(res.data, meta.testType, meta.ageBand);
-    } catch (error: unknown) {
-      if (!isBackendUnavailable(error)) throw error;
-      return buildMockResult(sessionId, meta.testType, meta.ageBand);
-    }
+    const res = await gatewayClient.post<ApiSessionResultOut>(`/sessions/${sessionId}/complete`);
+    return mapApiResultToUi(res.data, meta.testType, meta.ageBand);
   },
 
   async getResult(sessionId: string): Promise<AssessmentResult> {
     const meta = sessionMeta.get(sessionId);
     if (!meta) {
-      const cached = mockSessions.get(sessionId);
-      return buildMockResult(sessionId, cached?.testType ?? 'combined', cached?.ageBand ?? '18-24');
+      throw new Error('Session metadata not available for result lookup');
     }
 
-    try {
-      const res = await gatewayClient.get<ApiSessionResultOut>(`/sessions/${sessionId}/result`);
-      return mapApiResultToUi(res.data, meta.testType, meta.ageBand);
-    } catch (error: unknown) {
-      if (!isBackendUnavailable(error)) throw error;
-      return buildMockResult(sessionId, meta.testType, meta.ageBand);
-    }
+    const res = await gatewayClient.get<ApiSessionResultOut>(`/sessions/${sessionId}/result`);
+    return mapApiResultToUi(res.data, meta.testType, meta.ageBand);
   },
 
   async listMySessions(): Promise<AssessmentHistoryItem[]> {
-    const local = useAssessmentHistoryStore.getState().entries;
-    return local.length ? local : buildMockHistory();
+    try {
+      const res = await gatewayClient.get<{
+        sessions: Array<{
+          session_id: string;
+          assessment_type: 'holland' | 'mbti' | 'combined';
+          status: 'in_progress' | 'completed' | 'abandoned';
+          top_code: string | null;
+          started_at: string;
+          completed_at: string | null;
+          answered_count: number;
+        }>;
+        total: number;
+        page: number;
+        limit: number;
+      }>('/sessions/my', { params: { limit: 100 } });
+
+      // Merge API data with localStorage for fields the backend doesn't store
+      // (ageBand, progressPercent). API is source of truth for status/top_code/dates.
+      const localEntries = useAssessmentHistoryStore.getState().entries;
+      const localMap = new Map(localEntries.map((e) => [e.sessionId, e]));
+
+      return res.data.sessions.map((s) => {
+        const local = localMap.get(s.session_id);
+        return {
+          sessionId: s.session_id,
+          testType: s.assessment_type,
+          ageBand: local?.ageBand ?? '18-24',
+          status: s.status,
+          progressPercent:
+            s.status === 'completed' ? 100 : local?.progressPercent ?? (s.answered_count > 0 ? 50 : 0),
+          topCode: s.top_code ?? local?.topCode,
+          startedAt: s.started_at,
+          completedAt: s.completed_at ?? local?.completedAt,
+        };
+      });
+    } catch {
+      // Fallback to localStorage on any error (offline, auth, network)
+      return useAssessmentHistoryStore.getState().entries;
+    }
   },
 };

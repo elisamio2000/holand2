@@ -2,7 +2,7 @@
   {
     id: 1,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -18,7 +18,7 @@
   {
     id: 2,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 295.0,
@@ -34,7 +34,7 @@
   {
     id: 3,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 295.0,
@@ -44,7 +44,7 @@
   {
     id: 4,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -60,7 +60,7 @@
   {
     id: 5,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -76,7 +76,7 @@
   {
     id: 6,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 295.0,
@@ -92,7 +92,7 @@
   {
     id: 7,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 295.0,
@@ -102,7 +102,7 @@
   {
     id: 8,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -118,7 +118,7 @@
   {
     id: 9,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -134,7 +134,7 @@
   {
     id: 10,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 295.0,
@@ -148,3 +148,4 @@
     ],
   },
 ];
+

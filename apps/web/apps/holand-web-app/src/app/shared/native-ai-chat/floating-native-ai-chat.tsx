@@ -561,7 +561,7 @@ export default function FloatingNativeAiChat({
         if (res.session_id && !dock.sessionId) {
           void dock.loadDock();
         }
-        const answer = (res.answer ?? '').trim() || t('nativeAiChat.emptyAnswerFallback');
+        const answer = (res.answer ?? '').trim() || t('contextualAssistant.emptyAnswerFallback');
         dock.setMessages((prev) => [
           ...prev,
           {
@@ -581,8 +581,8 @@ export default function FloatingNativeAiChat({
           detail = err.message;
         }
         const msg = detail.trim()
-          ? t('nativeAiChat.gatewayErrorWithDetail', { detail })
-          : t('nativeAiChat.gatewayError');
+          ? t('contextualAssistant.gatewayErrorWithDetail', { detail })
+          : t('contextualAssistant.gatewayError');
         dock.setMessages((prev) => [
           ...prev,
           {
@@ -621,8 +621,8 @@ export default function FloatingNativeAiChat({
     return null;
   }
 
-  const title = t(`nativeAiChat.surfaces.${surface}.title`);
-  const subtitle = t(`nativeAiChat.surfaces.${surface}.subtitle`);
+  const title = t(`contextualAssistant.surfaces.${surface}.title`);
+  const subtitle = t(`contextualAssistant.surfaces.${surface}.subtitle`);
   const showFab = fabPinned && !open;
 
   return (
@@ -656,7 +656,7 @@ export default function FloatingNativeAiChat({
             onPointerUp={handlePanelHeaderPointerUp}
             onPointerCancel={handlePanelHeaderPointerUp}
             style={{ touchAction: 'none' }}
-            aria-label={t('nativeAiChat.dragHandleAria')}
+            aria-label={t('contextualAssistant.dragHandleAria')}
           >
             <div className="flex min-w-0 flex-1 items-start gap-2 select-none">
               <div
@@ -682,13 +682,13 @@ export default function FloatingNativeAiChat({
                 onPointerDown={stopHeaderDrag}
               >
                 <PiArrowSquareOut className="me-1 h-3.5 w-3.5" />
-                <span className="hidden xs:inline">{t('nativeAiChat.openFullChat')}</span>
+                <span className="hidden xs:inline">{t('contextualAssistant.openFullChat')}</span>
               </Link>
-              <Tooltip content={t('nativeAiChat.minimizePanelTooltip')} placement="bottom">
+              <Tooltip content={t('contextualAssistant.minimizePanelTooltip')} placement="bottom">
                 <ActionIcon
                   variant="text"
                   size="sm"
-                  aria-label={t('nativeAiChat.minimizePanelTooltip')}
+                  aria-label={t('contextualAssistant.minimizePanelTooltip')}
                   className="cursor-pointer"
                   onPointerDown={stopHeaderDrag}
                   onClick={minimizePanel}
@@ -696,11 +696,11 @@ export default function FloatingNativeAiChat({
                   <PiArrowsInSimple className="h-4 w-4" />
                 </ActionIcon>
               </Tooltip>
-              <Tooltip content={t('nativeAiChat.closePanel')} placement="bottom">
+              <Tooltip content={t('contextualAssistant.closePanel')} placement="bottom">
                 <ActionIcon
                   variant="text"
                   size="sm"
-                  aria-label={t('nativeAiChat.closePanel')}
+                  aria-label={t('contextualAssistant.closePanel')}
                   className="cursor-pointer"
                   onPointerDown={stopHeaderDrag}
                   onClick={dismissPanel}
@@ -716,7 +716,7 @@ export default function FloatingNativeAiChat({
             onClick={() => setContextExpanded((v) => !v)}
             className="flex w-full items-center justify-between border-b border-muted/80 px-3 py-2 text-start text-xs text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-100/80"
           >
-            <span className="font-medium">{t('nativeAiChat.contextTitle')}</span>
+            <span className="font-medium">{t('contextualAssistant.contextTitle')}</span>
             {contextExpanded ? (
               <PiCaretUp className="h-3.5 w-3.5 shrink-0 text-gray-400" />
             ) : (
@@ -728,17 +728,17 @@ export default function FloatingNativeAiChat({
             <div className="max-h-[32vh] space-y-2 overflow-y-auto border-b border-muted/80 px-3 py-2 text-[11px] leading-relaxed">
               <div>
                 <span className="font-semibold text-gray-700 dark:text-gray-200">
-                  {t('nativeAiChat.contextPath')}
+                  {t('contextualAssistant.contextPath')}
                 </span>
                 <div className="mt-0.5 break-all rounded-md bg-gray-100 px-2 py-1 font-mono text-[10px] text-gray-600 dark:bg-gray-200/40 dark:text-gray-700">
                   {pathname}
                 </div>
               </div>
               <Textarea
-                label={t('nativeAiChat.noteLabel')}
+                label={t('contextualAssistant.noteLabel')}
                 value={userNote}
                 onChange={(e) => setUserNote(e.target.value)}
-                placeholder={t('nativeAiChat.notePlaceholder')}
+                placeholder={t('contextualAssistant.notePlaceholder')}
                 textareaClassName="min-h-[48px] resize-y text-xs"
               />
               <Button
@@ -747,7 +747,7 @@ export default function FloatingNativeAiChat({
                 className="h-8 w-full text-[11px]"
                 onClick={() => setPayloadPreviewOpen((v) => !v)}
               >
-                {payloadPreviewOpen ? t('nativeAiChat.hidePayload') : t('nativeAiChat.previewPayload')}
+                {payloadPreviewOpen ? t('contextualAssistant.hidePayload') : t('contextualAssistant.previewPayload')}
               </Button>
               {payloadPreviewOpen && (
                 <pre className="max-h-36 overflow-auto rounded-lg bg-gray-900/95 p-2 text-[9px] text-emerald-100/95">
@@ -756,7 +756,7 @@ export default function FloatingNativeAiChat({
               )}
               <Text className="text-[10px] text-gray-400">
                 Key: <span className="font-mono">{NATIVE_HOST_CONTEXT_KEY}</span> —{' '}
-                {t('nativeAiChat.previewHint')}
+                {t('contextualAssistant.previewHint')}
               </Text>
             </div>
           )}
@@ -771,7 +771,7 @@ export default function FloatingNativeAiChat({
               </Text>
             ) : dock.messages.length === 0 ? (
               <Text className="px-1 py-6 text-center text-xs text-gray-400">
-                {t('nativeAiChat.emptyHint')}
+                {t('contextualAssistant.emptyHint')}
               </Text>
             ) : (
               dock.messages.map((m) => (
@@ -799,7 +799,7 @@ export default function FloatingNativeAiChat({
                 onClick={handleNewConversation}
                 disabled={dock.isLoading || isSending}
               >
-                {t('nativeAiChat.newConversation')}
+                {t('contextualAssistant.newConversation')}
               </Button>
             </div>
             <ChatInput
@@ -814,8 +814,8 @@ export default function FloatingNativeAiChat({
 
           <div
             role="separator"
-            aria-label={t('nativeAiChat.resizeHandleAria')}
-            title={t('nativeAiChat.resizeHandleTooltip')}
+            aria-label={t('contextualAssistant.resizeHandleAria')}
+            title={t('contextualAssistant.resizeHandleTooltip')}
             onPointerDown={handleResizePointerDown}
             onPointerMove={handleResizePointerMove}
             onPointerUp={handleResizePointerUp}
@@ -838,7 +838,7 @@ export default function FloatingNativeAiChat({
           onPointerUp={handleFabPointerUp}
           onPointerCancel={handleFabPointerUp}
           aria-expanded={open}
-          aria-label={t('nativeAiChat.fabAria')}
+          aria-label={t('contextualAssistant.fabAria')}
           style={{
             position: 'fixed',
             left: fabPos.left,

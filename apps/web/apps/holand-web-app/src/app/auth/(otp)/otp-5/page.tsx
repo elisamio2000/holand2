@@ -24,7 +24,7 @@ export default function OtpPage() {
         <div className="relative mx-auto aspect-[1/1.015] w-[540px] xl:w-[600px] 2xl:w-[636px]">
           <Image
             src={
-              '/logo.png'
+              '/brand/brand-mark-4x.svg'
             }
             alt="Sign Up Thumbnail"
             fill
@@ -42,3 +42,4 @@ export default function OtpPage() {
     </AuthWrapperFive>
   );
 }
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Tooltip } from '@/components/tooltip';
 import cn from '@core/utils/class-names';
@@ -90,7 +90,7 @@ function TooltipContent() {
           size="sm"
           name="John Doe"
           className="ring-2 ring-blue ring-offset-2"
-          src="/logo.png"
+          src="/brand/brand-mark-4x.svg"
         />
         <Box>
           <Text className="text-base font-semibold">Fred Chaparro</Text>
@@ -98,7 +98,7 @@ function TooltipContent() {
         </Box>
       </Flex>
       <Box className="max-w-[240px] text-sm">
-        <Text>Data Analyst, love to work with Ai assistant 🎉 </Text>
+        <Text>Data Analyst, focused on career guidance workflows.</Text>
         <Box className="mt-3 inline-flex gap-3">
           <Text>
             <Text as="span" className="font-medium">
@@ -117,3 +117,4 @@ function TooltipContent() {
     </Box>
   );
 }
+

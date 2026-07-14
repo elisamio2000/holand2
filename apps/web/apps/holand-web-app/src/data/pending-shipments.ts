@@ -7,7 +7,7 @@ export const pendingShipments = [
     trackingNumber: '2836142156719869',
     recipient: {
       name: 'Guillermo McLaughlin',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -23,7 +23,7 @@ export const pendingShipments = [
     trackingNumber: '9101855999470240',
     recipient: {
       name: 'Orville Kub',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -39,7 +39,7 @@ export const pendingShipments = [
     trackingNumber: '5730109791363725',
     recipient: {
       name: 'Melanie Lehner',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -55,7 +55,7 @@ export const pendingShipments = [
     trackingNumber: '9020589695119416',
     recipient: {
       name: 'Diane Feest',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -71,7 +71,7 @@ export const pendingShipments = [
     trackingNumber: '4354944726670868',
     recipient: {
       name: 'Nellie Shields',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -87,7 +87,7 @@ export const pendingShipments = [
     trackingNumber: '9570666661812187',
     recipient: {
       name: 'Natasha Littel',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -103,7 +103,7 @@ export const pendingShipments = [
     trackingNumber: '7245042528066667',
     recipient: {
       name: 'Janis Daniel',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -119,7 +119,7 @@ export const pendingShipments = [
     trackingNumber: '1344996327496556',
     recipient: {
       name: 'Garry Kris',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -135,7 +135,7 @@ export const pendingShipments = [
     trackingNumber: '2932871000336745',
     recipient: {
       name: 'Frankie Altenwerth',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -151,7 +151,7 @@ export const pendingShipments = [
     trackingNumber: '2866736796234601',
     recipient: {
       name: 'Alyssa Howell',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -167,7 +167,7 @@ export const pendingShipments = [
     trackingNumber: '6793116155096416',
     recipient: {
       name: 'Miss Emily Swaniawski-Kohler',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -183,7 +183,7 @@ export const pendingShipments = [
     trackingNumber: '7628333446545045',
     recipient: {
       name: 'Bryan Larkin',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -199,7 +199,7 @@ export const pendingShipments = [
     trackingNumber: '6775091255474608',
     recipient: {
       name: 'Ms. Jodi Ferry',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -215,7 +215,7 @@ export const pendingShipments = [
     trackingNumber: '7000633712849244',
     recipient: {
       name: 'Bruce Kunde',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -231,7 +231,7 @@ export const pendingShipments = [
     trackingNumber: '9027492797713803',
     recipient: {
       name: 'Van Rath',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -247,7 +247,7 @@ export const pendingShipments = [
     trackingNumber: '1729936797792926',
     recipient: {
       name: 'Terrance Terry',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -263,7 +263,7 @@ export const pendingShipments = [
     trackingNumber: '1136263014660257',
     recipient: {
       name: 'Nathan Luettgen V',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -279,7 +279,7 @@ export const pendingShipments = [
     trackingNumber: '6958585054907520',
     recipient: {
       name: 'Kristen Thiel',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -295,7 +295,7 @@ export const pendingShipments = [
     trackingNumber: '1858874799025770',
     recipient: {
       name: 'Iris Wolf',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -311,7 +311,7 @@ export const pendingShipments = [
     trackingNumber: '3718889181897589',
     recipient: {
       name: 'Dr. Rosa Olson',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -327,7 +327,7 @@ export const pendingShipments = [
     trackingNumber: '5148530734362262',
     recipient: {
       name: 'Billie Hintz-Okuneva',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -343,7 +343,7 @@ export const pendingShipments = [
     trackingNumber: '5549474711684906',
     recipient: {
       name: 'Darin King',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -359,7 +359,7 @@ export const pendingShipments = [
     trackingNumber: '6456021141019555',
     recipient: {
       name: 'Elias Watsica',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -375,7 +375,7 @@ export const pendingShipments = [
     trackingNumber: '3227450359352529',
     recipient: {
       name: 'Billie Bartell',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -391,7 +391,7 @@ export const pendingShipments = [
     trackingNumber: '8953668019764301',
     recipient: {
       name: 'Erma Will',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -403,3 +403,4 @@ export const pendingShipments = [
     invoiceStatus: 'Pending',
   },
 ];
+

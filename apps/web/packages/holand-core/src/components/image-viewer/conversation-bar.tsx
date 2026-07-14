@@ -1,4 +1,4 @@
-import AvatarCard from "../../ui/avatar-card";
+﻿import AvatarCard from "../../ui/avatar-card";
 import { SmartTooltip as Tooltip } from '../../ui/smart-tooltip';
 import { ActionIcon, Button, Input, Text } from "rizzui";
 import {
@@ -17,7 +17,7 @@ export default function ConversationBar() {
     <div className="flex flex-col border border-muted border-s-0 h-full overflow-y-auto custom-scrollbar relative">
       <div className="px-4 py-3 border-b border-muted space-y-6">
         <AvatarCard
-          src="/logo.png"
+          src="/brand/brand-mark-4x.svg"
           name="Fay Doe"
           description="Tuesday"
         />
@@ -95,7 +95,7 @@ function CommentForm() {
     const newComment = {
       id: createId(),
       name: "John Doe",
-      avatar: "/logo.png",
+      avatar: "/brand/brand-mark-4x.svg",
       commentTime: "Now",
       comment: e.currentTarget.comment.value,
     };
@@ -120,3 +120,4 @@ function CommentForm() {
     </form>
   );
 }
+

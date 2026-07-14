@@ -25,11 +25,11 @@ export {
 /** Local static favicons — served from /public (no Google Fonts / no dynamic metadata routes). */
 export const APP_ICONS: Metadata['icons'] = {
   icon: [
-    { url: '/brand/brand-mark-4x.png', sizes: '512x512', type: 'image/png' },
-    { url: '/brand/browser-tab.svg', type: 'image/svg+xml' },
+    { url: BRAND_MARK_SRC, sizes: 'any', type: 'image/svg+xml' },
+    { url: BRAND_MARK_SRC, sizes: '96x96', type: 'image/svg+xml' },
   ],
-  apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
-  shortcut: ['/brand/brand-mark-4x.png'],
+  apple: [{ url: BRAND_MARK_SRC, sizes: '180x180', type: 'image/svg+xml' }],
+  shortcut: [BRAND_MARK_SRC],
 };
 
 export const siteConfig = {

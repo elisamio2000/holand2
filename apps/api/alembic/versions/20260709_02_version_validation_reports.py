@@ -9,6 +9,7 @@ from collections.abc import Sequence
 
 import sqlalchemy as sa
 from alembic import op
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = "20260709_02"
@@ -18,7 +19,7 @@ depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:
-    version_entity_type_enum = sa.Enum(
+    version_entity_type_enum = postgresql.ENUM(
         "assessment_version",
         "formula_version",
         name="version_entity_type_enum",

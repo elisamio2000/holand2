@@ -43,7 +43,7 @@ export const customerWithTickets = [
     id: '9b94f685-1165-4aab-b69c-ea59d554c04f',
     user: {
       name: 'Johnnie Kassulke',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -142,7 +142,7 @@ export const customerWithTickets = [
     id: 'efdfa75e-8fb2-4357-a03f-200d166d5450',
     user: {
       name: 'Dr. Marcos McGlynn',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -241,7 +241,7 @@ export const customerWithTickets = [
     id: '3f48e02e-c6b7-4ee4-ba7a-f81c9d9f1cd9',
     user: {
       name: 'Omar Haag',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -340,7 +340,7 @@ export const customerWithTickets = [
     id: '4c49aaab-fcf5-4ac6-8815-09824a9e7b20',
     user: {
       name: 'Susie Beatty',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -439,7 +439,7 @@ export const customerWithTickets = [
     id: 'bf2365bd-5aa7-40a8-af8a-2847b38f5b76',
     user: {
       name: 'Kristie Ziemann',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -535,3 +535,4 @@ export const customerWithTickets = [
     ],
   },
 ];
+

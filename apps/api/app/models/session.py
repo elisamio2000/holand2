@@ -31,7 +31,12 @@ class AssessmentSession(Base, TimestampMixin):
     id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
     user_id: Mapped[str | None] = mapped_column(Uuid(as_uuid=False), nullable=True, index=True)
     assessment_type: Mapped[AssessmentType] = mapped_column(
-        Enum(AssessmentType, name="session_assessment_type_enum"), nullable=False
+        Enum(
+            AssessmentType,
+            name="session_assessment_type_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
     )
     assessment_version_id: Mapped[str] = mapped_column(
         Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=False, index=True
@@ -40,7 +45,11 @@ class AssessmentSession(Base, TimestampMixin):
         Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=True, index=True
     )
     status: Mapped[SessionStatus] = mapped_column(
-        Enum(SessionStatus, name="session_status_enum"),
+        Enum(
+            SessionStatus,
+            name="session_status_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
         nullable=False,
         default=SessionStatus.IN_PROGRESS,
     )
@@ -52,6 +61,9 @@ class AssessmentSession(Base, TimestampMixin):
     )
     result: Mapped[SessionResult | None] = relationship(
         back_populates="session", uselist=False, cascade="all, delete-orphan"
+    )
+    ai_reports: Mapped[list[Any]] = relationship(
+        "SessionAIReport", back_populates="session", cascade="all, delete-orphan"
     )
 
 

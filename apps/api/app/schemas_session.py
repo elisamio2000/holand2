@@ -67,3 +67,24 @@ class SessionResultOut(BaseModel):
     holland: dict[str, Any] | None = None
     mbti: dict[str, Any] | None = None
     computed_at: datetime
+
+
+class SessionListItem(BaseModel):
+    """Summary of a single assessment session for the history list."""
+
+    session_id: str
+    assessment_type: AssessmentType
+    status: SessionStatus
+    top_code: str | None = None
+    started_at: datetime
+    completed_at: datetime | None = None
+    answered_count: int
+
+    model_config = {"from_attributes": True}
+
+
+class SessionListResponse(BaseModel):
+    sessions: list[SessionListItem]
+    total: int
+    page: int
+    limit: int

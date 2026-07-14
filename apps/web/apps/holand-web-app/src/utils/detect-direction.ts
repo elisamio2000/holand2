@@ -1,5 +1,5 @@
-// ============================================
-// Detect Direction — Text directionality utility
+﻿// ============================================
+// Detect Direction â€” Text directionality utility
 // Determines RTL vs LTR from first strong Unicode character
 // Used for per-block direction detection in markdown rendering
 // ============================================
@@ -28,7 +28,7 @@ const LTR_CHAR_REGEX =
   /[A-Za-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u0370-\u0373\u0376-\u0377\u037B-\u037D\u037F-\u03FF\u0400-\u04FF\u0500-\u052F\u1100-\u11FF\u1E00-\u1EFF\u2C00-\u2C5F\u2C60-\u2C7F\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uAC00-\uD7AF\uFF21-\uFF3A\uFF41-\uFF5A]/;
 
 /**
- * detectDirection — Determine text directionality from first strong character.
+ * detectDirection â€” Determine text directionality from first strong character.
  *
  * Implements the same "first strong character" heuristic used by
  * HTML `dir="auto"` (Unicode Bidi Algorithm rules P2/P3).
@@ -43,10 +43,10 @@ const LTR_CHAR_REGEX =
  * @example
  * ```ts
  * detectDirection('Hello world')          // 'ltr'
- * detectDirection('سلام دنیا')            // 'rtl'
- * detectDirection('🤖 هوش مصنوعی')       // 'rtl' (emoji is neutral, هـ is RTL)
+ * detectDirection('Ø³Ù„Ø§Ù… Ø¯Ù†ÛŒØ§')            // 'rtl'
+ * detectDirection('ðŸ¤– Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ')       // 'rtl' (emoji is neutral, Ù‡Ù€ is RTL)
  * detectDirection('123 ABC')              // 'ltr'
- * detectDirection('📊')                   // 'ltr' (no strong char → default LTR)
+ * detectDirection('ðŸ“Š')                   // 'ltr' (no strong char â†’ default LTR)
  * ```
  */
 export function detectDirection(text: string): 'rtl' | 'ltr' {
@@ -54,19 +54,19 @@ export function detectDirection(text: string): 'rtl' | 'ltr' {
     if (RTL_CHAR_REGEX.test(char)) return 'rtl';
     if (LTR_CHAR_REGEX.test(char)) return 'ltr';
   }
-  // No strong directional character found → default to LTR
+  // No strong directional character found â†’ default to LTR
   return 'ltr';
 }
 
 /**
- * isRtlText — Quick check if text is RTL.
+ * isRtlText â€” Quick check if text is RTL.
  *
  * @param text - Text to analyze
  * @returns true if the text's base direction is RTL
  *
  * @example
  * ```ts
- * isRtlText('مرحبا')   // true
+ * isRtlText('Ù…Ø±Ø­Ø¨Ø§')   // true
  * isRtlText('Hello')   // false
  * ```
  */
@@ -75,7 +75,7 @@ export function isRtlText(text: string): boolean {
 }
 
 /**
- * getLastParagraphDirection — Detect direction of the last non-empty paragraph.
+ * getLastParagraphDirection â€” Detect direction of the last non-empty paragraph.
  *
  * Useful for positioning the streaming cursor at the correct side
  * of the last paragraph in a multi-language markdown response.
@@ -85,8 +85,8 @@ export function isRtlText(text: string): boolean {
  *
  * @example
  * ```ts
- * getLastParagraphDirection('Hello\n\nسلام')   // 'rtl'
- * getLastParagraphDirection('سلام\n\nHello')   // 'ltr'
+ * getLastParagraphDirection('Hello\n\nØ³Ù„Ø§Ù…')   // 'rtl'
+ * getLastParagraphDirection('Ø³Ù„Ø§Ù…\n\nHello')   // 'ltr'
  * ```
  */
 export function getLastParagraphDirection(text: string): 'rtl' | 'ltr' {
@@ -97,7 +97,7 @@ export function getLastParagraphDirection(text: string): 'rtl' | 'ltr' {
 }
 
 /**
- * extractTextFromNode — Recursively extract plain text from a React node tree.
+ * extractTextFromNode â€” Recursively extract plain text from a React node tree.
  *
  * Traverses through React elements, fragments, and arrays to collect
  * all string/number text content. Used to programmatically detect
@@ -105,7 +105,7 @@ export function getLastParagraphDirection(text: string): 'rtl' | 'ltr' {
  * use `dir="auto"` due to the HTML spec's nesting gotcha.
  *
  * WHY THIS EXISTS:
- * The HTML spec §14.3.2 says `dir="auto"` skips descendants that have
+ * The HTML spec Â§14.3.2 says `dir="auto"` skips descendants that have
  * a `dir` attribute. So `<ol dir="auto"><li dir="auto"><p dir="auto">Arabic</p></li></ol>`
  * results in the `<ol>` defaulting to LTR because it skips `<li>` and `<p>`.
  * We need to extract text programmatically and use `detectDirection()` instead.
@@ -124,7 +124,7 @@ export function extractTextFromNode(node: ReactNode): string {
   if (typeof node === 'string') return node;
   if (typeof node === 'number') return String(node);
   if (Array.isArray(node)) return (node as ReactNode[]).map(extractTextFromNode).join('');
-  // ReactElement — recurse into props.children
+  // ReactElement â€” recurse into props.children
   if (typeof node === 'object' && 'props' in node) {
     return extractTextFromNode((node as ReactElement).props?.children);
   }
@@ -136,14 +136,14 @@ export function extractTextFromNode(node: ReactNode): string {
 // ==========================================
 
 /**
- * detectMajorityDirection — Determine text directionality by character majority.
+ * detectMajorityDirection â€” Determine text directionality by character majority.
  *
  * Unlike `detectDirection()` which uses the First Strong Character algorithm
  * (per Unicode UAX #9), this function counts ALL strong directional characters
  * and returns the direction of the majority.
  *
  * USE CASE: When text starts with LTR characters but is predominantly RTL.
- * Example: "Hello سلام به همه دوستان عزیز" should be RTL (80% Persian).
+ * Example: "Hello Ø³Ù„Ø§Ù… Ø¨Ù‡ Ù‡Ù…Ù‡ Ø¯ÙˆØ³ØªØ§Ù† Ø¹Ø²ÛŒØ²" should be RTL (80% Persian).
  *
  * @param text - Text to analyze
  * @param threshold - Minimum ratio (0-1) of RTL chars to classify as RTL. Default: 0.5
@@ -151,9 +151,9 @@ export function extractTextFromNode(node: ReactNode): string {
  *
  * @example
  * ```ts
- * detectMajorityDirection('Hello سلام')           // 'rtl' (majority is Persian)
- * detectMajorityDirection('Hello world سلام')     // 'ltr' (majority is English)
- * detectMajorityDirection('سلام Hello', 0.3)      // 'rtl' (30%+ RTL threshold)
+ * detectMajorityDirection('Hello Ø³Ù„Ø§Ù…')           // 'rtl' (majority is Persian)
+ * detectMajorityDirection('Hello world Ø³Ù„Ø§Ù…')     // 'ltr' (majority is English)
+ * detectMajorityDirection('Ø³Ù„Ø§Ù… Hello', 0.3)      // 'rtl' (30%+ RTL threshold)
  * ```
  */
 export function detectMajorityDirection(
@@ -170,7 +170,7 @@ export function detectMajorityDirection(
   }
 
   const total = rtlCount + ltrCount;
-  if (total === 0) return 'ltr'; // No strong chars → default LTR
+  if (total === 0) return 'ltr'; // No strong chars â†’ default LTR
 
   const rtlRatio = rtlCount / total;
   return rtlRatio >= threshold ? 'rtl' : 'ltr';
@@ -185,18 +185,18 @@ const DIGIT_MAPS = {
   /** Western/European digits (ASCII) */
   en: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
   /** Persian/Farsi digits (Extended Arabic-Indic: U+06F0-U+06F9) */
-  fa: ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'],
+  fa: ['Û°', 'Û±', 'Û²', 'Û³', 'Û´', 'Ûµ', 'Û¶', 'Û·', 'Û¸', 'Û¹'],
   /** Arabic-Indic digits (U+0660-U+0669) */
-  ar: ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'],
+  ar: ['Ù ', 'Ù¡', 'Ù¢', 'Ù£', 'Ù¤', 'Ù¥', 'Ù¦', 'Ù§', 'Ù¨', 'Ù©'],
 } as const;
 
 /** Supported numeral locales */
 export type NumeralLocale = keyof typeof DIGIT_MAPS;
 
 /**
- * toLocalizedDigits — Convert digits to a specific numeral system.
+ * toLocalizedDigits â€” Convert digits to a specific numeral system.
  *
- * Transforms Western digits (0-9) to Persian (۰-۹) or Arabic (٠-٩) digits,
+ * Transforms Western digits (0-9) to Persian (Û°-Û¹) or Arabic (Ù -Ù©) digits,
  * or vice versa. Also handles conversion between Persian and Arabic.
  *
  * @param text - Text containing digits to convert
@@ -205,14 +205,14 @@ export type NumeralLocale = keyof typeof DIGIT_MAPS;
  *
  * @example
  * ```ts
- * toLocalizedDigits('Price: 1234', 'fa')     // 'Price: ۱۲۳۴'
- * toLocalizedDigits('قیمت: ۱۲۳۴', 'en')      // 'قیمت: 1234'
- * toLocalizedDigits('العدد: ١٢٣٤', 'fa')     // 'العدد: ۱۲۳۴'
+ * toLocalizedDigits('Price: 1234', 'fa')     // 'Price: Û±Û²Û³Û´'
+ * toLocalizedDigits('Ù‚ÛŒÙ…Øª: Û±Û²Û³Û´', 'en')      // 'Ù‚ÛŒÙ…Øª: 1234'
+ * toLocalizedDigits('Ø§Ù„Ø¹Ø¯Ø¯: Ù¡Ù¢Ù£Ù¤', 'fa')     // 'Ø§Ù„Ø¹Ø¯Ø¯: Û±Û²Û³Û´'
  * ```
  */
 export function toLocalizedDigits(text: string, targetLocale: NumeralLocale): string {
   // Regex to match any digit from any of the three systems
-  const allDigitsRegex = /[0-9۰-۹٠-٩]/g;
+  const allDigitsRegex = /[0-9Û°-Û¹Ù -Ù©]/g;
 
   return text.replace(allDigitsRegex, (digit) => {
     // Find which system this digit belongs to and its numeric value
@@ -220,7 +220,7 @@ export function toLocalizedDigits(text: string, targetLocale: NumeralLocale): st
 
     if (/[0-9]/.test(digit)) {
       numericValue = digit.charCodeAt(0) - 0x30; // ASCII 0-9
-    } else if (/[۰-۹]/.test(digit)) {
+    } else if (/[Û°-Û¹]/.test(digit)) {
       numericValue = digit.charCodeAt(0) - 0x06f0; // Persian
     } else {
       numericValue = digit.charCodeAt(0) - 0x0660; // Arabic-Indic
@@ -231,7 +231,7 @@ export function toLocalizedDigits(text: string, targetLocale: NumeralLocale): st
 }
 
 /**
- * formatNumberLocalized — Format a number with locale-specific digits and grouping.
+ * formatNumberLocalized â€” Format a number with locale-specific digits and grouping.
  *
  * Uses `Intl.NumberFormat` for proper thousand separators and decimal points,
  * then converts digits to the target numeral system if needed.
@@ -242,8 +242,8 @@ export function toLocalizedDigits(text: string, targetLocale: NumeralLocale): st
  *
  * @example
  * ```ts
- * formatNumberLocalized(1234567.89, 'fa-IR')  // '۱٬۲۳۴٬۵۶۷٫۸۹'
- * formatNumberLocalized(1234567.89, 'ar-EG')  // '١٬٢٣٤٬٥٦٧٫٨٩'
+ * formatNumberLocalized(1234567.89, 'fa-IR')  // 'Û±Ù¬Û²Û³Û´Ù¬ÛµÛ¶Û·Ù«Û¸Û¹'
+ * formatNumberLocalized(1234567.89, 'ar-EG')  // 'Ù¡Ù¬Ù¢Ù£Ù¤Ù¬Ù¥Ù¦Ù§Ù«Ù¨Ù©'
  * formatNumberLocalized(1234567.89, 'en-US')  // '1,234,567.89'
  * ```
  */
@@ -260,7 +260,7 @@ export function formatNumberLocalized(num: number, locale: string): string {
  * even within RTL context.
  */
 const TECHNICAL_PATTERNS = {
-  /** URLs: http://, /logo.png ftp://, or www. followed by domain */
+  /** URLs: http://, /brand/brand-mark-4x.svg ftp://, or www. followed by domain */
   url: /(?:https?:\/\/|ftp:\/\/|www\.)[^\s<>"\u0600-\u06FF\u0750-\u077F]+/gi,
   /** Email addresses */
   email: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi,
@@ -275,7 +275,7 @@ const TECHNICAL_PATTERNS = {
 };
 
 /**
- * TechnicalMatch — Represents a technical content match for wrapping.
+ * TechnicalMatch â€” Represents a technical content match for wrapping.
  */
 export interface TechnicalMatch {
   /** Type of technical content */
@@ -289,7 +289,7 @@ export interface TechnicalMatch {
 }
 
 /**
- * findTechnicalContent — Find all technical content (URLs, emails, etc.) in text.
+ * findTechnicalContent â€” Find all technical content (URLs, emails, etc.) in text.
  *
  * Identifies portions of text that should be displayed LTR even in RTL context.
  * Returns matches sorted by position for sequential processing.
@@ -299,10 +299,10 @@ export interface TechnicalMatch {
  *
  * @example
  * ```ts
- * const matches = findTechnicalContent('ایمیل: test@example.com و سایت: /logo.png');
+ * const matches = findTechnicalContent('Ø§ÛŒÙ…ÛŒÙ„: test@example.com Ùˆ Ø³Ø§ÛŒØª: /brand/brand-mark-4x.svg');
  * // [
  * //   { type: 'email', text: 'test@example.com', start: 7, end: 23 },
- * //   { type: 'url', text: '/logo.png', start: 33, end: 51 }
+ * //   { type: 'url', text: '/brand/brand-mark-4x.svg', start: 33, end: 51 }
  * // ]
  * ```
  */
@@ -327,7 +327,7 @@ export function findTechnicalContent(text: string): TechnicalMatch[] {
   // Sort by start position and remove overlapping matches
   matches.sort((a, b) => a.start - b.start);
 
-  // Remove overlaps — keep the first (or longest) match
+  // Remove overlaps â€” keep the first (or longest) match
   const filtered: TechnicalMatch[] = [];
   for (const match of matches) {
     const lastMatch = filtered[filtered.length - 1];
@@ -343,7 +343,7 @@ export function findTechnicalContent(text: string): TechnicalMatch[] {
 }
 
 /**
- * wrapTechnicalContent — Wrap technical content with LTR isolation markers.
+ * wrapTechnicalContent â€” Wrap technical content with LTR isolation markers.
  *
  * Wraps URLs, emails, phone numbers, etc. with Unicode isolation characters
  * (LRI...PDI) to ensure they display correctly in RTL context.
@@ -356,8 +356,8 @@ export function findTechnicalContent(text: string): TechnicalMatch[] {
  *
  * @example
  * ```ts
- * wrapTechnicalContent('ایمیل: test@example.com')
- * // 'ایمیل: ⁦test@example.com⁩'
+ * wrapTechnicalContent('Ø§ÛŒÙ…ÛŒÙ„: test@example.com')
+ * // 'Ø§ÛŒÙ…ÛŒÙ„: â¦test@example.comâ©'
  * ```
  */
 export function wrapTechnicalContent(text: string): string {
@@ -385,12 +385,12 @@ export function wrapTechnicalContent(text: string): string {
 }
 
 /**
- * wrapTechnicalContentHtml — Wrap technical content with HTML bdi elements.
+ * wrapTechnicalContentHtml â€” Wrap technical content with HTML bdi elements.
  *
  * Like `wrapTechnicalContent()`, but returns HTML with `<bdi>` elements
  * for proper isolation in HTML rendering.
  *
- * ⚠️ WARNING: The returned HTML should be sanitized before using with
+ * âš ï¸ WARNING: The returned HTML should be sanitized before using with
  * dangerouslySetInnerHTML. This function does NOT escape HTML entities
  * in the input text.
  *
@@ -399,8 +399,8 @@ export function wrapTechnicalContent(text: string): string {
  *
  * @example
  * ```ts
- * wrapTechnicalContentHtml('ایمیل: test@example.com')
- * // 'ایمیل: <bdi dir="ltr">test@example.com</bdi>'
+ * wrapTechnicalContentHtml('Ø§ÛŒÙ…ÛŒÙ„: test@example.com')
+ * // 'Ø§ÛŒÙ…ÛŒÙ„: <bdi dir="ltr">test@example.com</bdi>'
  * ```
  */
 export function wrapTechnicalContentHtml(text: string): string {
@@ -423,3 +423,4 @@ export function wrapTechnicalContentHtml(text: string): string {
 
   return result;
 }
+

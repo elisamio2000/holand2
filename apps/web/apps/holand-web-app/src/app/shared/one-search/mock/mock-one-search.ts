@@ -1,6 +1,6 @@
-// ============================================
-// One Search — in-page mock repository (sample contract)
-// Consumed ONLY by one-search-view.tsx — do not import elsewhere.
+﻿// ============================================
+// One Search â€” in-page mock repository (sample contract)
+// Consumed ONLY by one-search-view.tsx â€” do not import elsewhere.
 // ============================================
 
 import { routes } from '@/config/routes';
@@ -19,11 +19,11 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/** Broad match for the "احمد" scenario + generic queries for layout testing. */
+/** Broad match for the "Ø§Ø­Ù…Ø¯" scenario + generic queries for layout testing. */
 function isAhmadScenario(q: string): boolean {
   const n = q.trim().toLowerCase();
   if (!n) return false;
-  return /احمد|ahmad|ahmadi|احمدی/.test(q) || n.includes('ahmad');
+  return /Ø§Ø­Ù…Ø¯|ahmad|ahmadi|Ø§Ø­Ù…Ø¯ÛŒ/.test(q) || n.includes('ahmad');
 }
 
 function lane(
@@ -51,11 +51,11 @@ function expandHitsForStressTest(
     out.push({
       ...src,
       id: `${prefix}-synth-${seq}`,
-      title: `${src.title} · ${out.length + 1}`,
+      title: `${src.title} Â· ${out.length + 1}`,
       score: Math.max(0.12, (src.score ?? 0.55) * 0.965 ** (out.length - base.length + 1)),
       snippet: src.snippet
-        ? `${src.snippet} (ردیف نمونهٔ ${out.length + 1} برای تست اسکرول.)`
-        : `ردیف نمونهٔ ${out.length + 1} برای تست اسکرول.`,
+        ? `${src.snippet} (Ø±Ø¯ÛŒÙ Ù†Ù…ÙˆÙ†Ù‡Ù” ${out.length + 1} Ø¨Ø±Ø§ÛŒ ØªØ³Øª Ø§Ø³Ú©Ø±ÙˆÙ„.)`
+        : `Ø±Ø¯ÛŒÙ Ù†Ù…ÙˆÙ†Ù‡Ù” ${out.length + 1} Ø¨Ø±Ø§ÛŒ ØªØ³Øª Ø§Ø³Ú©Ø±ÙˆÙ„.`,
     });
   }
   return out;
@@ -69,8 +69,8 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
       hits: [
         ...Array.from({ length: 25 }, (_, i) => ({
           id: `mock-msg-${i + 1}`,
-          title: `چت ${i % 3 === 0 ? 'پرونده' : i % 3 === 1 ? 'تیم' : 'جلسه'} ${i + 1} — ${i % 2 === 0 ? 'بازجویی' : 'تحلیل'}`,
-          snippet: `${i % 2 === 0 ? 'طبق صورتجلسه' : 'بررسی اسناد'}, احمد ${i % 3 === 0 ? 'گفته بود' : i % 3 === 1 ? 'تأکید کرد' : 'اشاره کرد'} که ${i % 4 === 0 ? 'فایل اکسل' : i % 4 === 1 ? 'مدارک' : i % 4 === 2 ? 'گزارش' : 'اطلاعات'} را ${i % 2 === 0 ? 'روی درایو' : 'در سیستم'} قرار داده است.`,
+          title: `Ú†Øª ${i % 3 === 0 ? 'Ù¾Ø±ÙˆÙ†Ø¯Ù‡' : i % 3 === 1 ? 'ØªÛŒÙ…' : 'Ø¬Ù„Ø³Ù‡'} ${i + 1} â€” ${i % 2 === 0 ? 'Ø¨Ø§Ø²Ø¬ÙˆÛŒÛŒ' : 'ØªØ­Ù„ÛŒÙ„'}`,
+          snippet: `${i % 2 === 0 ? 'Ø·Ø¨Ù‚ ØµÙˆØ±ØªØ¬Ù„Ø³Ù‡' : 'Ø¨Ø±Ø±Ø³ÛŒ Ø§Ø³Ù†Ø§Ø¯'}, Ø§Ø­Ù…Ø¯ ${i % 3 === 0 ? 'Ú¯ÙØªÙ‡ Ø¨ÙˆØ¯' : i % 3 === 1 ? 'ØªØ£Ú©ÛŒØ¯ Ú©Ø±Ø¯' : 'Ø§Ø´Ø§Ø±Ù‡ Ú©Ø±Ø¯'} Ú©Ù‡ ${i % 4 === 0 ? 'ÙØ§ÛŒÙ„ Ø§Ú©Ø³Ù„' : i % 4 === 1 ? 'Ù…Ø¯Ø§Ø±Ú©' : i % 4 === 2 ? 'Ú¯Ø²Ø§Ø±Ø´' : 'Ø§Ø·Ù„Ø§Ø¹Ø§Øª'} Ø±Ø§ ${i % 2 === 0 ? 'Ø±ÙˆÛŒ Ø¯Ø±Ø§ÛŒÙˆ' : 'Ø¯Ø± Ø³ÛŒØ³ØªÙ…'} Ù‚Ø±Ø§Ø± Ø¯Ø§Ø¯Ù‡ Ø§Ø³Øª.`,
           href: routes.aiChat.session(`mock-session-${i + 1}`),
           score: 0.94 - i * 0.02,
           occurredAt: new Date(2026, 4, 2 - Math.floor(i / 3), 14 + i, 22, 0).toISOString(),
@@ -87,8 +87,8 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
       hits: [
         ...Array.from({ length: 18 }, (_, i) => ({
           id: `mock-case-${i + 1}`,
-          title: `پرونده MOCK-${4412 + i * 100} — ${i % 3 === 0 ? 'اختلاس' : i % 3 === 1 ? 'کلاهبرداری' : 'تخلف مالی'} ${i % 2 === 0 ? 'منطقه ' + (i % 5 + 1) : 'بخش ' + (i % 4 + 1)}`,
-          snippet: `${i === 0 ? 'نام مظنون اصلی: احمد کریمی؛ نام مستعار در اسناد: Ahmad Karimi.' : `پرونده شماره ${i + 1} مرتبط با ${i % 2 === 0 ? 'احمد' : 'Ahmad'} - ${i % 3 === 0 ? 'در حال بررسی' : i % 3 === 1 ? 'تحت تحقیق' : 'در انتظار تصمیم'}`}`,
+          title: `Ù¾Ø±ÙˆÙ†Ø¯Ù‡ MOCK-${4412 + i * 100} â€” ${i % 3 === 0 ? 'Ø§Ø®ØªÙ„Ø§Ø³' : i % 3 === 1 ? 'Ú©Ù„Ø§Ù‡Ø¨Ø±Ø¯Ø§Ø±ÛŒ' : 'ØªØ®Ù„Ù Ù…Ø§Ù„ÛŒ'} ${i % 2 === 0 ? 'Ù…Ù†Ø·Ù‚Ù‡ ' + (i % 5 + 1) : 'Ø¨Ø®Ø´ ' + (i % 4 + 1)}`,
+          snippet: `${i === 0 ? 'Ù†Ø§Ù… Ù…Ø¸Ù†ÙˆÙ† Ø§ØµÙ„ÛŒ: Ø§Ø­Ù…Ø¯ Ú©Ø±ÛŒÙ…ÛŒØ› Ù†Ø§Ù… Ù…Ø³ØªØ¹Ø§Ø± Ø¯Ø± Ø§Ø³Ù†Ø§Ø¯: Ahmad Karimi.' : `Ù¾Ø±ÙˆÙ†Ø¯Ù‡ Ø´Ù…Ø§Ø±Ù‡ ${i + 1} Ù…Ø±ØªØ¨Ø· Ø¨Ø§ ${i % 2 === 0 ? 'Ø§Ø­Ù…Ø¯' : 'Ahmad'} - ${i % 3 === 0 ? 'Ø¯Ø± Ø­Ø§Ù„ Ø¨Ø±Ø±Ø³ÛŒ' : i % 3 === 1 ? 'ØªØ­Øª ØªØ­Ù‚ÛŒÙ‚' : 'Ø¯Ø± Ø§Ù†ØªØ¸Ø§Ø± ØªØµÙ…ÛŒÙ…'}`}`,
           href: routes.cases.detail(`CASE-MOCK-${4412 + i * 100}`),
           score: 0.97 - i * 0.03,
           occurredAt: new Date(2026, 2, 15 - i * 2, 0, 0, 0).toISOString(),
@@ -106,7 +106,7 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         ...Array.from({ length: 30 }, (_, i) => ({
           id: `mock-file-${i + 1}`,
           title: `${i % 4 === 0 ? 'report' : i % 4 === 1 ? 'document' : i % 4 === 2 ? 'contract' : 'invoice'}_ahmad_${i % 3 === 0 ? 'draft' : i % 3 === 1 ? 'final' : 'v' + (i % 5 + 1)}.${i % 5 === 0 ? 'pdf' : i % 5 === 1 ? 'docx' : i % 5 === 2 ? 'xlsx' : i % 5 === 3 ? 'txt' : 'pptx'}`,
-          snippet: `${i % 2 === 0 ? 'صفحه' : 'بخش'} ${i % 10 + 1}: «احمد» ${i % 3 === 0 ? 'به عنوان امضاکننده' : i % 3 === 1 ? 'در لیست مسئولین' : 'در جدول اطلاعات'} ${i % 2 === 0 ? 'ذکر شده است' : 'قید شده'}.`,
+          snippet: `${i % 2 === 0 ? 'ØµÙØ­Ù‡' : 'Ø¨Ø®Ø´'} ${i % 10 + 1}: Â«Ø§Ø­Ù…Ø¯Â» ${i % 3 === 0 ? 'Ø¨Ù‡ Ø¹Ù†ÙˆØ§Ù† Ø§Ù…Ø¶Ø§Ú©Ù†Ù†Ø¯Ù‡' : i % 3 === 1 ? 'Ø¯Ø± Ù„ÛŒØ³Øª Ù…Ø³Ø¦ÙˆÙ„ÛŒÙ†' : 'Ø¯Ø± Ø¬Ø¯ÙˆÙ„ Ø§Ø·Ù„Ø§Ø¹Ø§Øª'} ${i % 2 === 0 ? 'Ø°Ú©Ø± Ø´Ø¯Ù‡ Ø§Ø³Øª' : 'Ù‚ÛŒØ¯ Ø´Ø¯Ù‡'}.`,
           href: `${routes.fileExplorer}?search=ahmad&file=${i + 1}`,
           score: 0.88 - i * 0.015,
           occurredAt: new Date(2026, 3, 30 - Math.floor(i / 2), 11 + i, 0, 0).toISOString(),
@@ -122,19 +122,19 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
       total: 50,
       hits: [
         // Images (20 items with varied dimensions and orientations)
-        // Portrait images (عمودی)
+        // Portrait images (Ø¹Ù…ÙˆØ¯ÛŒ)
         {
           id: 'mock-img-1',
           title: 'passport_photo_ahmad.jpg',
-          snippet: 'عکس پاسپورت احمد کریمی - تصویر عمودی',
+          snippet: 'Ø¹Ú©Ø³ Ù¾Ø§Ø³Ù¾ÙˆØ±Øª Ø§Ø­Ù…Ø¯ Ú©Ø±ÛŒÙ…ÛŒ - ØªØµÙˆÛŒØ± Ø¹Ù…ÙˆØ¯ÛŒ',
           href: routes.storage,
           score: 0.95,
           occurredAt: new Date(2026, 3, 20, 8, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-1',
             mime: 'image/jpeg',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 800,
             height: 1200,
             size_bytes: 1800000,
@@ -143,15 +143,15 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         {
           id: 'mock-img-2',
           title: 'id_card_scan_ahmad.png',
-          snippet: 'اسکن کارت شناسایی - تصویر عمودی',
+          snippet: 'Ø§Ø³Ú©Ù† Ú©Ø§Ø±Øª Ø´Ù†Ø§Ø³Ø§ÛŒÛŒ - ØªØµÙˆÛŒØ± Ø¹Ù…ÙˆØ¯ÛŒ',
           href: routes.storage,
           score: 0.93,
           occurredAt: new Date(2026, 3, 19, 9, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-2',
             mime: 'image/png',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 900,
             height: 1350,
             size_bytes: 2200000,
@@ -160,33 +160,33 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         {
           id: 'mock-img-3',
           title: 'portrait_ahmad_office.jpg',
-          snippet: 'عکس پرتره احمد در دفتر',
+          snippet: 'Ø¹Ú©Ø³ Ù¾Ø±ØªØ±Ù‡ Ø§Ø­Ù…Ø¯ Ø¯Ø± Ø¯ÙØªØ±',
           href: routes.storage,
           score: 0.91,
           occurredAt: new Date(2026, 3, 18, 10, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-3',
             mime: 'image/jpeg',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 720,
             height: 1280,
             size_bytes: 1900000,
           },
         },
-        // Landscape images (افقی)
+        // Landscape images (Ø§ÙÙ‚ÛŒ)
         {
           id: 'mock-img-4',
           title: 'meeting_room_ahmad.jpg',
-          snippet: 'تصویر اتاق جلسه - تصویر افقی',
+          snippet: 'ØªØµÙˆÛŒØ± Ø§ØªØ§Ù‚ Ø¬Ù„Ø³Ù‡ - ØªØµÙˆÛŒØ± Ø§ÙÙ‚ÛŒ',
           href: routes.storage,
           score: 0.89,
           occurredAt: new Date(2026, 3, 17, 11, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-4',
             mime: 'image/jpeg',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 1920,
             height: 1080,
             size_bytes: 2500000,
@@ -195,15 +195,15 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         {
           id: 'mock-img-5',
           title: 'office_panorama.png',
-          snippet: 'پانورامای دفتر کار احمد',
+          snippet: 'Ù¾Ø§Ù†ÙˆØ±Ø§Ù…Ø§ÛŒ Ø¯ÙØªØ± Ú©Ø§Ø± Ø§Ø­Ù…Ø¯',
           href: routes.storage,
           score: 0.87,
           occurredAt: new Date(2026, 3, 16, 12, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-5',
             mime: 'image/png',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 2400,
             height: 1200,
             size_bytes: 3200000,
@@ -212,33 +212,33 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         {
           id: 'mock-img-6',
           title: 'document_wide_scan.jpg',
-          snippet: 'اسکن سند عریض',
+          snippet: 'Ø§Ø³Ú©Ù† Ø³Ù†Ø¯ Ø¹Ø±ÛŒØ¶',
           href: routes.storage,
           score: 0.85,
           occurredAt: new Date(2026, 3, 15, 13, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-6',
             mime: 'image/jpeg',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 1800,
             height: 1200,
             size_bytes: 2100000,
           },
         },
-        // Square images (مربع)
+        // Square images (Ù…Ø±Ø¨Ø¹)
         {
           id: 'mock-img-7',
           title: 'profile_ahmad_square.jpg',
-          snippet: 'عکس پروفایل مربعی احمد',
+          snippet: 'Ø¹Ú©Ø³ Ù¾Ø±ÙˆÙØ§ÛŒÙ„ Ù…Ø±Ø¨Ø¹ÛŒ Ø§Ø­Ù…Ø¯',
           href: routes.storage,
           score: 0.83,
           occurredAt: new Date(2026, 3, 14, 14, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-7',
             mime: 'image/jpeg',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 1200,
             height: 1200,
             size_bytes: 1700000,
@@ -247,51 +247,51 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         {
           id: 'mock-img-8',
           title: 'logo_company_square.png',
-          snippet: 'لوگوی مربعی شرکت',
+          snippet: 'Ù„ÙˆÚ¯ÙˆÛŒ Ù…Ø±Ø¨Ø¹ÛŒ Ø´Ø±Ú©Øª',
           href: routes.storage,
           score: 0.81,
           occurredAt: new Date(2026, 3, 13, 15, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-8',
             mime: 'image/png',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 1000,
             height: 1000,
             size_bytes: 1500000,
           },
         },
-        // Very tall portrait (خیلی عمودی)
+        // Very tall portrait (Ø®ÛŒÙ„ÛŒ Ø¹Ù…ÙˆØ¯ÛŒ)
         {
           id: 'mock-img-9',
           title: 'full_body_photo.jpg',
-          snippet: 'عکس تمام قد - تصویر بسیار عمودی',
+          snippet: 'Ø¹Ú©Ø³ ØªÙ…Ø§Ù… Ù‚Ø¯ - ØªØµÙˆÛŒØ± Ø¨Ø³ÛŒØ§Ø± Ø¹Ù…ÙˆØ¯ÛŒ',
           href: routes.storage,
           score: 0.79,
           occurredAt: new Date(2026, 3, 12, 16, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-9',
             mime: 'image/jpeg',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 600,
             height: 1800,
             size_bytes: 1600000,
           },
         },
-        // Very wide landscape (خیلی افقی)
+        // Very wide landscape (Ø®ÛŒÙ„ÛŒ Ø§ÙÙ‚ÛŒ)
         {
           id: 'mock-img-10',
           title: 'banner_wide.png',
-          snippet: 'بنر عریض - تصویر بسیار افقی',
+          snippet: 'Ø¨Ù†Ø± Ø¹Ø±ÛŒØ¶ - ØªØµÙˆÛŒØ± Ø¨Ø³ÛŒØ§Ø± Ø§ÙÙ‚ÛŒ',
           href: routes.storage,
           score: 0.77,
           occurredAt: new Date(2026, 3, 11, 17, 0, 0).toISOString(),
           meta: {
             artifact_id: 'art-img-10',
             mime: 'image/png',
-            thumb_url: '/logo.png',
-            url: '/logo.png',
+            thumb_url: '/brand/brand-mark-4x.svg',
+            url: '/brand/brand-mark-4x.svg',
             width: 2560,
             height: 1024,
             size_bytes: 2800000,
@@ -301,15 +301,15 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         ...Array.from({ length: 10 }, (_, i) => ({
           id: `mock-img-${11 + i}`,
           title: `photo_ahmad_${11 + i}.${i % 2 === 0 ? 'jpg' : 'png'}`,
-          snippet: `تصویر ${11 + i} - ${i % 3 === 0 ? 'عمودی' : i % 3 === 1 ? 'افقی' : 'مربع'}`,
+          snippet: `ØªØµÙˆÛŒØ± ${11 + i} - ${i % 3 === 0 ? 'Ø¹Ù…ÙˆØ¯ÛŒ' : i % 3 === 1 ? 'Ø§ÙÙ‚ÛŒ' : 'Ù…Ø±Ø¨Ø¹'}`,
           href: routes.storage,
           score: 0.75 - i * 0.02,
           occurredAt: new Date(2026, 3, 10 - i, 8 + i, 0, 0).toISOString(),
           meta: {
             artifact_id: `art-img-${11 + i}`,
             mime: i % 2 === 0 ? 'image/jpeg' : 'image/png',
-            thumb_url: `/logo.png + i}/400/300`,
-            url: `/logo.png + i}/${
+            thumb_url: `/brand/brand-mark-4x.svg + i}/400/300`,
+            url: `/brand/brand-mark-4x.svg + i}/${
               i % 3 === 0 ? '800/1200' : i % 3 === 1 ? '1600/900' : '1200/1200'
             }`,
             width: i % 3 === 0 ? 800 : i % 3 === 1 ? 1600 : 1200,
@@ -321,21 +321,21 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         ...Array.from({ length: 10 }, (_, i) => ({
           id: `mock-video-${i + 1}`,
           title: `video_ahmad_${i + 1}.mp4`,
-          snippet: `ویدیو ${i + 1} - ${i % 2 === 0 ? 'بازجویی' : 'مستند'} احمد کریمی`,
+          snippet: `ÙˆÛŒØ¯ÛŒÙˆ ${i + 1} - ${i % 2 === 0 ? 'Ø¨Ø§Ø²Ø¬ÙˆÛŒÛŒ' : 'Ù…Ø³ØªÙ†Ø¯'} Ø§Ø­Ù…Ø¯ Ú©Ø±ÛŒÙ…ÛŒ`,
           href: routes.storage,
           score: 0.88 - i * 0.03,
           occurredAt: new Date(2026, 4, 2 - i, 14 + i, 30, 0).toISOString(),
           meta: {
             artifact_id: `art-video-${i + 1}`,
             mime: 'video/mp4',
-            thumb_url: `/logo.png + i}/640/360`,
+            thumb_url: `/brand/brand-mark-4x.svg + i}/640/360`,
             url: i === 0 
-              ? '/logo.png'
+              ? '/brand/brand-mark-4x.svg'
               : i === 1
-              ? '/logo.png'
+              ? '/brand/brand-mark-4x.svg'
               : i === 2
-              ? '/logo.png'
-              : '/logo.png',
+              ? '/brand/brand-mark-4x.svg'
+              : '/brand/brand-mark-4x.svg',
             width: 1920,
             height: 1080,
             duration: 300 + i * 120,
@@ -349,7 +349,7 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
           snippet:
             i % 3 === 0
               ? '... discussed the budget meeting for Q2 in the recording ...'
-              : `ضبط صوتی ${i + 1} - ${i % 3 === 0 ? 'تماس تلفنی' : i % 3 === 1 ? 'جلسه' : 'مصاحبه'}`,
+              : `Ø¶Ø¨Ø· ØµÙˆØªÛŒ ${i + 1} - ${i % 3 === 0 ? 'ØªÙ…Ø§Ø³ ØªÙ„ÙÙ†ÛŒ' : i % 3 === 1 ? 'Ø¬Ù„Ø³Ù‡' : 'Ù…ØµØ§Ø­Ø¨Ù‡'}`,
           href: routes.storage,
           score: 0.82 - i * 0.02,
           occurredAt: new Date(2026, 3, 20 - i, 16 + i, 45, 0).toISOString(),
@@ -376,7 +376,7 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         ...Array.from({ length: 10 }, (_, i) => ({
           id: `mock-doc-${i + 1}`,
           title: `document_ahmad_${i + 1}.${i % 3 === 0 ? 'pdf' : i % 3 === 1 ? 'docx' : 'txt'}`,
-          snippet: `سند ${i + 1} مرتبط با پرونده احمد کریمی`,
+          snippet: `Ø³Ù†Ø¯ ${i + 1} Ù…Ø±ØªØ¨Ø· Ø¨Ø§ Ù¾Ø±ÙˆÙ†Ø¯Ù‡ Ø§Ø­Ù…Ø¯ Ú©Ø±ÛŒÙ…ÛŒ`,
           href: routes.storage,
           score: 0.75 - i * 0.02,
           occurredAt: new Date(2026, 3, 15 - i, 10 + i, 0, 0).toISOString(),
@@ -394,14 +394,14 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
       hits: [
         ...Array.from({ length: 12 }, (_, i) => ({
           id: `mock-user-${i + 1}`,
-          title: `کاربر: ${i === 0 ? 'ahmad.karimi' : `user_${i}_ahmad`}`,
-          snippet: `نقش: ${i % 3 === 0 ? 'تحلیل‌گر' : i % 3 === 1 ? 'مدیر' : 'کارشناس'} — گروه: ${i % 2 === 0 ? 'تیم شمال' : 'تیم جنوب'} — آخرین ورود: ${new Date(2026, 4, 1 - i).toLocaleDateString('fa-IR')}`,
+          title: `Ú©Ø§Ø±Ø¨Ø±: ${i === 0 ? 'ahmad.karimi' : `user_${i}_ahmad`}`,
+          snippet: `Ù†Ù‚Ø´: ${i % 3 === 0 ? 'ØªØ­Ù„ÛŒÙ„â€ŒÚ¯Ø±' : i % 3 === 1 ? 'Ù…Ø¯ÛŒØ±' : 'Ú©Ø§Ø±Ø´Ù†Ø§Ø³'} â€” Ú¯Ø±ÙˆÙ‡: ${i % 2 === 0 ? 'ØªÛŒÙ… Ø´Ù…Ø§Ù„' : 'ØªÛŒÙ… Ø¬Ù†ÙˆØ¨'} â€” Ø¢Ø®Ø±ÛŒÙ† ÙˆØ±ÙˆØ¯: ${new Date(2026, 4, 1 - i).toLocaleDateString('fa-IR')}`,
           href: routes.profile,
           score: 0.86 - i * 0.03,
           meta: {
             user_id: `usr-mock-${i + 1}`,
-            aliases: i === 0 ? 'احمد کریمی, Ahmad Karimi' : `User ${i + 1}, Ahmad User`,
-            thumb_url: `/logo.png % 2 === 0 ? 'men' : 'women'}/${32 + i}.jpg`,
+            aliases: i === 0 ? 'Ø§Ø­Ù…Ø¯ Ú©Ø±ÛŒÙ…ÛŒ, Ahmad Karimi' : `User ${i + 1}, Ahmad User`,
+            thumb_url: `/brand/brand-mark-4x.svg % 2 === 0 ? 'men' : 'women'}/${32 + i}.jpg`,
           },
         })),
       ],
@@ -412,8 +412,8 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
       hits: [
         ...Array.from({ length: 20 }, (_, i) => ({
           id: `mock-graph-${i + 1}`,
-          title: `گراف: ${i % 4 === 0 ? 'Person' : i % 4 === 1 ? 'Account' : i % 4 === 2 ? 'Transaction' : 'Document'}(ahmad_${i + 1}) — ارتباط با ${i % 3 === 0 ? 'Account' : i % 3 === 1 ? 'Person' : 'Organization'}`,
-          snippet: `یال ${i % 3 === 0 ? 'HAS_ALIAS' : i % 3 === 1 ? 'CONNECTED_TO' : 'OWNS'} → «احمد»${i % 2 === 0 ? '، «Ahmad»' : ''}${i % 3 === 0 ? '، «احمد کریمی»' : ''}`,
+          title: `Ú¯Ø±Ø§Ù: ${i % 4 === 0 ? 'Person' : i % 4 === 1 ? 'Account' : i % 4 === 2 ? 'Transaction' : 'Document'}(ahmad_${i + 1}) â€” Ø§Ø±ØªØ¨Ø§Ø· Ø¨Ø§ ${i % 3 === 0 ? 'Account' : i % 3 === 1 ? 'Person' : 'Organization'}`,
+          snippet: `ÛŒØ§Ù„ ${i % 3 === 0 ? 'HAS_ALIAS' : i % 3 === 1 ? 'CONNECTED_TO' : 'OWNS'} â†’ Â«Ø§Ø­Ù…Ø¯Â»${i % 2 === 0 ? 'ØŒ Â«AhmadÂ»' : ''}${i % 3 === 0 ? 'ØŒ Â«Ø§Ø­Ù…Ø¯ Ú©Ø±ÛŒÙ…ÛŒÂ»' : ''}`,
           href: routes.graphExplorer,
           score: 0.79 - i * 0.02,
           meta: { 
@@ -429,16 +429,16 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
       hits: [
         {
           id: 'task-mock-001',
-          title: 'Operation North Star — Review import checklist',
-          snippet: 'Assigned task in proj-mock-001 · due this week · linked case-mock-4412',
+          title: 'Operation North Star â€” Review import checklist',
+          snippet: 'Assigned task in proj-mock-001 Â· due this week Â· linked case-mock-4412',
           href: routes.projects.task('proj-mock-001', 'task-mock-001'),
           score: 0.72,
           meta: { project_id: 'proj-mock-001', task_id: 'task-mock-001', status: 'in_progress' },
         },
         {
           id: 'task-mock-002',
-          title: 'Financial Review — Reconcile transaction graph',
-          snippet: 'High priority · proj-mock-002 · analyst assignment',
+          title: 'Financial Review â€” Reconcile transaction graph',
+          snippet: 'High priority Â· proj-mock-002 Â· analyst assignment',
           href: routes.projects.task('proj-mock-002', 'task-mock-002'),
           score: 0.68,
           meta: { project_id: 'proj-mock-002', priority: 'high' },
@@ -446,14 +446,14 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         {
           id: 'proj-mock-001',
           title: 'Project: Operation North Star',
-          snippet: 'Active project · 12 open tasks · 3 linked cases',
+          snippet: 'Active project Â· 12 open tasks Â· 3 linked cases',
           href: routes.projects.detail('proj-mock-001'),
           score: 0.61,
           meta: { type: 'project', status: 'active' },
         },
         ...Array.from({ length: 5 }, (_, i) => ({
           id: `task-mock-search-${i + 3}`,
-          title: `Task sample ${i + 3} — ${query.slice(0, 20) || 'projects'}`,
+          title: `Task sample ${i + 3} â€” ${query.slice(0, 20) || 'projects'}`,
           snippet: `Mock projects & tasks lane hit for federated search UI testing.`,
           href: routes.projects.myTasksAssigned,
           score: 0.55 - i * 0.04,
@@ -506,15 +506,15 @@ function buildRichAhmadResponse(query: string, mode: OneSearchMode): OneSearchRe
         'docx': 4,
         'xlsx': 3,
       },
-      scriptVariants: ['احمد', 'Ahmad', 'ahmad', 'احمدی'],
-      relatedEntities: ['کریمی', 'پرونده 4412', 'IBAN-IR-...', 'تیم شمال'],
+      scriptVariants: ['Ø§Ø­Ù…Ø¯', 'Ahmad', 'ahmad', 'Ø§Ø­Ù…Ø¯ÛŒ'],
+      relatedEntities: ['Ú©Ø±ÛŒÙ…ÛŒ', 'Ù¾Ø±ÙˆÙ†Ø¯Ù‡ 4412', 'IBAN-IR-...', 'ØªÛŒÙ… Ø´Ù…Ø§Ù„'],
     },
     suggestions: {
       relatedSearches: [
-        'احمد کریمی پرونده',
+        'Ø§Ø­Ù…Ø¯ Ú©Ø±ÛŒÙ…ÛŒ Ù¾Ø±ÙˆÙ†Ø¯Ù‡',
         'ahmad karimi case',
-        'IBAN احمد',
-        'پرونده 4412',
+        'IBAN Ø§Ø­Ù…Ø¯',
+        'Ù¾Ø±ÙˆÙ†Ø¯Ù‡ 4412',
       ],
     },
   };
@@ -532,8 +532,8 @@ function buildGenericResponse(query: string, mode: OneSearchMode): OneSearchResp
         hits: [
           {
             id: 'gen-chat-1',
-            title: `نتیجهٔ نمونه — چت (${q.slice(0, 24)}${q.length > 24 ? '…' : ''})`,
-            snippet: `…متن نمونه حاوی عبارت جستجو: «${q}» برای تست رابط.`,
+            title: `Ù†ØªÛŒØ¬Ù‡Ù” Ù†Ù…ÙˆÙ†Ù‡ â€” Ú†Øª (${q.slice(0, 24)}${q.length > 24 ? 'â€¦' : ''})`,
+            snippet: `â€¦Ù…ØªÙ† Ù†Ù…ÙˆÙ†Ù‡ Ø­Ø§ÙˆÛŒ Ø¹Ø¨Ø§Ø±Øª Ø¬Ø³ØªØ¬Ùˆ: Â«${q}Â» Ø¨Ø±Ø§ÛŒ ØªØ³Øª Ø±Ø§Ø¨Ø·.`,
             href: routes.aiChat.root,
             score: 0.55,
           },
@@ -544,8 +544,8 @@ function buildGenericResponse(query: string, mode: OneSearchMode): OneSearchResp
         hits: [
           {
             id: 'gen-case-1',
-            title: 'پروندهٔ نمونه MOCK-GENERIC',
-            snippet: `در چک‌لیست واردات، رشتهٔ «${q}» در فیلد توضیحات یافت شد.`,
+            title: 'Ù¾Ø±ÙˆÙ†Ø¯Ù‡Ù” Ù†Ù…ÙˆÙ†Ù‡ MOCK-GENERIC',
+            snippet: `Ø¯Ø± Ú†Ú©â€ŒÙ„ÛŒØ³Øª ÙˆØ§Ø±Ø¯Ø§ØªØŒ Ø±Ø´ØªÙ‡Ù” Â«${q}Â» Ø¯Ø± ÙÛŒÙ„Ø¯ ØªÙˆØ¶ÛŒØ­Ø§Øª ÛŒØ§ÙØª Ø´Ø¯.`,
             href: routes.cases.list,
             score: 0.48,
           },
@@ -557,7 +557,7 @@ function buildGenericResponse(query: string, mode: OneSearchMode): OneSearchResp
           {
             id: 'gen-file-1',
             title: `file_containing_${q.slice(0, 12).replace(/\s+/g, '_') || 'query'}.txt`,
-            snippet: 'نمونهٔ کوتاه برای بررسی کارت نتیجه و اسنیپت.',
+            snippet: 'Ù†Ù…ÙˆÙ†Ù‡Ù” Ú©ÙˆØªØ§Ù‡ Ø¨Ø±Ø§ÛŒ Ø¨Ø±Ø±Ø³ÛŒ Ú©Ø§Ø±Øª Ù†ØªÛŒØ¬Ù‡ Ùˆ Ø§Ø³Ù†ÛŒÙ¾Øª.',
             href: routes.fileExplorer,
             score: 0.41,
           },
@@ -571,7 +571,7 @@ function buildGenericResponse(query: string, mode: OneSearchMode): OneSearchResp
         hits: [
           {
             id: 'gen-task-1',
-            title: `Task / project match — «${q.slice(0, 24)}${q.length > 24 ? '…' : ''}»`,
+            title: `Task / project match â€” Â«${q.slice(0, 24)}${q.length > 24 ? 'â€¦' : ''}Â»`,
             snippet: 'Sample projects & tasks lane hit for layout testing.',
             href: routes.projects.feed,
             score: 0.38,
@@ -619,3 +619,4 @@ export async function runMockOneSearch(params: {
   }
   return buildGenericResponse(q, params.mode);
 }
+

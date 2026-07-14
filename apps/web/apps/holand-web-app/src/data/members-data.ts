@@ -2,7 +2,7 @@
   {
     id: 1,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Albert Flores',
     email: 'tanya.hill@example.com',
     color: 'text-[#00a76f]',
@@ -12,7 +12,7 @@
   {
     id: 2,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Jenny Wilson',
     email: 'michael.mitc@example.com',
     color: 'text-[#00b8d9]',
@@ -22,7 +22,7 @@
   {
     id: 3,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Bessie Cooper',
     email: 'curtis.weaver@example.com',
     color: 'text-[#ff5630]',
@@ -32,7 +32,7 @@
   {
     id: 4,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Wade Warren',
     email: 'debra.holt@example.com',
     color: 'text-[#00a76f]',
@@ -42,7 +42,7 @@
   {
     id: 5,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Robert Fox',
     email: 'michael.mitc@example.com',
     color: 'text-[#00b8d9]',
@@ -52,7 +52,7 @@
   {
     id: 6,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Sungla hass',
     email: 'sungla@example.com',
     color: 'text-[#ff5630]',
@@ -62,7 +62,7 @@
   {
     id: 7,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Shoeie Fashio',
     email: 'fashio@example.com',
     color: 'text-[#00a76f]',
@@ -72,7 +72,7 @@
   {
     id: 8,
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'fume lueak',
     email: 'lueak@example.com',
     color: 'text-[#00b8d9]',
@@ -80,3 +80,4 @@
     status: 'away',
   },
 ];
+

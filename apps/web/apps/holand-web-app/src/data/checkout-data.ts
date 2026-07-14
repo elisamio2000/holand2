@@ -3,21 +3,21 @@ export const shippingMethodData = [
   {
     id: 1,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'FedEx',
     value: 'fedex',
   },
   {
     id: 2,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'ups',
     value: 'ups',
   },
   {
     id: 3,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'DHL',
     value: 'dhl',
   },
@@ -60,7 +60,7 @@ export const paymentMethodData = [
   {
     id: 1,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'PayPal',
     value: 'paypal',
     description:
@@ -70,7 +70,7 @@ export const paymentMethodData = [
   {
     id: 2,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'Stripe',
     value: 'stripe',
     description:
@@ -80,7 +80,7 @@ export const paymentMethodData = [
   {
     id: 3,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     name: 'MasterCard',
     value: 'mastercard',
     description:
@@ -88,3 +88,4 @@ export const paymentMethodData = [
     defaultChecked: false,
   },
 ];
+

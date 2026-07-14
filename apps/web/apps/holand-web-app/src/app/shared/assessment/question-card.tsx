@@ -6,6 +6,7 @@
 
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { Button, Text, Title } from 'rizzui';
 import cn from '@/lib/cn';
 import type { AssessmentQuestion, AgeBand } from '@/types/assessment.types';
@@ -42,6 +43,25 @@ export default function QuestionCard({
   const prompt = question.promptByAgeBand?.[ageBand] ?? question.prompt;
   const isLikert = question.kind === 'likert5';
   const useSimplified = isLikert && theme.simplifiedLikertLabels;
+  const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Cancel any pending auto-advance when the question changes (new question mounted)
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current);
+    };
+  }, [question.id]);
+
+  function handleSelect(selected: number | string) {
+    onAnswer(selected);
+    // Auto-advance to next question after a short pause — NOT on the last question
+    if (!isLast && onNext) {
+      if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current);
+      autoAdvanceTimer.current = setTimeout(() => {
+        onNext();
+      }, 380);
+    }
+  }
 
   return (
     <div
@@ -71,14 +91,14 @@ export default function QuestionCard({
             value={value}
             useSimplified={useSimplified}
             fontScale={theme.fontScale}
-            onSelect={onAnswer}
+            onSelect={handleSelect}
           />
         ) : (
           <BinaryOptions
             options={question.options}
             value={value}
             fontScale={theme.fontScale}
-            onSelect={onAnswer}
+            onSelect={handleSelect}
           />
         )}
       </div>

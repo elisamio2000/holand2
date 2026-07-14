@@ -17,7 +17,7 @@ export const notificationsData = [
   },
   {
     id: 2,
-    name: 'Ai assistant dashboard redesign',
+    name: 'Holand dashboard redesign',
     icon: CubeSolidIcon,
     unRead: true,
     sendTime: '2023-05-30T09:35:31.820Z',

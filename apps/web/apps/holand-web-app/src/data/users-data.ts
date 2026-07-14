@@ -28,7 +28,7 @@ export const STATUSES = {
 export const usersData = [
   {
     id: '0256',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Bessie Beatty',
@@ -40,7 +40,7 @@ export const usersData = [
   },
   {
     id: '6177',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Joshua Green',
@@ -52,7 +52,7 @@ export const usersData = [
   },
   {
     id: '5456',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Wendy Ankunding',
@@ -64,7 +64,7 @@ export const usersData = [
   },
   {
     id: '6370',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Daryl Wilderman',
@@ -76,7 +76,7 @@ export const usersData = [
   },
   {
     id: '8681',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Antonia Ankunding Jr.',
@@ -88,7 +88,7 @@ export const usersData = [
   },
   {
     id: '1083',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Marie VonRueden',
@@ -100,7 +100,7 @@ export const usersData = [
   },
   {
     id: '9425',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Katherine Parisian',
@@ -112,7 +112,7 @@ export const usersData = [
   },
   {
     id: '4775',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Jaime Tremblay',
@@ -124,7 +124,7 @@ export const usersData = [
   },
   {
     id: '5854',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Mr. Abel Hettinger',
@@ -136,7 +136,7 @@ export const usersData = [
   },
   {
     id: '9964',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Velma Flatley',
@@ -148,7 +148,7 @@ export const usersData = [
   },
   {
     id: '6964',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Ebony Mertz-Grimes',
@@ -160,7 +160,7 @@ export const usersData = [
   },
   {
     id: '3866',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Alma Ebert IV',
@@ -172,7 +172,7 @@ export const usersData = [
   },
   {
     id: '4895',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Dr. Lynn Hills V',
@@ -184,7 +184,7 @@ export const usersData = [
   },
   {
     id: '8615',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Leona Berge',
@@ -196,7 +196,7 @@ export const usersData = [
   },
   {
     id: '0735',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Vicky Gorczany',
@@ -208,7 +208,7 @@ export const usersData = [
   },
   {
     id: '8778',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Elsie Veum',
@@ -220,7 +220,7 @@ export const usersData = [
   },
   {
     id: '1520',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Sandy Kunde',
@@ -232,7 +232,7 @@ export const usersData = [
   },
   {
     id: '7680',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Mrs. Melanie Harber',
@@ -244,7 +244,7 @@ export const usersData = [
   },
   {
     id: '4530',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Ben Schiller',
@@ -256,7 +256,7 @@ export const usersData = [
   },
   {
     id: '0649',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Ramon Schneider',
@@ -268,7 +268,7 @@ export const usersData = [
   },
   {
     id: '3675',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Pearl Harvey',
@@ -280,7 +280,7 @@ export const usersData = [
   },
   {
     id: '3104',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Orville Heathcote',
@@ -292,7 +292,7 @@ export const usersData = [
   },
   {
     id: '5806',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Sonia Schinner',
@@ -304,7 +304,7 @@ export const usersData = [
   },
   {
     id: '6235',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Franklin Tillman',
@@ -316,7 +316,7 @@ export const usersData = [
   },
   {
     id: '8853',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Rick Dietrich',
@@ -328,7 +328,7 @@ export const usersData = [
   },
   {
     id: '0278',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Mathew Lang III',
@@ -340,7 +340,7 @@ export const usersData = [
   },
   {
     id: '7029',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Bob Douglas',
@@ -352,7 +352,7 @@ export const usersData = [
   },
   {
     id: '0017',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Alexandra Nicolas',
@@ -364,7 +364,7 @@ export const usersData = [
   },
   {
     id: '4295',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Jan Schiller',
@@ -376,7 +376,7 @@ export const usersData = [
   },
   {
     id: '4133',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Dr. Leigh Wolf',
@@ -388,7 +388,7 @@ export const usersData = [
   },
   {
     id: '8054',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Bennie Block',
@@ -400,7 +400,7 @@ export const usersData = [
   },
   {
     id: '3288',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Christopher Veum',
@@ -412,7 +412,7 @@ export const usersData = [
   },
   {
     id: '6680',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Claudia Kutch I',
@@ -424,7 +424,7 @@ export const usersData = [
   },
   {
     id: '4369',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Hubert Glover',
@@ -436,7 +436,7 @@ export const usersData = [
   },
   {
     id: '2882',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Dr. Allison Collier',
@@ -448,7 +448,7 @@ export const usersData = [
   },
   {
     id: '0456',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Patty Schimmel',
@@ -460,7 +460,7 @@ export const usersData = [
   },
   {
     id: '7503',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Marcella Roberts',
@@ -472,7 +472,7 @@ export const usersData = [
   },
   {
     id: '8237',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Claire Schumm',
@@ -484,7 +484,7 @@ export const usersData = [
   },
   {
     id: '1885',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Marcella Weber',
@@ -496,7 +496,7 @@ export const usersData = [
   },
   {
     id: '2335',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Pete Little-Schaefer',
@@ -508,7 +508,7 @@ export const usersData = [
   },
   {
     id: '1187',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Irma Legros-Hilpert',
@@ -520,7 +520,7 @@ export const usersData = [
   },
   {
     id: '6848',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'May Vandervort',
@@ -532,7 +532,7 @@ export const usersData = [
   },
   {
     id: '0542',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Belinda Goldner',
@@ -544,7 +544,7 @@ export const usersData = [
   },
   {
     id: '5708',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Doreen Spencer',
@@ -556,7 +556,7 @@ export const usersData = [
   },
   {
     id: '9416',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Bethany Reilly',
@@ -568,7 +568,7 @@ export const usersData = [
   },
   {
     id: '0756',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Ellis Hartmann',
@@ -580,7 +580,7 @@ export const usersData = [
   },
   {
     id: '6171',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Lance Dickens',
@@ -592,7 +592,7 @@ export const usersData = [
   },
   {
     id: '9363',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Eva Lang',
@@ -604,7 +604,7 @@ export const usersData = [
   },
   {
     id: '5455',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Latoya Beatty',
@@ -616,7 +616,7 @@ export const usersData = [
   },
   {
     id: '7949',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Douglas Hand',
@@ -628,7 +628,7 @@ export const usersData = [
   },
   {
     id: '1568',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Virgil Stracke',
@@ -640,7 +640,7 @@ export const usersData = [
   },
   {
     id: '8505',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Mr. Amos Botsford',
@@ -652,7 +652,7 @@ export const usersData = [
   },
   {
     id: '1619',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Gilbert Mertz Sr.',
@@ -664,7 +664,7 @@ export const usersData = [
   },
   {
     id: '7952',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Clinton Mante',
@@ -676,7 +676,7 @@ export const usersData = [
   },
   {
     id: '3376',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'April Von-Davis',
@@ -688,7 +688,7 @@ export const usersData = [
   },
   {
     id: '3544',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Hugo Veum',
@@ -700,7 +700,7 @@ export const usersData = [
   },
   {
     id: '5807',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Patrick Keebler',
@@ -712,7 +712,7 @@ export const usersData = [
   },
   {
     id: '9200',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Everett Bins Jr.',
@@ -724,7 +724,7 @@ export const usersData = [
   },
   {
     id: '7412',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Sherman Ondricka',
@@ -736,7 +736,7 @@ export const usersData = [
   },
   {
     id: '5879',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Rufus Conn',
@@ -748,7 +748,7 @@ export const usersData = [
   },
   {
     id: '2784',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Ms. Kim Tillman',
@@ -760,7 +760,7 @@ export const usersData = [
   },
   {
     id: '6320',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Eddie Wisozk',
@@ -772,7 +772,7 @@ export const usersData = [
   },
   {
     id: '0973',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Vincent Hand',
@@ -784,7 +784,7 @@ export const usersData = [
   },
   {
     id: '5323',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Marvin Langworth',
@@ -796,7 +796,7 @@ export const usersData = [
   },
   {
     id: '5052',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Alex Jenkins III',
@@ -808,7 +808,7 @@ export const usersData = [
   },
   {
     id: '6099',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Muriel Boyer',
@@ -820,7 +820,7 @@ export const usersData = [
   },
   {
     id: '8420',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Bernadette Bode III',
@@ -832,7 +832,7 @@ export const usersData = [
   },
   {
     id: '9621',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Louis Rippin',
@@ -844,7 +844,7 @@ export const usersData = [
   },
   {
     id: '4794',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Silvia Leuschke',
@@ -856,7 +856,7 @@ export const usersData = [
   },
   {
     id: '4050',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Rosie Hintz',
@@ -868,7 +868,7 @@ export const usersData = [
   },
   {
     id: '9681',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Ray Marquardt PhD',
@@ -880,7 +880,7 @@ export const usersData = [
   },
   {
     id: '0596',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Alfred Braun',
@@ -892,7 +892,7 @@ export const usersData = [
   },
   {
     id: '4156',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Jody Kshlerin',
@@ -904,7 +904,7 @@ export const usersData = [
   },
   {
     id: '9124',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'George Ratke',
@@ -916,7 +916,7 @@ export const usersData = [
   },
   {
     id: '8363',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Albert Purdy Sr.',
@@ -928,7 +928,7 @@ export const usersData = [
   },
   {
     id: '4473',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Marsha Cummings',
@@ -940,7 +940,7 @@ export const usersData = [
   },
   {
     id: '0716',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Miss Kellie Grady',
@@ -952,7 +952,7 @@ export const usersData = [
   },
   {
     id: '5425',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Holly Pfannerstill',
@@ -964,7 +964,7 @@ export const usersData = [
   },
   {
     id: '7397',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Mabel Blick',
@@ -976,7 +976,7 @@ export const usersData = [
   },
   {
     id: '2861',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Willie Cremin',
@@ -988,7 +988,7 @@ export const usersData = [
   },
   {
     id: '9210',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Miss Tabitha Feil',
@@ -1000,7 +1000,7 @@ export const usersData = [
   },
   {
     id: '6085',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Megan Corkery',
@@ -1012,7 +1012,7 @@ export const usersData = [
   },
   {
     id: '9633',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Dwight Baumbach',
@@ -1024,7 +1024,7 @@ export const usersData = [
   },
   {
     id: '7815',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Blanca Raynor Sr.',
@@ -1036,7 +1036,7 @@ export const usersData = [
   },
   {
     id: '1461',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Loren Kunde',
@@ -1048,7 +1048,7 @@ export const usersData = [
   },
   {
     id: '1437',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Ms. Patty Gerlach',
@@ -1060,7 +1060,7 @@ export const usersData = [
   },
   {
     id: '0569',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Jenna Lang',
@@ -1072,7 +1072,7 @@ export const usersData = [
   },
   {
     id: '8289',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Leroy Buckridge',
@@ -1084,7 +1084,7 @@ export const usersData = [
   },
   {
     id: '3468',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Dr. Ada Koss',
@@ -1096,7 +1096,7 @@ export const usersData = [
   },
   {
     id: '6174',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Mr. Francis Breitenberg',
@@ -1108,7 +1108,7 @@ export const usersData = [
   },
   {
     id: '1831',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Omar Schimmel',
@@ -1120,7 +1120,7 @@ export const usersData = [
   },
   {
     id: '8643',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Delbert Brekke',
@@ -1132,7 +1132,7 @@ export const usersData = [
   },
   {
     id: '3483',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Dr. Patrick Emard',
@@ -1144,7 +1144,7 @@ export const usersData = [
   },
   {
     id: '2303',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Mitchell Hermiston',
@@ -1156,7 +1156,7 @@ export const usersData = [
   },
   {
     id: '8674',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Dr. Robyn Casper',
@@ -1168,7 +1168,7 @@ export const usersData = [
   },
   {
     id: '1973',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Eula Gleichner',
@@ -1180,7 +1180,7 @@ export const usersData = [
   },
   {
     id: '5985',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Erin Schumm Jr.',
@@ -1192,7 +1192,7 @@ export const usersData = [
   },
   {
     id: '9780',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Celia Miller',
@@ -1204,7 +1204,7 @@ export const usersData = [
   },
   {
     id: '3294',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Katrina Price',
@@ -1216,7 +1216,7 @@ export const usersData = [
   },
   {
     id: '0649',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     fullName: 'Leonard Franecki Sr.',
@@ -1227,3 +1227,4 @@ export const usersData = [
     status: STATUSES.Pending,
   },
 ];
+

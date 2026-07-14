@@ -7,11 +7,28 @@
 import axios, { AxiosInstance } from 'axios';
 
 function resolveHolandApiUrl(): string {
-  return (
+  const configured =
     process.env.NEXT_PUBLIC_HOLAND_API_URL?.trim() ||
     process.env.NEXT_PUBLIC_API_GATEWAY_URL?.trim() ||
-    'http://localhost:8000'
-  );
+    '';
+
+  // Browser calls should prefer same-origin proxy to avoid CORS on direct :8000/:8001 targets.
+  if (typeof window !== 'undefined') {
+    if (!configured) {
+      return '/api/gateway';
+    }
+    try {
+      const parsed = new URL(configured, window.location.origin);
+      if (parsed.origin !== window.location.origin) {
+        return '/api/gateway';
+      }
+    } catch {
+      return '/api/gateway';
+    }
+    return configured;
+  }
+
+  return configured || 'http://localhost:8000';
 }
 
 export const holandApiClient: AxiosInstance = axios.create({

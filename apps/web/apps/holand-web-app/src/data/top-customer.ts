@@ -21,7 +21,7 @@ export const topCustomers = [
     id: 'SE858',
     user: {
       name: 'Eleanor Tillman',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'jared_weimann57@yahoo.com',
@@ -37,7 +37,7 @@ export const topCustomers = [
     id: 'VP325',
     user: {
       name: 'Jack Rath',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'gloria_mohr@hotmail.com',
@@ -53,7 +53,7 @@ export const topCustomers = [
     id: 'EC639',
     user: {
       name: 'Dr. Terri Stracke',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'aliza.wiza29@gmail.com',
@@ -69,7 +69,7 @@ export const topCustomers = [
     id: 'MZ671',
     user: {
       name: 'Ms. Doreen Aufderhar',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'lurline.nienow45@yahoo.com',
@@ -85,7 +85,7 @@ export const topCustomers = [
     id: 'RG510',
     user: {
       name: 'Florence Hoeger',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'maiya_bailey@gmail.com',
@@ -101,7 +101,7 @@ export const topCustomers = [
     id: 'QS080',
     user: {
       name: 'Dr. Albert Beer',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'jarred_sipes@hotmail.com',
@@ -117,7 +117,7 @@ export const topCustomers = [
     id: 'UO154',
     user: {
       name: 'Sean Goyette',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'sigmund_zieme@yahoo.com',
@@ -133,7 +133,7 @@ export const topCustomers = [
     id: 'SO247',
     user: {
       name: 'Gregg Kling',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'mason_macejkovic@gmail.com',
@@ -149,7 +149,7 @@ export const topCustomers = [
     id: 'LR832',
     user: {
       name: 'Chelsea Thiel',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'abby.kemmer68@hotmail.com',
@@ -165,7 +165,7 @@ export const topCustomers = [
     id: 'ME262',
     user: {
       name: 'Virginia Schumm',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'royal.schinner79@hotmail.com',
@@ -181,7 +181,7 @@ export const topCustomers = [
     id: 'YP369',
     user: {
       name: 'Mrs. Opal Kuphal-Crist',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'doris_parisian@yahoo.com',
@@ -197,7 +197,7 @@ export const topCustomers = [
     id: 'ZK736',
     user: {
       name: 'Tanya Wintheiser',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'mina_hilpert@yahoo.com',
@@ -213,7 +213,7 @@ export const topCustomers = [
     id: 'NS479',
     user: {
       name: 'Lola Walter V',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'evie_deckow@gmail.com',
@@ -229,7 +229,7 @@ export const topCustomers = [
     id: 'DF799',
     user: {
       name: 'Ronnie Grant-Ruecker',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'clemmie_bergstrom@gmail.com',
@@ -245,7 +245,7 @@ export const topCustomers = [
     id: 'AZ892',
     user: {
       name: 'Fannie Hartmann',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
       email: 'keith_herzog57@yahoo.com',
@@ -258,3 +258,4 @@ export const topCustomers = [
     cost: '636.00',
   },
 ];
+

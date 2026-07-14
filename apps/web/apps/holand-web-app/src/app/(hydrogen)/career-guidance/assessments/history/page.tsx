@@ -42,14 +42,22 @@ export default function AssessmentHistoryPage() {
   const router = useRouter();
   const [items, setItems] = useState<AssessmentHistoryItem[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [selectedForCompare, setSelectedForCompare] = useState<string[]>([]);
 
   useEffect(() => {
     let cancelled = false;
+    setFetchError(null);
     assessmentService
       .listMySessions()
       .then((data) => {
         if (!cancelled) setItems(data);
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setFetchError(err instanceof Error ? err.message : 'خطا در بارگذاری تاریخچه');
+          setItems([]);
+        }
       })
       .finally(() => {
         if (!cancelled) setIsLoading(false);
@@ -113,6 +121,29 @@ export default function AssessmentHistoryPage() {
       <section className="mt-8">
         {isLoading ? (
           <Text className="text-sm text-gray-500">در حال بارگذاری...</Text>
+        ) : fetchError ? (
+          <WidgetCard title="خطا در بارگذاری تاریخچه">
+            <Text className="mt-3 text-sm text-red-600">{fetchError}</Text>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-4"
+              onClick={() => {
+                setIsLoading(true);
+                setFetchError(null);
+                assessmentService
+                  .listMySessions()
+                  .then(setItems)
+                  .catch((err: unknown) => {
+                    setFetchError(err instanceof Error ? err.message : 'خطا در بارگذاری تاریخچه');
+                    setItems([]);
+                  })
+                  .finally(() => setIsLoading(false));
+              }}
+            >
+              تلاش مجدد
+            </Button>
+          </WidgetCard>
         ) : !items || items.length === 0 ? (
           <WidgetCard title="هنوز آزمونی ثبت نشده">
             <Text className="mt-3 text-sm text-gray-500">

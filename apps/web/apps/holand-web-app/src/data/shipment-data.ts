@@ -68,13 +68,13 @@ export const shipmentData = [
     date: '2018-06-08T23:09:12.576Z',
     sender: {
       name: 'Tracy Rempel',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Priscilla Price',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -89,13 +89,13 @@ export const shipmentData = [
     date: '2021-08-23T01:40:25.825Z',
     sender: {
       name: 'Nelson Toy',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Wesley Gulgowski-Hayes',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -110,13 +110,13 @@ export const shipmentData = [
     date: '2018-12-12T14:11:29.183Z',
     sender: {
       name: 'Cristina Waelchi',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Owen Stokes',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -131,13 +131,13 @@ export const shipmentData = [
     date: '2021-07-08T18:04:03.850Z',
     sender: {
       name: 'Carole Bogan',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Billie Nienow',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -152,13 +152,13 @@ export const shipmentData = [
     date: '2022-12-28T05:29:57.101Z',
     sender: {
       name: 'Marian Will',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Nicholas Carter',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -173,13 +173,13 @@ export const shipmentData = [
     date: '2022-03-22T18:34:46.584Z',
     sender: {
       name: 'Kristen Kirlin',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Audrey Conroy',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -194,13 +194,13 @@ export const shipmentData = [
     date: '2022-04-28T00:43:49.934Z',
     sender: {
       name: 'Kim Nicolas',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Randolph Heller',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -215,13 +215,13 @@ export const shipmentData = [
     date: '2018-01-30T08:52:47.969Z',
     sender: {
       name: 'Jaime Murazik',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Annette Hyatt',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -236,13 +236,13 @@ export const shipmentData = [
     date: '2021-12-03T10:40:20.654Z',
     sender: {
       name: 'Kathy Zemlak',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Gwen Bernier',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -257,13 +257,13 @@ export const shipmentData = [
     date: '2021-09-01T19:33:23.836Z',
     sender: {
       name: 'Mr. Luis Schmeler-Legros',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Noel Funk',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -278,13 +278,13 @@ export const shipmentData = [
     date: '2018-12-17T02:29:56.581Z',
     sender: {
       name: 'Laurie Beer',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'James Welch',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -299,13 +299,13 @@ export const shipmentData = [
     date: '2018-11-12T19:24:31.825Z',
     sender: {
       name: 'Cheryl Corkery',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Mr. Kyle Pfeffer',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -320,13 +320,13 @@ export const shipmentData = [
     date: '2019-07-21T21:25:28.867Z',
     sender: {
       name: 'Bennie Weber',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Arnold Leannon',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -341,13 +341,13 @@ export const shipmentData = [
     date: '2018-07-19T00:17:13.182Z',
     sender: {
       name: 'Moses Bashirian',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Dr. Darlene Roberts',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -362,13 +362,13 @@ export const shipmentData = [
     date: '2019-09-27T03:37:39.519Z',
     sender: {
       name: 'Beulah Rohan',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Arthur Goyette',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -383,13 +383,13 @@ export const shipmentData = [
     date: '2020-10-05T04:42:12.119Z',
     sender: {
       name: 'Kelli Pfannerstill',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Dr. Christopher Baumbach',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -404,13 +404,13 @@ export const shipmentData = [
     date: '2018-02-16T16:28:23.890Z',
     sender: {
       name: 'Terry Kautzer',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Alfredo Cruickshank',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -425,13 +425,13 @@ export const shipmentData = [
     date: '2022-08-12T19:29:25.633Z',
     sender: {
       name: 'Marco Koss',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Mario Howe',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -446,13 +446,13 @@ export const shipmentData = [
     date: '2018-06-21T09:13:03.760Z',
     sender: {
       name: 'Eugene Feest',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Sue Lind',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -467,13 +467,13 @@ export const shipmentData = [
     date: '2021-11-05T23:53:38.522Z',
     sender: {
       name: 'Pat Bruen',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Ted Ortiz',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -488,13 +488,13 @@ export const shipmentData = [
     date: '2018-04-17T14:57:41.296Z',
     sender: {
       name: 'Carole Price',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Donnie Medhurst DVM',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -509,13 +509,13 @@ export const shipmentData = [
     date: '2021-10-22T13:49:10.836Z',
     sender: {
       name: 'Gilbert McKenzie',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Kristen Legros',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -530,13 +530,13 @@ export const shipmentData = [
     date: '2023-07-29T06:31:45.685Z',
     sender: {
       name: 'Muriel Gorczany',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Wilfred Larson',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -551,13 +551,13 @@ export const shipmentData = [
     date: '2021-08-23T11:30:13.169Z',
     sender: {
       name: 'Lela Powlowski',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Dora Bradtke',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -572,13 +572,13 @@ export const shipmentData = [
     date: '2020-05-28T08:50:59.653Z',
     sender: {
       name: 'Ginger Effertz',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     receiver: {
       name: 'Janis Schiller',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -588,3 +588,4 @@ export const shipmentData = [
     status: 'Out For Delivery',
   },
 ];
+

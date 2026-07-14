@@ -84,6 +84,6 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|api/auth|api/health|auth/|legal/|access-denied|not-found|maintenance|coming-soon|welcome|icon|apple-icon)(?!.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|mjs|json|woff|woff2|ttf|eot|map|txt|xml|pdf|pbf|webm|mp4|mp3|m4a|wav|ogg|flac|aac|html)$).*)',
+    '/((?!_next/static|_next/image|api/auth|api/health|auth/|legal/|access-denied|not-found|maintenance|coming-soon|welcome|icon|apple-icon.svg)(?!.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|mjs|json|woff|woff2|ttf|eot|map|txt|xml|pdf|pbf|webm|mp4|mp3|m4a|wav|ogg|flac|aac|html)$).*)',
   ],
 };

@@ -44,7 +44,7 @@ export function isSilentMiddlewarePath(pathname: string): boolean {
   if (pathname.startsWith('/api/auth/_log')) return true;
   if (isPublicAuthGatewayProxyPath(pathname)) return true;
   if (pathname === '/api/health') return true;
-  if (pathname === '/icon' || pathname === '/apple-icon') return true;
+  if (pathname === '/icon' || pathname === '/apple-icon.svg') return true;
   if (/\.(png|jpe?g|gif|webp|ico|svg|woff2?|css|js|mjs|map|txt)$/i.test(pathname)) return true;
   return false;
 }

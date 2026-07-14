@@ -6,12 +6,15 @@
 
 import { routes } from '@/config/routes';
 import {
+  PiBrainDuotone,
   PiClipboardTextDuotone,
+  PiGearDuotone,
   PiNewspaperClippingDuotone,
   PiShieldCheckDuotone,
   PiSquaresFourDuotone,
   PiUserCircleDuotone,
   PiUserGearDuotone,
+  PiUsersThreeDuotone,
 } from 'react-icons/pi';
 
 /**
@@ -83,5 +86,28 @@ export const menuItems: MenuItem[] = [
     name: 'nav.accountSettings',
     href: routes.forms.profileSettings,
     icon: <PiUserGearDuotone />,
+  },
+
+  // ==========================================
+  // Admin Panel — only visible to admin/super-admin
+  // ==========================================
+  { name: 'nav.adminSection', section: 'admin' },
+  {
+    name: 'nav.adminUsers',
+    href: '/admin/users',
+    icon: <PiUsersThreeDuotone />,
+    section: 'admin',
+  },
+  {
+    name: 'nav.adminAiSettings',
+    href: '/admin/ai-settings',
+    icon: <PiBrainDuotone />,
+    section: 'admin',
+  },
+  {
+    name: 'nav.adminSettings',
+    href: '/admin/dashboard',
+    icon: <PiGearDuotone />,
+    section: 'admin',
   },
 ];

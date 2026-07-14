@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import { Title, Text } from 'rizzui';
 import { PiImageDuotone } from 'react-icons/pi';
 import WidgetCard from '@core/components/cards/widget-card';
@@ -8,7 +8,7 @@ const activities = [
     title: 'Today',
     threads: [
       {
-        avatar: '/logo.png',
+        avatar: '/brand/brand-mark-4x.svg',
         username: 'Denny Albuz',
         logMessage: 'added new file in',
         alias: 'photos',
@@ -16,7 +16,7 @@ const activities = [
         files: ['Untitled photo.jpg', 'brief-feature-chats.png'],
       },
       {
-        avatar: '/logo.png',
+        avatar: '/brand/brand-mark-4x.svg',
         username: 'Monty Prismic',
         logMessage: 'edited a file',
         alias: '',
@@ -24,7 +24,7 @@ const activities = [
         files: ['Saraly statement.doc'],
       },
       {
-        avatar: '/logo.png',
+        avatar: '/brand/brand-mark-4x.svg',
         username: 'Jacky Andersion',
         logMessage: 'uploaded a new file',
         alias: '',
@@ -37,7 +37,7 @@ const activities = [
     title: 'Yesterday',
     threads: [
       {
-        avatar: '/logo.png',
+        avatar: '/brand/brand-mark-4x.svg',
         username: 'Wolbu fenny',
         logMessage: 'added new file in',
         alias: 'photos',
@@ -138,3 +138,4 @@ export default function RecentActivities({
     </div>
   );
 }
+

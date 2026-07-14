@@ -262,20 +262,6 @@ async def get_report_by_session(
     return _to_report_response(report_row, recommendation_row)
 
 
-@router.get("/{report_id}", response_model=ReportResponse)
-async def get_report(report_id: str, session: DbSession, current_user: CurrentUser) -> ReportResponse:
-    report_row = await session.get(Report, report_id)
-    if report_row is None:
-        raise HTTPException(status_code=404, detail="Report not found")
-    await _assert_can_access_report(session, report_row, current_user)
-
-    recommendation_row = None
-    if report_row.recommendation_id:
-        recommendation_row = await session.get(Recommendation, report_row.recommendation_id)
-
-    return _to_report_response(report_row, recommendation_row)
-
-
 @router.get("/history", response_model=list[ReportHistoryItem])
 async def list_report_history(session: DbSession, current_user: CurrentUser) -> list[ReportHistoryItem]:
     if current_user.role == UserRole.ADMIN:
@@ -332,6 +318,20 @@ async def list_report_history(session: DbSession, current_user: CurrentUser) -> 
             )
         )
     return history
+
+
+@router.get("/{report_id}", response_model=ReportResponse)
+async def get_report(report_id: str, session: DbSession, current_user: CurrentUser) -> ReportResponse:
+    report_row = await session.get(Report, report_id)
+    if report_row is None:
+        raise HTTPException(status_code=404, detail="Report not found")
+    await _assert_can_access_report(session, report_row, current_user)
+
+    recommendation_row = None
+    if report_row.recommendation_id:
+        recommendation_row = await session.get(Recommendation, report_row.recommendation_id)
+
+    return _to_report_response(report_row, recommendation_row)
 
 
 @router.get("/{report_id}/export")

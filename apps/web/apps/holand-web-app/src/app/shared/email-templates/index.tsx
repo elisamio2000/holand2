@@ -1,4 +1,4 @@
-import logo from '@public/newsletter-3.svg';
+﻿import logo from '@public/newsletter-3.svg';
 import newsletterImg1 from '@public/newsletter-1.svg';
 import TemplatePreview from '@/app/shared/email-templates/template-preview';
 
@@ -8,13 +8,14 @@ export default function EmailTemplates() {
       <TemplatePreview
         icon={logo}
         title="Account Email"
-        preview="/logo.png"
+        preview="/brand/brand-mark-4x.svg"
       />
       <TemplatePreview
         icon={newsletterImg1}
         title="Order Email"
-        preview="/logo.png"
+        preview="/brand/brand-mark-4x.svg"
       />
     </div>
   );
 }
+

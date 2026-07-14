@@ -8,8 +8,8 @@
 
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from '@/locales/en-clean';
-import fa from '@/locales/fa-clean';
+import en from '@/locales/en';
+import fa from '@/locales/fa';
 
 /**
  * Supported languages in the platform.

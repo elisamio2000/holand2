@@ -73,11 +73,21 @@ class AssessmentVersion(Base, TimestampMixin):
 
     id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
     assessment_type: Mapped[AssessmentType] = mapped_column(
-        Enum(AssessmentType, name="assessment_type_enum"), nullable=False, index=True
+        Enum(
+            AssessmentType,
+            name="assessment_type_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
+        index=True,
     )
     version: Mapped[int] = mapped_column(Integer, nullable=False)
     status: Mapped[VersionStatus] = mapped_column(
-        Enum(VersionStatus, name="version_status_enum"),
+        Enum(
+            VersionStatus,
+            name="version_status_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
         nullable=False,
         default=VersionStatus.DRAFT,
     )
@@ -112,7 +122,12 @@ class Question(Base, TimestampMixin):
         Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=False, index=True
     )
     kind: Mapped[QuestionKind] = mapped_column(
-        Enum(QuestionKind, name="question_kind_enum"), nullable=False
+        Enum(
+            QuestionKind,
+            name="question_kind_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
     )
     # RIASEC letter (R/I/A/S/E/C) for Likert questions; for forced-choice
     # questions this holds the dichotomy pair, e.g. "EI", "SN", "TF", "JP".
@@ -169,11 +184,20 @@ class ScoringFormulaVersion(Base, TimestampMixin):
     id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
     formula_key: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     assessment_type: Mapped[AssessmentType] = mapped_column(
-        Enum(AssessmentType, name="formula_assessment_type_enum"), nullable=False
+        Enum(
+            AssessmentType,
+            name="formula_assessment_type_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
     )
     version: Mapped[int] = mapped_column(Integer, nullable=False)
     status: Mapped[VersionStatus] = mapped_column(
-        Enum(VersionStatus, name="formula_version_status_enum"),
+        Enum(
+            VersionStatus,
+            name="formula_version_status_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
         nullable=False,
         default=VersionStatus.DRAFT,
     )
@@ -209,7 +233,12 @@ class VersionAuditLog(Base):
 
     id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
     entity_type: Mapped[VersionEntityType] = mapped_column(
-        Enum(VersionEntityType, name="version_entity_type_enum"), nullable=False
+        Enum(
+            VersionEntityType,
+            name="version_entity_type_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
     )
     entity_id: Mapped[str] = mapped_column(Uuid(as_uuid=False), nullable=False, index=True)
     action: Mapped[str] = mapped_column(String(50), nullable=False)
@@ -229,7 +258,12 @@ class VersionValidationReport(Base):
 
     id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
     entity_type: Mapped[VersionEntityType] = mapped_column(
-        Enum(VersionEntityType, name="version_entity_type_enum"), nullable=False
+        Enum(
+            VersionEntityType,
+            name="version_entity_type_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
     )
     entity_id: Mapped[str] = mapped_column(Uuid(as_uuid=False), nullable=False, index=True)
     gate: Mapped[str] = mapped_column(String(50), nullable=False)

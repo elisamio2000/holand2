@@ -1,7 +1,7 @@
-'use client';
+﻿'use client';
 
 // ============================================
-// DataSourceConnector — Multi-source graph data input
+// DataSourceConnector â€” Multi-source graph data input
 // Provides tab-based interface for: Backend Case IDs, File Upload,
 // External URL, and File Path data sources
 // ============================================
@@ -64,7 +64,7 @@ import {
   type FileEncoding,
 } from '@/utils/file-encoding-reader';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /** Available data source tabs */
 export type DataSourceTab = 'backend' | 'file' | 'url' | 'path' | 'generate';
@@ -80,7 +80,7 @@ interface DataSourceConnectorProps {
   onTabChange?: (tab: DataSourceTab) => void;
 }
 
-// ─── Accepted file types ──────────────────────────────────────────────────────
+// â”€â”€â”€ Accepted file types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const ACCEPTED_EXTENSIONS = '.json,.csv,.tsv,.txt,.text,.graphml,.gexf,.xls,.xlsx,.xlsm,.xlsb';
 const FILE_TYPE_ICONS: Record<string, React.ElementType> = {
@@ -95,20 +95,20 @@ const FILE_TYPE_ICONS: Record<string, React.ElementType> = {
   xlsb: PiMicrosoftExcelLogoBold,
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
- * DataSourceConnector — Multi-source graph data input component.
+ * DataSourceConnector â€” Multi-source graph data input component.
  *
  * Provides 4 tabs modeled after the Case Importer pattern:
- * 1. Backend (Case IDs) — connect to API Gateway via /api/gateway proxy
- * 2. File Upload — JSON, CSV, TSV, TXT with drag & drop
- * 3. External URL — fetch from remote endpoint
- * 4. File Path — server-side file path (future)
+ * 1. Backend (Case IDs) â€” connect to API Gateway via /api/gateway proxy
+ * 2. File Upload â€” JSON, CSV, TSV, TXT with drag & drop
+ * 3. External URL â€” fetch from remote endpoint
+ * 4. File Path â€” server-side file path (future)
  *
- * @requires graphService — for backend API calls
- * @requires parseGraphFile — for local file parsing
- * @requires fetchAndParseGraphUrl — for URL fetching
+ * @requires graphService â€” for backend API calls
+ * @requires parseGraphFile â€” for local file parsing
+ * @requires fetchAndParseGraphUrl â€” for URL fetching
  *
  * @example
  * ```tsx
@@ -200,9 +200,9 @@ export default function DataSourceConnector({
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TAB 1: Backend (Case IDs)
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 interface TabProps {
   onLoad: (data: GraphData, sourceLabel: string, meta?: { caseIds?: string[] }) => void;
@@ -211,7 +211,7 @@ interface TabProps {
 }
 
 /**
- * BackendTab — Load graph data via graph_explorer plugins (Neo4j).
+ * BackendTab â€” Load graph data via graph_explorer plugins (Neo4j).
  */
 function BackendTab({ onLoad, isLoading, setIsLoading }: TabProps) {
   const { t } = useTranslation();
@@ -453,9 +453,9 @@ function BackendTab({ onLoad, isLoading, setIsLoading }: TabProps) {
         setBackendAvailable(true);
         const elShort =
           validElements.length > 2
-            ? `${validElements.slice(0, 2).join(', ')}… (+${validElements.length - 2})`
+            ? `${validElements.slice(0, 2).join(', ')}â€¦ (+${validElements.length - 2})`
             : validElements.join(', ');
-        onLoad(merged, [...labelBase, `elementIds: ${elShort}`].join(' · '), { caseIds: [cid] });
+        onLoad(merged, [...labelBase, `elementIds: ${elShort}`].join(' Â· '), { caseIds: [cid] });
         toast.success(t('graphExplorer.dataSource.loaded'));
         return;
       }
@@ -468,9 +468,9 @@ function BackendTab({ onLoad, isLoading, setIsLoading }: TabProps) {
         setBackendAvailable(true);
         const artShort =
           validArtifacts.length > 2
-            ? `${validArtifacts.slice(0, 2).join(', ')}… (+${validArtifacts.length - 2})`
+            ? `${validArtifacts.slice(0, 2).join(', ')}â€¦ (+${validArtifacts.length - 2})`
             : validArtifacts.join(', ');
-        onLoad(merged, [...labelBase, `artifacts: ${artShort}`].join(' · '), { caseIds: [cid] });
+        onLoad(merged, [...labelBase, `artifacts: ${artShort}`].join(' Â· '), { caseIds: [cid] });
         toast.success(t('graphExplorer.dataSource.loaded'));
         return;
       }
@@ -489,7 +489,7 @@ function BackendTab({ onLoad, isLoading, setIsLoading }: TabProps) {
       const labelParts = [...labelBase];
       if (validElements.length === 1) labelParts.push(`elementId: ${validElements[0]}`);
       if (validArtifacts.length === 1) labelParts.push(`artifact: ${validArtifacts[0]}`);
-      onLoad(data, labelParts.join(' · '), { caseIds: [cid] });
+      onLoad(data, labelParts.join(' Â· '), { caseIds: [cid] });
       toast.success(t('graphExplorer.dataSource.loaded'));
     } catch (err: unknown) {
       console.error('[DataSourceConnector] Backend load failed:', err);
@@ -506,7 +506,7 @@ function BackendTab({ onLoad, isLoading, setIsLoading }: TabProps) {
                 'detail' in err.response.data
               ? String((err.response.data as { detail?: unknown }).detail).slice(0, 200)
               : '';
-        detail = [st ? `HTTP ${st}` : '', body].filter(Boolean).join(' — ');
+        detail = [st ? `HTTP ${st}` : '', body].filter(Boolean).join(' â€” ');
         if (st === 404) toastMsg = t('graphExplorer.dataSource.caseNotFound404');
       }
       setLastLoadError(detail || (err instanceof Error ? err.message : String(err)));
@@ -843,12 +843,12 @@ function BackendTab({ onLoad, isLoading, setIsLoading }: TabProps) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TAB 2: File Upload
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 /**
- * FileUploadTab — Drag & drop file upload with multi-format support.
+ * FileUploadTab â€” Drag & drop file upload with multi-format support.
  *
  * Accepts: JSON, CSV, TSV, TXT
  * Features: drag & drop, file browse, format preview, parse results
@@ -956,7 +956,7 @@ function FileUploadTab({ onLoad, isLoading, setIsLoading }: TabProps) {
     if (successResults.length === 1 && successResults[0].data) {
       onLoad(successResults[0].data, `File: ${successResults[0].fileName}`);
       toast.success(
-        `${t('graphExplorer.dataSource.loaded')} — ${successResults[0].nodeCount} nodes, ${successResults[0].linkCount} edges`
+        `${t('graphExplorer.dataSource.loaded')} â€” ${successResults[0].nodeCount} nodes, ${successResults[0].linkCount} edges`
       );
     } else if (successResults.length > 1) {
       const merged = mergeGraphData(successResults.map((r) => r.data!));
@@ -991,7 +991,7 @@ function FileUploadTab({ onLoad, isLoading, setIsLoading }: TabProps) {
 
   return (
     <div className="space-y-4">
-      {/* ── CSV Format Selector ─────────────────────────────────────── */}
+      {/* â”€â”€ CSV Format Selector â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="rounded-lg border border-muted bg-gray-50/80 dark:bg-gray-100/50 p-3 space-y-2">
         <Text className="text-xs font-semibold text-gray-800 dark:text-gray-700">
           {t('graphExplorer.dataSource.formatSelectorTitle')}
@@ -1089,7 +1089,7 @@ function FileUploadTab({ onLoad, isLoading, setIsLoading }: TabProps) {
         </div>
       </div>
 
-      {/* ── Encoding Selector ─────────────────────────────────────── */}
+      {/* â”€â”€ Encoding Selector â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="rounded-lg border border-muted bg-gray-50/80 dark:bg-gray-100/50 p-3 space-y-2">
         <div className="flex items-center gap-2">
           <PiTranslateBold className="h-4 w-4 text-gray-600 dark:text-gray-400" />
@@ -1267,11 +1267,11 @@ function FileUploadTab({ onLoad, isLoading, setIsLoading }: TabProps) {
                     {(file.size / 1024).toFixed(1)} KB
                     {result && result.success && (
                       <span className="text-green-500 ml-2">
-                        ✓ {result.nodeCount} nodes, {result.linkCount} edges
+                        âœ“ {result.nodeCount} nodes, {result.linkCount} edges
                       </span>
                     )}
                     {result && !result.success && (
-                      <span className="text-red-500 ml-2">✗ {result.error}</span>
+                      <span className="text-red-500 ml-2">âœ— {result.error}</span>
                     )}
                   </Text>
                 </div>
@@ -1294,7 +1294,7 @@ function FileUploadTab({ onLoad, isLoading, setIsLoading }: TabProps) {
           {parseResults.some((r) => r.warnings.length > 0) && (
             <div className="rounded-md bg-yellow-50 dark:bg-yellow-950/20 p-2 text-[10px] text-yellow-700 dark:text-yellow-400">
               {parseResults.flatMap((r) => r.warnings).map((w, i) => (
-                <div key={i}>⚠ {w}</div>
+                <div key={i}>âš  {w}</div>
               ))}
             </div>
           )}
@@ -1316,12 +1316,12 @@ function FileUploadTab({ onLoad, isLoading, setIsLoading }: TabProps) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TAB 3: External URL
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 /**
- * UrlTab — Fetch graph data from a remote URL endpoint.
+ * UrlTab â€” Fetch graph data from a remote URL endpoint.
  */
 function UrlTab({ onLoad, isLoading, setIsLoading }: TabProps) {
   const { t } = useTranslation();
@@ -1350,7 +1350,7 @@ function UrlTab({ onLoad, isLoading, setIsLoading }: TabProps) {
       if (result.success && result.data) {
         onLoad(result.data, `URL: ${trimmed}`);
         toast.success(
-          `${t('graphExplorer.dataSource.loaded')} — ${result.nodeCount} nodes, ${result.linkCount} edges`
+          `${t('graphExplorer.dataSource.loaded')} â€” ${result.nodeCount} nodes, ${result.linkCount} edges`
         );
       } else {
         toast.error(result.error || t('graphExplorer.dataSource.parseFailed'));
@@ -1379,7 +1379,7 @@ function UrlTab({ onLoad, isLoading, setIsLoading }: TabProps) {
           type="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="/logo.png"
+          placeholder="/brand/brand-mark-4x.svg"
           disabled={isLoading}
           prefix={<PiLinkBold className="h-4 w-4 text-gray-400" />}
         />
@@ -1399,12 +1399,12 @@ function UrlTab({ onLoad, isLoading, setIsLoading }: TabProps) {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TAB 4: File Path (Server-side)
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 /**
- * PathTab — Server-side file path input (future feature placeholder).
+ * PathTab â€” Server-side file path input (future feature placeholder).
  *
  * WHY placeholder: This requires a backend endpoint to read files from
  * the server filesystem, which is not yet implemented.
@@ -1437,9 +1437,9 @@ function PathTab() {
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // Helper: Merge multiple GraphData objects
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 /**
  * Merge multiple GraphData objects into a single graph.
@@ -1494,25 +1494,25 @@ function mergeGraphData(dataSets: GraphData[]): GraphData {
   };
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TAB 5: Generate Test Data (Big Data Testing)
-// ═══════════════════════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const PRESETS = [
-  { label: 'Small (100 nodes)', nodeCount: 100, edgesPerNode: 2, description: 'Quick test — renders instantly' },
-  { label: 'Medium (500 nodes)', nodeCount: 500, edgesPerNode: 3, description: 'Moderate — tests basic filtering' },
+  { label: 'Small (100 nodes)', nodeCount: 100, edgesPerNode: 2, description: 'Quick test â€” renders instantly' },
+  { label: 'Medium (500 nodes)', nodeCount: 500, edgesPerNode: 3, description: 'Moderate â€” tests basic filtering' },
   { label: 'Large (2K nodes)', nodeCount: 2000, edgesPerNode: 3, description: 'LOD & viewport culling kick in' },
-  { label: 'Big Data (5K nodes)', nodeCount: 5000, edgesPerNode: 3, description: 'Full scalability test — 3D recommended' },
+  { label: 'Big Data (5K nodes)', nodeCount: 5000, edgesPerNode: 3, description: 'Full scalability test â€” 3D recommended' },
   { label: 'Stress Test (10K nodes)', nodeCount: 10000, edgesPerNode: 2, description: 'Push engine to limits' },
 ] as const;
 
 /**
- * GenerateTab — Generate synthetic test graph data for Big Data testing.
+ * GenerateTab â€” Generate synthetic test graph data for Big Data testing.
  *
  * Provides preset sizes and custom configuration for stress-testing
  * the graph explorer with large datasets.
  *
- * @requires generateTestGraph — synthetic data generator
+ * @requires generateTestGraph â€” synthetic data generator
  */
 function GenerateTab({
   onLoad,
@@ -1697,3 +1697,4 @@ function GenerateTab({
     </div>
   );
 }
+

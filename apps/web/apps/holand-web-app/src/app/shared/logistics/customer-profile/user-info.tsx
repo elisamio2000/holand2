@@ -19,7 +19,7 @@ export default function UserInfo({ className }: SidebarProps) {
         <figure className="relative -mt-8 h-20 w-20 rounded-full border-4 border-white drop-shadow @2xl:-mt-12 @2xl:h-32 @2xl:w-32 @4xl:-mt-12 @7xl:-mt-14">
           <span className="absolute bottom-1.5 right-1.5 z-10 h-3 w-3 rounded-full border-2 border-white bg-[#11A849] @2xl:bottom-2.5 @2xl:right-2.5 @3xl:h-4 @3xl:w-4 @4xl:bottom-2 @4xl:right-2" />
           <Image
-            src={`/logo.png
+            src={`/brand/brand-mark-4x.svg
               avatarIds
             )}.webp`}
             alt={customer.name}
@@ -79,3 +79,4 @@ export default function UserInfo({ className }: SidebarProps) {
     </article>
   );
 }
+

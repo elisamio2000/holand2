@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import { Text } from 'rizzui';
@@ -125,7 +125,7 @@ export const getColumns = () => [
             quality={100}
             alt={`${country} Flag icon`}
             className="object-contain"
-            src={`/logo.png)}.svg`}
+            src={`/brand/brand-mark-4x.svg)}.svg`}
           />
         </figure>
 
@@ -158,7 +158,7 @@ export const getColumns = () => [
             quality={100}
             alt={`${country} Flag icon`}
             className="object-contain"
-            src={`/logo.png)}.svg`}
+            src={`/brand/brand-mark-4x.svg)}.svg`}
           />
         </figure>
 
@@ -208,3 +208,4 @@ export default function RecentShipments() {
     />
   );
 }
+

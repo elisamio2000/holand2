@@ -1,4 +1,4 @@
-import { IconType } from 'react-icons';
+﻿import { IconType } from 'react-icons';
 import FacebookIcon from '@core/components/icons/facebook';
 import {
   PiMapPinLight,
@@ -11,10 +11,10 @@ import {
 import TwitterIcon from '@core/components/icons/twitter';
 
 export const jobFeedBannerLogo =
-  '/logo.png';
+  '/brand/brand-mark-4x.svg';
 
 export const jobFeedLogo =
-  '/logo.png';
+  '/brand/brand-mark-4x.svg';
 
 export type JobDescription = {
   descTitle: string;
@@ -54,7 +54,7 @@ export const jobFeedData = [
   {
     type: 'company',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Senior Product Designer',
     price: '$50-$60',
     time: '1-3 Month',
@@ -138,7 +138,7 @@ export const jobFeedData = [
   {
     type: 'contract',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Senior Software Engineer',
     price: '$50 - $60',
     time: '1-3 Month',
@@ -222,7 +222,7 @@ export const jobFeedData = [
   {
     type: 'company',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Full Stack Web Developer',
     price: '$50 - $60',
     time: '1-3 Month',
@@ -306,7 +306,7 @@ export const jobFeedData = [
   {
     type: 'company',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Mid-level Software Engineer',
     price: '$50 - $60',
     time: '1-3 Month',
@@ -390,7 +390,7 @@ export const jobFeedData = [
   {
     type: 'company',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Senior UI/UX Designer',
     price: '$50-$60',
     time: '1-3 Month',
@@ -474,7 +474,7 @@ export const jobFeedData = [
   {
     type: 'contract',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Senior Software Engineer',
     price: '$50 - $60',
     time: '1-3 Month',
@@ -558,7 +558,7 @@ export const jobFeedData = [
   {
     type: 'company',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Mid-level Full Stack Web Developer',
     price: '$20 - $30',
     time: '1-3 Month',
@@ -642,7 +642,7 @@ export const jobFeedData = [
   {
     type: 'company',
     companyName: 'GreenTech LLC',
-    logo: '/logo.png',
+    logo: '/brand/brand-mark-4x.svg',
     jobTitle: 'Senior Product Designer',
     price: '$30 - $35',
     time: '1-3 Month',
@@ -818,12 +818,12 @@ export const socialInfos = [
   {
     title: 'Share',
     icon: FacebookIcon,
-    href: '/logo.png',
+    href: '/brand/brand-mark-4x.svg',
   },
   {
     title: 'Tweet',
     icon: TwitterIcon,
-    href: '/logo.png',
+    href: '/brand/brand-mark-4x.svg',
   },
 ];
 
@@ -838,3 +838,4 @@ export const initialState: InitialStateType = {
   recommended: [],
   startDate: '',
 };
+

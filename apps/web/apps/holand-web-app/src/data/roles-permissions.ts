@@ -6,42 +6,42 @@ export const users = [
   {
     id: 1,
     role: ROLES.Administrator,
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
   },
   {
     id: 2,
     role: ROLES.Administrator,
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
   },
   {
     id: 3,
     role: ROLES.Administrator,
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
   },
   {
     id: 4,
     role: ROLES.Administrator,
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
   },
   {
     id: 5,
     role: ROLES.Administrator,
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
   },
   {
     id: 6,
     role: ROLES.Administrator,
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
   },
@@ -104,3 +104,4 @@ export const roleActions = [
     name: 'Remove Role',
   },
 ];
+

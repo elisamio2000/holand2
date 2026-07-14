@@ -6,9 +6,9 @@ interface IconProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 
 /** Full wordmark — Holand logo with text (public as `brand-wordmark.svg`). */
 export const BRAND_LOGO_SRC = '/brand/brand-wordmark.svg';
-/** Compact square mark — Holand icon (public as `brand-mark-4x.png` / `ai-assistant-mark.svg`). */
-export const BRAND_MARK_SRC = '/brand/ai-assistant-mark.svg';
-export const BRAND_MARK_ON_DARK_SRC = '/brand/ai-assistant-mark-on-dark.svg';
+/** Compact square mark — Holand icon. */
+export const BRAND_MARK_SRC = '/brand/brand-mark-4x.svg';
+export const BRAND_MARK_ON_DARK_SRC = '/brand/brand-mark-4x.svg';
 
 /** Layout sizes: wordmark viewBox 278.01×174.86; mark is 1:1 square (viewBox 391×391). */
 export const BRAND_LOGO_WIDTH = 278;
@@ -27,7 +27,8 @@ export default function Logo({
   const width = iconOnly ? BRAND_MARK_WIDTH : BRAND_LOGO_WIDTH;
   const height = iconOnly ? BRAND_MARK_HEIGHT : BRAND_LOGO_HEIGHT;
 
-  const darkClass = noDarkInvert ? '' : 'dark:invert';
+  // Keep the compact mark in its native colors; dark invert is only for full wordmark.
+  const darkClass = noDarkInvert || iconOnly ? '' : 'dark:invert';
   const merged = [darkClass, className].filter(Boolean).join(' ');
 
   return (

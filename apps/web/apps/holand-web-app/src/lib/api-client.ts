@@ -52,6 +52,7 @@ const GATEWAY_CLIENT_URL =
 // triggering signOut() multiple times. Once one signOut is in flight, all
 // subsequent 401s are ignored until the page redirects.
 let isSigningOut = false;
+const DEV_BYPASS_TOKEN = 'dev-bypass-placeholder';
 
 const FORBIDDEN_TOAST_DEBOUNCE_MS = 4000;
 const lastForbiddenToastAt = new Map<string, number>();
@@ -73,6 +74,11 @@ function maybeNotifyForbidden(error: AxiosError): void {
 }
 
 type RetriableAxiosConfig = InternalAxiosRequestConfig & { _authRetried?: boolean };
+
+function isDevBypassSession(session: unknown): boolean {
+  const user = (session as { user?: { accessToken?: string; refreshToken?: string } } | null | undefined)?.user;
+  return user?.accessToken === DEV_BYPASS_TOKEN || user?.refreshToken === DEV_BYPASS_TOKEN;
+}
 
 /** Gateway revoked the bearer token â€” NextAuth cookie still holds the old JWT. */
 function isRevokedOrInvalidAuth(error: AxiosError): boolean {
@@ -103,6 +109,15 @@ async function handleUnauthorized(error: AxiosError): Promise<void> {
 
   try {
     const session = await getSession();
+
+    if (isDevBypassSession(session)) {
+      console.warn('[ApiClient] 401 during AUTH_DEV_BYPASS session; keeping local session and surfacing request error.', {
+        url: error.config?.url,
+        detail: error.response?.data,
+      });
+      isSigningOut = false;
+      return;
+    }
 
     if ((session?.user as any)?.error === 'RefreshTokenExpired') {
       console.warn('[ApiClient] Token refresh expired â€” signing out.');
@@ -135,6 +150,10 @@ async function handleUnauthorized(error: AxiosError): Promise<void> {
     }
 
     if (!session?.user?.accessToken) {
+        if (isDevBypassSession(session)) {
+          config.headers.Authorization = `Bearer ${session.user.accessToken}`;
+          return config;
+        }
       console.warn('[ApiClient] 401 and no access token â€” signing out.');
       await signOut({ redirect: false });
       window.location.href = routes.signIn;

@@ -1,4 +1,4 @@
-import {
+﻿import {
   Body,
   Button,
   Container,
@@ -18,12 +18,12 @@ interface DropboxResetPasswordEmailProps {
 }
 
 const baseUrl = process.env.VERCEL_URL
-  ? `/logo.png`
+  ? `/brand/brand-mark-4x.svg`
   : '';
 
 export default function DropboxResetPasswordEmail({
   userFirstname = 'Zeno',
-  resetPasswordLink = '/logo.png',
+  resetPasswordLink = '/brand/brand-mark-4x.svg',
 }: DropboxResetPasswordEmailProps) {
   return (
     <Html>
@@ -53,7 +53,7 @@ export default function DropboxResetPasswordEmail({
             <Text style={text}>
               To keep your account secure, please don&apos;t forward this email
               to anyone. See our Help Center for{' '}
-              <Link style={anchor} href="/logo.png">
+              <Link style={anchor} href="/brand/brand-mark-4x.svg">
                 more security tips.
               </Link>
             </Text>
@@ -101,3 +101,4 @@ const button = {
 const anchor = {
   textDecoration: 'underline',
 };
+

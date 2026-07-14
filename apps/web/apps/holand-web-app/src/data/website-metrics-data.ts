@@ -1489,7 +1489,7 @@ export const websiteMetricData = [
   },
   {
     id: '8037',
-    channel: 'REDQ',
+    channel: 'Holand',
     users: 345,
     sessions: 9059,
     engagementRate: 6.04,

@@ -38,7 +38,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 's3.amazonaws.com',
-        pathname: '/redqteam.com/holand-platform/public/**',
+        pathname: '/holand-platform/public/**',
       },
       {
         protocol: 'https',

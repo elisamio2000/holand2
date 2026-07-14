@@ -300,7 +300,7 @@ export const workspaceMockStore = {
         return {
           group_id: inv.group_id,
           group_name: group?.name ?? inv.group_id,
-          inviter_name: 'Dev Admin',
+          inviter_name: 'Holand Admin',
           role_name: inv.role_name,
           email: inv.email,
           status: inv.status,

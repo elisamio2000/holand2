@@ -399,9 +399,11 @@ export const authOptions: NextAuthOptions = {
             return {
               id: 'dev-admin',
               username: 'admin',
-              displayName: 'Dev Admin',
+              displayName: 'Holand Admin',
               email: 'admin@localhost',
-              name: 'Dev Admin',
+              name: 'Holand Admin',
+              avatarUrl: '/brand/brand-mark-4x.svg',
+              image: '/brand/brand-mark-4x.svg',
               accessToken: 'dev-bypass-placeholder',
               refreshToken: 'dev-bypass-placeholder',
               // Long TTL so jwt() rarely hits the refresh branch (placeholder cannot refresh).

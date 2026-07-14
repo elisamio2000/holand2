@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Interactive 3D graph HTML (Three.js + 3d-force-graph UMD).
  * Offline-capable: inline bundles, ZIP vendor/, or CDN fallback.
  * Visual preset: lit nodes + optional glow, link flow particles, collapsible UI dock.
@@ -108,8 +108,8 @@ function build3DEngineTags(o: InteractiveHtmlExport3DOptions): string {
     return `<script>${sanitizeInlineScriptContent(o.threeBundle)}</script>
   <script>${sanitizeInlineScriptContent(o.forceGraph3dBundle)}</script>`;
   }
-  return `<script src="/logo.png"></script>
-  <script src="/logo.png"></script>`;
+  return `<script src="/brand/brand-mark-4x.svg"></script>
+  <script src="/brand/brand-mark-4x.svg"></script>`;
 }
 
 
@@ -147,7 +147,7 @@ export function buildInteractiveGraphHtml3D(
         'inspector',
         'Inspector',
         `<div class="inspector-inner">
-      <div class="inspector-h"><span id="inspector-title">Node</span><button type="button" id="inspector-close">×</button></div>
+      <div class="inspector-h"><span id="inspector-title">Node</span><button type="button" id="inspector-close">Ã—</button></div>
       <div id="inspector-body"></div>
     </div>`,
         'inspector hidden'
@@ -207,7 +207,7 @@ export function buildInteractiveGraphHtml3D(
     'info',
     'Graph',
     `<h1>${escHtml(o.title)}</h1>
-      <div class="row"><span>3D · Nodes</span><span>${nodes.length}</span></div>
+      <div class="row"><span>3D Â· Nodes</span><span>${nodes.length}</span></div>
       <div class="row"><span>Links</span><span>${links.length}</span></div>
       <div class="row"><span>Exported</span><span>${new Date().toISOString().slice(0, 10)}</span></div>
       <div class="row"><span>Engine</span><span>${o.scriptBasePath ? 'offline' : o.scriptMode === 'inline' ? 'embedded' : 'CDN'}</span></div>`,
@@ -242,7 +242,7 @@ export function buildInteractiveGraphHtml3D(
     : '';
 
   const linkLabelLine = o.includeLinkLabels
-    ? `.linkLabel(l => (l.relation || '').length > 24 ? (l.relation || '').slice(0, 22) + '…' : (l.relation || ''))`
+    ? `.linkLabel(l => (l.relation || '').length > 24 ? (l.relation || '').slice(0, 22) + 'â€¦' : (l.relation || ''))`
     : '';
 
   return `<!DOCTYPE html>
@@ -271,7 +271,7 @@ export function buildInteractiveGraphHtml3D(
   ${legendBlock}
   ${visualsBlock}
   ${controlsBlock}
-  <div class="nav-hint">Left-drag orbit · Scroll zoom · Right-drag pan</div>
+  <div class="nav-hint">Left-drag orbit Â· Scroll zoom Â· Right-drag pan</div>
   <script>
     function esc(s) {
       return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -436,3 +436,4 @@ export function buildInteractiveGraphHtml3D(
 </body>
 </html>`;
 }
+

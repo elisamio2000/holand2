@@ -1,5 +1,5 @@
-// ============================================
-// PdfViewer — PDF document viewer with pagination
+﻿// ============================================
+// PdfViewer â€” PDF document viewer with pagination
 // Lazy-loaded to avoid pdfjs-dist webpack incompatibility
 // ============================================
 
@@ -16,7 +16,7 @@ import cn from '@core/utils/class-names';
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 /**
- * PdfViewerProps — Props for the PDF viewer component.
+ * PdfViewerProps â€” Props for the PDF viewer component.
  */
 interface PdfViewerProps {
   /** URL or base64 data of the PDF file */
@@ -24,7 +24,7 @@ interface PdfViewerProps {
 }
 
 /**
- * PdfViewer — Renders a PDF document with page navigation.
+ * PdfViewer â€” Renders a PDF document with page navigation.
  *
  * Uses react-pdf (pdfjs-dist) for rendering. Must be loaded via
  * next/dynamic with ssr: false to avoid webpack ESM incompatibility.
@@ -34,7 +34,7 @@ interface PdfViewerProps {
  * @example
  * ```tsx
  * const PdfViewer = dynamic(() => import('./pdf-viewer'), { ssr: false });
- * <PdfViewer file="/logo.png" />
+ * <PdfViewer file="/brand/brand-mark-4x.svg" />
  * ```
  */
 export default function PdfViewer({ file }: PdfViewerProps) {
@@ -96,3 +96,4 @@ export default function PdfViewer({ file }: PdfViewerProps) {
     </div>
   );
 }
+

@@ -101,6 +101,10 @@ class UserUpdate(BaseModel):
     is_active: bool | None = None
 
 
+class AvatarUploadResponse(BaseModel):
+    avatar_url: str
+
+
 class HollandRequest(BaseModel):
     scores: dict[str, float] = Field(
         ..., description="RIASEC scores keyed by R, I, A, S, E, C"

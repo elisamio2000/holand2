@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { SubmitHandler, Controller } from 'react-hook-form';
@@ -26,10 +26,10 @@ import { getApiErrorMessage } from '@/lib/api-errors';
 
 /**
  * DEV NOTE: Backend fields mapping for Profile tab
- * ✅ Available: username, email, display_name, avatar_url
- * ❌ NOT available: website, bio (description), job title (role select),
+ * âœ… Available: username, email, display_name, avatar_url
+ * âŒ NOT available: website, bio (description), job title (role select),
  *    alternative email, portfolio upload
- *    → These require backend schema extension (UserUpdate model)
+ *    â†’ These require backend schema extension (UserUpdate model)
  */
 
 // Simplified schema using only backend-supported fields
@@ -680,7 +680,7 @@ export function ProfileHeader({
         <div className="relative -top-1/3 aspect-square w-[110px] overflow-hidden rounded-full border-[6px] border-white bg-gray-100 shadow-profilePic @2xl:w-[130px] @5xl:-top-2/3 @5xl:w-[150px] dark:border-gray-50 3xl:w-[200px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={avatarSrc || '/logo.png'}
+            src={avatarSrc || '/brand/brand-mark-4x.svg'}
             alt="profile-pic"
             className="h-full w-full object-cover"
           />
@@ -702,3 +702,4 @@ export function ProfileHeader({
     </div>
   );
 }
+

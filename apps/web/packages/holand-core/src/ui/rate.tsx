@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { SmartTooltip as Tooltip } from './smart-tooltip';
 import React, { forwardRef } from 'react';
@@ -80,7 +80,7 @@ function Star() {
 }
 
 /** A basic input based rate component for getting user feedback. Here is the API documentation of the Rate component */
-/** We are using `rc-rate` package to build Rate component. See their [documentation](/logo.png) for any query. */
+/** We are using `rc-rate` package to build Rate component. See their [documentation](/brand/brand-mark-4x.svg) for any query. */
 const Rate = forwardRef<any, RateProps>(
   (
     {
@@ -162,3 +162,4 @@ const Rate = forwardRef<any, RateProps>(
 
 Rate.displayName = 'Rate';
 export default Rate;
+

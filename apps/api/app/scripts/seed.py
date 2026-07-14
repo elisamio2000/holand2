@@ -61,9 +61,10 @@ async def _seed_assessment_version(
             AssessmentVersion.status == VersionStatus.PUBLISHED,
         )
     )
-    if existing.scalars().first() is not None:
+    existing_version = existing.scalars().first()
+    if existing_version is not None:
         print(f"[seed] {assessment_type.value}: published version already exists, skipping.")
-        return existing.scalars().first()
+        return existing_version
 
     version = AssessmentVersion(
         assessment_type=assessment_type,
@@ -136,6 +137,65 @@ async def _seed_formula(db: AsyncSession, formula_def: dict) -> None:
     print(f"[seed] formula {formula_def['formula_key']}: published v1.")
 
 
+async def _seed_llm_defaults(db: AsyncSession) -> None:
+    """Seed a default primary LLM provider (from env) and Persian prompt
+    templates so AI report generation works out of the box once a vLLM/Ollama
+    server is reachable. Idempotent."""
+    import os
+
+    from ..models.ai_provider import AIProviderConfig, LLMPromptTemplate
+
+    base_url = os.getenv("DEFAULT_LLM_BASE_URL", "http://host.docker.internal:18005")
+    model = os.getenv("DEFAULT_LLM_MODEL", "qwen2.5-3b-instruct")
+    provider_type = os.getenv("DEFAULT_LLM_PROVIDER_TYPE", "vllm")
+
+    # Only seed a default provider when NONE exist yet, so we never create a
+    # second is_primary row alongside an admin-configured provider (which would
+    # break the "active + primary" lookup during report generation).
+    any_provider = await db.execute(select(AIProviderConfig.id).limit(1))
+    if any_provider.first() is None:
+        db.add(
+            AIProviderConfig(
+                name="Default LLM",
+                provider_type=provider_type,
+                base_url=base_url,
+                default_model=model,
+                is_active=True,
+                is_primary=True,
+            )
+        )
+        await db.flush()
+        print(f"[seed] LLM provider 'Default LLM' -> {provider_type} {base_url} ({model}).")
+
+    system_prompt = (
+        "شما یک مشاور خبره‌ی هدایت شغلی و تحصیلی هستید. تمام پاسخ را فقط به زبان فارسی و با قالب Markdown "
+        "استاندارد بنویسید (سرتیتر ##، فهرست نشانه‌دار، و جدول در صورت لزوم). تحلیل را دقیقاً بر اساس داده‌ها و "
+        "امتیازهای واقعی ارائه‌شده بنویسید و از قالب خالی یا درخواست اطلاعات از کاربر خودداری کنید."
+    )
+    prompt_body = (
+        "برای کاربری با کد نتیجه {{ HOLLAND_CODE }} و گروه سنی {{ AGE_BAND }} یک تحلیل هدایت شغلی و "
+        "تحصیلی کامل بنویس.\n\n{{ DATA_BLOCK }}"
+    )
+    for template_type in ("holland", "mbti", "combined"):
+        name = f"default_{template_type}_fa_v1"
+        existing_tpl = await db.execute(
+            select(LLMPromptTemplate).where(LLMPromptTemplate.name == name)
+        )
+        if existing_tpl.scalar_one_or_none() is None:
+            db.add(
+                LLMPromptTemplate(
+                    name=name,
+                    template_type=template_type,
+                    prompt_template=prompt_body,
+                    system_prompt=system_prompt,
+                    generation_params={"temperature": 0.6, "max_tokens": 2000, "top_p": 0.9},
+                    is_active=True,
+                )
+            )
+            print(f"[seed] LLM prompt template '{name}' created.")
+    await db.flush()
+
+
 async def seed() -> None:
     async with AsyncSessionLocal() as db:
         await _seed_assessment_version(
@@ -146,6 +206,7 @@ async def seed() -> None:
         )
         await _seed_formula(db, HOLLAND_NORMALIZE_FORMULA)
         await _seed_formula(db, MBTI_PREFERENCE_FORMULA)
+        await _seed_llm_defaults(db)
         await db.commit()
     print("[seed] done.")
 

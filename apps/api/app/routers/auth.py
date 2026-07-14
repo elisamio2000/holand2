@@ -7,7 +7,7 @@ so no frontend changes are required to authenticate against this API.
 
 from datetime import UTC, datetime
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,6 +16,7 @@ from ..deps import get_current_user
 from ..models.refresh_token import RefreshToken
 from ..models.user import User, UserRole
 from ..schemas import (
+    AvatarUploadResponse,
     LoginRequest,
     LogoutRequest,
     PermissionsResponse,
@@ -36,11 +37,26 @@ from ..services.auth_service import (
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 # Sections a role is allowed to see in the frontend sidebar (Phase 1: coarse-grained).
+# 'profile' is granted to every authenticated role so users can always reach their
+# own account/profile/settings pages (self-service).
 ROLE_SECTIONS: dict[UserRole, list[str]] = {
-    UserRole.USER: ["career-guidance"],
-    UserRole.COUNSELOR: ["career-guidance", "counselor"],
-    UserRole.ADMIN: ["career-guidance", "counselor", "admin"],
+    UserRole.USER: ["career-guidance", "profile"],
+    UserRole.COUNSELOR: ["career-guidance", "counselor", "profile"],
+    UserRole.ADMIN: ["career-guidance", "counselor", "admin", "profile"],
 }
+
+
+def role_permissions(role: UserRole) -> list[str]:
+    """Derive coarse-grained ``<section>:read`` permissions from allowed sections.
+
+    Keeps the frontend fine-grained permission gates (e.g. ``profile:read``)
+    satisfied while the backend RBAC stays section-based.
+    """
+    perms: list[str] = []
+    for section in ROLE_SECTIONS.get(role, []):
+        perms.append(f"{section}:read")
+        perms.append(f"{section}:write")
+    return perms
 
 
 def _user_summary(user: User) -> UserSummary:
@@ -152,3 +168,61 @@ async def permissions_me(user: User = Depends(get_current_user)) -> PermissionsR
         allowed_sections=ROLE_SECTIONS.get(user.role, []),
         realm_roles=[user.role.value],
     )
+
+
+@router.get("/me")
+async def me(current_user: User = Depends(get_current_user)) -> dict:
+    """Return the currently authenticated user's profile.
+
+    Shape matches the frontend ``UserInfo`` contract
+    (see apps/web/.../src/types/auth.types.ts).
+    """
+    created_at = getattr(current_user, "created_at", None)
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "role": current_user.role.value,
+        "is_active": current_user.is_active,
+        "created_at": created_at.isoformat() if created_at else None,
+        "last_login": None,
+        "display_name": current_user.display_name,
+        "avatar_url": current_user.avatar_url,
+        "bio": current_user.bio,
+        "timezone": current_user.timezone,
+        "language": current_user.language,
+    }
+
+
+
+@router.post("/avatar", response_model=AvatarUploadResponse, status_code=status.HTTP_200_OK)
+async def upload_avatar(
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> AvatarUploadResponse:
+    """Upload or replace the current user's avatar image (PNG/JPEG/WebP/GIF, max 2 MB)."""
+    from ..services.storage_service import get_storage_service
+
+    storage = get_storage_service()
+    # Delete old file if one exists (best-effort; ignores missing files)
+    storage.delete_avatar(current_user.avatar_url)
+    avatar_url = await storage.save_avatar(str(current_user.id), file)
+    current_user.avatar_url = avatar_url
+    await db.flush()
+    return AvatarUploadResponse(avatar_url=avatar_url)
+
+
+@router.delete("/avatar", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_avatar(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> None:
+    """Remove the current user's avatar image."""
+    from ..services.storage_service import get_storage_service
+
+    storage = get_storage_service()
+    storage.delete_avatar(current_user.avatar_url)
+    current_user.avatar_url = None
+    await db.flush()
+    return None

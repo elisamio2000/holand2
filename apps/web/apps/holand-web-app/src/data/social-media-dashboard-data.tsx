@@ -1,4 +1,4 @@
-import LinkedInSquareIcon from '@core/components/icons/linkedin-square';
+﻿import LinkedInSquareIcon from '@core/components/icons/linkedin-square';
 import FacebookSquareIcon from '@core/components/icons/facebook-square';
 import InstagramIcon from '@core/components/icons/instagram';
 import { IconType } from 'react-icons';
@@ -319,9 +319,9 @@ export const postSummaryData = [
   {
     id: 1,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Liverpool football club, Laliga',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -329,24 +329,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 2,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Xiaomi USA, and others share',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -354,24 +354,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 3,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: '5 min crafts recently shared',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -379,24 +379,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 4,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Liverpool football club, Laliga',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -404,24 +404,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 5,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Xiaomi USA, and others share',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -429,24 +429,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 6,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: '5 min crafts recently shared',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -454,24 +454,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 7,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Liverpool football club, Laliga',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -479,24 +479,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 8,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Xiaomi USA, and others share',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -504,24 +504,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 9,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: '5 min crafts recently shared',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -529,24 +529,24 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
   {
     id: 10,
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     title: 'Liverpool football club, Laliga',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -554,15 +554,15 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
@@ -570,7 +570,7 @@ export const postSummaryData = [
     id: 11,
     image: '/images/social-media-dashboard/post-1.png',
     title: 'Xiaomi USA, and others share',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -578,15 +578,15 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
@@ -594,7 +594,7 @@ export const postSummaryData = [
     id: 12,
     image: '/images/social-media-dashboard/post-1.png',
     title: '5 min crafts recently shared',
-    link: '/logo.png',
+    link: '/brand/brand-mark-4x.svg',
     availabilityDate: 'Jul 07, 2024',
     views: 241000,
     likes: 4785,
@@ -602,15 +602,15 @@ export const postSummaryData = [
     platforms: [
       {
         name: 'Facebook',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'Instagram',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
       {
         name: 'LinkedIn',
-        link: '/logo.png',
+        link: '/brand/brand-mark-4x.svg',
       },
     ],
   },
@@ -701,50 +701,51 @@ export type SchedulePostType = {
 export const scheduledPostData: SchedulePostType[] = [
   {
     platform: 'Facebook',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
   {
     platform: 'Instagram',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
   {
     platform: 'LinkedIn',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
   {
     platform: 'Facebook',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
   {
     platform: 'Instagram',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
   {
     platform: 'Facebook',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
   {
     platform: 'LinkedIn',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
   {
     platform: 'Instagram',
-    title: 'It’s not just yoga  it’s a whole lifestyle. Subscribe today...',
+    title: 'Itâ€™s not just yoga  itâ€™s a whole lifestyle. Subscribe today...',
     date: '04-07-2024',
     time: '10:30 PM',
   },
 ];
+

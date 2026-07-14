@@ -39,13 +39,13 @@ export const ticketsData = [
       "You can't hack the card without hacking the cross-platform SAS program!",
     author: {
       name: 'Joann Mertz',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Henry Bauch',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -60,13 +60,13 @@ export const ticketsData = [
       "synthesizing the bus won't do anything, we need to override the back-end ASCII matrix!",
     author: {
       name: 'Marcus Ledner-Weimann',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Mr. Tony Brakus',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -81,13 +81,13 @@ export const ticketsData = [
       'The RSS application is down, hack the neural alarm so we can synthesize the EXE bus!',
     author: {
       name: 'Felicia Lang',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Wanda Wiegand DVM',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -102,13 +102,13 @@ export const ticketsData = [
       'Try to reboot the TCP bandwidth, maybe it will hack the auxiliary card!',
     author: {
       name: 'Ashley Cronin',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Sidney Schulist PhD',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -123,13 +123,13 @@ export const ticketsData = [
       'The COM bandwidth is down, copy the 1080p alarm so we can back up the DRAM protocol!',
     author: {
       name: 'Dr. Jeffery Hackett',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Gretchen Lemke',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -144,13 +144,13 @@ export const ticketsData = [
       'If we bypass the firewall, we can get to the SAS interface through the solid state ADP driver!',
     author: {
       name: 'Margarita Ratke',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Dr. Elijah Konopelski',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -165,13 +165,13 @@ export const ticketsData = [
       "You can't index the alarm without quantifying the auxiliary UDP sensor!",
     author: {
       name: 'Lynne Borer',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Curtis Barrows',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -186,13 +186,13 @@ export const ticketsData = [
       "You can't reboot the application without quantifying the digital VGA hard drive!",
     author: {
       name: 'Yvette Zemlak-Douglas',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Dr. Viola Graham',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -207,13 +207,13 @@ export const ticketsData = [
       'Use the optical CLI matrix, then you can input the digital bandwidth!',
     author: {
       name: 'Patricia Kassulke-Gerlach',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Pat Bartell',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -228,13 +228,13 @@ export const ticketsData = [
       'Try to hack the API array, maybe it will calculate the virtual capacitor!',
     author: {
       name: 'Jessie Blanda',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Leonard Mitchell',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -248,13 +248,13 @@ export const ticketsData = [
     issue: 'We need to index the solid state CLI firewall!',
     author: {
       name: 'Yvette Cormier',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Ervin Ferry',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -269,13 +269,13 @@ export const ticketsData = [
       'Use the online HDD program, then you can reboot the back-end hard drive!',
     author: {
       name: 'Ross McGlynn',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Miss Antoinette Hilll',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -289,13 +289,13 @@ export const ticketsData = [
     issue: 'We need to reboot the haptic HEX array!',
     author: {
       name: 'Pearl Emard',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Israel Nitzsche',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -310,13 +310,13 @@ export const ticketsData = [
       'The UDP capacitor is down, input the back-end interface so we can synthesize the API system!',
     author: {
       name: 'Felipe Rosenbaum',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Dr. Jon Kovacek',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -331,13 +331,13 @@ export const ticketsData = [
       "You can't quantify the matrix without navigating the online SCSI program!",
     author: {
       name: 'Lydia Ryan',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Ellen Collins',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -352,13 +352,13 @@ export const ticketsData = [
       "I'll compress the primary OCR card, that should matrix the SSD circuit!",
     author: {
       name: 'Russell Miller Jr.',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Ismael Zboncak',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -372,13 +372,13 @@ export const ticketsData = [
     issue: 'We need to generate the optical API bandwidth!',
     author: {
       name: 'Clara Sipes IV',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: "Felicia O'Conner",
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -393,13 +393,13 @@ export const ticketsData = [
       'Try to navigate the RSS feed, maybe it will quantify the back-end firewall!',
     author: {
       name: 'Irma Cronin',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Brett Boyer',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -414,13 +414,13 @@ export const ticketsData = [
       "I'll index the virtual UDP circuit, that should circuit the DNS transmitter!",
     author: {
       name: 'Allen Heller',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Randolph Marquardt DDS',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -435,13 +435,13 @@ export const ticketsData = [
       'The CLI program is down, reboot the back-end feed so we can transmit the SSL sensor!',
     author: {
       name: 'Carol Weimann',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Monica Strosin',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -455,13 +455,13 @@ export const ticketsData = [
     issue: 'We need to quantify the 1080p ASCII bus!',
     author: {
       name: 'Santos Cormier',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Erik Donnelly II',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -476,13 +476,13 @@ export const ticketsData = [
       'Use the solid state PNG matrix, then you can program the bluetooth card!',
     author: {
       name: 'Francisco Kirlin',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Lori Zemlak',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -496,13 +496,13 @@ export const ticketsData = [
     issue: 'We need to input the auxiliary SCSI monitor!',
     author: {
       name: 'Randolph Cole',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Lorene Zulauf',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -517,13 +517,13 @@ export const ticketsData = [
       "I'll bypass the multi-byte RAM hard drive, that should hard drive the API system!",
     author: {
       name: 'Bernadette Abshire DDS',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Patrick Kohler IV',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -538,13 +538,13 @@ export const ticketsData = [
       'The XML firewall is down, input the auxiliary interface so we can input the CLI sensor!',
     author: {
       name: 'Cesar Bartoletti',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
     agent: {
       name: 'Marlon Stoltenberg',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -554,3 +554,4 @@ export const ticketsData = [
     dueDate: '2018-01-09T21:05:33.076Z',
   },
 ];
+

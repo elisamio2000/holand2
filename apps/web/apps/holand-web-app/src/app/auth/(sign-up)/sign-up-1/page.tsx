@@ -29,7 +29,7 @@ export default function SignUp() {
         <div className="relative mx-auto aspect-[4/3.37] w-[500px] xl:w-[620px] 2xl:w-[820px]">
           <Image
             src={
-              '/logo.png'
+              '/brand/brand-mark-4x.svg'
             }
             alt="Sign Up Thumbnail"
             fill
@@ -44,3 +44,4 @@ export default function SignUp() {
     </AuthWrapperOne>
   );
 }
+

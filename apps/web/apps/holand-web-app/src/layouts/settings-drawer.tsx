@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Button } from 'rizzui';
 import SimpleBar from '@core/ui/simplebar';
@@ -28,7 +28,7 @@ export default function SettingsDrawer() {
 function SettingsFooterButton() {
   return (
     <a
-      href="/logo.png"
+      href="/brand/brand-mark-4x.svg"
       target="_blank"
       className="grid grid-cols-1 border-t border-muted px-6 pt-4"
     >
@@ -39,3 +39,4 @@ function SettingsFooterButton() {
     </a>
   );
 }
+

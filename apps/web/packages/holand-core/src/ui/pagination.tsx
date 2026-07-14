@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import RcPagination, {
   PaginationProps as RcPaginationProps,
@@ -146,7 +146,7 @@ const JumpPrevIcon = ({ icon, rounded, outline, className }: IconProps) => (
       className
     )}
   >
-    {icon || '•••'}
+    {icon || 'â€¢â€¢â€¢'}
   </div>
 );
 
@@ -160,7 +160,7 @@ const JumpNextIcon = ({ icon, rounded, outline, className }: IconProps) => (
       className
     )}
   >
-    {icon || '•••'}
+    {icon || 'â€¢â€¢â€¢'}
   </div>
 );
 
@@ -199,7 +199,7 @@ export interface PaginationProps extends RcPaginationProps {
 
 /**
  * We used `rc-pagination` package to build pagination component.
- * See their [official documentation](/logo.png) for more info.
+ * See their [official documentation](/brand/brand-mark-4x.svg) for more info.
  */
 export default function Pagination({
   outline = false,
@@ -270,3 +270,4 @@ export default function Pagination({
 }
 
 Pagination.displayName = 'Pagination';
+

@@ -19,13 +19,13 @@ const data = [
     date: new Date('2023-08-23T10:18:34.191Z'),
     deliveredBy: {
       name: 'Estelle Hansen MD',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.png`,
     },
     receivedBy: {
       name: 'Sherry Kulas DVM',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.png`,
     },
@@ -110,3 +110,4 @@ export default function DeliveryDetails({ className }: DeliveryDetailsProps) {
     />
   );
 }
+

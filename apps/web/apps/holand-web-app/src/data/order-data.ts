@@ -4,7 +4,7 @@
     name: 'Dr. Ernest Fritsch-Shanahan',
     email: 'August17@hotmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 83,
     price: '457.00',
     status: 'Cancelled',
@@ -16,7 +16,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -25,7 +25,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -34,7 +34,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -45,7 +45,7 @@
     name: 'Mr. Gregory Medhurst-Lubowitz',
     email: 'General.Bergstrom@yahoo.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 21,
     price: '426.00',
     status: 'Cancelled',
@@ -57,7 +57,7 @@
         name: 'Licensed Concrete Cheese',
         category: 'Shirt',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -66,7 +66,7 @@
         name: 'Gorgeous Bronze Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -77,7 +77,7 @@
     name: 'Becky Goodwin',
     email: 'Daniella_Littel@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 93,
     price: '544.00',
     status: 'Refunded',
@@ -89,7 +89,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -100,7 +100,7 @@
     name: 'Mrs. Ann Leuschke Jr.',
     email: 'Favian49@yahoo.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 63,
     price: '282.00',
     status: 'Cancelled',
@@ -112,7 +112,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -121,7 +121,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -130,7 +130,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -141,7 +141,7 @@
     name: 'Elmer Heathcote',
     email: 'Efren.Wehner@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 89,
     price: '971.00',
     status: 'Refunded',
@@ -153,7 +153,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -164,7 +164,7 @@
     name: 'Ida McKenzie',
     email: 'Waino_Bosco@hotmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 64,
     price: '889.00',
     status: 'Cancelled',
@@ -176,7 +176,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -185,7 +185,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -196,7 +196,7 @@
     name: 'Randal Dare',
     email: 'Morton_Lubowitz@hotmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 23,
     price: '566.00',
     status: 'Cancelled',
@@ -208,7 +208,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -217,7 +217,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -226,7 +226,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -237,7 +237,7 @@
     name: 'Jesse Zboncak',
     email: 'Kurtis6@yahoo.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 43,
     price: '999.00',
     status: 'Completed',
@@ -249,7 +249,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -258,7 +258,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -269,7 +269,7 @@
     name: 'Tom Turcotte',
     email: 'Myrl.Reilly@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 37,
     price: '130.00',
     status: 'Pending',
@@ -281,7 +281,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -292,7 +292,7 @@
     name: 'Horace McGlynn',
     email: 'Dulce_Williamson37@yahoo.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 35,
     price: '224.00',
     status: 'Completed',
@@ -304,7 +304,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -313,7 +313,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -324,7 +324,7 @@
     name: 'Michelle Hackett',
     email: 'Leila48@yahoo.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 40,
     price: '822.00',
     status: 'Pending',
@@ -336,7 +336,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -345,7 +345,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -356,7 +356,7 @@
     name: 'Luther Windler',
     email: 'Carmella.Morar52@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 75,
     price: '746.00',
     status: 'Completed',
@@ -368,7 +368,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -377,7 +377,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -386,7 +386,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -397,7 +397,7 @@
     name: 'Hazel Wuckert',
     email: 'Breanna.Stanton@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 12,
     price: '274.00',
     status: 'Pending',
@@ -409,7 +409,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -420,7 +420,7 @@
     name: 'Joanne Batz',
     email: 'Izabella44@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 93,
     price: '202.00',
     status: 'Refunded',
@@ -432,7 +432,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -441,7 +441,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -452,7 +452,7 @@
     name: 'Kara Goodwin',
     email: 'Milford67@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 57,
     price: '329.00',
     status: 'Pending',
@@ -464,7 +464,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -473,7 +473,7 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
@@ -484,7 +484,7 @@
     name: 'Mr. Irvin Farrell',
     email: 'Chanel21@yahoo.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 91,
     price: '263.00',
     status: 'Pending',
@@ -496,7 +496,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -507,7 +507,7 @@
     name: 'Seth Rau',
     email: 'Bartholome24@gmail.com',
     avatar:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     items: 88,
     price: '808.00',
     status: 'Completed',
@@ -519,7 +519,7 @@
         name: 'Tasty Metal Shirt',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '410.00',
         quantity: 2,
       },
@@ -528,7 +528,7 @@
         name: 'Modern Cotton Gloves',
         category: 'Watch',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '342.00',
         quantity: 3,
       },
@@ -537,10 +537,11 @@
         name: 'Rustic Steel Computer',
         category: 'Shoes',
         image:
-          '/logo.png',
+          '/brand/brand-mark-4x.svg',
         price: '948.00',
         quantity: 1,
       },
     ],
   },
 ];
+

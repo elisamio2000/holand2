@@ -60,6 +60,28 @@ const initialState = {
   error: null as string | null,
 };
 
+const syncDebounceTimers = new Map<string, ReturnType<typeof setTimeout>>();
+const pendingQuestionSync = new Map<string, Set<string>>();
+
+function enqueueAnswerSync(sessionId: string, questionId: string): void {
+  const pending = pendingQuestionSync.get(sessionId) ?? new Set<string>();
+  pending.add(questionId);
+  pendingQuestionSync.set(sessionId, pending);
+}
+
+function scheduleAnswerSync(sessionId: string, flush: () => Promise<void>): void {
+  const timer = syncDebounceTimers.get(sessionId);
+  if (timer) {
+    clearTimeout(timer);
+  }
+  syncDebounceTimers.set(
+    sessionId,
+    setTimeout(() => {
+      void flush();
+    }, 300)
+  );
+}
+
 export const useAssessmentFlowStore = create<AssessmentFlowState>()(
   persist(
     (set, get) => ({
@@ -100,19 +122,38 @@ export const useAssessmentFlowStore = create<AssessmentFlowState>()(
         const question = questions[currentIndex];
         if (!sessionId || !question) return;
 
-        set({ answers: { ...answers, [question.id]: value } });
+        const nextAnswers = { ...answers, [question.id]: value };
+        set({ answers: nextAnswers });
+        enqueueAnswerSync(sessionId, question.id);
+        scheduleAnswerSync(sessionId, async () => {
+          const pending = pendingQuestionSync.get(sessionId);
+          if (!pending || pending.size === 0) return;
 
-        try {
-          await assessmentService.submitAnswer({
-            sessionId,
-            questionId: question.id,
-            value,
-          });
-        } catch (error: unknown) {
-          // Answer is already stored locally/persisted; surfacing a hard
-          // error here would break the flow for a non-critical sync issue.
-          console.warn('[AssessmentFlowStore] Failed to sync answer (kept locally):', error);
-        }
+          const snapshot = get();
+          const batch = Array.from(pending).map((qid) => ({
+            questionId: qid,
+            value: snapshot.answers[qid],
+          }));
+          pendingQuestionSync.set(sessionId, new Set<string>());
+
+          try {
+            await assessmentService.submitAnswers(
+              sessionId,
+              batch.filter((item) => item.value !== undefined) as Array<{
+                questionId: string;
+                value: number | string;
+              }>
+            );
+          } catch (error: unknown) {
+            // Keep answers local and re-queue for the final completion sync.
+            console.warn('[AssessmentFlowStore] Batched sync failed (kept locally):', error);
+            const retrySet = pendingQuestionSync.get(sessionId) ?? new Set<string>();
+            for (const item of batch) {
+              retrySet.add(item.questionId);
+            }
+            pendingQuestionSync.set(sessionId, retrySet);
+          }
+        });
 
         const { testType, ageBand } = get();
         if (testType && ageBand) {
@@ -145,6 +186,25 @@ export const useAssessmentFlowStore = create<AssessmentFlowState>()(
         if (!sessionId) return null;
         set({ status: 'submitting', error: null });
         try {
+          const pending = pendingQuestionSync.get(sessionId) ?? new Set<string>();
+          const stateSnapshot = get();
+          const allQuestionIds = stateSnapshot.questions.map((q) => q.id);
+          for (const qid of allQuestionIds) {
+            if (stateSnapshot.answers[qid] !== undefined) {
+              pending.add(qid);
+            }
+          }
+          pendingQuestionSync.set(sessionId, pending);
+
+          const flushBatch = Array.from(pending)
+            .map((qid) => ({ questionId: qid, value: stateSnapshot.answers[qid] }))
+            .filter((item): item is { questionId: string; value: number | string } => item.value !== undefined);
+
+          if (flushBatch.length > 0) {
+            await assessmentService.submitAnswers(sessionId, flushBatch);
+            pendingQuestionSync.set(sessionId, new Set<string>());
+          }
+
           const result = await assessmentService.completeSession(sessionId);
           set({ status: 'completed', result });
           if (testType && ageBand) {
@@ -171,6 +231,15 @@ export const useAssessmentFlowStore = create<AssessmentFlowState>()(
       },
 
       reset() {
+        const { sessionId } = get();
+        if (sessionId) {
+          const timer = syncDebounceTimers.get(sessionId);
+          if (timer) {
+            clearTimeout(timer);
+            syncDebounceTimers.delete(sessionId);
+          }
+          pendingQuestionSync.delete(sessionId);
+        }
         set({ ...initialState });
       },
     }),

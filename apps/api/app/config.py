@@ -78,6 +78,7 @@ class Settings(BaseSettings):
     # Storage
     storage_backend: str = "local"
     storage_local_path: str = "./storage"
+    static_url_prefix: str = "/static"
 
 
 @lru_cache

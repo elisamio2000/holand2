@@ -3,7 +3,7 @@
     city: 'Fort Chloetown',
     country: 'Paraguay',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.87,
     ratingCount: 657,
     hostname: 'Zion',
@@ -18,7 +18,7 @@
     city: 'West Claude',
     country: 'Ethiopia',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 1.85,
     ratingCount: 749,
     hostname: 'Tyreek',
@@ -33,7 +33,7 @@
     city: 'Jamalboro',
     country: "Lao People's Democratic Republic",
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 1.92,
     ratingCount: 746,
     hostname: 'Mikel',
@@ -48,7 +48,7 @@
     city: 'Conroe',
     country: 'Namibia',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.07,
     ratingCount: 474,
     hostname: 'Dee',
@@ -63,7 +63,7 @@
     city: 'North Houston',
     country: 'Suriname',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 4.34,
     ratingCount: 890,
     hostname: 'Christopher',
@@ -78,7 +78,7 @@
     city: 'South Lamont',
     country: 'Iceland',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 3.18,
     ratingCount: 660,
     hostname: 'Cecilia',
@@ -93,7 +93,7 @@
     city: 'Lake Mauricio',
     country: 'Maldives',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 3.84,
     ratingCount: 54,
     hostname: 'Tyra',
@@ -108,7 +108,7 @@
     city: 'West Vergie',
     country: 'Kiribati',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.4,
     ratingCount: 168,
     hostname: 'Allison',
@@ -123,7 +123,7 @@
     city: 'South Jan',
     country: 'Malawi',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 1.72,
     ratingCount: 75,
     hostname: 'Omer',
@@ -138,7 +138,7 @@
     city: 'Port Ivoryshire',
     country: "Cote d'Ivoire",
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 3.96,
     ratingCount: 943,
     hostname: 'Demond',
@@ -153,7 +153,7 @@
     city: 'Unafurt',
     country: 'Croatia',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 1.16,
     ratingCount: 425,
     hostname: 'Lisandro',
@@ -168,7 +168,7 @@
     city: 'Port Curtis',
     country: 'Cameroon',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.74,
     ratingCount: 713,
     hostname: 'Tristin',
@@ -183,7 +183,7 @@
     city: 'Lake Hermann',
     country: 'Lebanon',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 1.96,
     ratingCount: 875,
     hostname: 'Brenna',
@@ -198,7 +198,7 @@
     city: 'Lonieburgh',
     country: 'Namibia',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 3.05,
     ratingCount: 129,
     hostname: 'Phoebe',
@@ -213,7 +213,7 @@
     city: 'Corkeryworth',
     country: 'Tonga',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 1.59,
     ratingCount: 945,
     hostname: 'Yasmin',
@@ -228,7 +228,7 @@
     city: 'New Manuel',
     country: 'Luxembourg',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 3.16,
     ratingCount: 590,
     hostname: 'Abigayle',
@@ -243,7 +243,7 @@
     city: 'Fort Jeraldberg',
     country: 'Ethiopia',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.73,
     ratingCount: 714,
     hostname: 'Raphaelle',
@@ -258,7 +258,7 @@
     city: 'Lake Marisol',
     country: 'Pakistan',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 4.03,
     ratingCount: 931,
     hostname: 'Harvey',
@@ -273,7 +273,7 @@
     city: 'Lake Ettie',
     country: 'Spain',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.33,
     ratingCount: 646,
     hostname: 'Rozella',
@@ -288,7 +288,7 @@
     city: 'Charlieside',
     country: 'Gambia',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 4.28,
     ratingCount: 463,
     hostname: 'Alena',
@@ -303,7 +303,7 @@
     city: 'New Leilatown',
     country: 'Poland',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.56,
     ratingCount: 932,
     hostname: 'Warren',
@@ -318,7 +318,7 @@
     city: 'Manchester',
     country: 'Palestine',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 4.44,
     ratingCount: 87,
     hostname: 'Marshall',
@@ -333,7 +333,7 @@
     city: 'Palo Alto',
     country: 'Guernsey',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 3.87,
     ratingCount: 696,
     hostname: 'Isaac',
@@ -348,7 +348,7 @@
     city: 'Grimeschester',
     country: 'Saint Martin',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     rating: 2.8,
     ratingCount: 275,
     hostname: 'Johnathon',
@@ -360,3 +360,4 @@
     tag: 'Premium',
   },
 ];
+

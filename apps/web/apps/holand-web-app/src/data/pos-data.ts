@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+﻿import { cloneDeep } from 'lodash';
 
 export const posProducts = [
   {
@@ -6,7 +6,7 @@ export const posProducts = [
     name: 'Chicken curry',
     description: 'South Asian dish',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -18,7 +18,7 @@ export const posProducts = [
     name: 'Iced tea with rose syrup',
     description: 'Cold Drinks',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -30,7 +30,7 @@ export const posProducts = [
     name: 'Strawberry cocktail drinks',
     description: 'Cold Coffee',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -42,7 +42,7 @@ export const posProducts = [
     name: 'Iced tea with rose syrup',
     description: 'Soft Drinks',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -54,7 +54,7 @@ export const posProducts = [
     name: 'CocaCola wit zero diet',
     description: 'Soft Drinks',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -66,7 +66,7 @@ export const posProducts = [
     name: 'Hawaiian Chicken PizzaSmoked',
     description: 'Fast Food Items',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -77,7 +77,7 @@ export const posProducts = [
     name: 'Pepsi with zero diet',
     description: 'Soft Drinks',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -88,7 +88,7 @@ export const posProducts = [
     name: 'Jimmy Willy Pizza with cheese',
     description: 'Fast Food Items',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -99,7 +99,7 @@ export const posProducts = [
     name: 'Hawaiian Chicken PizzaSmoked',
     description: 'Fast Food Items',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -110,7 +110,7 @@ export const posProducts = [
     name: 'Strawberry cocktail drinks',
     description: 'Cold Coffee',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -121,7 +121,7 @@ export const posProducts = [
     name: 'Pepsi with zero diet',
     description: 'Soft Drinks',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -133,7 +133,7 @@ export const posProducts = [
     name: 'Apricot ice cream balls',
     description: 'Ice Cream Items',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -144,7 +144,7 @@ export const posProducts = [
     name: 'CocaCola with zero diet',
     description: 'Soft Drinks',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -156,7 +156,7 @@ export const posProducts = [
     name: 'Strawberry cocktail drinks',
     description: 'Cold Coffee',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -167,7 +167,7 @@ export const posProducts = [
     name: 'Hawaiian Chicken PizzaSmoked',
     description: 'Fast Food Items',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -178,7 +178,7 @@ export const posProducts = [
     name: 'Apricot ice cream balls',
     description: 'Ice Cream Items',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     price: 320,
     salePrice: 295,
     quantity: 10,
@@ -192,3 +192,4 @@ export const posData = cloneDeep(posProducts).map((product) => {
     id: product.id + posProducts.length,
   };
 });
+

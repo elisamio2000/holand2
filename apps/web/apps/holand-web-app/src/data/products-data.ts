@@ -16,7 +16,7 @@ export const productsData = [
     name: 'Tasty Metal Shirt',
     category: 'Books',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '52442',
     stock: 30,
     price: '410.00',
@@ -28,7 +28,7 @@ export const productsData = [
     name: 'Modern Gloves',
     category: 'Kids',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '98424',
     stock: 0,
     price: '340.00',
@@ -40,7 +40,7 @@ export const productsData = [
     name: 'Rustic Steel Computer',
     category: 'Games',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '78192',
     stock: 50,
     price: '948.00',
@@ -52,7 +52,7 @@ export const productsData = [
     name: 'Licensed Concrete Cheese',
     category: 'Electronics',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '86229',
     stock: 0,
     price: '853.00',
@@ -64,7 +64,7 @@ export const productsData = [
     name: 'Electronic Rubber Table',
     category: 'Books',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '89762',
     stock: 18,
     price: '881.00',
@@ -76,7 +76,7 @@ export const productsData = [
     name: 'Gorgeous Bronze Gloves',
     category: 'Shoes',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '21065',
     stock: 9,
     price: '124.00',
@@ -88,7 +88,7 @@ export const productsData = [
     name: 'Practical Steel Keyboard',
     category: 'Kids',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '41063',
     stock: 0,
     price: '890.00',
@@ -100,7 +100,7 @@ export const productsData = [
     name: 'Sleek Frozen Ball',
     category: 'Electronics',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '13240',
     stock: 9,
     price: '980.00',
@@ -112,7 +112,7 @@ export const productsData = [
     name: 'Ergonomic Frozen Pants',
     category: 'Games',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '26214',
     stock: 0,
     price: '289.00',
@@ -124,7 +124,7 @@ export const productsData = [
     name: 'Sleek Fresh Chair',
     category: 'Garden',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '14317',
     stock: 24,
     price: '587.00',
@@ -136,7 +136,7 @@ export const productsData = [
     name: 'Awesome Granite Chicken',
     category: 'Electronics',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '21944',
     stock: 9,
     price: '581.00',
@@ -148,7 +148,7 @@ export const productsData = [
     name: 'Rustic Concrete Ball',
     category: 'Books',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '93411',
     stock: 18,
     price: '946.00',
@@ -160,7 +160,7 @@ export const productsData = [
     name: 'Electronic Concrete Computer',
     category: 'Tools',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '61422',
     stock: 24,
     price: '448.00',
@@ -172,7 +172,7 @@ export const productsData = [
     name: 'Small Wooden Pizza',
     category: 'Toys',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '30532',
     stock: 0,
     price: '676.00',
@@ -184,7 +184,7 @@ export const productsData = [
     name: 'Tasty Bronze Salad',
     category: 'Baby',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '47948',
     stock: 9,
     price: '524.00',
@@ -196,7 +196,7 @@ export const productsData = [
     name: 'Tasty Metal T-Shirt',
     category: 'shirt',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '52342',
     stock: 0,
     price: '400.00',
@@ -208,7 +208,7 @@ export const productsData = [
     name: 'Modern Cotton Gloves',
     category: 'Kids',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '98414',
     stock: 0,
     price: '342.00',
@@ -220,7 +220,7 @@ export const productsData = [
     name: 'Steel Computer',
     category: 'Games',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     sku: '78592',
     stock: 0,
     price: '948.00',
@@ -228,3 +228,4 @@ export const productsData = [
     rating: [4, 5, 8, 5, 3],
   },
 ];
+

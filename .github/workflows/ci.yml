@@ -8,9 +8,42 @@ on:
   pull_request:
 
 jobs:
+  # ==========================================
+  # Forbidden Token Scan (Blocking Gate)
+  # ==========================================
+  forbidden-token-scan:
+    name: 🔒 Forbidden Token Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for template traces
+        run: |
+          echo "🔍 Scanning for forbidden tokens..."
+          
+          FORBIDDEN=(aiv2 ai-assistant RedQ REDQ "nativeAiChat\\." "ai-assistant-email\\.png")
+          PATHS=(apps/web/apps/holand-web-app/src apps/web/packages/holand-core/src apps/api/app)
+          
+          VIOLATIONS=0
+          for pattern in "${FORBIDDEN[@]}"; do
+            if grep -r -E "$pattern" "${PATHS[@]}" 2>/dev/null; then
+              echo "❌ FORBIDDEN: $pattern"
+              VIOLATIONS=$((VIOLATIONS + 1))
+            fi
+          done
+          
+          if [ $VIOLATIONS -gt 0 ]; then
+            echo "❌ CI FAILED: $VIOLATIONS forbidden token(s)"
+            exit 1
+          fi
+          
+          echo "✅ Clean"
+
   api:
     name: API (phase lint + pytest)
     runs-on: ubuntu-latest
+    needs: forbidden-token-scan
     defaults:
       run:
         working-directory: apps/api
@@ -88,6 +121,7 @@ jobs:
   web:
     name: Web (lint + focused tests)
     runs-on: ubuntu-latest
+    needs: forbidden-token-scan
     env:
       NEXTAUTH_SECRET: ci-dev-secret
       NEXTAUTH_URL: http://localhost:3000

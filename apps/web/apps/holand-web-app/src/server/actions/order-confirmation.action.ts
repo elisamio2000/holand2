@@ -9,7 +9,7 @@ export const sendOrderConfirmationEmail = async (data: { email: string }) => {
 
   sendEmail({
     to: to,
-    subject: 'Your Order is Confirmed! · Ai assistant',
+    subject: 'Your Order is Confirmed! · Holand Platform',
     html: render(OrderConfirmationEmail()) as unknown as string,
   });
 

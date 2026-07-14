@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Interactive 2D graph HTML export (force-graph).
  * - scriptMode 'cdn': loads library from unpkg (needs internet unless cached).
  * - scriptMode 'inline': embeds {@link InteractiveHtmlExportOptions.forceGraphBundle}
@@ -44,7 +44,7 @@ export { sanitizeInlineScriptContent } from './graph-export-payload';
 
 export type HtmlExportScriptMode = 'cdn' | 'inline';
 
-/** How search affects non-matching nodes when query length ≥ 2 */
+/** How search affects non-matching nodes when query length â‰¥ 2 */
 export type HtmlExportSearchFocus = 'highlight' | 'dim' | 'hide';
 
 export interface InteractiveHtmlExportOptions {
@@ -111,7 +111,7 @@ function buildEngineScriptTag(o: InteractiveHtmlExportOptions): string {
   if (o.scriptMode === 'inline' && o.forceGraphBundle && o.forceGraphBundle.length > 100) {
     return `<script>${sanitizeInlineScriptContent(o.forceGraphBundle)}</script>`;
   }
-  return `<script src="/logo.png"></script>`;
+  return `<script src="/brand/brand-mark-4x.svg"></script>`;
 }
 
 export function buildInteractiveGraphHtml(
@@ -151,7 +151,7 @@ export function buildInteractiveGraphHtml(
         'inspector',
         'Inspector',
         `<div class="inspector-inner">
-      <div class="inspector-h"><span id="inspector-title">Node</span><button type="button" id="inspector-close">×</button></div>
+      <div class="inspector-h"><span id="inspector-title">Node</span><button type="button" id="inspector-close">Ã—</button></div>
       <div id="inspector-body"></div>
     </div>`,
         'inspector hidden'
@@ -186,8 +186,8 @@ export function buildInteractiveGraphHtml(
         'controls',
         'Controls',
         `<div class="controls">
-      <button type="button" data-a="zoom-in" title="Zoom in">＋</button>
-      <button type="button" data-a="zoom-out" title="Zoom out">−</button>
+      <button type="button" data-a="zoom-in" title="Zoom in">ï¼‹</button>
+      <button type="button" data-a="zoom-out" title="Zoom out">âˆ’</button>
       <button type="button" data-a="fit" title="Fit graph">Fit</button>
       <button type="button" data-a="reset" title="Reset view">Reset</button>
       <button type="button" data-a="reheat" title="Restart simulation">Reheat</button>
@@ -198,7 +198,7 @@ export function buildInteractiveGraphHtml(
       <button type="button" data-a="clear">Clear</button>
     </div>
     <label class="pivot-opt"><input type="checkbox" id="pivot-mode" />
-      <span>Aim zoom on next empty click (then use ±)</span>
+      <span>Aim zoom on next empty click (then use Â±)</span>
     </label>
     ${physicsInline}
     ${o.includeLayoutPicker && o.includeControls ? buildExportLayoutControlHtml(o.includeSavedPositions) : ''}`,
@@ -221,7 +221,7 @@ export function buildInteractiveGraphHtml(
     'info',
     'Graph',
     `<h1>${escHtml(o.title)}</h1>
-      <div class="row"><span>2D · Nodes</span><span>${nodes.length}</span></div>
+      <div class="row"><span>2D Â· Nodes</span><span>${nodes.length}</span></div>
       <div class="row"><span>Links</span><span>${links.length}</span></div>
       <div class="row"><span>Exported</span><span>${new Date().toISOString().slice(0, 10)}</span></div>
       <div class="row"><span>Engine</span><span>${o.scriptBasePath ? 'offline' : o.scriptMode === 'inline' ? 'embedded' : 'CDN'}</span></div>`,
@@ -232,7 +232,7 @@ export function buildInteractiveGraphHtml(
   const linkLabelChain = o.includeLinkLabels
     ? `.linkLabel(l => {
         var r = l.relation || '';
-        return r.length > 24 ? r.slice(0, 22) + '…' : r;
+        return r.length > 24 ? r.slice(0, 22) + 'â€¦' : r;
       })`
     : '';
 
@@ -289,7 +289,7 @@ export function buildInteractiveGraphHtml(
   ${legendBlock}
   ${visualsBlock}
   ${controlsBlock}
-  <div class="nav-hint">Drag nodes · Scroll zoom · Empty click clears selection</div>
+  <div class="nav-hint">Drag nodes Â· Scroll zoom Â· Empty click clears selection</div>
   <script>
     function esc(s) {
       return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -450,7 +450,7 @@ export function buildInteractiveGraphHtml(
         ctx.lineWidth = 1 / globalScale;
         ctx.stroke();
         if (showLabels && globalScale > 0.35) {
-          var label = (node.label || '').length > 18 ? (node.label || '').slice(0, 16) + '…' : (node.label || '');
+          var label = (node.label || '').length > 18 ? (node.label || '').slice(0, 16) + 'â€¦' : (node.label || '');
           var fs = Math.max(7, 9 / globalScale);
           ctx.font = '500 ' + fs + 'px system-ui,sans-serif';
           ctx.textAlign = 'center';
@@ -566,3 +566,4 @@ export function downloadTextFile(filename: string, content: string, mime: string
   a.click();
   URL.revokeObjectURL(url);
 }
+

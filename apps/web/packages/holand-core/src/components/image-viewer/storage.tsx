@@ -1,4 +1,4 @@
-import { atom, useAtom } from "jotai";
+﻿import { atom, useAtom } from "jotai";
 
 export type CommentsDataType = {
   id: string | number;
@@ -13,35 +13,35 @@ type ImageType = {
 };
 
 const imageAtom = atom<ImageType>({
-  url: "/logo.png",
+  url: "/brand/brand-mark-4x.svg",
 });
 
 const commentAtom = atom<CommentsDataType[]>([
   {
     id: 1,
     name: "John Doe",
-    avatar: "/logo.png",
+    avatar: "/brand/brand-mark-4x.svg",
     commentTime: "1 minute ago",
     comment: "I think we need to add a border radius of 10px to the image. It will look better.",
   },
   {
     id: 2,
     name: "Jane Doe",
-    avatar: "/logo.png",
+    avatar: "/brand/brand-mark-4x.svg",
     commentTime: "10 minute ago",
     comment: "Can we add a button to download the image? I think it will be useful for the users.",
   },
   {
     id: 3,
     name: "John Doe",
-    avatar: "/logo.png",
+    avatar: "/brand/brand-mark-4x.svg",
     commentTime: "30 minute ago",
     comment: "The color scheme is good. But I think we need to change the font size to 16px.",
   },
   {
     id: 4,
     name: "Jane Doe",
-    avatar: "/logo.png",
+    avatar: "/brand/brand-mark-4x.svg",
     commentTime: "Yesterday",
     comment:
       "Guys the design is done and ready for review. Please check and let me know if there is any changes.",
@@ -59,3 +59,4 @@ export function useComment() {
 
   return { comment, setComment };
 }
+

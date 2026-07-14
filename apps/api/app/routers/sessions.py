@@ -6,12 +6,14 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from ..database import get_db
+from ..deps import get_current_user
 from ..models.assessment import (
     AssessmentType,
     AssessmentVersion,
@@ -22,7 +24,10 @@ from ..models.assessment import (
     VersionStatus,
 )
 from ..models.session import AssessmentSession, SessionAnswer, SessionResult, SessionStatus
+from ..models.user import User
 from ..schemas_session import (
+    SessionListItem,
+    SessionListResponse,
     SessionOut,
     SessionResultOut,
     StartSessionIn,
@@ -135,17 +140,227 @@ def _count_total_questions(*versions: AssessmentVersion | None) -> int:
     return sum(len(version.questions) for version in versions if version is not None)
 
 
+async def _auto_generate_report(
+    db: AsyncSession,
+    session: AssessmentSession,
+    computed: dict,
+    raw_totals: dict[str, float],
+) -> None:
+    """
+    Auto-generate a full interpretive report after session completion.
+    Uses the session's scoring result directly without re-scoring.
+    Skips if a report for this session already exists.
+    """
+    from ..models.recommendation import Recommendation
+    from ..models.report import Report
+    from ..schemas import age_to_band, RecommendationResponseV2
+    from ..scoring import score_holland, score_mbti, compute_holland_field_scores
+    from ..services.interpretation_engine import (
+        build_action_plan,
+        build_confidence_score,
+        build_interpretation,
+        build_risk_flags,
+        build_summary_card,
+    )
+    from ..services.recommendation_engine import build_recommendations_v2
+
+    # Skip if report already exists
+    existing = await db.execute(
+        select(Report).where(Report.session_id == session.id)
+    )
+    if existing.scalars().first():
+        return
+
+    assessment_type = session.assessment_type.value
+
+    # Build scores per assessment type
+    if assessment_type == "holland":
+        holland_raw = {k: raw_totals.get(k, 0.0) for k in ("R", "I", "A", "S", "E", "C")}
+        mbti_raw = {k: 0.0 for k in ("E", "I", "S", "N", "T", "F", "J", "P")}
+    elif assessment_type == "mbti":
+        holland_raw = {k: 0.0 for k in ("R", "I", "A", "S", "E", "C")}
+        mbti_raw = {k: raw_totals.get(k, 0.0) for k in ("E", "I", "S", "N", "T", "F", "J", "P")}
+    else:  # combined
+        holland_raw = {k: raw_totals.get(k, 0.0) for k in ("R", "I", "A", "S", "E", "C")}
+        mbti_raw = {k: raw_totals.get(k, 0.0) for k in ("E", "I", "S", "N", "T", "F", "J", "P")}
+
+    try:
+        normalized_scores, holland_code, holland_quality, _ = score_holland(holland_raw)
+    except ValueError:
+        normalized_scores = {k: 0.0 for k in ("R", "I", "A", "S", "E", "C")}
+        holland_code = "RIA"
+        holland_quality = 0.0
+
+    try:
+        mbti_code, mbti_certainty, mbti_quality, _ = score_mbti(mbti_raw)
+    except ValueError:
+        mbti_code = "ESTJ"
+        mbti_certainty = {}
+        mbti_quality = 0.0
+
+    # Compute congruence-based field scores from the Tajallinia Holland methodology
+    field_data = compute_holland_field_scores(normalized_scores)
+    field_scores = field_data["field_scores"]
+
+    # Use a default age_band; will be refined when user profile is complete
+    age_band = "18-24"
+
+    # Default age: midpoint of band
+    age_midpoints = {"13-17": 15, "18-24": 21, "25-30": 27, "30+": 35}
+    age = age_midpoints.get(age_band, 21)
+
+    recommendations = await build_recommendations_v2(
+        db, holland_code=holland_code, mbti_type=mbti_code, age=age
+    )
+
+    def _holland_certainty_avg(top3_code: str, ns: dict) -> float:
+        vals = [ns.get(c, 0.0) for c in top3_code]
+        return round(sum(vals) / len(vals), 1) if vals else 50.0
+
+    holland_certainty_avg = _holland_certainty_avg(holland_code, normalized_scores)
+
+    summary_card = build_summary_card(holland_code, mbti_code, age_band, recommendations)
+    detailed = build_interpretation(
+        holland_code, normalized_scores, mbti_code, mbti_certainty, age_band, recommendations,
+        field_scores=field_scores,
+        raw_scores=holland_raw,
+        max_raw_per_dimension=50.0,
+    )
+    action_plan = build_action_plan(recommendations, age_band)
+    risk_flags = build_risk_flags(
+        holland_certainty_avg, mbti_certainty, age_band, recommendations,
+        normalized_scores=normalized_scores,
+        holland_quality_score=holland_quality,
+        mbti_quality_score=mbti_quality,
+    )
+    confidence = build_confidence_score(
+        holland_certainty_avg, mbti_certainty, recommendations.confidence_score,
+        holland_quality_score=holland_quality,
+        mbti_quality_score=mbti_quality,
+    )
+
+    reco_row = Recommendation(
+        session_id=session.id,
+        holland_code=holland_code,
+        mbti_type=mbti_code,
+        age_band=age_band,
+        careers=[c.model_dump() for c in recommendations.careers],
+        majors=[m.model_dump() for m in recommendations.majors],
+        confidence_score=recommendations.confidence_score,
+    )
+    db.add(reco_row)
+    await db.flush()
+
+    report_row = Report(
+        recommendation_id=reco_row.id,
+        user_id=session.user_id,
+        session_id=session.id,
+        holland_code=holland_code,
+        mbti_type=mbti_code,
+        age_band=age_band,
+        summary_card=summary_card.model_dump(),
+        detailed_interpretation=detailed.model_dump(),
+        action_plan=action_plan.model_dump(),
+        risk_flags=risk_flags,
+        confidence_score=confidence,
+    )
+    db.add(report_row)
+    await db.flush()
+
+
+@router.get("/my", response_model=SessionListResponse)
+async def list_my_sessions(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+    page: int = 1,
+    limit: int = 20,
+    status_filter: str | None = None,
+) -> SessionListResponse:
+    """Return the paginated list of assessment sessions for the authenticated user."""
+    page = max(1, page)
+    limit = max(1, min(limit, 100))
+    offset = (page - 1) * limit
+
+    base_where = [AssessmentSession.user_id == str(current_user.id)]
+    if status_filter and status_filter != "all":
+        try:
+            base_where.append(AssessmentSession.status == SessionStatus(status_filter))
+        except ValueError:
+            pass  # Ignore unknown status values
+
+    count_stmt = select(AssessmentSession).where(*base_where)
+    count_result = await db.execute(count_stmt)
+    all_sessions = count_result.scalars().all()
+    total = len(all_sessions)
+
+    list_stmt = (
+        select(AssessmentSession)
+        .options(
+            selectinload(AssessmentSession.answers),
+            selectinload(AssessmentSession.result),
+        )
+        .where(*base_where)
+        .order_by(AssessmentSession.started_at.desc())
+        .offset(offset)
+        .limit(limit)
+    )
+    list_result = await db.execute(list_stmt)
+    sessions = list_result.scalars().all()
+
+    items = [
+        SessionListItem(
+            session_id=s.id,
+            assessment_type=s.assessment_type,
+            status=s.status,
+            top_code=s.result.code if s.result else None,
+            started_at=s.started_at,
+            completed_at=s.completed_at,
+            answered_count=len(s.answers),
+        )
+        for s in sessions
+    ]
+
+    return SessionListResponse(sessions=items, total=total, page=page, limit=limit)
+
+
+_optional_bearer = HTTPBearer(auto_error=False)
+
+
+async def _try_get_current_user(
+    credentials: HTTPAuthorizationCredentials | None = Depends(_optional_bearer),
+    db: AsyncSession = Depends(get_db),
+) -> User | None:
+    """Return the authenticated User if a valid Bearer token is provided, else None."""
+    if credentials is None or not credentials.credentials:
+        return None
+    try:
+        from ..services.auth_service import JWTError, decode_access_token
+        payload = decode_access_token(credentials.credentials)
+        user_id = payload.get("sub")
+        if not user_id:
+            return None
+        result = await db.execute(select(User).where(User.id == user_id))
+        user = result.scalar_one_or_none()
+        return user if user and user.is_active else None
+    except Exception:
+        return None
+
+
 @router.post("/start", response_model=StartSessionOut, status_code=201)
 async def start_session(
     payload: StartSessionIn,
     db: Annotated[AsyncSession, Depends(get_db)],
+    current_user: User | None = Depends(_try_get_current_user),
 ) -> StartSessionOut:
     primary_version, secondary_version = await _get_published_versions_for_start(
         db, payload.assessment_type
     )
 
+    # Prefer authenticated user over client-supplied user_id (security)
+    resolved_user_id = str(current_user.id) if current_user else payload.user_id
+
     session = AssessmentSession(
-        user_id=payload.user_id,
+        user_id=resolved_user_id,
         assessment_type=payload.assessment_type,
         assessment_version_id=primary_version.id,
         secondary_assessment_version_id=secondary_version.id if secondary_version else None,
@@ -256,7 +471,9 @@ async def submit_answers(
 
 @router.post("/{session_id}/complete", response_model=SessionResultOut)
 async def complete_session(
-    session_id: str, db: Annotated[AsyncSession, Depends(get_db)]
+    session_id: str,
+    background_tasks: BackgroundTasks,
+    db: Annotated[AsyncSession, Depends(get_db)],
 ) -> SessionResultOut:
     session = await _get_session(db, session_id)
     if session.status == SessionStatus.COMPLETED:
@@ -358,7 +575,14 @@ async def complete_session(
     session.completed_at = _now()
     await db.flush()
 
-    return SessionResultOut(
+    # Capture session data BEFORE the DB session closes, to pass to the background report task
+    session_id_copy = session.id
+    user_id_copy = session.user_id
+    assessment_type_copy = session.assessment_type.value
+    computed_copy = dict(computed)
+    raw_totals_copy = dict(raw_totals)
+
+    result_out = SessionResultOut(
         session_id=session.id,
         assessment_type=session.assessment_type,
         assessment_version=version.version,
@@ -373,6 +597,48 @@ async def complete_session(
         mbti=computed.get("mbti"),
         computed_at=session_result.computed_at,
     )
+
+    # Auto-generate report using FastAPI BackgroundTasks (runs after response is sent)
+    background_tasks.add_task(
+        _auto_generate_report_independent,
+        session_id_copy, user_id_copy, assessment_type_copy, computed_copy, raw_totals_copy
+    )
+
+    return result_out
+
+
+async def _auto_generate_report_independent(
+    session_id: str,
+    user_id: str | None,
+    assessment_type: str,
+    computed: dict,
+    raw_totals: dict[str, float],
+) -> None:
+    """
+    Generate a report for a completed session in a fresh, independent DB session.
+    Called via asyncio.ensure_future so it does not affect the caller's transaction.
+    """
+    import asyncio
+    import logging
+    _log = logging.getLogger(__name__)
+
+    await asyncio.sleep(1.0)  # allow the parent transaction to fully commit first
+    from ..database import AsyncSessionLocal
+    from ..models.session import AssessmentSession as _Session
+    try:
+        async with AsyncSessionLocal() as db:
+            result = await db.execute(
+                select(_Session).where(_Session.id == session_id)
+            )
+            real_session = result.scalar_one_or_none()
+            if real_session is None:
+                _log.warning("[AutoReport] Session %s not found for report generation", session_id)
+                return
+            await _auto_generate_report(db, real_session, computed, raw_totals)
+            await db.commit()
+            _log.info("[AutoReport] Report generated successfully for session %s", session_id)
+    except Exception as exc:
+        _log.error("[AutoReport] Failed for session %s: %s", session_id, exc, exc_info=True)
 
 
 async def _build_result_out(db: AsyncSession, session: AssessmentSession) -> SessionResultOut:
@@ -448,3 +714,38 @@ async def get_session_result(
     if session.status != SessionStatus.COMPLETED:
         raise HTTPException(status_code=409, detail="Session is not completed yet")
     return await _build_result_out(db, session)
+
+
+@router.get("/{session_id}/ai-report")
+async def get_session_ai_report(
+    session_id: str, db: Annotated[AsyncSession, Depends(get_db)]
+) -> dict:
+    """
+    Return the latest completed AI report for a session.
+    Returns the parsed_sections JSON so the frontend can display AI-generated insights.
+    Returns 404 if no AI report exists for this session yet.
+    """
+    from ..models.ai_provider import SessionAIReport
+    stmt = (
+        select(SessionAIReport)
+        .where(
+            SessionAIReport.session_id == session_id,
+            SessionAIReport.status == "completed",
+        )
+        .order_by(SessionAIReport.created_at.desc())
+    )
+    result = await db.execute(stmt)
+    ai_report = result.scalars().first()
+    if ai_report is None:
+        raise HTTPException(status_code=404, detail="No completed AI report found for this session")
+    return {
+        "id": ai_report.id,
+        "session_id": session_id,
+        "model_name": ai_report.model_name,
+        "parsed_sections": ai_report.parsed_sections or {},
+        "raw_response": ai_report.raw_response,
+        "generation_time_ms": ai_report.generation_time_ms,
+        "tokens_used": ai_report.tokens_used,
+        "status": ai_report.status,
+        "created_at": ai_report.created_at.isoformat() if ai_report.created_at else None,
+    }

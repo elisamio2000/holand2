@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from ..deps import get_current_user
 from ..models.user import User
-from ..routers.auth import ROLE_SECTIONS
+from ..routers.auth import ROLE_SECTIONS, role_permissions
 from ..schemas import EffectivePermissionsResponse
 
 router = APIRouter(prefix="/admin/group-rbac", tags=["Admin RBAC"])
@@ -19,7 +19,7 @@ async def effective_permissions(
         base_roles=[role],
         is_admin=role == "admin",
         is_super_admin=False,
-        global_permissions=[],
+        global_permissions=role_permissions(user.role),
         allowed_sections=ROLE_SECTIONS.get(user.role, []),
         groups={},
     )

@@ -9,6 +9,7 @@ from collections.abc import Sequence
 
 import sqlalchemy as sa
 from alembic import op
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = "20260709_01"
@@ -17,21 +18,21 @@ branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
 
-assessment_type_enum = sa.Enum("holland", "mbti", name="assessment_type_enum")
-version_status_enum = sa.Enum(
-    "draft", "reviewed", "approved", "published", "archived", name="version_status_enum"
+assessment_type_enum = postgresql.ENUM("holland", "mbti", name="assessment_type_enum", create_type=False)
+version_status_enum = postgresql.ENUM(
+    "draft", "reviewed", "approved", "published", "archived", name="version_status_enum", create_type=False
 )
-question_kind_enum = sa.Enum("likert", "forced_choice", name="question_kind_enum")
-formula_assessment_type_enum = sa.Enum("holland", "mbti", name="formula_assessment_type_enum")
-formula_version_status_enum = sa.Enum(
-    "draft", "reviewed", "approved", "published", "archived", name="formula_version_status_enum"
+question_kind_enum = postgresql.ENUM("likert", "forced_choice", name="question_kind_enum", create_type=False)
+formula_assessment_type_enum = postgresql.ENUM("holland", "mbti", name="formula_assessment_type_enum", create_type=False)
+formula_version_status_enum = postgresql.ENUM(
+    "draft", "reviewed", "approved", "published", "archived", name="formula_version_status_enum", create_type=False
 )
-version_entity_type_enum = sa.Enum(
-    "assessment_version", "formula_version", name="version_entity_type_enum"
+version_entity_type_enum = postgresql.ENUM(
+    "assessment_version", "formula_version", name="version_entity_type_enum", create_type=False
 )
-session_assessment_type_enum = sa.Enum("holland", "mbti", name="session_assessment_type_enum")
-session_status_enum = sa.Enum(
-    "in_progress", "completed", "abandoned", name="session_status_enum"
+session_assessment_type_enum = postgresql.ENUM("holland", "mbti", name="session_assessment_type_enum", create_type=False)
+session_status_enum = postgresql.ENUM(
+    "in_progress", "completed", "abandoned", name="session_status_enum", create_type=False
 )
 
 

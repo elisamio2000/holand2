@@ -6,10 +6,10 @@ describe('server-logger', () => {
     expect(isSilentMiddlewarePath('/api/auth/session')).toBe(true);
     expect(isSilentMiddlewarePath('/api/auth/_log')).toBe(true);
     expect(isSilentMiddlewarePath('/_next/static/chunks/main.js')).toBe(true);
-    expect(isSilentMiddlewarePath('/brand/brand-mark-4x.png')).toBe(true);
-    expect(isSilentMiddlewarePath('/apple-touch-icon.png')).toBe(true);
+    expect(isSilentMiddlewarePath('/brand/brand-mark-4x.svg')).toBe(true);
+    expect(isSilentMiddlewarePath('/apple-touch-icon.svg')).toBe(true);
     expect(isSilentMiddlewarePath('/icon')).toBe(true);
-    expect(isSilentMiddlewarePath('/apple-icon')).toBe(true);
+    expect(isSilentMiddlewarePath('/apple-icon.svg')).toBe(true);
   });
 
   it('logs protected app routes', () => {

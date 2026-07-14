@@ -12,13 +12,13 @@ import { Heading } from '@react-email/heading';
 import { Section } from '@react-email/section';
 import { Hr } from '@react-email/hr';
 
-export default function VercelInviteUserEmail(
-  userEmail: string = 'bukinoshita@example.com',
-  username: string = 'zenorocha',
+export default function HolandAccountConfirmationEmail(
+  userEmail: string = 'user@holand.app',
+  username: string = 'Holand User',
   demoLink: string =
     process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 ) {
-  const previewText = `Join ${username} on Vercel`;
+  const previewText = `Welcome ${username} to Holand`;
 
   return (
     <Html>
@@ -28,15 +28,15 @@ export default function VercelInviteUserEmail(
         <Container style={container}>
           <Section style={{ marginTop: '32px' }}>
             <Img
-              src={`${demoLink.replace(/\/$/, '')}/brand/ai-assistant-email.png`}
-              alt="Ai assistant"
+              src={`${demoLink.replace(/\/$/, '')}/brand/brand-mark-4x.svg`}
+              alt="Holand Platform"
               style={{
                 margin: '0 auto',
               }}
             />
           </Section>
           <Heading style={heading}>
-            Welcome to <strong>Ai assistant</strong>
+            Welcome to <strong>Holand</strong>
           </Heading>
           <Text style={subheading}>
             Hello <strong>{username}</strong>, (
@@ -53,7 +53,7 @@ export default function VercelInviteUserEmail(
             }}
           >
             <Link style={global.button} href={demoLink}>
-              Open Ai assistant
+              Open Holand
             </Link>
           </Section>
           <Text style={subheading}>
@@ -79,10 +79,10 @@ export default function VercelInviteUserEmail(
               Please contact us if you have any questions.
             </Text>
             <Text style={footer.text}>
-              © {new Date().getFullYear()} RedQ, Inc. All Rights Reserved.
+              © {new Date().getFullYear()} Holand Platform. All Rights Reserved.
             </Text>
             <Text style={footer.text}>
-              RedQ, INC. One Bowerman Drive, Beaverton, Oregon 00000, USA.
+              Holand Platform
             </Text>
           </Section>
         </Container>

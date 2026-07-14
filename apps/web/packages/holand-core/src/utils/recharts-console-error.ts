@@ -1,4 +1,4 @@
-// required this function to element this issue: /logo.png
+﻿// required this function to element this issue: /brand/brand-mark-4x.svg
 export default function hideRechartsConsoleError() {
   const error = console.error;
   return (console.error = (...args: any) => {
@@ -6,3 +6,4 @@ export default function hideRechartsConsoleError() {
     error(...args);
   });
 }
+

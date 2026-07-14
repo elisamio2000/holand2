@@ -44,7 +44,7 @@ export const snippetsAndTemplates = [
   {
     id: '5b679ea8-8261-4e0e-a562-e18381bd3175',
     name: 'Licensed Bronze Pants',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     folder: 'Payment',
@@ -55,7 +55,7 @@ export const snippetsAndTemplates = [
   {
     id: 'f7a77a4b-76e3-44bd-bd18-660d80751067',
     name: 'Handcrafted Steel Computer',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     folder: 'Payment',
@@ -66,7 +66,7 @@ export const snippetsAndTemplates = [
   {
     id: '67426e62-3b78-4c1d-80ff-463fbc78e546',
     name: 'Oriental Plastic Shoes',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     folder: 'Withdrawal',
@@ -77,7 +77,7 @@ export const snippetsAndTemplates = [
   {
     id: 'ba88a5d6-ca86-47a9-b5e1-570ec0af4309',
     name: 'Handcrafted Granite Gloves',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     folder: 'Payment',
@@ -88,7 +88,7 @@ export const snippetsAndTemplates = [
   {
     id: '67426e62-3b7a-4c1d-80ff-463fbc78e546',
     name: 'Oriental Plastic Shoes',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     folder: 'Withdrawal',
@@ -99,7 +99,7 @@ export const snippetsAndTemplates = [
   {
     id: 'ba88a5d6-cae6-47a9-b5e1-570ec0af4309',
     name: 'Handcrafted Granite Gloves',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     folder: 'Payment',
@@ -110,7 +110,7 @@ export const snippetsAndTemplates = [
   {
     id: '67426e68-3b78-4c1d-80ff-463fbc78e546',
     name: 'Oriental Plastic Shoes',
-    avatar: `/logo.png
+    avatar: `/brand/brand-mark-4x.svg
       avatarIds
     )}.webp`,
     folder: 'Withdrawal',
@@ -119,3 +119,4 @@ export const snippetsAndTemplates = [
     updatedAt: new Date('2022-12-03T03:21:03.983Z'),
   },
 ];
+

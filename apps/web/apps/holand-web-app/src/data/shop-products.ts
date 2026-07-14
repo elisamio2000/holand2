@@ -1,7 +1,7 @@
 ﻿export const modernProductsGrid = [
   {
     id: 1,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -17,7 +17,7 @@
   },
   {
     id: 2,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 315.0,
@@ -33,7 +33,7 @@
   },
   {
     id: 3,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 99.0,
@@ -49,7 +49,7 @@
   },
   {
     id: 4,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 77.0,
@@ -65,7 +65,7 @@
   },
   {
     id: 5,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 45.0,
@@ -81,7 +81,7 @@
   },
   {
     id: 6,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Nike Shoe',
     description: 'High Quality Wireless Headphone',
     price: 119.0,
@@ -97,7 +97,7 @@
   },
   {
     id: 7,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Denim Jacket',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 79.0,
@@ -113,7 +113,7 @@
   },
   {
     id: 8,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Ladies High Hill',
     description: 'Classic Black Heels For Women',
     price: 49.99,
@@ -129,7 +129,7 @@
   },
   {
     id: 9,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -145,7 +145,7 @@
   },
   {
     id: 10,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 295.0,
@@ -161,7 +161,7 @@
   },
   {
     id: 11,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 295.0,
@@ -177,7 +177,7 @@
   },
   {
     id: 12,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Apple AirPods',
     description: 'Mobile Accessories | Wireless Earphone',
     price: 295.0,
@@ -193,7 +193,7 @@
   },
   {
     id: 13,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Soap Bars',
     description: 'Saffron Handmade Bar',
     price: 295.0,
@@ -209,7 +209,7 @@
   },
   {
     id: 14,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 295.0,
@@ -225,7 +225,7 @@
   },
   {
     id: 15,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Clutch Bag',
     description: 'Ladies Bag 12x112',
     price: 295.0,
@@ -241,7 +241,7 @@
   },
   {
     id: 16,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Versace Eros',
     description: 'Perfume For Men',
     price: 295.0,
@@ -260,7 +260,7 @@
 export const recommendationProducts = [
   {
     id: 1,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 295.0,
@@ -275,7 +275,7 @@ export const recommendationProducts = [
   },
   {
     id: 2,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -290,7 +290,7 @@ export const recommendationProducts = [
   },
   {
     id: 3,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -305,7 +305,7 @@ export const recommendationProducts = [
   },
   {
     id: 4,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 295.0,
@@ -314,7 +314,7 @@ export const recommendationProducts = [
   },
   {
     id: 5,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -329,7 +329,7 @@ export const recommendationProducts = [
   },
   {
     id: 6,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -344,7 +344,7 @@ export const recommendationProducts = [
   },
   {
     id: 7,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -359,7 +359,7 @@ export const recommendationProducts = [
   },
   {
     id: 8,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -377,7 +377,7 @@ export const recommendationProducts = [
 export const recentlyProducts = [
   {
     id: 1,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -392,7 +392,7 @@ export const recentlyProducts = [
   },
   {
     id: 2,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 295.0,
@@ -407,7 +407,7 @@ export const recentlyProducts = [
   },
   {
     id: 3,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 295.0,
@@ -416,7 +416,7 @@ export const recentlyProducts = [
   },
   {
     id: 4,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -431,7 +431,7 @@ export const recentlyProducts = [
   },
   {
     id: 5,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -446,7 +446,7 @@ export const recentlyProducts = [
   },
   {
     id: 6,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -461,7 +461,7 @@ export const recentlyProducts = [
   },
   {
     id: 7,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -480,7 +480,7 @@ export const recentlyProducts = [
 export const minimalProducts = [
   {
     id: 1,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Casio Watch',
     description: 'Casio Classic Watch',
     price: 295.0,
@@ -495,7 +495,7 @@ export const minimalProducts = [
   },
   {
     id: 2,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Beats Headphone',
     description: 'High Quality Wireless Headphone',
     price: 295.0,
@@ -510,7 +510,7 @@ export const minimalProducts = [
   },
   {
     id: 3,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Marc Jacob’s Decadent',
     description: 'Classic Marc Jacob’s Fragrance',
     price: 295.0,
@@ -519,7 +519,7 @@ export const minimalProducts = [
   },
   {
     id: 4,
-    thumbnail: `/logo.png`,
+    thumbnail: `/brand/brand-mark-4x.svg`,
     title: 'Black Shoes',
     description: 'Classic Black Heels For Women',
     price: 295.0,
@@ -533,3 +533,4 @@ export const minimalProducts = [
     ],
   },
 ];
+

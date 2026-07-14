@@ -19,7 +19,7 @@ export const sendEmail = async (data: EmailPayload) => {
 
   try {
     await transporter.sendMail({
-      from: `Ai assistant<${env.SMTP_FROM_EMAIL}>`,
+      from: `Holand Platform <${env.SMTP_FROM_EMAIL}>`,
       ...data,
     });
     return true;

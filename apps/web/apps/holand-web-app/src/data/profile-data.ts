@@ -1,28 +1,28 @@
-export const postData = [
+﻿export const postData = [
   {
     id: 100,
     type: 'gallery',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     images: [
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -30,26 +30,26 @@ export const postData = [
     id: 101,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a>',
       },
     ],
   },
@@ -57,31 +57,31 @@ export const postData = [
     id: 102,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@hedoifn',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -89,28 +89,28 @@ export const postData = [
     id: 103,
     type: 'video',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     video: {
       thumbnail:
-        '/logo.png',
-      link: '/logo.png',
+        '/brand/brand-mark-4x.svg',
+      link: '/brand/brand-mark-4x.svg',
     },
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -118,29 +118,29 @@ export const postData = [
     id: 104,
     type: 'gallery',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     images: [
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -148,20 +148,20 @@ export const postData = [
     id: 105,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@bobnah',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
     ],
   },
@@ -169,20 +169,20 @@ export const postData = [
     id: 106,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -190,34 +190,34 @@ export const postData = [
     id: 107,
     type: 'video',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     video: {
       thumbnail:
-        '/logo.png',
-      link: '/logo.png',
+        '/brand/brand-mark-4x.svg',
+      link: '/brand/brand-mark-4x.svg',
     },
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -225,32 +225,32 @@ export const postData = [
     id: 108,
     type: 'gallery',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     images: [
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
     ],
   },
@@ -258,25 +258,25 @@ export const postData = [
     id: 109,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -284,20 +284,20 @@ export const postData = [
     id: 110,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@hedoifn',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -305,18 +305,18 @@ export const postData = [
     id: 111,
     type: 'video',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     video: {
       thumbnail:
-        '/logo.png',
-      link: '/logo.png',
+        '/brand/brand-mark-4x.svg',
+      link: '/brand/brand-mark-4x.svg',
     },
     commentData: [
       {
         user: '@jackchan',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
     ],
   },
@@ -324,26 +324,26 @@ export const postData = [
     id: 112,
     type: 'gallery',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     images: [
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -351,26 +351,26 @@ export const postData = [
     id: 113,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a>',
       },
     ],
   },
@@ -378,31 +378,31 @@ export const postData = [
     id: 114,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@hedoifn',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -410,28 +410,28 @@ export const postData = [
     id: 115,
     type: 'video',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     video: {
       thumbnail:
-        '/logo.png',
-      link: '/logo.png',
+        '/brand/brand-mark-4x.svg',
+      link: '/brand/brand-mark-4x.svg',
     },
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -439,29 +439,29 @@ export const postData = [
     id: 116,
     type: 'gallery',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     images: [
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -469,20 +469,20 @@ export const postData = [
     id: 117,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@bobnah',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
     ],
   },
@@ -490,20 +490,20 @@ export const postData = [
     id: 118,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -511,34 +511,34 @@ export const postData = [
     id: 119,
     type: 'video',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     video: {
       thumbnail:
-        '/logo.png',
-      link: '/logo.png',
+        '/brand/brand-mark-4x.svg',
+      link: '/brand/brand-mark-4x.svg',
     },
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -546,32 +546,32 @@ export const postData = [
     id: 120,
     type: 'gallery',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     images: [
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
+      '/brand/brand-mark-4x.svg',
     ],
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
     ],
   },
@@ -579,25 +579,25 @@ export const postData = [
     id: 121,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@abcrefo',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
       {
         user: '@herboif',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@bobnah',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -605,20 +605,20 @@ export const postData = [
     id: 122,
     type: 'image',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     image:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     commentData: [
       {
         user: '@hedoifn',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
       {
         user: '@jackchan',
-        userImg: '/logo.png',
-        userComment: 'Excellent work !!! Looks very clean and appealing 👏',
+        userImg: '/brand/brand-mark-4x.svg',
+        userComment: 'Excellent work !!! Looks very clean and appealing ðŸ‘',
       },
     ],
   },
@@ -626,18 +626,18 @@ export const postData = [
     id: 123,
     type: 'video',
     thumbnail:
-      '/logo.png',
+      '/brand/brand-mark-4x.svg',
     video: {
       thumbnail:
-        '/logo.png',
-      link: '/logo.png',
+        '/brand/brand-mark-4x.svg',
+      link: '/brand/brand-mark-4x.svg',
     },
     commentData: [
       {
         user: '@jackchan',
-        userImg: '/logo.png',
+        userImg: '/brand/brand-mark-4x.svg',
         userComment:
-          'Hi 👋🏻😊<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... 😜<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
+          'Hi ðŸ‘‹ðŸ»ðŸ˜Š<br /> These are my personal favorites of my last year\'s render challenge. And maybe that\'s also a reason to try this new instagram feature... ðŸ˜œ<br /> <a  href="#">#lekoarts</a> <a  href="#">#arsaurea</a> <a  href="#">#photoshop</a> <a  href="#">#cinema4d</a> <a  href="#">#c4d</a> <a  href="#">#graphicdesign</a> <a  href="#">#artwork</a> <a  href="#">#digitalart</a> <a  href="#">#artoftheday</a> <a  href="#">#abstract</a>',
       },
     ],
   },
@@ -646,55 +646,55 @@ export const postData = [
 export const followersData = [
   {
     id: 1,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Thomas Stock',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 2,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Veeti Seppanen',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 3,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Bonnie Riley',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 4,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Steve T. Scaife',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 5,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Leo Gill',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 6,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'June Cha',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 7,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Renee Sims',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 8,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Jonathan Cha',
     buttonText: ['following', 'Follow'],
   },
   {
     id: 9,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Veeti Seppanen',
     buttonText: ['following', 'Follow'],
   },
@@ -703,74 +703,75 @@ export const followersData = [
 export const followingData = [
   {
     id: 1,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Thomas Stock',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 2,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Veeti Seppanen',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 3,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Bonnie Riley',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 4,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Steve T. Scaife',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 5,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Leo Gill',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 6,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'June Cha',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 7,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Renee Sims',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 8,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Jonathan Cha',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 9,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Veeti Seppanen',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 10,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Bonnie Riley',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 11,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Steve T. Scaife',
     buttonText: ['follow', 'unfollow'],
   },
   {
     id: 12,
-    avatar: '/logo.png',
+    avatar: '/brand/brand-mark-4x.svg',
     name: 'Leo Gill',
     buttonText: ['follow', 'unfollow'],
   },
 ];
+

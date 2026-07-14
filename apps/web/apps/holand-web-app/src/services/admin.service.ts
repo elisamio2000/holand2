@@ -65,6 +65,8 @@ import type {
   EffectivePermissions,
 } from '@/types/auth.types';
 
+let systemSettingsEndpointUnavailable = false;
+
 /**
  * Extract role name strings from the /roles/user/{id} response.
  *
@@ -1643,6 +1645,9 @@ export const adminService = {
    * @throws {AxiosError} 401 if unauthorized, 403 if not admin
    */
   async getSystemSettings(): Promise<SystemSettingsResponse> {
+    if (systemSettingsEndpointUnavailable) {
+      return {};
+    }
     console.info('[AdminService] Fetching system settings...');
     try {
       const res = await gatewayClient.get<SystemSettingsResponse>(
@@ -1654,6 +1659,12 @@ export const adminService = {
       });
       return res.data;
     } catch (error: unknown) {
+      const status = (error as { response?: { status?: number } } | undefined)?.response?.status;
+      if (status === 404) {
+        systemSettingsEndpointUnavailable = true;
+        console.info('[AdminService] /admin/settings is not available in this environment.');
+        return {};
+      }
       console.error('[AdminService] Failed to fetch system settings:', error);
       throw error;
     }

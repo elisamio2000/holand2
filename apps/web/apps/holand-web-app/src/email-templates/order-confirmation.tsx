@@ -20,21 +20,21 @@ const orderedProducts = [
     quantity: 1,
     price: 99.99,
     name: 'Hario Bauno Cattle',
-    image: `/logo.png`,
+    image: `/brand/brand-mark-4x.svg`,
   },
   {
     id: 2,
     quantity: 1,
     price: 122.12,
     name: 'Hario Bauno Cattle',
-    image: `/logo.png`,
+    image: `/brand/brand-mark-4x.svg`,
   },
   {
     id: 3,
     quantity: 1,
     price: 241.66,
     name: 'Hario Bauno Cattle',
-    image: `/logo.png`,
+    image: `/brand/brand-mark-4x.svg`,
   },
 ];
 
@@ -62,8 +62,8 @@ export default function OrderConfirmationEmail(
             <Row>
               <Column>
                 <Img
-                  src={`${baseUrl}/brand/ai-assistant-email.png`}
-                  alt="Ai assistant"
+                  src={`${baseUrl}/brand/brand-mark-4x.svg`}
+                  alt="Holand Platform"
                   style={{
                     margin: '0',
                   }}
@@ -235,8 +235,8 @@ export default function OrderConfirmationEmail(
           <Hr style={global.hr} />
           <Section style={paddingY}>
             <Img
-              src={`${baseUrl}/brand/ai-assistant-email.png`}
-              alt="Ai assistant"
+              src={`${baseUrl}/brand/brand-mark-4x.svg`}
+              alt="Holand Platform"
               style={{
                 margin: '12px auto 36px',
               }}
@@ -284,10 +284,10 @@ export default function OrderConfirmationEmail(
               Please contact us if you have any questions.
             </Text>
             <Text style={footer.text}>
-              © {new Date().getFullYear()} RedQ, Inc. All Rights Reserved.
+              © {new Date().getFullYear()} Holand Platform. All Rights Reserved.
             </Text>
             <Text style={footer.text}>
-              RedQ, INC. One Bowerman Drive, Beaverton, Oregon 97005, USA.
+              Holand Platform
             </Text>
           </Section>
         </Container>
@@ -510,3 +510,4 @@ const footer = {
     textDecoration: 'underline',
   } as React.CSSProperties,
 };
+

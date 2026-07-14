@@ -175,6 +175,8 @@ const en = {
   nav: {
     menu: 'Menu',
     platform: 'Platform',
+    home: 'Home',
+    assessments: 'Assessments',
     aiChat: 'AI Chat',
     oneSearch: 'One Search',
     caseImporter: 'Case Importer',
@@ -226,8 +228,62 @@ const en = {
     llmRouting: 'LLM & Tool Routing',
     pipelineAdmin: 'Pipeline Admin',
     workflowBuilder: 'Workflow Builder',
+    expertLab: 'Content Lab',
     myProfile: 'My Profile',
     accountSettings: 'Account Settings',
+    adminSection: 'Admin Panel',
+    adminUsers: 'Users',
+    adminAiSettings: 'AI Settings',
+    adminSettings: 'Admin Dashboard',
+  },
+
+  // ==========================================
+  // Report Page
+  // ==========================================
+  reportPage: {
+    title: 'Full Career Guidance Report',
+    exportButton: 'Export Report',
+    exportError: 'Failed to download report file.',
+    loading: 'Loading report...',
+    notFound: 'Report not found.',
+    fetchError: 'Failed to fetch report.',
+    hollandCode: 'Holland Code',
+    mbtiType: 'MBTI Type',
+    ageBand: 'Age Band',
+    careersSummary: 'Career Suggestions Summary',
+    majorsSummary: 'Major Suggestions Summary',
+    psychometric: 'Psychometric Interpretation',
+    behavioralFit: 'Behavioral Fit & Work Environment',
+    careerMajorAnalysis: 'Career / Major Path Analysis',
+    skillGrowth: 'Skill Growth',
+    careerRecommendations: 'Career Path Suggestions',
+    majorRecommendations: 'Academic Major Suggestions',
+    fitScore: 'Match',
+    noItems: 'No items recorded.',
+    actionPlan: 'Staged Action Plan',
+    actionPlan3m: '3 Months',
+    actionPlan6m: '6 Months',
+    actionPlan12m: '12 Months',
+    confidenceScore: 'Report Confidence Score',
+    aiAnalysisTitle: 'AI Analysis',
+    aiGenerateButton: 'Get AI Analysis',
+    aiRegenerateButton: 'Regenerate AI Analysis',
+    aiGenerating: 'Generating analysis...',
+    aiGeneratedBadge: 'AI-generated',
+    aiModelLabel: 'Model',
+    aiPersonalityDesc: 'Personality Description (AI)',
+    aiStrengths: 'Strengths (AI)',
+    aiChallenges: 'Potential Challenges (AI)',
+    aiJobs: 'Suggested Careers (AI)',
+    aiMajors: 'Suggested Majors (AI)',
+    aiActionPlan: 'Smart Action Plan (AI)',
+    aiRawOutput: 'Model Output (AI)',
+    aiDisclaimer: '⚡ This section is AI-generated and advisory — read with caution alongside a specialist.',
+    aiReplaceConfirm: 'An AI analysis already exists for this report. Generate a new one to replace it?',
+    aiConfirmYes: 'Yes, generate new analysis',
+    aiConfirmNo: 'No, show existing analysis',
+    aiError: 'Error generating AI analysis',
+    aiLoadError: 'Failed to load AI analysis.',
   },
 
   // ==========================================
@@ -437,7 +493,7 @@ const en = {
     language: {
       title: 'Language',
       en: 'English',
-      fa: 'فارسی',
+      fa: 'ÙØ§Ø±Ø³ÛŒ',
     },
   },
 
@@ -606,14 +662,14 @@ const en = {
         async: {
           label: 'Auto (Async)',
           description:
-            'Full pipeline: Review → Embed → Store. Runs in background and is best for large folders.',
+            'Full pipeline: Review â†’ Embed â†’ Store. Runs in background and is best for large folders.',
           capability:
             'Best for heavy imports with stable queue behavior and resilient retry handling.',
         },
         sync: {
           label: 'Auto (Sync)',
           description:
-            'Full pipeline: Review → Embed → Store. Waits until complete and is recommended for small folders.',
+            'Full pipeline: Review â†’ Embed â†’ Store. Waits until complete and is recommended for small folders.',
           capability:
             'Best for short imports when immediate completion feedback is needed.',
         },
@@ -1017,7 +1073,7 @@ const en = {
         'Tools advertised by the local executor (HTTP) or a static fallback list — often Python processors on disk.',
       splitExplainerTitle: 'How this page is split',
       splitExplainerIntro:
-        '“External” here means outside the gateway tool registry tab — not “no server”. The two blocks differ by where the tool runs and how it is discovered:',
+        '“Externalâ€ here means outside the gateway tool registry tab — not “no serverâ€. The two blocks differ by where the tool runs and how it is discovered:',
       splitBulletFrontend:
         'In-app tools: UI and orchestration live in Next.js; they may still call the API gateway (e.g. :8000) for data.',
       splitBulletExecutor:
@@ -1301,9 +1357,9 @@ const en = {
     },
     automations: {
       title: 'Automations',
-      presetImport: 'When case import completes → create milestone tasks',
-      presetOverdue: 'When task overdue → notify in Messages',
-      presetAssign: 'When task assigned → inbox notification',
+      presetImport: 'When case import completes â†’ create milestone tasks',
+      presetOverdue: 'When task overdue â†’ notify in Messages',
+      presetAssign: 'When task assigned â†’ inbox notification',
       executionLog: 'Execution log (mock)',
       noRuns: 'No automation runs yet — assign a task in mock mode to trigger preset.',
     },
@@ -1408,14 +1464,14 @@ const en = {
       timeline: {
         empty: 'No user actions captured during this session.',
         click: 'Click: {{target}}',
-        api: '{{method}} {{endpoint}} → {{status}}',
+        api: '{{method}} {{endpoint}} â†’ {{status}}',
         error: 'Error: {{message}}',
-        navigation: 'Navigate: {{from}} → {{to}}',
+        navigation: 'Navigate: {{from}} â†’ {{to}}',
         state: '{{component}}: {{change}}',
         addNote: 'Add note',
         deleteAction: 'Remove',
         notePlaceholder: 'Add a note…',
-        note: '📝 {{text}}',
+        note: 'ðŸ“ {{text}}',
       },
       sessionJson: 'Full session payload (JSON)',
       sendToTeam: 'Send to dev team',
@@ -1441,7 +1497,7 @@ const en = {
       uploadRetry: 'Upload failed. Retry?',
       capturing: 'Recording session...',
       captureActive: 'Bug reporter is active',
-      navigationTracked: 'Navigation: {{from}} → {{to}}',
+      navigationTracked: 'Navigation: {{from}} â†’ {{to}}',
       upload: {
         uploading: 'Uploading assets...',
         sending: 'Sending report...',
@@ -1477,7 +1533,7 @@ const en = {
     fab: {
       openMenu: 'Help & support',
       chatCustomer: 'Chat with Support',
-      aiChat: 'AI Assistant',
+      aiChat: 'Assistant',
     },
     inbox: 'Inbox',
     sent: 'Sent',
@@ -2191,10 +2247,10 @@ const en = {
     emptyLane: 'No hits yet — connect the search API for this lane.',
     dorkTitle: 'Structured query ideas',
     dorkBody:
-      'Examples: `type:chat احمد`, `case:* AND path:*report*`, `lang:fa OR lang:en`, `before:2026-05-01`. Final operator set is for the backend contract.',
+      'Examples: `type:chat Ø§Ø­Ù…Ø¯`, `case:* AND path:*report*`, `lang:fa OR lang:en`, `before:2026-05-01`. Final operator set is for the backend contract.',
     transliterationTitle: 'Names across scripts',
     transliterationBody:
-      'Same entity may appear as احمد / ahmad / Ahmad. The UI will show script variants when the gateway returns alias facets.',
+      'Same entity may appear as Ø§Ø­Ù…Ø¯ / ahmad / Ahmad. The UI will show script variants when the gateway returns alias facets.',
     colCase: 'Case',
     colCaseId: 'Case ID',
     colScore: 'Score',
@@ -2203,7 +2259,7 @@ const en = {
     mockSampleExplain:
       'Results are generated only inside this page for UX testing. No other route imports this data. In production builds mock defaults off unless you set NEXT_PUBLIC_ONE_SEARCH_MOCK=true.',
     mockSearching: 'Searching sample index…',
-    mockEnterQuery: 'Submit a query (try احمد or ahmad) to load the sample federated response.',
+    mockEnterQuery: 'Submit a query (try Ø§Ø­Ù…Ø¯ or ahmad) to load the sample federated response.',
     mockDisabled:
       'Mock is off (set NEXT_PUBLIC_ONE_SEARCH_MOCK=true to enable, or run in development). Connect the real gateway search API for live results.',
     topNavAria: 'Product shortcuts (preview)',
@@ -2251,7 +2307,7 @@ const en = {
     advancedMinScoreHint:
       'Maps to smart_search score_threshold (0.0–1.0). Changes are debounced before refetch.',
     quickTry: 'Quick try',
-    sampleAhmad: 'احمد',
+    sampleAhmad: 'Ø§Ø­Ù…Ø¯',
     ctaImageSearch: 'Image search',
     ctaVoiceBundle: 'Voice bundle',
     heroFootnote: 'Multimodal routing and ranking will follow the gateway contract.',
@@ -2267,11 +2323,11 @@ const en = {
     related1: 'CASE-MOCK-4412 attachments',
     related2: 'storage artifact image/png',
     related3: 'knowledge graph Person',
-    related4: 'directory احمد',
+    related4: 'directory Ø§Ø­Ù…Ø¯',
     related5: 'file path report',
     resultMenu: 'Result options',
     noResults: 'No results found',
-    modeEmptyHint: 'Try another query or switch mode — currently viewing «{{mode}}».',
+    modeEmptyHint: 'Try another query or switch mode — currently viewing Â«{{mode}}Â».',
     advancedFiltersClientOnlyNote:
       'Dev note: advanced sidebar filters are applied client-side and sent in smart_search args; backend may ignore until server facets/sort ship.',
     source: 'Source',
@@ -2289,7 +2345,7 @@ const en = {
     statsMs: 'Milliseconds',
     aiPanelTitle: 'AI overview',
     aiQuestion: 'What is {{query}}?',
-    aiFooter: 'Auto summary for “{{query}}”',
+    aiFooter: 'Auto summary for “{{query}}â€',
     aiSummaryPlaceholder: 'This is sample text that should come from the server.',
     imageStripCount: '{{shown}} of {{total}} images for this query',
     viewAllImages: 'All images',
@@ -2303,7 +2359,7 @@ const en = {
     searching: 'Searching…',
     apiFootprint: {
       title: 'APIs used for this One Search query',
-      subtitle: 'Mode «{{mode}}» — live gateway calls via plugin_smart_search (+ file_manager supplement when needed).',
+      subtitle: 'Mode Â«{{mode}}Â» — live gateway calls via plugin_smart_search (+ file_manager supplement when needed).',
       provider: 'Provider: {{id}}',
       tookMs: '{{ms}} ms total',
       hasReal: 'Live gateway calls',
@@ -2379,7 +2435,7 @@ const en = {
     devRequirements: {
       toggle: 'Backend integration checklist (dev)',
       title: 'One Search — Backend API requirements',
-      subtitle: 'Mode «{{mode}}» — APIs and capability gaps for this tab',
+      subtitle: 'Mode Â«{{mode}}Â» — APIs and capability gaps for this tab',
       footer:
         'Source: search-api-requirements.ts · backend-capability-gaps.ts · docs/backend-integration/03-frontend-pages/one-search-endpoint-guide.md',
       resolved: 'Resolved',
@@ -2437,7 +2493,7 @@ const en = {
       },
     },
     surfaceGuide: {
-      title: 'Endpoints for «{{mode}}» surface',
+      title: 'Endpoints for Â«{{mode}}Â» surface',
       subtitle: 'APIs used on this tab — live vs workaround vs missing.',
       expand: 'Show endpoints',
       collapse: 'Hide endpoints',
@@ -2458,7 +2514,7 @@ const en = {
         userIdForwarding: 'args.user_id forwarded to cases/users for RBAC',
         queryImageEcho: 'data.metadata.query_image echo for UI crop preview',
         textModeTranscripts: 'mode=text merges AV transcript hits into files lane',
-        clipBinding: 'SigLIP text→image — needs embed_imagetext binding (optional)',
+        clipBinding: 'SigLIP textâ†’image — needs embed_imagetext binding (optional)',
         relatedSearches: 'Related searches panel needs server suggestions',
         serverFacets: 'args.filters/sort/pagination honored server-side (basic)',
         smartSearchText: 'Text lane via smart_search mode=text',
@@ -2469,7 +2525,7 @@ const en = {
         tempUpload: 'Target TTL upload without catalog pollution',
         smartSearchVideo: 'Video lane routing',
         smartSearchAudio: 'Audio lane routing',
-        audioPlaybackJwt: 'JWT blob fetch → blob: URL for WaveSurfer (blob-first)',
+        audioPlaybackJwt: 'JWT blob fetch â†’ blob: URL for WaveSurfer (blob-first)',
         audioPresignedFallback: 'Presigned MinIO URL when blob fetch fails (may fail CORS)',
         audioClientSort: 'Legacy note — toolbar refetches with args.sort',
         mediaServerRefetch: 'Toolbar patch refetched via buildSmartSearchArgs — BE honors',
@@ -2766,8 +2822,8 @@ const en = {
       permissionHeader: 'Permission',
       accessDeniedMessage:
         'You do not have permission to view the permissions matrix. This feature requires admin-level access.',
-      endpoint403: 'GET /admin/group-rbac/permissions/matrix → HTTP 403 Forbidden',
-      endpoint404: 'GET /admin/group-rbac/permissions/matrix → HTTP 404 Not Found',
+      endpoint403: 'GET /admin/group-rbac/permissions/matrix â†’ HTTP 403 Forbidden',
+      endpoint404: 'GET /admin/group-rbac/permissions/matrix â†’ HTTP 404 Not Found',
       endpoint404Hint:
         'The permissions matrix endpoint has not been implemented yet or is not routed through the API Gateway.',
     },
@@ -2832,7 +2888,7 @@ const en = {
         'You do not have permission to view the role hierarchy. This feature requires the super-admin role.',
       accessDeniedHint:
         'If you were recently granted super-admin access, sign out and sign in again so your token is refreshed.',
-      endpointLabel: 'GET /admin/rbac/roles/hierarchy → HTTP 403 Forbidden',
+      endpointLabel: 'GET /admin/rbac/roles/hierarchy â†’ HTTP 403 Forbidden',
       sessionRolesLabel: 'Your session roles: {{roles}}',
       tokenRolesLabel: 'Roles reported by API: {{roles}}',
     },
@@ -2935,9 +2991,9 @@ const en = {
       accessDeniedMessage:
         'You do not have permission to view {{view}} events. This feature requires elevated access rights.',
       accessDeniedHint: 'Contact your administrator to request access to the audit log.',
-      endpoint403Admin: 'GET /admin/events/admin → HTTP 403 Forbidden',
-      endpoint403User: 'GET /admin/events/user → HTTP 403 Forbidden',
-      endpoint404: 'GET /admin/events/{{view}} → HTTP 404 Not Found',
+      endpoint403Admin: 'GET /admin/events/admin â†’ HTTP 403 Forbidden',
+      endpoint403User: 'GET /admin/events/user â†’ HTTP 403 Forbidden',
+      endpoint404: 'GET /admin/events/{{view}} â†’ HTTP 404 Not Found',
       hideFilters: 'Hide Filters',
       showFilters: 'Show Filters',
       all: 'All',
@@ -3076,7 +3132,7 @@ const en = {
       email: 'Email',
       emailPlaceholder: 'your@email.com',
       avatarUrl: 'Profile Image URL',
-      avatarUrlPlaceholder: '/logo.png',
+      avatarUrlPlaceholder: '/brand/brand-mark-4x.svg',
       avatarBuilder: 'Avatar Builder',
       avatarBuilderDesc:
         'Build your profile avatar locally with DiceBear — no internet required. Pick a style and customize every detail.',
@@ -3133,7 +3189,7 @@ const en = {
       searchStyle: 'Search styles…',
       noStyleResults: 'No styles match your search.',
       currentStyle: 'Current style',
-      useChangeStyle: 'Use “Change Style” above to switch avatar style.',
+      useChangeStyle: 'Use “Change Styleâ€ above to switch avatar style.',
       emptyTab: 'No options in this category for the selected style.',
       selectedOption: 'Selected: {{value}}',
       seedLabel: 'Seed',
@@ -3182,7 +3238,7 @@ const en = {
       gaps: {
         'avatar-dicebear-url': {
           capability: 'Persist dicebear: avatar_url (REQ-AVATAR-001)',
-          acceptance: 'PATCH dicebear string → 200; GET /auth/me returns same value',
+          acceptance: 'PATCH dicebear string â†’ 200; GET /auth/me returns same value',
         },
         'avatar-url-text-column': {
           capability: 'DB column supports long avatar_url strings',
@@ -3362,7 +3418,7 @@ const en = {
     backendNotAvailableTitle: 'Backend Not Available',
     backendNotAvailableMessage:
       'The Group RBAC service is not available. The API endpoint exists in the OpenAPI spec but is returning 404 — the group-rbac microservice may not be running.',
-    endpoint404: 'GET /admin/group-rbac/groups → HTTP 404 Not Found',
+    endpoint404: 'GET /admin/group-rbac/groups â†’ HTTP 404 Not Found',
     retry: 'Retry',
   },
 
@@ -4085,9 +4141,9 @@ const en = {
       passwordRules: {
         title: 'Password must include (minimum {{min}} characters):',
         minLength: 'At least {{min}} characters',
-        uppercase: 'At least one uppercase letter (A–Z)',
-        lowercase: 'At least one lowercase letter (a–z)',
-        numeric: 'At least one number (0–9)',
+        uppercase: 'At least one uppercase letter (A-Z)',
+        lowercase: 'At least one lowercase letter (a-z)',
+        numeric: 'At least one number (0-9)',
       },
       validation: {
         usernameMinLength: 'Username must be at least 3 characters',
@@ -4142,7 +4198,7 @@ const en = {
       tooltip: 'Switch to {{language}}',
     },
     footer: {
-      copyright: '� Copyright 2026. Holand Platform. All rights reserved.',
+      copyright: '© Copyright 2026. Holand Platform. All rights reserved.',
       navLabel: 'Legal and help links',
       help: 'Help',
       privacy: 'Privacy',
@@ -4167,7 +4223,7 @@ const en = {
       title: 'Terms of Service',
       lastUpdated: 'Last updated: July 4, 2026',
       intro:
-        'These Terms of Service ("Terms") govern your access to and use of the Holand Platform platform and related services. By creating an account or using the service, you agree to these Terms. If you do not agree, do not use the service.',
+        'These Terms of Service ("Terms") govern your access to and use of the Holand Platform and related services. By creating an account or using the service, you agree to these Terms. If you do not agree, do not use the service.',
       sections: {
         acceptance: {
           title: '1. Acceptance of Terms',
@@ -4245,7 +4301,7 @@ const en = {
         modelTraining: {
           title: '3. Model Training & Quality Improvement',
           body:
-            'Holand Platform may use prompts, outputs, feedback, and related technical metadata to evaluate and improve AI models, retrieval pipelines, safety filters, and product features. Processing for this purpose is performed with safeguards intended to preserve confidentiality and data integrity, including:\n\n• Access limited to authorized personnel and systems\n• Encryption and secure transport where applicable\n• Organizational boundaries and permission models\n• De-identification, redaction, or aggregation where appropriate\n• Retention limits aligned with operational need\n\nWe do not use your content to train public third-party foundation models unless your organization explicitly opts in to such integrations. Regulated or enterprise tenants may receive enhanced isolation, data residency, or contractual data-processing terms.',
+            'Holand Platform may use prompts, outputs, feedback, and related technical metadata to evaluate and improve AI models, retrieval pipelines, safety filters, and product features. Processing for this purpose is performed with safeguards intended to preserve confidentiality and data integrity, including:\n\nâ€¢ Access limited to authorized personnel and systems\nâ€¢ Encryption and secure transport where applicable\nâ€¢ Organizational boundaries and permission models\nâ€¢ De-identification, redaction, or aggregation where appropriate\nâ€¢ Retention limits aligned with operational need\n\nWe do not use your content to train public third-party foundation models unless your organization explicitly opts in to such integrations. Regulated or enterprise tenants may receive enhanced isolation, data residency, or contractual data-processing terms.',
         },
         retention: {
           title: '4. Data Retention',
@@ -4392,7 +4448,7 @@ const en = {
       explore: 'Explore',
     },
     actions: {
-      openAi: 'Open AI assistant',
+      openAi: 'Open assistant',
       openAiHint: 'Open the contextual AI panel',
       supportChat: 'Chat with support',
       supportChatHint: 'Message the support team',
@@ -4401,7 +4457,7 @@ const en = {
     },
     oneSearch: {
       searchEverything: 'Search everything',
-      searchEverythingWithQuery: 'Search everything for “{{q}}”',
+      searchEverythingWithQuery: 'Search everything for “{{q}}â€',
       hint: 'Opens One Search (/one-search)',
       lanesTitle: 'Search in lane',
       laneAll: 'All content',
@@ -4413,20 +4469,20 @@ const en = {
   },
 
   // ==========================================
-  // Native AI chat (floating FAB, multi-surface)
+  // Contextual Assistant (floating FAB, multi-surface)
   // ==========================================
-  nativeAiChat: {
-    fabAria: 'Open contextual AI assistant',
+  contextualAssistant: {
+    fabAria: 'Open contextual assistant',
     closePanel: 'Close assistant completely',
     minimizePanelTooltip: 'Minimize to floating button',
-    headerOpenPanel: 'Open AI assistant',
-    headerPanelOpen: 'AI assistant is open',
-    headerClosePanel: 'Close AI assistant',
-    headerOpenFullChat: 'Open AI chat',
-    openFullChat: 'Open full AI chat',
+    headerOpenPanel: 'Open assistant panel',
+    headerPanelOpen: 'Assistant panel is open',
+    headerClosePanel: 'Close assistant panel',
+    headerOpenFullChat: 'Open assistant chat',
+    openFullChat: 'Open full assistant chat',
     newConversation: 'New conversation',
     hideLauncherTooltip: 'Hide floating assistant button (restore from top bar)',
-    showLauncherTooltip: 'Show floating AI assistant button',
+    showLauncherTooltip: 'Show floating assistant button',
     dragHandleTooltip: 'Drag to move the panel',
     dragHandleAria: 'Move assistant panel',
     resizeHandleTooltip: 'Drag corner to resize the panel',
@@ -4473,7 +4529,72 @@ const en = {
         subtitle: 'Inbox, conversations, and support context from this page.',
       },
       general: {
-        title: 'AI assistant',
+        title: 'Assistant',
+        subtitle: 'Ask about this page and your current workflow.',
+      },
+    },
+  },
+
+  /** @deprecated Use contextualAssistant namespace instead. Kept for backward compatibility. */
+  nativeAiChat: {
+    fabAria: 'Open contextual assistant',
+    closePanel: 'Close assistant completely',
+    minimizePanelTooltip: 'Minimize to floating button',
+    headerOpenPanel: 'Open assistant panel',
+    headerPanelOpen: 'Assistant panel is open',
+    headerClosePanel: 'Close assistant panel',
+    headerOpenFullChat: 'Open assistant chat',
+    openFullChat: 'Open full assistant chat',
+    newConversation: 'New conversation',
+    hideLauncherTooltip: 'Hide floating assistant button (restore from top bar)',
+    showLauncherTooltip: 'Show floating assistant button',
+    dragHandleTooltip: 'Drag to move the panel',
+    dragHandleAria: 'Move assistant panel',
+    resizeHandleTooltip: 'Drag corner to resize the panel',
+    resizeHandleAria: 'Resize assistant panel',
+    gatewayError: 'Chat gateway error. Check that you are signed in and the API gateway is reachable.',
+    gatewayErrorWithDetail: 'Chat gateway error: {{detail}}',
+    emptyAnswerFallback: '(No text in model reply)',
+    contextTitle: 'Page context',
+    contextPath: 'Path',
+    noteLabel: 'Note for the model',
+    notePlaceholder: 'Optional instructions…',
+    previewPayload: 'Preview payload',
+    hidePayload: 'Hide payload',
+    previewHint: 'Merged into ChatRequest.context for POST /chat (non-streaming in this dock).',
+    emptyHint: 'Messages appear here. Replies use POST /chat with your page context when the gateway is available.',
+    assistantStub: 'Legacy placeholder (replies now use POST /chat when the gateway responds).',
+    surfaces: {
+      file_explorer: {
+        title: 'File explorer assistant',
+        subtitle: 'Folders, filters, and current path.',
+      },
+      offline_map: {
+        title: 'Offline map assistant',
+        subtitle: 'Map view, layers, and coordinates.',
+      },
+      geo_location: {
+        title: 'Geo analysis assistant',
+        subtitle: 'Markers, selection, and map state.',
+      },
+      tts_plugin: {
+        title: 'TTS assistant',
+        subtitle: 'Synthesis settings and backend status.',
+      },
+      graph_edit_entities: {
+        title: 'Graph prep assistant',
+        subtitle: 'Entities, relationships, and filters before visualization.',
+      },
+      graph_visual_explorer: {
+        title: 'Graph explorer assistant',
+        subtitle: 'Visual graph, selection, and pathfinding (dock matches other pages).',
+      },
+      messages: {
+        title: 'Messages assistant',
+        subtitle: 'Inbox, conversations, and support context from this page.',
+      },
+      general: {
+        title: 'Assistant',
         subtitle: 'Ask about this page and your current workflow.',
       },
     },
@@ -5166,7 +5287,7 @@ const en = {
     output: 'Output',
     toolsCount: 'Tools ({{count}})',
     toolInput: 'Input',
-    toolResult: 'Result → LLM',
+    toolResult: 'Result â†’ LLM',
     title: 'Agent Trace',
     stepSingular: 'step',
     stepPlural: 'steps',
@@ -5544,8 +5665,8 @@ const en = {
     },
     manifest: {
       toggle: 'Dashboard API manifest (dev)',
-      intro: 'Widget → API contract for backend coordination. Dev-only panel.',
-      widgetMapping: 'Widget → API mapping',
+      intro: 'Widget â†’ API contract for backend coordination. Dev-only panel.',
+      widgetMapping: 'Widget â†’ API mapping',
       partialBlocked: 'Partial / Blocked',
       mockWidgets: 'Mock widgets',
       proposed: 'Proposed backend APIs',
@@ -6232,7 +6353,7 @@ const en = {
       unknown: 'Unknown',
     },
     floatingAiChat: {
-      fabAria: 'Open graph AI assistant',
+      fabAria: 'Open graph assistant',
       title: 'Graph assistant',
       subtitle: 'Graph Q&A via plugin_graph_explorer_graph_search (Neo4j-backed).',
       openFullChat: 'Full chat',
@@ -6393,7 +6514,7 @@ const en = {
     modelRerun: 'Rerun',
     modelActions: 'Model actions',
     viewOnBoardHint: 'Open the pipeline topology board focused on this GPU node.',
-    viewPoolOnBoardHint: 'Open the topology board focused on this node’s model pool / logical route.',
+    viewPoolOnBoardHint: 'Open the topology board focused on this nodeâ€™s model pool / logical route.',
     gpuClusterSummary: '{{count}} GPU(s) total',
     gpuMemoryFree: 'Free VRAM',
     gpuDriver: 'Driver',
@@ -7441,9 +7562,9 @@ const en = {
       strokeColor: 'Stroke',
       stroke: { solid: 'Solid', dashed: 'Dashed', dotted: 'Dotted' },
       arrow: {
-        forward: 'Forward →',
-        backward: 'Backward ←',
-        both: 'Both ↔',
+        forward: 'Forward â†’',
+        backward: 'Backward â†',
+        both: 'Both â†”',
         none: 'None —',
       },
       stickyInk: 'Handwriting & drawings',
@@ -7724,7 +7845,7 @@ const en = {
       addSelected: 'Add to board ({{count}})',
       openExplorer: 'Open in File Explorer',
       casePrefixInvalid: 'Case ID is empty or invalid — case-scoped files may not appear.',
-      folderUp: '↑ Up',
+      folderUp: 'â†‘ Up',
       noFolders: 'No subfolders',
       filterAllTypes: 'All types',
       filterAllMimes: 'All MIME',
@@ -7835,4 +7956,5 @@ const en = {
 };
 
 export default en;
+
 

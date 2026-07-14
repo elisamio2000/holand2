@@ -25,13 +25,13 @@ export const productReviews = [
       name: 'Modern Frozen Sausages',
       category: 'Books',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design',
     customer: {
       name: 'Karen Russel',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -46,13 +46,13 @@ export const productReviews = [
       category: 'Garden',
 
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals',
     customer: {
       name: 'Irvin Ledner',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -66,13 +66,13 @@ export const productReviews = [
       name: 'Modern Metal Fish',
       category: 'Games',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
     customer: {
       name: 'Opal Brakus Sr.',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -86,14 +86,14 @@ export const productReviews = [
       name: 'Sleek Rubber Tuna',
       category: 'Electronics',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support',
     customer: {
       name: 'Kara Reilly IV',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -107,13 +107,13 @@ export const productReviews = [
       name: 'Awesome Bronze Gloves',
       category: 'Industrial',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals',
     customer: {
       name: 'Essie Bernier',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -127,14 +127,14 @@ export const productReviews = [
       name: 'Unbranded Frozen Cheese',
       category: 'Games',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients',
     customer: {
       name: 'Jamie Pfannerstill',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -148,14 +148,14 @@ export const productReviews = [
       name: 'Intelligent Bronze Salad',
       category: 'Music',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart',
     customer: {
       name: 'Jordan Smitham',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -169,12 +169,12 @@ export const productReviews = [
       name: 'Refined Fresh Computer',
       category: 'Games',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review: 'The Football Is Good For Training And Recreational Purposes',
     customer: {
       name: 'Ray Breitenberg',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -188,13 +188,13 @@ export const productReviews = [
       name: 'Elegant Plastic Chicken',
       category: 'Beauty',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals',
     customer: {
       name: 'Blanca Kuhic',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -208,13 +208,13 @@ export const productReviews = [
       name: 'Unbranded Soft Shoes',
       category: 'Music',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality',
     customer: {
       name: 'Cesar Reinger',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -228,13 +228,13 @@ export const productReviews = [
       name: 'Fantastic Concrete Car',
       category: 'Music',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive',
     customer: {
       name: 'Philip Kub',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -248,13 +248,13 @@ export const productReviews = [
       name: 'Licensed Granite Keyboard',
       category: 'Jewelery',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients',
     customer: {
       name: 'Doreen Reilly IV',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -268,14 +268,14 @@ export const productReviews = [
       name: 'Incredible Concrete Computer',
       category: 'Sports',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016',
     customer: {
       name: 'Ada Hartmann',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -289,13 +289,13 @@ export const productReviews = [
       name: 'Unbranded Steel Gloves',
       category: 'Outdoors',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart',
     customer: {
       name: 'Dave Corkery',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -309,14 +309,14 @@ export const productReviews = [
       name: 'Modern Metal Cheese',
       category: 'Health',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'Carbonite web goalkeeper gloves are ergonomically designed to give easy fit',
     customer: {
       name: 'Jerald Moore Jr.',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -330,14 +330,14 @@ export const productReviews = [
       name: 'Tasty Bronze Gloves',
       category: 'Outdoors',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'Carbonite web goalkeeper gloves are ergonomically designed to give easy fit',
     customer: {
       name: 'Ruben Kub',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -352,13 +352,13 @@ export const productReviews = [
       category: 'Electronics',
 
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive',
     customer: {
       name: 'Ms. Nicole Jakubowski',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -372,13 +372,13 @@ export const productReviews = [
       name: 'Tasty Granite Hat',
       category: 'Kids',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016',
     customer: {
       name: 'Marie Tillman',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -392,14 +392,14 @@ export const productReviews = [
       name: 'Recycled Bronze Shirt',
       category: 'Movies',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
     customer: {
       name: 'Frank Lynch',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -413,14 +413,14 @@ export const productReviews = [
       name: 'Gorgeous Wooden Ball',
       category: 'Computers',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J',
     customer: {
       name: 'Jackie Mohr',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -434,13 +434,13 @@ export const productReviews = [
       name: 'Ergonomic Granite Soap',
       category: 'Outdoors',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review: 'The Football Is Good For Training And Recreational Purposes',
     customer: {
       name: 'Mrs. Claire Berge',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -454,14 +454,14 @@ export const productReviews = [
       name: 'Handmade Steel Towels',
       category: 'Beauty',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals',
     customer: {
       name: 'Mr. Bradford Sauer',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -475,13 +475,13 @@ export const productReviews = [
       name: 'Tasty Frozen Chicken',
       category: 'Music',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality',
     customer: {
       name: 'Mrs. Connie Schaden',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -495,13 +495,13 @@ export const productReviews = [
       name: 'Ergonomic Concrete Tuna',
       category: 'Grocery',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design',
     customer: {
       name: 'Freddie VonRueden',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -515,13 +515,13 @@ export const productReviews = [
       name: 'Modern Bronze Ball',
       category: 'Sports',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       'The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design',
     customer: {
       name: 'Dr. Lindsay Shanahan',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -535,13 +535,13 @@ export const productReviews = [
       name: 'Fantastic Soft Fish',
       category: 'Electronics',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review:
       "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
     customer: {
       name: 'Winifred Keeling',
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -555,13 +555,13 @@ export const productReviews = [
       name: 'Tasty Granite Gloves',
       category: 'Toys',
       image:
-        '/logo.png',
+        '/brand/brand-mark-4x.svg',
     },
     review: 'The Football Is Good For Training And Recreational Purposes',
     customer: {
       name: 'Kara Huels',
 
-      avatar: `/logo.png
+      avatar: `/brand/brand-mark-4x.svg
         avatarIds
       )}.webp`,
     },
@@ -570,3 +570,4 @@ export const productReviews = [
     createdAt: new Date('2023-06-21T15:55:13.465Z'),
   },
 ];
+

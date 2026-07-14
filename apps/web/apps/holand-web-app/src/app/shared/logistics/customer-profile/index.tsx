@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import cn from '@core/utils/class-names';
@@ -48,7 +48,7 @@ function CustomerCoverPhoto() {
     >
       <Image
         alt="Mountains"
-        src={`/logo.png`}
+        src={`/brand/brand-mark-4x.svg`}
         quality={100}
         fill
         sizes="100vw"
@@ -58,3 +58,4 @@ function CustomerCoverPhoto() {
     </figure>
   );
 }
+

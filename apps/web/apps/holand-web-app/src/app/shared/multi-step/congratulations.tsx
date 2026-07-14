@@ -10,7 +10,7 @@ export default function Congratulations() {
         <figure className="relative mb-12 aspect-[60/45] md:mb-20">
           <Image
             src={
-              '/logo.png'
+              '/brand/brand-mark-4x.svg'
             }
             alt="congratulation image"
             fill
@@ -33,3 +33,4 @@ export default function Congratulations() {
     </>
   );
 }
+

@@ -19,6 +19,7 @@ export default function ReportsHistoryPage() {
   const [items, setItems] = useState<ReportHistoryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [compare, setCompare] = useState<string[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -26,6 +27,13 @@ export default function ReportsHistoryPage() {
       .listHistory()
       .then((data) => {
         if (!cancelled) setItems(data);
+      })
+      .catch((error: unknown) => {
+        console.warn('[ReportsHistoryPage] Failed to load history:', error);
+        if (!cancelled) {
+          setItems([]);
+          setLoadError('فعلاً دسترسی به تاریخچه گزارش‌ها در این محیط ممکن نیست.');
+        }
       })
       .finally(() => {
         if (!cancelled) setIsLoading(false);
@@ -68,6 +76,12 @@ export default function ReportsHistoryPage() {
           مقایسه انتخاب‌شده‌ها
         </Button>
       </div>
+
+      {loadError && (
+        <Text className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          {loadError}
+        </Text>
+      )}
 
       {isLoading ? (
         <Text className="mt-6 text-sm text-gray-500">در حال بارگذاری...</Text>
