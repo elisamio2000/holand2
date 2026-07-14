@@ -1,6 +1,6 @@
 # سند مرجع خط توسعه (Master Tracker)
 
-آخرین به‌روزرسانی: 2026-07-13
+آخرین به‌روزرسانی: 2026-07-14
 وضعیت: سند مرجع فعال
 هدف: جلوگیری از گم شدن خط توسعه، تثبیت درخواست‌ها، و تبدیل آن‌ها به مسیر اجرایی قابل پیگیری.
 
@@ -176,6 +176,7 @@
 - ST-19: پیاده‌سازی Composite assessment contract در backend/frontend.
 - ST-20: بازطراحی سوالات/کپی متن برای 13-17 و اعتبارسنجی روان‌سنجی بعد از تغییر.
 - ST-21: اجرای برنامه فازبندی Release Readiness مطابق docs/release-readiness-phased-remediation-plan-fa.md.
+- ST-22: اجرای برنامه رسمی نسخه ۱ شامل RBAC چهارنقشی، ثبت‌نام هویتی، event tracking آزمون، branch سنی، تحلیل ترکیبی و governance لایه AI مطابق docs/release-v1-implementation-master-plan-fa.md.
 
 یادداشت: خروجی اولیه بنچمارک Esanj در سند docs/esanj-benchmark-extracted-findings-fa.md ثبت شد.
 
@@ -261,6 +262,7 @@
 
 مرجع اجرایی OR-05 و OR-06:
 - docs/release-readiness-phased-remediation-plan-fa.md
+- docs/release-v1-implementation-master-plan-fa.md
 
 ## 10) نسخه‌بندی این سند
 
@@ -268,3 +270,4 @@
 - v1.1 (2026-07-13): افزودن خط توسعه Performance + Teen-focused quality + Esanj hands-on benchmark.
 - v1.2 (2026-07-13): افزودن مسیر Composite model + بازطراحی تجربه آزمون کودک/نوجوان + رفرنس‌کاوی علمی.
 - v1.3 (2026-07-13): افزودن نقشه فازبندی Release Readiness و ثبت OR-05/OR-06.
+- v1.4 (2026-07-14): افزودن مسیر رسمی اجرای نسخه ۱ (ST-22) با تمرکز RBAC، ثبت‌نام هویتی، branch سنی، تحلیل ترکیبی و governance تنظیمات AI.
