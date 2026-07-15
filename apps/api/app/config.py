@@ -55,6 +55,13 @@ class Settings(BaseSettings):
     rate_limit_analytics_events_per_minute: int = 60
     rate_limit_expert_lab_writes_per_minute: int = 30
     rate_limit_recommendation_feedback_per_minute: int = 30
+    rate_limit_session_events_per_minute: int = 120
+
+    # Phase B: Assessment Runtime Integrity — event timeline ingestion.
+    # Kept behind a toggle for the first release cycle so the endpoint can be
+    # disabled without a deploy if issues surface; frontend falls back to
+    # local-only event buffering (no data loss, just deferred sync) when off.
+    feature_session_events_enabled: bool = True
 
     # Recommendation quality monitor
     recommendation_quality_alert_threshold_percent: float = 35.0

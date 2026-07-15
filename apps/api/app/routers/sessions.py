@@ -1,12 +1,19 @@
 """Assessment session API (Phase 3): start a session, submit answers, complete
 it, and fetch results — see docs/mvp-execution-plan-fa.md week 3."""
 
-from __future__ import annotations
+# NOTE: deliberately no `from __future__ import annotations` here. slowapi's
+# `@limiter.limit` decorator wraps the endpoint with `functools.wraps`, whose
+# copied `__annotations__` are resolved by FastAPI via `typing.get_type_hints`
+# against the *wrapper's* `__globals__` (slowapi's module), not this module's.
+# With postponed evaluation, that forward-reference resolution fails silently
+# and FastAPI mis-classifies body params (e.g. Pydantic models) as required
+# query params. Keeping annotations eagerly evaluated avoids this for the new
+# rate-limited `/events` endpoint; see `submit_session_events` below.
 
 from datetime import datetime, timezone
 from typing import Annotated
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,6 +21,7 @@ from sqlalchemy.orm import selectinload
 
 from ..database import get_db
 from ..deps import get_current_user
+from ..config import get_settings
 from ..models.assessment import (
     AssessmentType,
     AssessmentVersion,
@@ -23,9 +31,18 @@ from ..models.assessment import (
     ScoringFormulaVersion,
     VersionStatus,
 )
-from ..models.session import AssessmentSession, SessionAnswer, SessionResult, SessionStatus
+from ..models.session import (
+    AssessmentSession,
+    SessionAnswer,
+    SessionEvent,
+    SessionEventType,
+    SessionResult,
+    SessionStatus,
+)
 from ..models.user import User
 from ..schemas_session import (
+    ResumeAnswerOut,
+    ResumeSessionOut,
     SessionListItem,
     SessionListResponse,
     SessionOut,
@@ -34,14 +51,20 @@ from ..schemas_session import (
     StartSessionOut,
     SubmitAnswersIn,
     SubmitAnswersOut,
+    SubmitEventsIn,
+    SubmitEventsOut,
 )
+from ..security import limiter
 from ..services.assessment_scoring import (
     compute_holland_result,
     compute_mbti_result,
     compute_session_result,
 )
+from ..services.run_codes import generate_participant_code, generate_run_code
 
 router = APIRouter(prefix="/sessions", tags=["Assessment Sessions"])
+settings = get_settings()
+_RUN_CODE_MAX_RETRIES = 5
 
 
 def _now() -> datetime:
@@ -310,6 +333,7 @@ async def list_my_sessions(
     items = [
         SessionListItem(
             session_id=s.id,
+            run_code=s.run_code,
             assessment_type=s.assessment_type,
             status=s.status,
             top_code=s.result.code if s.result else None,
@@ -346,6 +370,17 @@ async def _try_get_current_user(
         return None
 
 
+async def _generate_unique_run_code(db: AsyncSession) -> str:
+    for _ in range(_RUN_CODE_MAX_RETRIES):
+        candidate = generate_run_code()
+        existing = await db.execute(
+            select(AssessmentSession.id).where(AssessmentSession.run_code == candidate)
+        )
+        if existing.scalar_one_or_none() is None:
+            return candidate
+    raise HTTPException(status_code=500, detail="Could not allocate a unique run code, please retry")
+
+
 @router.post("/start", response_model=StartSessionOut, status_code=201)
 async def start_session(
     payload: StartSessionIn,
@@ -359,8 +394,13 @@ async def start_session(
     # Prefer authenticated user over client-supplied user_id (security)
     resolved_user_id = str(current_user.id) if current_user else payload.user_id
 
+    run_code = await _generate_unique_run_code(db)
+    participant_code = generate_participant_code(resolved_user_id)
+
     session = AssessmentSession(
         user_id=resolved_user_id,
+        run_code=run_code,
+        participant_code=participant_code,
         assessment_type=payload.assessment_type,
         assessment_version_id=primary_version.id,
         secondary_assessment_version_id=secondary_version.id if secondary_version else None,
@@ -372,6 +412,8 @@ async def start_session(
 
     return StartSessionOut(
         session_id=session.id,
+        run_code=session.run_code,
+        participant_code=session.participant_code,
         assessment_type=session.assessment_type,
         assessment_version=primary_version.version,
         status=session.status,
@@ -391,6 +433,7 @@ async def get_session(
     version, secondary_version = await _get_session_versions(db, session)
     return SessionOut(
         session_id=session.id,
+        run_code=session.run_code,
         assessment_type=session.assessment_type,
         assessment_version=version.version,
         status=session.status,
@@ -411,6 +454,57 @@ async def get_session_questions(
 
     all_questions = [*version.questions, *(secondary_version.questions if secondary_version else [])]
     return [QuestionOut.model_validate(q) for q in all_questions]
+
+
+@router.get("/{session_id}/resume", response_model=ResumeSessionOut)
+async def resume_session(
+    session_id: str, db: Annotated[AsyncSession, Depends(get_db)]
+) -> ResumeSessionOut:
+    """Authoritative runtime snapshot for resuming a session.
+
+    This is the canonical source of truth on load/refresh — the frontend
+    must reconcile (and override) any locally persisted state against this
+    response rather than trusting its own localStorage copy (BLK-04 / Phase
+    B: assessment-flow.store.ts local persistence is a resume *hint* only).
+    """
+    session = await _get_session(db, session_id)
+    version, secondary_version = await _get_session_versions(db, session)
+    total_questions = _count_total_questions(version, secondary_version)
+
+    revise_counts: dict[str, int] = {}
+    revise_result = await db.execute(
+        select(SessionEvent.question_id, func.count(SessionEvent.id))
+        .where(
+            SessionEvent.session_id == session.id,
+            SessionEvent.event_type == SessionEventType.QUESTION_REVISE,
+        )
+        .group_by(SessionEvent.question_id)
+    )
+    for question_id, count in revise_result.all():
+        if question_id:
+            revise_counts[question_id] = count
+
+    answers = [
+        ResumeAnswerOut(
+            question_id=a.question_id,
+            option_id=a.option_id,
+            answered_at=a.answered_at,
+            revision_count=revise_counts.get(a.question_id, 0),
+        )
+        for a in session.answers
+    ]
+
+    return ResumeSessionOut(
+        session_id=session.id,
+        run_code=session.run_code,
+        assessment_type=session.assessment_type,
+        status=session.status,
+        started_at=session.started_at,
+        completed_at=session.completed_at,
+        total_questions=total_questions,
+        answered_count=len(session.answers),
+        answers=answers,
+    )
 
 
 @router.post("/{session_id}/answers", response_model=SubmitAnswersOut)
@@ -466,6 +560,75 @@ async def submit_answers(
         answered_count=len(answers_by_question),
         total_questions=_count_total_questions(version, secondary_version),
         status=session.status,
+    )
+
+
+_VALID_EVENT_TYPES = {member.value for member in SessionEventType if member != SessionEventType.REVISIT}
+
+
+@router.post("/{session_id}/events", response_model=SubmitEventsOut)
+@limiter.limit(f"{settings.rate_limit_session_events_per_minute}/minute")
+async def submit_session_events(
+    request: Request,
+    session_id: str,
+    payload: SubmitEventsIn,
+    db: AsyncSession = Depends(get_db),
+) -> SubmitEventsOut:
+    """Batch-ingest runtime timeline events for a session.
+
+    Gated behind ``settings.feature_session_events_enabled`` for the first
+    release cycle — see rollout/rollback notes in the Phase B PR. Append-only:
+    events are never mutated or deleted, and ``server_seq``/``received_at``
+    (not the client-supplied ``client_seq``/``occurred_at``) are the
+    authoritative ordering/audit fields.
+
+    ``revisit`` is server-derived, not client-submitted (see
+    ``ResumeSessionOut``/history reconstruction), so it is rejected here to
+    keep the trust boundary clear.
+    """
+    if not settings.feature_session_events_enabled:
+        raise HTTPException(status_code=503, detail="Session event ingestion is temporarily disabled")
+
+    session = await _get_session(db, session_id)
+
+    last_seq_result = await db.execute(
+        select(func.max(SessionEvent.server_seq)).where(SessionEvent.session_id == session.id)
+    )
+    next_seq = (last_seq_result.scalar() or 0) + 1
+    server_seq_start = next_seq
+    received_at = _now()
+
+    stored = 0
+    for event_in in payload.events:
+        if event_in.event_type not in _VALID_EVENT_TYPES:
+            raise HTTPException(
+                status_code=400, detail=f"Unsupported or server-only event_type '{event_in.event_type}'"
+            )
+        db.add(
+            SessionEvent(
+                session_id=session.id,
+                event_type=SessionEventType(event_in.event_type),
+                question_id=event_in.question_id,
+                option_id=event_in.option_id,
+                previous_option_id=event_in.previous_option_id,
+                client_seq=event_in.client_seq,
+                server_seq=next_seq,
+                occurred_at=event_in.occurred_at,
+                received_at=received_at,
+                dwell_ms=event_in.dwell_ms,
+            )
+        )
+        next_seq += 1
+        stored += 1
+
+    await db.flush()
+
+    return SubmitEventsOut(
+        accepted=True,
+        session_id=session.id,
+        server_seq_start=server_seq_start,
+        server_seq_end=next_seq - 1,
+        stored=stored,
     )
 
 
