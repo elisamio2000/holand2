@@ -1,10 +1,9 @@
 // ============================================
 // Assessment History Store (Zustand)
-// Tracks a lightweight local record of assessment sessions the current
-// browser/user has started or completed, persisted to localStorage. Used by
-// the "My Assessments" history page as a fallback when the backend is
-// unavailable, and as the source for ageBand / progressPercent (fields the
-// backend does not store).
+// Local cache of recently started/completed sessions. Per Phase B (BLK-04),
+// this store is a *non-authoritative cache* — the backend (GET /sessions/my
+// and GET /sessions/{id}/resume) is the canonical source. The cache is used
+// only as a hint/offline fallback and for UI-only fields (ageBand, progress).
 // ============================================
 
 'use client';

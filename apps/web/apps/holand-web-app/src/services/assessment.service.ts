@@ -175,6 +175,7 @@ export const assessmentService = {
   async startSession(data: StartAssessmentRequest): Promise<AssessmentSession> {
     const res = await gatewayClient.post<ApiStartSessionOut>('/sessions/start', {
       assessment_type: data.testType,
+      user_id: undefined,
     });
     const api = res.data;
     const mapped: AssessmentSession = {
@@ -185,6 +186,8 @@ export const assessmentService = {
       totalQuestions: api.questions.length,
       questions: api.questions.map((q, index) => mapApiQuestionToUi(q, api.assessment_type, index + 1)),
       createdAt: api.started_at,
+      runCode: api.run_code ?? null,
+      participantCode: api.participant_code ?? null,
     };
     const optionLookup = new Map<string, Map<string, string>>();
     for (const question of api.questions) {
@@ -201,6 +204,16 @@ export const assessmentService = {
       optionLookup,
     });
     return mapped;
+  },
+
+  async resume(sessionId: string): Promise<import('@/services/assessment.service').ResumeSessionOut | null> {
+    try {
+      const res = await gatewayClient.get<any>(`/sessions/${sessionId}/resume`);
+      return res.data;
+    } catch (error) {
+      console.warn('[assessmentService] resume failed, falling back to local state:', error);
+      return null;
+    }
   },
 
   async getSession(sessionId: string): Promise<AssessmentSession> {
@@ -264,6 +277,17 @@ export const assessmentService = {
     return { accepted: true, sent: payload.length };
   },
 
+  async submitEvents(sessionId: string, events: Array<any>): Promise<{ accepted: boolean } | null> {
+    try {
+      const payload = { events };
+      const res = await gatewayClient.post(`/sessions/${sessionId}/events`, payload);
+      return res.data;
+    } catch (error) {
+      console.warn('[assessmentService] submitEvents failed (feature-flag or network):', error);
+      return null;
+    }
+  },
+
   async completeSession(sessionId: string): Promise<AssessmentResult> {
     const meta = sessionMeta.get(sessionId);
     if (!meta) {
@@ -301,12 +325,12 @@ export const assessmentService = {
         limit: number;
       }>('/sessions/my', { params: { limit: 100 } });
 
-      // Merge API data with localStorage for fields the backend doesn't store
-      // (ageBand, progressPercent). API is source of truth for status/top_code/dates.
+      // API is source of truth for status/top_code/dates. Use local cache only
+      // for fields backend does not provide (ageBand, progressPercent) as hints.
       const localEntries = useAssessmentHistoryStore.getState().entries;
       const localMap = new Map(localEntries.map((e) => [e.sessionId, e]));
 
-      return res.data.sessions.map((s) => {
+      const merged = res.data.sessions.map((s) => {
         const local = localMap.get(s.session_id);
         return {
           sessionId: s.session_id,
@@ -320,8 +344,16 @@ export const assessmentService = {
           completedAt: s.completed_at ?? local?.completedAt,
         };
       });
-    } catch {
-      // Fallback to localStorage on any error (offline, auth, network)
+
+      // Update local cache to reflect server truth (prune unknown ids)
+      useAssessmentHistoryStore.getState().pruneToIds(new Set(merged.map((m) => m.sessionId)));
+      for (const entry of merged) {
+        useAssessmentHistoryStore.getState().upsertEntry(entry);
+      }
+
+      return merged;
+    } catch (error) {
+      console.warn('[assessmentService] listMySessions failed, returning local cache:', error);
       return useAssessmentHistoryStore.getState().entries;
     }
   },
