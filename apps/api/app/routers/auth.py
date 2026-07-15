@@ -11,10 +11,11 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ..config import get_settings
 from ..database import get_db
 from ..deps import get_current_user
 from ..models.refresh_token import RefreshToken
-from ..models.user import User, UserRole
+from ..models.user import User, UserRole, has_admin_access, is_super_admin_role
 from ..schemas import (
     AvatarUploadResponse,
     LoginRequest,
@@ -35,14 +36,17 @@ from ..services.auth_service import (
 )
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
+settings = get_settings()
 
 # Sections a role is allowed to see in the frontend sidebar (Phase 1: coarse-grained).
 # 'profile' is granted to every authenticated role so users can always reach their
 # own account/profile/settings pages (self-service).
 ROLE_SECTIONS: dict[UserRole, list[str]] = {
     UserRole.USER: ["career-guidance", "profile"],
+    UserRole.ANALYST: ["career-guidance", "counselor", "profile"],
     UserRole.COUNSELOR: ["career-guidance", "counselor", "profile"],
     UserRole.ADMIN: ["career-guidance", "counselor", "admin", "profile"],
+    UserRole.SUPER_ADMIN: ["career-guidance", "counselor", "admin", "profile"],
 }
 
 
@@ -66,8 +70,8 @@ def _user_summary(user: User) -> UserSummary:
         display_name=user.display_name,
         email=user.email,
         roles=[user.role.value],
-        is_admin=user.role == UserRole.ADMIN,
-        is_super_admin=False,
+        is_admin=has_admin_access(user.role),
+        is_super_admin=is_super_admin_role(user.role),
     )
 
 
@@ -86,7 +90,15 @@ async def _issue_tokens(db: AsyncSession, user: User) -> TokenResponse:
 
 @router.get("/registration-info", response_model=RegistrationInfoResponse)
 async def registration_info() -> RegistrationInfoResponse:
-    return RegistrationInfoResponse()
+    return RegistrationInfoResponse(
+        identity_validation={
+            "full_name_enabled": settings.identity_validation_full_name_enabled,
+            "national_id_enabled": settings.identity_validation_national_id_enabled,
+            "mobile_number_enabled": settings.identity_validation_mobile_number_enabled,
+            "provider_base_url": settings.identity_validation_provider_base_url,
+            "provider_timeout_seconds": settings.identity_validation_provider_timeout_seconds,
+        }
+    )
 
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
@@ -95,17 +107,33 @@ async def register(payload: RegisterRequest, db: AsyncSession = Depends(get_db))
     if existing.scalar_one_or_none() is not None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Username already taken")
 
-    if payload.email:
-        existing_email = await db.execute(select(User).where(User.email == payload.email))
-        if existing_email.scalar_one_or_none() is not None:
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT, detail="Email already registered"
-            )
+    existing_email = await db.execute(select(User).where(User.email == payload.email))
+    if existing_email.scalar_one_or_none() is not None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered")
+
+    existing_national_id = await db.execute(select(User).where(User.national_id == payload.national_id))
+    if existing_national_id.scalar_one_or_none() is not None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="National ID already registered",
+        )
+
+    existing_mobile = await db.execute(select(User).where(User.mobile_number == payload.mobile_number))
+    if existing_mobile.scalar_one_or_none() is not None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Mobile number already registered",
+        )
 
     user = User(
         username=payload.username,
         email=payload.email,
-        display_name=payload.display_name or payload.username,
+        display_name=payload.display_name or f"{payload.first_name} {payload.last_name}",
+        first_name=payload.first_name,
+        last_name=payload.last_name,
+        national_id=payload.national_id,
+        mobile_number=payload.mobile_number,
+        center_name=payload.center_name,
         hashed_password=hash_password(payload.password),
         role=UserRole.USER,
     )
@@ -187,6 +215,11 @@ async def me(current_user: User = Depends(get_current_user)) -> dict:
         "created_at": created_at.isoformat() if created_at else None,
         "last_login": None,
         "display_name": current_user.display_name,
+        "first_name": current_user.first_name,
+        "last_name": current_user.last_name,
+        "national_id": current_user.national_id,
+        "mobile_number": current_user.mobile_number,
+        "center_name": current_user.center_name,
         "avatar_url": current_user.avatar_url,
         "bio": current_user.bio,
         "timezone": current_user.timezone,

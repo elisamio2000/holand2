@@ -3646,6 +3646,7 @@ const en = {
     roleNames: {
       pending: 'Pending',
       'super-admin': 'Super Admin',
+      super_admin: 'Super Admin',
       admin: 'Admin',
       analyst: 'Analyst',
       user: 'User',
@@ -3653,6 +3654,7 @@ const en = {
     },
     roleDescriptions: {
       'super-admin': 'Full access to all features including user management',
+      super_admin: 'Full access to all features including user management',
       admin: 'Administrative access to most features',
       analyst: 'Analyst access with limited features',
       user: 'Standard user access',
@@ -4116,6 +4118,12 @@ const en = {
       firstNamePlaceholder: 'Enter first name',
       lastNameLabel: 'Last Name',
       lastNamePlaceholder: 'Enter last name',
+      nationalIdLabel: 'National ID',
+      nationalIdPlaceholder: 'Enter national ID',
+      mobileNumberLabel: 'Mobile Number',
+      mobileNumberPlaceholder: 'Enter mobile number',
+      centerNameLabel: 'Center Name',
+      centerNamePlaceholder: 'Enter center name',
       emailLabel: 'Email',
       emailPlaceholder: 'Enter your email',
       passwordLabel: 'Password',
@@ -4148,6 +4156,16 @@ const en = {
       validation: {
         usernameMinLength: 'Username must be at least 3 characters',
         usernameMaxLength: 'Username must be at most 50 characters',
+        firstNameRequired: 'First name is required',
+        firstNameMaxLength: 'First name must be at most 100 characters',
+        lastNameRequired: 'Last name is required',
+        lastNameMaxLength: 'Last name must be at most 100 characters',
+        nationalIdRequired: 'National ID is required',
+        nationalIdMaxLength: 'National ID must be at most 32 characters',
+        mobileNumberRequired: 'Mobile number is required',
+        mobileNumberMaxLength: 'Mobile number must be at most 32 characters',
+        centerNameRequired: 'Center name is required',
+        centerNameMaxLength: 'Center name must be at most 150 characters',
         invalidEmail: 'Invalid email address',
         passwordRequired: 'Password is required',
         passwordMinLength: 'Password must be at least 8 characters',
@@ -7956,5 +7974,3 @@ const en = {
 };
 
 export default en;
-
-

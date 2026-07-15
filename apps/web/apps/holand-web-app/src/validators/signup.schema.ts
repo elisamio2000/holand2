@@ -23,6 +23,26 @@ export function createSignUpSchema(t: (key: string) => string) {
         .string()
         .min(3, { message: t('authPages.signUp.validation.usernameMinLength') })
         .max(50, { message: t('authPages.signUp.validation.usernameMaxLength') }),
+      firstName: z
+        .string()
+        .min(1, { message: t('authPages.signUp.validation.firstNameRequired') })
+        .max(100, { message: t('authPages.signUp.validation.firstNameMaxLength') }),
+      lastName: z
+        .string()
+        .min(1, { message: t('authPages.signUp.validation.lastNameRequired') })
+        .max(100, { message: t('authPages.signUp.validation.lastNameMaxLength') }),
+      nationalId: z
+        .string()
+        .min(5, { message: t('authPages.signUp.validation.nationalIdRequired') })
+        .max(32, { message: t('authPages.signUp.validation.nationalIdMaxLength') }),
+      mobileNumber: z
+        .string()
+        .min(7, { message: t('authPages.signUp.validation.mobileNumberRequired') })
+        .max(32, { message: t('authPages.signUp.validation.mobileNumberMaxLength') }),
+      centerName: z
+        .string()
+        .min(1, { message: t('authPages.signUp.validation.centerNameRequired') })
+        .max(150, { message: t('authPages.signUp.validation.centerNameMaxLength') }),
       email: z.string().refine(
         (value) => isValidPlatformEmail(value, allowedDomains),
         { message: t('authPages.signUp.validation.invalidEmail') }

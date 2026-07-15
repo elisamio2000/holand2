@@ -70,5 +70,10 @@ def require_roles(*roles: Sequence[UserRole] | UserRole):
     return _checker
 
 
-require_admin = require_roles(UserRole.ADMIN)
-require_counselor_or_admin = require_roles(UserRole.COUNSELOR, UserRole.ADMIN)
+require_admin = require_roles(UserRole.SUPER_ADMIN, UserRole.ADMIN)
+require_counselor_or_admin = require_roles(
+    UserRole.COUNSELOR,
+    UserRole.ANALYST,
+    UserRole.ADMIN,
+    UserRole.SUPER_ADMIN,
+)

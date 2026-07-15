@@ -17,15 +17,43 @@ class HealthResponse(BaseModel):
 class RegisterRequest(BaseModel):
     username: str = Field(..., min_length=3, max_length=64)
     password: str = Field(..., min_length=8, max_length=128)
-    email: EmailStr | None = None
+    email: EmailStr
+    first_name: str = Field(..., min_length=1, max_length=100)
+    last_name: str = Field(..., min_length=1, max_length=100)
+    national_id: str = Field(..., min_length=5, max_length=32)
+    mobile_number: str = Field(..., min_length=7, max_length=32)
+    center_name: str = Field(..., min_length=1, max_length=150)
     display_name: str | None = Field(default=None, max_length=150)
+
+
+class IdentityValidationConfig(BaseModel):
+    full_name_enabled: bool = False
+    national_id_enabled: bool = False
+    mobile_number_enabled: bool = False
+    provider_base_url: str | None = None
+    provider_timeout_seconds: int = 5
 
 
 class RegistrationInfoResponse(BaseModel):
     """Public info the frontend checks before showing the register form."""
 
     allow_registration: bool = True
+    can_self_register: bool = True
+    policy: str = "open"
+    terms_version: str = "v1"
+    require_terms: bool = False
     default_role: str = "user"
+    post_approval_role_hint: str = "analyst"
+    can_login_after_register: bool = True
+    requires_admin_activation: bool = False
+    required_fields: list[str] = [
+        "first_name",
+        "last_name",
+        "national_id",
+        "mobile_number",
+        "center_name",
+    ]
+    identity_validation: IdentityValidationConfig = IdentityValidationConfig()
 
 
 class LoginRequest(BaseModel):
@@ -78,6 +106,11 @@ class UserResponse(BaseModel):
     username: str
     email: str | None = None
     display_name: str | None = None
+    first_name: str | None = None
+    last_name: str | None = None
+    national_id: str | None = None
+    mobile_number: str | None = None
+    center_name: str | None = None
     avatar_url: str | None = None
     role: str
     permissions: list[str] = []
@@ -94,6 +127,11 @@ class UserResponse(BaseModel):
 class UserUpdate(BaseModel):
     email: EmailStr | None = None
     display_name: str | None = Field(default=None, max_length=150)
+    first_name: str | None = Field(default=None, max_length=100)
+    last_name: str | None = Field(default=None, max_length=100)
+    national_id: str | None = Field(default=None, max_length=32)
+    mobile_number: str | None = Field(default=None, max_length=32)
+    center_name: str | None = Field(default=None, max_length=150)
     avatar_url: str | None = None
     bio: str | None = Field(default=None, max_length=500)
     timezone: str | None = None

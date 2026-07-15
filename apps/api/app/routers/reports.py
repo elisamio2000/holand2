@@ -14,7 +14,7 @@ from ..deps import get_current_user
 from ..models.counselor_assignment import CounselorAssignment
 from ..models.recommendation import Recommendation
 from ..models.report import Report
-from ..models.user import User, UserRole
+from ..models.user import User, UserRole, has_admin_access, has_counselor_access
 from ..schemas import (
     RecommendationResponseV2,
     ReportHistoryItem,
@@ -93,13 +93,13 @@ async def _is_assigned_counselor(
 async def _assert_can_access_report(
     session: AsyncSession, report_row: Report, current_user: User
 ) -> None:
-    if current_user.role == UserRole.ADMIN:
+    if has_admin_access(current_user.role):
         return
     if current_user.role == UserRole.USER:
         if report_row.user_id == current_user.id:
             return
         raise HTTPException(status_code=403, detail="Insufficient permissions for this report")
-    if current_user.role == UserRole.COUNSELOR:
+    if has_counselor_access(current_user.role):
         allowed = await _is_assigned_counselor(session, current_user.id, report_row.user_id)
         if allowed:
             return
@@ -264,9 +264,9 @@ async def get_report_by_session(
 
 @router.get("/history", response_model=list[ReportHistoryItem])
 async def list_report_history(session: DbSession, current_user: CurrentUser) -> list[ReportHistoryItem]:
-    if current_user.role == UserRole.ADMIN:
+    if has_admin_access(current_user.role):
         rows_result = await session.execute(select(Report).order_by(Report.created_at.desc()))
-    elif current_user.role == UserRole.COUNSELOR:
+    elif has_counselor_access(current_user.role):
         assigned_student_ids = select(CounselorAssignment.student_user_id).where(
             CounselorAssignment.counselor_user_id == current_user.id
         )

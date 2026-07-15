@@ -3,7 +3,9 @@
 import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.pool import StaticPool
 
 from app.database import get_db
@@ -14,6 +16,11 @@ from app.models.user import User, UserRole
 
 # ── In-memory SQLite for tests (no Postgres needed) ─────────────────────────
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
+
+
+@compiles(JSONB, "sqlite")
+def _compile_jsonb_for_sqlite(_type, _compiler, **_kwargs) -> str:
+    return "JSON"
 
 
 @pytest.fixture(scope="session")

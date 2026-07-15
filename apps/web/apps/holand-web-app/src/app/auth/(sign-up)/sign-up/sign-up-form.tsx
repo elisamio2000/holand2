@@ -20,6 +20,11 @@ import SignUpPasswordHints from './sign-up-password-hints';
 
 const initialValues = {
   username: '',
+  firstName: '',
+  lastName: '',
+  nationalId: '',
+  mobileNumber: '',
+  centerName: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -70,14 +75,18 @@ export default function SignUpForm() {
     console.info('[SignUpForm] Submitting registration:', { username: data.username });
     setIsLoading(true);
     try {
-      const response = await authService.register({
+      await authService.register({
         username: data.username,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        national_id: data.nationalId,
+        mobile_number: data.mobileNumber,
+        center_name: data.centerName,
         email: data.email,
         password: data.password,
-        accepted_terms: true,
       });
 
-      if (response.requires_admin_activation || response.can_login === false) {
+      if (registrationInfo?.requires_admin_activation) {
         toast.success(t('authPages.signUp.registerPendingApproval'));
       } else {
         toast.success(t('authPages.signUp.registerSuccess'));
@@ -141,6 +150,51 @@ export default function SignUpForm() {
                 className="[&>label>span]:font-medium"
                 {...register('username')}
                 error={errors.username?.message}
+              />
+              <Input
+                type="text"
+                size={isMedium ? 'lg' : 'xl'}
+                label={t('authPages.signUp.firstNameLabel')}
+                placeholder={t('authPages.signUp.firstNamePlaceholder')}
+                className="[&>label>span]:font-medium"
+                {...register('firstName')}
+                error={errors.firstName?.message}
+              />
+              <Input
+                type="text"
+                size={isMedium ? 'lg' : 'xl'}
+                label={t('authPages.signUp.lastNameLabel')}
+                placeholder={t('authPages.signUp.lastNamePlaceholder')}
+                className="[&>label>span]:font-medium"
+                {...register('lastName')}
+                error={errors.lastName?.message}
+              />
+              <Input
+                type="text"
+                size={isMedium ? 'lg' : 'xl'}
+                label={t('authPages.signUp.nationalIdLabel')}
+                placeholder={t('authPages.signUp.nationalIdPlaceholder')}
+                className="[&>label>span]:font-medium"
+                {...register('nationalId')}
+                error={errors.nationalId?.message}
+              />
+              <Input
+                type="text"
+                size={isMedium ? 'lg' : 'xl'}
+                label={t('authPages.signUp.mobileNumberLabel')}
+                placeholder={t('authPages.signUp.mobileNumberPlaceholder')}
+                className="[&>label>span]:font-medium"
+                {...register('mobileNumber')}
+                error={errors.mobileNumber?.message}
+              />
+              <Input
+                type="text"
+                size={isMedium ? 'lg' : 'xl'}
+                label={t('authPages.signUp.centerNameLabel')}
+                placeholder={t('authPages.signUp.centerNamePlaceholder')}
+                className="[&>label>span]:font-medium"
+                {...register('centerName')}
+                error={errors.centerName?.message}
               />
               <Input
                 type="email"

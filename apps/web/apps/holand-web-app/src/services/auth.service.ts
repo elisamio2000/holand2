@@ -55,14 +55,8 @@ export const authService = {
   async register(data: RegisterRequest): Promise<RegisterResponse> {
     console.info('[AuthService] Registering user:', { username: data.username });
     try {
-      const res = await gatewayClient.post<RegisterResponse>('/auth/register', {
-        ...data,
-        accepted_terms: data.accepted_terms ?? false,
-      });
-      console.info('[AuthService] Registration successful:', {
-        username: data.username,
-        status: res.data.status,
-      });
+      const res = await gatewayClient.post<RegisterResponse>('/auth/register', data);
+      console.info('[AuthService] Registration successful:', { username: data.username });
       return res.data;
     } catch (error: unknown) {
       console.error('[AuthService] Registration failed:', { username: data.username, error });
@@ -291,4 +285,3 @@ export const authService = {
     }
   },
 };
-

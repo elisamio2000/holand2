@@ -23,7 +23,7 @@
 
 ### 3.1 Identity Service
 
-- ثبت نام، ورود، مدیریت نقش ها (کاربر، مشاور، ادمین)
+- ثبت نام، ورود، مدیریت نقش ها (super_admin، admin، analyst، user) با سازگاری نقش legacy مشاور
 - JWT + Refresh Token
 
 ### 3.2 Assessment Service

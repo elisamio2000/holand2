@@ -3666,6 +3666,7 @@ const fa = {
     roleNames: {
       pending: 'در انتظار',
       'super-admin': 'مدیر ارشد',
+      super_admin: 'مدیر ارشد',
       admin: 'مدیر',
       analyst: 'تحلیلگر',
       user: 'کاربر',
@@ -3673,6 +3674,7 @@ const fa = {
     },
     roleDescriptions: {
       'super-admin': 'دسترسی کامل به همه قابلیت‌ها از جمله مدیریت کاربران',
+      super_admin: 'دسترسی کامل به همه قابلیت‌ها از جمله مدیریت کاربران',
       admin: 'دسترسی مدیریتی به بیشتر قابلیت‌ها',
       analyst: 'دسترسی تحلیلگر با قابلیت‌های محدود',
       user: 'دسترسی استاندارد کاربر',
@@ -4136,6 +4138,12 @@ const fa = {
       firstNamePlaceholder: 'نام را وارد کنید',
       lastNameLabel: 'نام خانوادگی',
       lastNamePlaceholder: 'نام خانوادگی را وارد کنید',
+      nationalIdLabel: 'کد ملی',
+      nationalIdPlaceholder: 'کد ملی را وارد کنید',
+      mobileNumberLabel: 'شماره موبایل',
+      mobileNumberPlaceholder: 'شماره موبایل را وارد کنید',
+      centerNameLabel: 'نام مرکز',
+      centerNamePlaceholder: 'نام مرکز را وارد کنید',
       emailLabel: 'ایمیل',
       emailPlaceholder: 'ایمیل خود را وارد کنید',
       passwordLabel: 'رمز عبور',
@@ -4168,6 +4176,16 @@ const fa = {
       validation: {
         usernameMinLength: 'نام کاربری باید حداقل ۳ کاراکتر باشد',
         usernameMaxLength: 'نام کاربری باید حداکثر ۵۰ کاراکتر باشد',
+        firstNameRequired: 'نام الزامی است',
+        firstNameMaxLength: 'نام باید حداکثر ۱۰۰ کاراکتر باشد',
+        lastNameRequired: 'نام خانوادگی الزامی است',
+        lastNameMaxLength: 'نام خانوادگی باید حداکثر ۱۰۰ کاراکتر باشد',
+        nationalIdRequired: 'کد ملی الزامی است',
+        nationalIdMaxLength: 'کد ملی باید حداکثر ۳۲ کاراکتر باشد',
+        mobileNumberRequired: 'شماره موبایل الزامی است',
+        mobileNumberMaxLength: 'شماره موبایل باید حداکثر ۳۲ کاراکتر باشد',
+        centerNameRequired: 'نام مرکز الزامی است',
+        centerNameMaxLength: 'نام مرکز باید حداکثر ۱۵۰ کاراکتر باشد',
         invalidEmail: 'ایمیل نامعتبر است',
         passwordRequired: 'رمز عبور الزامی است',
         passwordMinLength: 'رمز عبور باید حداقل ۸ کاراکتر باشد',
@@ -7980,4 +7998,3 @@ const fa = {
 };
 
 export default fa;
-
