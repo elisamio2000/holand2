@@ -44,7 +44,7 @@ def upgrade() -> None:
     op.create_table(
         'analysis_results',
         sa.Column('id', sa.UUID(), nullable=False),
-        sa.Column('assessment_id', sa.UUID(), nullable=False),
+        sa.Column('assessment_session_id', sa.UUID(), nullable=False),
         sa.Column('user_id', sa.UUID(), nullable=False),
         sa.Column('age_branch', sa.String(20), nullable=False),
         sa.Column('test_type', sa.String(50), nullable=False),
@@ -52,13 +52,13 @@ def upgrade() -> None:
         sa.Column('results_json', sa.JSON(), nullable=False),
         sa.Column('generated_at', sa.DateTime(timezone=True), nullable=False),
         sa.Column('created_at', sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
-        sa.ForeignKeyConstraint(['assessment_id'], ['assessments.id'], ),
+        sa.ForeignKeyConstraint(['assessment_session_id'], ['assessment_sessions.id'], ),
         sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
         sa.PrimaryKeyConstraint('id'),
     )
 
     # Create indexes for common queries
-    op.create_index('ix_analysis_results_assessment_id', 'analysis_results', ['assessment_id'])
+    op.create_index('ix_analysis_results_assessment_session_id', 'analysis_results', ['assessment_session_id'])
     op.create_index('ix_analysis_results_user_id', 'analysis_results', ['user_id'])
     op.create_index('ix_analysis_results_test_type', 'analysis_results', ['test_type'])
     op.create_index('ix_analysis_templates_test_type', 'analysis_templates', ['test_type'])
@@ -69,6 +69,6 @@ def downgrade() -> None:
     op.drop_index('ix_analysis_templates_test_type', table_name='analysis_templates')
     op.drop_index('ix_analysis_results_test_type', table_name='analysis_results')
     op.drop_index('ix_analysis_results_user_id', table_name='analysis_results')
-    op.drop_index('ix_analysis_results_assessment_id', table_name='analysis_results')
+    op.drop_index('ix_analysis_results_assessment_session_id', table_name='analysis_results')
     op.drop_table('analysis_results')
     op.drop_table('analysis_templates')

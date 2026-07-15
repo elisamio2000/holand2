@@ -24,7 +24,7 @@ class AnalysisResult(Base):
 
     Attributes:
         id: Unique identifier (UUID)
-        assessment_id: Foreign key to AssessmentSession
+        assessment_session_id: Foreign key to AssessmentSession
         user_id: Foreign key to User (for authorization)
         age_branch: Age category (child/teen/adult/senior) for analysis routing
         test_type: Test identifier (holland, mbti, composite)
@@ -39,7 +39,7 @@ class AnalysisResult(Base):
     __tablename__ = "analysis_results"
 
     id: Mapped[UUID] = mapped_column(primary_key=True)
-    assessment_id: Mapped[UUID] = mapped_column(ForeignKey("assessments.id"), nullable=False)
+    assessment_session_id: Mapped[UUID] = mapped_column(ForeignKey("assessment_sessions.id"), nullable=False)
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
     age_branch: Mapped[str] = mapped_column(String(20), nullable=False)  # child/teen/adult/senior
     test_type: Mapped[str] = mapped_column(String(50), nullable=False)  # holland, mbti, composite
@@ -56,6 +56,6 @@ class AnalysisResult(Base):
 
     def __repr__(self) -> str:
         return (
-            f"<AnalysisResult(id={self.id}, assessment_id={self.assessment_id}, "
+            f"<AnalysisResult(id={self.id}, assessment_session_id={self.assessment_session_id}, "
             f"test_type={self.test_type}, age_branch={self.age_branch})>"
         )
