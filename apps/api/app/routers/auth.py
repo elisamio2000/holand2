@@ -5,7 +5,7 @@ Endpoint contract intentionally matches the already-wired Next.js frontend
 so no frontend changes are required to authenticate against this API.
 """
 
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy import select
@@ -164,9 +164,9 @@ async def refresh(payload: RefreshRequest, db: AsyncSession = Depends(get_db)) -
     expires_at = stored.expires_at if stored else None
     if expires_at is not None and expires_at.tzinfo is None:
         # SQLite (used in tests) drops tzinfo on round-trip; treat as UTC.
-        expires_at = expires_at.replace(tzinfo=UTC)
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
 
-    if stored is None or stored.revoked or expires_at < datetime.now(UTC):
+    if stored is None or stored.revoked or expires_at < datetime.now(timezone.utc):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired refresh token"
         )
