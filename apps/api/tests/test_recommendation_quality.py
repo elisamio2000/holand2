@@ -1,6 +1,6 @@
 """Tests for recommendation quality monitor and admin alert endpoint."""
 
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pytest
 from sqlalchemy import update
