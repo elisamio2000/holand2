@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const APP_ROOT = path.resolve(__dirname, '../../..');
 const BASELINE_PATH = path.resolve(
   __dirname,
-  '../../../../../../../../docs/frontend-development/results/i18n-baseline.json'
+  '../../../../../../../docs/frontend-development/results/i18n-baseline.json'
 );
 const RESULTS_DIR = path.dirname(BASELINE_PATH);
 

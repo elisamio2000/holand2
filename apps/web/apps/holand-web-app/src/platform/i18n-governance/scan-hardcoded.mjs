@@ -11,6 +11,12 @@ const APP_SRC = path.resolve(__dirname, '../..');
 const SCAN_DIRS = [
   path.join(APP_SRC, 'app/shared'),
   path.join(APP_SRC, 'components'),
+  // Phase F (Production Hardening / WS-F): the release-readiness target routes live
+  // under app/(hydrogen)/career-guidance and were previously untouched by this scan,
+  // so hardcoded strings in the actual assessment/history/report/counselor/expert-lab
+  // pages went undetected. Scope the addition to career-guidance to avoid pulling in
+  // unrelated template modules (chat, projects, one-search, admin-pipeline, etc.).
+  path.join(APP_SRC, 'app/(hydrogen)/career-guidance'),
 ];
 
 function walk(dir, files = []) {
@@ -38,8 +44,13 @@ function scanFile(filePath) {
     if (line.includes('t(') || line.includes('useTranslation') || line.includes('i18n')) continue;
     if (line.trim().startsWith('//') || line.includes('import ')) continue;
 
-    const jsxMatch = line.match(/>\s*([A-Z][a-zA-Z]{2,}[^<{]*)/);
-    if (jsxMatch) {
+    // Latin-script hardcoded JSX text (e.g. "Add new card").
+    const jsxMatchLatin = line.match(/>\s*([A-Z][a-zA-Z]{2,}[^<{]*)/);
+    // Persian/Arabic-script hardcoded JSX text (e.g. "مرکز آزمون‌ها"). The original
+    // heuristic only matched a Latin capital start, so entire RTL pages with no i18n
+    // integration at all (plain Persian strings) were previously invisible to this scan.
+    const jsxMatchFa = line.match(/>\s*([\u0600-\u06FF][^<{]{2,})/);
+    if (jsxMatchLatin || jsxMatchFa) {
       hits.push({ file: rel, line: i + 1, text: line.trim().slice(0, 120) });
     }
   }

@@ -1,0 +1,323 @@
+{
+  "timestamp": "2026-07-14T09:35:31.971Z",
+  "hardcodedCount": 744,
+  "hardcodedSample": [
+    {
+      "file": "app/shared/account-settings/billing-settings.tsx",
+      "line": 241,
+      "text": "<span>Add new card</span>"
+    },
+    {
+      "file": "app/shared/admin-llm/components/routes-readonly-table.tsx",
+      "line": 10,
+      "text": "parseConstraints?: (route: LlmRoute) => Record<string, unknown> | null;"
+    },
+    {
+      "file": "app/shared/admin-nodes/admin-nodes-view.tsx",
+      "line": 356,
+      "text": "const scanStatuses = scan.map((r) => String(r.deploy_status ?? ''));"
+    },
+    {
+      "file": "app/shared/admin-nodes/hooks/use-node-deploy-stream.ts",
+      "line": 27,
+      "text": "connect: (wsUrl: string) => Promise<boolean>;"
+    },
+    {
+      "file": "app/shared/admin-nodes/hooks/use-node-deploy-stream.ts",
+      "line": 34,
+      "text": "}) => Promise<{ ok: boolean; servedName?: string }>;"
+    },
+    {
+      "file": "app/shared/admin-nodes/hooks/use-node-gpu-stream.ts",
+      "line": 24,
+      "text": "refreshOnce: () => Promise<boolean>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/entity-settings/node-settings-modal.tsx",
+      "line": 13,
+      "text": "onRefresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/entity-settings/node-settings-panel.tsx",
+      "line": 61,
+      "text": "onRefresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/entity-settings/node-settings-panel.tsx",
+      "line": 595,
+      "text": "<Text className=\"mt-2 text-[10px] text-gray-500\">GPU: {nodeGpuSummary}</Text>"
+    },
+    {
+      "file": "app/shared/admin-pipeline/helpers/topology-visual-tokens.ts",
+      "line": 46,
+      "text": "const item = HEALTH_LEGEND.find((l) => HEALTH_DOT_COLOR[kind] === l.color);"
+    },
+    {
+      "file": "app/shared/admin-pipeline/tabs/routing-topology-tab.tsx",
+      "line": 35,
+      "text": "onRefresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/components/create-route-modal.tsx",
+      "line": 18,
+      "text": "onCreated: (routeKey: string) => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/components/topology-edge-inspector.tsx",
+      "line": 31,
+      "text": "onRefresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/components/topology-entity-nodes.tsx",
+      "line": 408,
+      "text": "<Text className=\"mt-1 text-[10px] text-purple-600/70\">Cluster</Text>"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/components/topology-inspector.tsx",
+      "line": 43,
+      "text": "onRefresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/components/topology-toolbar.tsx",
+      "line": 91,
+      "text": "onRefresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/helpers/display-filter.ts",
+      "line": 159,
+      "text": "return mods.some((m) => String(m).toLowerCase() === modality);"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/helpers/layout-storage.ts",
+      "line": 158,
+      "text": "if (keys.length > LAYOUT_CACHE_MAX) {"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/hooks/use-health-pulse.ts",
+      "line": 17,
+      "text": "refresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/hooks/use-topology-focus.ts",
+      "line": 90,
+      "text": ".filter((id): id is string => Boolean(id));"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/store/topology-board-store.ts",
+      "line": 72,
+      "text": "function scheduleGraphFlush(set: (partial: Partial<TopologyBoardState>) => void, get: () => TopologyBoardState) {"
+    },
+    {
+      "file": "app/shared/admin-pipeline/topology-board/topology-board-view.tsx",
+      "line": 43,
+      "text": "onRefresh: () => Promise<void>;"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-inspector.tsx",
+      "line": 249,
+      "text": "<PiArrowLeftBold className=\"h-3 w-3\" /> Inputs"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-inspector.tsx",
+      "line": 278,
+      "text": "<PiArrowRightBold className=\"h-3 w-3\" /> Outputs"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-run-panel.tsx",
+      "line": 278,
+      "text": "<Text className=\"text-[9px] text-gray-400\">Duration</Text>"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-run-panel.tsx",
+      "line": 284,
+      "text": "<Text className=\"text-[9px] text-gray-400\">Started</Text>"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-run-panel.tsx",
+      "line": 294,
+      "text": "<Text className=\"text-[9px] text-gray-400\">Finished</Text>"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-shortcuts-help.tsx",
+      "line": 57,
+      "text": "<Text className=\"font-semibold\">Keyboard Shortcuts</Text>"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-step-node.tsx",
+      "line": 282,
+      "text": "<span className=\"font-medium text-green-500\">True</span>"
+    },
+    {
+      "file": "app/shared/admin-workflows/components/workflow-step-node.tsx",
+      "line": 283,
+      "text": "<span className=\"font-medium text-red-500\">False</span>"
+    },
+    {
+      "file": "app/shared/admin-workflows/store/workflow-store.ts",
+      "line": 69,
+      "text": "toDefinition: () => WorkflowDefinition;"
+    },
+    {
+      "file": "app/shared/ai-chat/arc-navigator/arc-navigator.tsx",
+      "line": 42,
+      "text": "() => Math.max(1, ...turns.map((x) => x.weight)),"
+    },
+    {
+      "file": "app/shared/ai-chat/authenticated-markdown-media.tsx",
+      "line": 74,
+      "text": "<span className=\"text-xs text-gray-400\">Loading image…</span>"
+    },
+    {
+      "file": "app/shared/ai-chat/authenticated-markdown-media.tsx",
+      "line": 88,
+      "text": "<span>Could not load image</span>"
+    },
+    {
+      "file": "app/shared/ai-chat/authenticated-markdown-media.tsx",
+      "line": 211,
+      "text": "<div className={cn('my-2 text-xs text-gray-500', className)}>Loading audio…</div>"
+    },
+    {
+      "file": "app/shared/ai-chat/authenticated-markdown-media.tsx",
+      "line": 217,
+      "text": "<div className={cn('my-2 text-xs text-orange-700', className)}>Could not load audio</div>"
+    },
+    {
+      "file": "app/shared/ai-chat/authenticated-markdown-media.tsx",
+      "line": 239,
+      "text": "<div className={cn('my-2 text-xs text-orange-700', className)}>Could not load audio</div>"
+    },
+    {
+      "file": "app/shared/ai-chat/canvas-panel.tsx",
+      "line": 65,
+      "text": "<div className=\"flex items-center justify-center py-10 text-sm text-gray-500\">Loading PDF viewer...</div>"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-input.tsx",
+      "line": 153,
+      "text": "urls.forEach((url) => URL.revokeObjectURL(url));"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-input.tsx",
+      "line": 204,
+      "text": "previewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-input.tsx",
+      "line": 439,
+      "text": "<span className=\"text-red-500\">Upload failed</span>"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-input.tsx",
+      "line": 441,
+      "text": "<span className=\"text-green-600 dark:text-green-400\">Uploaded</span>"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-sidebar.tsx",
+      "line": 123,
+      "text": "onCreateFolder?: (data: { name: string; color?: string }) => Promise<void>;"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-sidebar.tsx",
+      "line": 124,
+      "text": "onUpdateFolder?: (id: string, data: { name?: string; color?: string }) => Promise<void>;"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-sidebar.tsx",
+      "line": 125,
+      "text": "onDeleteFolder?: (id: string) => Promise<void>;"
+    },
+    {
+      "file": "app/shared/ai-chat/chat-sidebar.tsx",
+      "line": 126,
+      "text": "onMoveSessionToFolder?: (sessionId: string, folderId: string | null) => Promise<void>;"
+    },
+    {
+      "file": "app/shared/ai-chat/code-block.tsx",
+      "line": 33,
+      "text": "<div className=\"px-3 py-6 text-center text-xs text-gray-400 dark:text-gray-500\">Loading preview…</div>"
+    },
+    {
+      "file": "app/shared/ai-chat/code-block.tsx",
+      "line": 93,
+      "text": "const codeContent = useMemo(() => String(children || ''), [children]);"
+    },
+    {
+      "file": "app/shared/ai-chat/export/build-interactive-chat-html.ts",
+      "line": 579,
+      "text": "return '<div class=\"export-img-viewer\"><img src=\"' + src + '\" alt=\"' + filename + '\" class=\"export-img-modal\" /><div cla"
+    },
+    {
+      "file": "app/shared/ai-chat/export/test-offline.ts",
+      "line": 76,
+      "text": "const html = '<h1>Offline Test DOCX</h1><p>این DOCX بدون نیاز به اینترنت ساخته شد!</p>';"
+    }
+  ],
+  "localeParity": {
+    "enKeyCount": 6632,
+    "faKeyCount": 6659,
+    "missingInFa": [
+      "chatPage.files",
+      "chatPage.files.title",
+      "chatPage.memory.title",
+      "messages.requirements.roadmap.realtime.name",
+      "messages.requirements.roadmap.realtime.note",
+      "pages.compose",
+      "projects.automations.executionLog",
+      "projects.automations.noRuns",
+      "projects.table",
+      "projects.table.assignee",
+      "projects.table.case",
+      "projects.table.due",
+      "projects.table.exportCsv",
+      "projects.table.priority",
+      "projects.table.title"
+    ],
+    "missingInEn": [
+      "pipeline.topology.endpoint",
+      "pipeline.topology.health",
+      "pipeline.topology.model",
+      "pipeline.topology.noRoutes",
+      "pipeline.topology.routeKey",
+      "searchHub.aboutResults",
+      "searchHub.activeFilters",
+      "searchHub.anyTime",
+      "searchHub.clearAllFilters",
+      "searchHub.dateRange",
+      "searchHub.dateRanges",
+      "searchHub.dateRanges.last_24h",
+      "searchHub.dateRanges.last_month",
+      "searchHub.dateRanges.last_week",
+      "searchHub.dateRanges.older",
+      "searchHub.description",
+      "searchHub.errorTitle",
+      "searchHub.featuredResult",
+      "searchHub.fileType",
+      "searchHub.files",
+      "searchHub.filterDate",
+      "searchHub.filterFileType",
+      "searchHub.filterScriptVariants",
+      "searchHub.filterSource",
+      "searchHub.filtersLabel",
+      "searchHub.hideFilters",
+      "searchHub.highestScore",
+      "searchHub.last24Hours",
+      "searchHub.lastMonth",
+      "searchHub.lastWeek",
+      "searchHub.lastYear",
+      "searchHub.moreResults",
+      "searchHub.noResultsInLane",
+      "searchHub.preview",
+      "searchHub.refineResults",
+      "searchHub.relatedEntities",
+      "searchHub.results",
+      "searchHub.scriptVariantsInfo",
+      "searchHub.selectArea",
+      "searchHub.showFilters",
+      "searchHub.showMore",
+      "searchHub.videoNotSupported"
+    ],
+    "missingInFaCount": 15,
+    "missingInEnCount": 42
+  }
+}

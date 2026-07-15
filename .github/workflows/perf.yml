@@ -1,0 +1,38 @@
+name: Perf (k6 smoke) — non-blocking
+
+# Phase F (Production Hardening / WS-H). This workflow is intentionally NOT wired
+# into pull_request/push triggers in ci.yml — it must never block a normal PR merge.
+# Trigger manually (workflow_dispatch) or on a schedule once a staging BASE_URL is
+# assigned to this pipeline. See perf/README.md and docs/qa-gate-matrix-fa.md (G4-perf).
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Target base URL for the API (defaults to local docker-compose)"
+        required: false
+        default: "http://localhost:8001"
+      target_vus:
+        description: "Target concurrent virtual users"
+        required: false
+        default: "1000"
+  # Disabled by default — uncomment once a staging environment is assigned.
+  # schedule:
+  #   - cron: "0 3 * * *"
+
+jobs:
+  k6-smoke:
+    name: k6 smoke (non-blocking)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run k6 smoke scenario
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: perf/k6/smoke-health.js
+        env:
+          BASE_URL: ${{ github.event.inputs.base_url || 'http://localhost:8001' }}
+          TARGET_VUS: ${{ github.event.inputs.target_vus || '1000' }}

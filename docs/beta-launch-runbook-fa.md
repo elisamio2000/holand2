@@ -114,13 +114,44 @@
    - اجرای CI روی commit نهایی
    - اجرای smoke روی staging
    - بررسی `go_no_go` در `/monitoring/readiness`
+   - اجرای `check-and-run.ps1 -Gate` روی محیط هدف؛ فقط با `exitCode=0` ادامه دهید (بخش 9)
 2. هنگام لانچ:
    - rollout محدود 5-10%
    - monitor هر 30 دقیقه برای 6 ساعت اول
 3. شرط rollback فوری:
    - `go_no_go=no-go` در دو probe متوالی
    - یا `api_error_5xx_rate` fail برای بیش از 15 دقیقه
+   - یا `check-and-run.ps1 -Gate` بعد از دیپلوی `fail` برگرداند
 4. rollback:
-   - بازگشت به release پایدار قبلی
+   - بازگشت به release پایدار قبلی با شناسه نسخه مطابق بخش 10 (git tag / image tag)
    - freeze rollout cohort
    - ثبت incident summary + owner + ETA اصلاح
+
+## 9) چک‌لیست رسمی ریلیز (Release Checklist — Phase F / G4)
+
+قبل از اعلام هر Release Candidate (RC)، همه موارد زیر باید سبز باشند؛ نگاشت گیت مربوطه در
+`docs/qa-gate-matrix-fa.md` قابل پیگیری است:
+
+- [ ] CI pipeline (`.github/workflows/ci.yml`): forbidden-token-scan + api + web سبز
+- [ ] `pnpm i18n:check` در `apps/web/apps/holand-web-app` بدون رگرسیون نسبت به baseline
+      (`docs/frontend-development/results/i18n-baseline.json`)
+- [ ] `check-and-run.ps1 -Gate -GateOutput <path>` با `exitCode=0` روی staging (گیت G4-devops)
+- [ ] تست بار k6 (`perf/k6/`) روی 1000 VU مطابق آستانه‌های `perf/README.md` پاس شده باشد (گیت G4-perf)
+- [ ] `GET /monitoring/readiness` → `go_no_go == "go"`
+- [ ] عدم وجود Blocker باز با Severity 1 یا 2 در `docs/release-readiness-phased-remediation-plan-fa.md`
+- [ ] Migration های Alembic روی staging/production اجرا و تأیید شده باشند
+- [ ] Rollback identifiers (بخش 10) برای commit جاری ساخته و مستند شده باشند
+
+## 10) قرارداد نام‌گذاری نسخه برای Rollback
+
+برای اینکه rollback همیشه یک هدف مشخص و بدون ابهام داشته باشد، از این قرارداد استفاده می‌شود:
+
+- **Git tag**: `v1.0.0-rc.<N>` روی commit نهایی هر Release Candidate (مثلاً `v1.0.0-rc.1`,
+  `v1.0.0-rc.2`, ...). نسخه پایدار نهایی با `v1.0.0` تگ می‌شود.
+- **Image tags**: هر build دو تگ می‌گیرد:
+  - `<git-sha>` (تگ غیرقابل‌تغییر، دقیق‌ترین اشاره به کد)
+  - `rc-<N>` (تگ خوانا برای انسان، هم‌راستا با git tag بالا)
+- **رویه rollback**: برای بازگشت، آخرین `git tag` پایدار قبلی (یا `rc-<N-1>`) شناسایی و
+  ایمیج متناظر با همان `<git-sha>`/`rc-<N-1>` دوباره deploy می‌شود. `check-and-run.ps1 -Gate`
+  باید بلافاصله پس از rollback دوباره اجرا و `pass` برگرداند.
+- این قرارداد تا پیش از این فاز در ریپو مستند نشده بود؛ از این پس برای هر RC الزامی است.
