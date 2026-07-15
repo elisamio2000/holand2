@@ -25,7 +25,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_db_session
+from app.database import get_db
 from app.models.analysis_result import AnalysisResult
 from app.models.analysis_template import AnalysisTemplate
 from app.models.user import User
@@ -35,7 +35,7 @@ from app.schemas_analysis import (
     AnalysisTemplateResponse,
     AnalysisTemplateUpdate,
 )
-from app.security.rbac import get_current_user, check_role
+from app.deps import get_current_user
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api", tags=["analysis"])
@@ -55,7 +55,7 @@ router = APIRouter(prefix="/api", tags=["analysis"])
 async def get_assessment_analysis(
     assessment_id: UUID,
     current_user: User = Depends(get_current_user),
-    session: AsyncSession = Depends(get_db_session),
+    session: AsyncSession = Depends(get_db),
 ) -> dict:
     """
     Retrieve analysis results for a completed assessment.
@@ -132,7 +132,7 @@ async def list_analysis_templates(
     test_type: Optional[str] = None,
     age_branch: Optional[str] = None,
     current_user: User = Depends(get_current_user),
-    session: AsyncSession = Depends(get_db_session),
+    session: AsyncSession = Depends(get_db),
 ) -> list[AnalysisTemplateResponse]:
     """
     List analysis templates with optional filtering.
@@ -181,7 +181,7 @@ async def list_analysis_templates(
 async def get_analysis_template(
     template_id: UUID,
     current_user: User = Depends(get_current_user),
-    session: AsyncSession = Depends(get_db_session),
+    session: AsyncSession = Depends(get_db),
 ) -> AnalysisTemplateResponse:
     """
     Retrieve a single analysis template by ID.
@@ -224,7 +224,7 @@ async def get_analysis_template(
 async def create_analysis_template(
     payload: AnalysisTemplateCreate,
     current_user: User = Depends(get_current_user),
-    session: AsyncSession = Depends(get_db_session),
+    session: AsyncSession = Depends(get_db),
 ) -> AnalysisTemplateResponse:
     """
     Create a new analysis template.
@@ -293,7 +293,7 @@ async def update_analysis_template(
     template_id: UUID,
     payload: AnalysisTemplateUpdate,
     current_user: User = Depends(get_current_user),
-    session: AsyncSession = Depends(get_db_session),
+    session: AsyncSession = Depends(get_db),
 ) -> AnalysisTemplateResponse:
     """
     Update an analysis template.
@@ -343,7 +343,7 @@ async def update_analysis_template(
 async def delete_analysis_template(
     template_id: UUID,
     current_user: User = Depends(get_current_user),
-    session: AsyncSession = Depends(get_db_session),
+    session: AsyncSession = Depends(get_db),
 ) -> None:
     """
     Delete an analysis template.
