@@ -107,3 +107,61 @@ async def reorder_questions(version_id: str, payload: QuestionReorderIn, db: Asy
         question.order_index = item.order_index
     await db.flush()
     return version.questions
+
+
+# Question updates and deletions
+@router.put("/{version_id}/questions/{question_id}", response_model=QuestionAdminOut)
+async def update_question(version_id: str, question_id: str, payload: QuestionDraftIn, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(AssessmentVersion).where(AssessmentVersion.id == version_id))
+    version = result.scalar_one_or_none()
+    if version is None:
+        raise HTTPException(status_code=404, detail="Assessment version not found")
+    from ..models.assessment import VersionStatus
+    if version.status != VersionStatus.DRAFT:
+        raise HTTPException(status_code=409, detail="Assessment version not editable")
+    
+    result = await db.execute(select(Question).where(Question.id == question_id, Question.assessment_version_id == version_id))
+    q = result.scalar_one_or_none()
+    if q is None:
+        raise HTTPException(status_code=404, detail="Question not found")
+    
+    q.kind = payload.kind
+    q.dimension = payload.dimension
+    q.text = payload.text
+    q.order_index = payload.order_index
+    q.is_reverse_scored = payload.is_reverse_scored
+    
+    # Update options
+    from ..models.assessment import QuestionOption
+    await db.execute(
+        select(QuestionOption).where(QuestionOption.question_id == q.id)
+    )
+    result = await db.execute(select(QuestionOption).where(QuestionOption.question_id == q.id))
+    existing_opts = result.scalars().all()
+    for opt in existing_opts:
+        db.delete(opt)
+    
+    for opt in payload.options:
+        db.add(QuestionOption(question_id=q.id, label=opt.label, value=opt.value, pole=opt.pole, weight=opt.weight, order_index=opt.order_index))
+    
+    await db.flush()
+    return q
+
+
+@router.delete("/{version_id}/questions/{question_id}", status_code=204)
+async def delete_question(version_id: str, question_id: str, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(AssessmentVersion).where(AssessmentVersion.id == version_id))
+    version = result.scalar_one_or_none()
+    if version is None:
+        raise HTTPException(status_code=404, detail="Assessment version not found")
+    from ..models.assessment import VersionStatus
+    if version.status != VersionStatus.DRAFT:
+        raise HTTPException(status_code=409, detail="Assessment version not editable")
+    
+    result = await db.execute(select(Question).where(Question.id == question_id, Question.assessment_version_id == version_id))
+    q = result.scalar_one_or_none()
+    if q is None:
+        raise HTTPException(status_code=404, detail="Question not found")
+    
+    db.delete(q)
+    await db.flush()
