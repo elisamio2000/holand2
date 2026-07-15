@@ -1,8 +1,11 @@
 # برنامه فازبندی رفع نواقص و آماده‌سازی ارائه (Release Readiness)
 
-آخرین به‌روزرسانی: 2026-07-13
+آخرین به‌روزرسانی: 2026-07-14
 وضعیت فعلی: آماده ارائه نیست (Release Blocked)
 هدف: تبدیل مسائل جاری به برنامه اجرایی دقیق، موازی‌پذیر و قابل تحویل.
+
+مرجع تکمیلی نسخه ۱:
+- docs/release-v1-implementation-master-plan-fa.md
 
 ## 1) وضعیت بلوکه‌کننده فعلی (Release Blockers)
 
@@ -202,6 +205,7 @@
 - test report
 - release gate checklist
 - rollback plan
+- traceability به ST-* در سند docs/development-line-master-tracker-fa.md
 
 ## 8) وضعیت آمادگی ارائه
 
