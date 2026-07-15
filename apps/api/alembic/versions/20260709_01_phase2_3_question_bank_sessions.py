@@ -13,9 +13,9 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = "20260709_01"
-down_revision: str | None = None
+down_revision: str | None = "0001_users_and_refresh_tokens"
 branch_labels: str | Sequence[str] | None = None
-depends_on: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = "0001_users_and_refresh_tokens"
 
 
 assessment_type_enum = postgresql.ENUM("holland", "mbti", name="assessment_type_enum", create_type=False)
