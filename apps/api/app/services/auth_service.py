@@ -8,7 +8,7 @@ we can revoke individual sessions on logout.
 
 import hashlib
 import secrets
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from jose import JWTError, jwt
@@ -33,7 +33,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_access_token(*, subject: str, role: str) -> tuple[str, int]:
     """Return (token, expires_in_seconds)."""
-    now = datetime.now(UTC)
+    now = datetime.now(timezone.utc)
     expires_in = settings.jwt_access_token_expire_minutes * 60
     expire = now + timedelta(seconds=expires_in)
     payload: dict[str, Any] = {
@@ -59,7 +59,7 @@ def new_refresh_token() -> tuple[str, str, datetime]:
     """Generate a raw refresh token, its hash, and its expiry datetime."""
     raw = secrets.token_urlsafe(48)
     token_hash = hash_refresh_token(raw)
-    expires_at = datetime.now(UTC) + timedelta(
+    expires_at = datetime.now(timezone.utc) + timedelta(
         days=settings.jwt_refresh_token_expire_days
     )
     return raw, token_hash, expires_at
