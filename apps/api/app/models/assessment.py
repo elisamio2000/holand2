@@ -33,6 +33,7 @@ from sqlalchemy import (
     UniqueConstraint,
     Uuid,
     func,
+    Boolean,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -102,6 +103,10 @@ class AssessmentVersion(Base, TimestampMixin):
     rollback_of: Mapped[str | None] = mapped_column(
         Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=True
     )
+    # Age-branching flags
+    is_age_branched: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    publish_state: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
+
 
     questions: Mapped[list[Question]] = relationship(
         back_populates="assessment_version",
@@ -133,6 +138,7 @@ class Question(Base, TimestampMixin):
     # questions this holds the dichotomy pair, e.g. "EI", "SN", "TF", "JP".
     dimension: Mapped[str] = mapped_column(String(4), nullable=False, index=True)
     text: Mapped[str] = mapped_column(Text, nullable=False)
+    age_variants: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
     order_index: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     is_reverse_scored: Mapped[bool] = mapped_column(default=False)
 
@@ -276,6 +282,19 @@ class VersionValidationReport(Base):
     )
 
 
+class AssessmentBranch(Base, TimestampMixin):
+    __tablename__ = "assessment_branches"
+
+    id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
+    assessment_version_id: Mapped[str] = mapped_column(Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=False, index=True)
+    age_group: Mapped[str] = mapped_column(String(20), nullable=False)
+    created_from_id: Mapped[str | None] = mapped_column(Uuid(as_uuid=False), nullable=True)
+    branch_version_id: Mapped[str | None] = mapped_column(Uuid(as_uuid=False), nullable=True, index=True)
+    title: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    state: Mapped[str] = mapped_column(String(50), nullable=False, default='draft')
+
+
 __all__ = [
     "AssessmentType",
     "VersionStatus",
@@ -287,4 +306,5 @@ __all__ = [
     "VersionEntityType",
     "VersionAuditLog",
     "VersionValidationReport",
+    "AssessmentBranch",
 ]

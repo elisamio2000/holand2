@@ -7,6 +7,7 @@ from .counselor_assignment import CounselorAssignment
 from .expert_lab import ContentDraft, ContentKind, ContentVersion, DraftStatus
 from .recommendation_quality import RecommendationFeedback
 from .session import AssessmentSession, SessionAnswer, SessionResult
+from .scoring_model import ScoringModel
 
 __all__ = [
     "Base",
@@ -25,4 +26,5 @@ __all__ = [
     "AssessmentSession",
     "SessionAnswer",
     "SessionResult",
+    "ScoringModel",
 ]

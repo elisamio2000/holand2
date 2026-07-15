@@ -41,6 +41,8 @@ class AssessmentSession(Base, TimestampMixin):
     assessment_version_id: Mapped[str] = mapped_column(
         Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=False, index=True
     )
+    user_age_group: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    selected_age_branch: Mapped[str | None] = mapped_column(String(20), nullable=True)
     secondary_assessment_version_id: Mapped[str | None] = mapped_column(
         Uuid(as_uuid=False), ForeignKey("assessment_versions.id"), nullable=True, index=True
     )
