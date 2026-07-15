@@ -1,6 +1,6 @@
 # برنامه فازبندی رفع نواقص و آماده‌سازی ارائه (Release Readiness)
 
-آخرین به‌روزرسانی: 2026-07-13
+آخرین به‌روزرسانی: 2026-07-14
 وضعیت فعلی: آماده ارائه نیست (Release Blocked)
 هدف: تبدیل مسائل جاری به برنامه اجرایی دقیق، موازی‌پذیر و قابل تحویل.
 
@@ -9,6 +9,8 @@
 - قرارداد ثبت‌نام با فیلدهای اجباری هویتی (first_name, last_name, national_id, mobile_number, center_name) هم‌راستا شد.
 - seed پیش‌فرض کاربران به‌صورت idempotent برای superadmin/admin/analyst/user اعمال شد.
 - تنظیمات config-first برای فعال/غیرفعال‌سازی اعتبارسنجی‌های external identity (full_name, national_id, mobile) و placeholderهای provider اضافه شد.
+مرجع تکمیلی نسخه ۱:
+- docs/release-v1-implementation-master-plan-fa.md
 
 ## 1) وضعیت بلوکه‌کننده فعلی (Release Blockers)
 
@@ -208,6 +210,7 @@
 - test report
 - release gate checklist
 - rollback plan
+- traceability به ST-* در سند docs/development-line-master-tracker-fa.md
 
 ## 8) وضعیت آمادگی ارائه
 
