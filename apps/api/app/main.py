@@ -29,6 +29,8 @@ from .routers.recommendations import router as reco_router
 from .routers.reports import router as reports_router
 from .routers.sessions import router as sessions_router
 from .routers.users import router as users_router
+from .routers.authoring import router as authoring_router
+from .routers.scoring_models import router as scoring_models_router
 from .schemas import (
     HealthResponse,
     HollandRequest,
@@ -200,6 +202,8 @@ app.include_router(analytics_router)
 app.include_router(expert_lab_router)
 app.include_router(recommendation_quality_router)
 app.include_router(monitoring_router)
+app.include_router(authoring_router)
+app.include_router(scoring_models_router)
 
 init_sentry_hooks()
 

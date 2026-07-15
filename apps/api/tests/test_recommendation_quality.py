@@ -1,6 +1,6 @@
 """Tests for recommendation quality monitor and admin alert endpoint."""
 
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pytest
 from sqlalchemy import update
@@ -229,7 +229,7 @@ class TestRecommendationQualityMonitor:
         assert old_feedback.status_code == 201
         old_feedback_id = old_feedback.json()["id"]
 
-        old_timestamp = datetime.now(UTC) - timedelta(days=8)
+        old_timestamp = datetime.now(timezone.utc) - timedelta(days=8)
         await db_session.execute(
             update(RecommendationFeedback)
             .where(RecommendationFeedback.id == old_feedback_id)
