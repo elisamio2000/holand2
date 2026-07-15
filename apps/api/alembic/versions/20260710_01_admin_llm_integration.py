@@ -1,7 +1,7 @@
 """Phase 6: Admin LLM Integration - Provider Config, Prompt Templates, AI Reports
 
 Revision ID: 20260710_01
-Revises: f66a241cdea3
+Revises: 20260709_03_combined
 Create Date: 2026-07-10 12:00:00.000000
 
 """
@@ -11,7 +11,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 
 # revision identifiers, used by Alembic.
 revision = '20260710_01'
-down_revision = 'f66a241cdea3'
+down_revision = '20260709_03_combined'
 branch_labels = None
 depends_on = None
 
