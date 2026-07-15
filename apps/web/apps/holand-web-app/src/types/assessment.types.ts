@@ -57,6 +57,9 @@ export interface AssessmentSession {
   totalQuestions: number;
   questions: AssessmentQuestion[];
   createdAt: string;
+  /** Phase B additions */
+  runCode?: string | null;
+  participantCode?: string | null;
 }
 
 export interface StartAssessmentRequest {

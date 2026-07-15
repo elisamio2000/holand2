@@ -255,6 +255,46 @@ export const useAssessmentFlowStore = create<AssessmentFlowState>()(
         status: state.status,
         result: state.result,
       }),
+      // On rehydrate, treat backend as canonical: fetch session questions and resume snapshot
+      onRehydrateStorage: () => (persistedState) => {
+        if (!persistedState || !persistedState.sessionId) return;
+        const sessionId = persistedState.sessionId as string;
+        // Defer so rehydration completes first
+        setTimeout(() => {
+          (async () => {
+            try {
+              const serverSession = await assessmentService.getSession(sessionId);
+              const resume = await assessmentService.resume(sessionId);
+              // Build answers map from resume (option_id keyed)
+              const answers: Record<string, string> = {};
+              if (resume?.answers) {
+                for (const a of resume.answers) {
+                  answers[a.question_id] = a.option_id;
+                }
+              }
+              // Compute next index: first unanswered after last answered
+              let lastAnswered = -1;
+              for (let i = 0; i < serverSession.questions.length; i++) {
+                if (answers[serverSession.questions[i].id] !== undefined) lastAnswered = i;
+              }
+              const nextIndex = Math.min(Math.max(0, lastAnswered + 1), Math.max(0, serverSession.questions.length - 1));
+
+              set({
+                sessionId: serverSession.sessionId,
+                testType: serverSession.testType,
+                ageBand: serverSession.ageBand,
+                questions: serverSession.questions,
+                currentIndex: nextIndex,
+                answers,
+                status: resume?.status === 'in_progress' ? 'in_progress' : (resume?.status ?? 'in_progress'),
+                result: null,
+              });
+            } catch (err) {
+              console.warn('[AssessmentFlowStore] resume initialization failed', err);
+            }
+          })();
+        }, 0);
+      },
     }
   )
 );

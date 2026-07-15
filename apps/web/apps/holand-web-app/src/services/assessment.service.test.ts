@@ -209,3 +209,65 @@ describe('assessmentService contract adapter', () => {
     expect(result.mbti?.typeCode).toBe('INTJ');
   });
 });
+
+it('resumes session state from /sessions/{id}/resume and maps answers', async () => {
+  // start to seed sessionMeta and questions mapping
+  postMock.mockResolvedValueOnce({
+    data: {
+      session_id: 's10',
+      assessment_type: 'holland',
+      started_at: '2026-01-01T00:00:00Z',
+      status: 'in_progress',
+      questions: [
+        {
+          id: 'q1',
+          kind: 'likert',
+          dimension: 'R',
+          text: 'q',
+          order_index: 0,
+          options: [{ id: 'o1', label: '1', value: 1 }],
+        },
+      ],
+    },
+  });
+
+  await assessmentService.startSession({ testType: 'holland', ageBand: '18-24' });
+
+  // Mock questions and resume endpoints
+  getMock.mockImplementation((url: string) => {
+    if (url.endsWith('/questions')) {
+      return Promise.resolve({ data: [
+        { id: 'q1', kind: 'likert', dimension: 'R', text: 'q', order_index: 0, options: [{ id: 'o1', label: '1', value: 1 }] }
+      ]});
+    }
+    if (url.endsWith('/resume')) {
+      return Promise.resolve({ data: {
+        session_id: 's10',
+        assessment_type: 'holland',
+        status: 'in_progress',
+        started_at: '2026-01-01T00:00:00Z',
+        total_questions: 1,
+        answered_count: 1,
+        answers: [ { question_id: 'q1', option_id: 'o1', answered_at: '2026-01-01T00:01:00Z', revision_count: 0 } ]
+      }});
+    }
+    if (url.endsWith('/sessions/s10')) {
+      return Promise.resolve({ data: { status: 'in_progress', started_at: '2026-01-01T00:00:00Z' } });
+    }
+    return Promise.resolve({ data: {} });
+  });
+
+  const session = await assessmentService.getSession('s10');
+  expect(session.questions.length).toBe(1);
+  const resume = await assessmentService.resume('s10');
+  expect(resume).not.toBeNull();
+  expect(resume?.answers[0].option_id).toBe('o1');
+});
+
+it('submits events to /sessions/{id}/events and returns server reply', async () => {
+  postMock.mockResolvedValueOnce({ data: { accepted: true, session_id: 's20', server_seq_start: 1, server_seq_end: 1, stored: 1 } });
+  const payload = [{ event_type: 'question_view', question_id: 'q1' }];
+  const res = await assessmentService.submitEvents('s20', payload as any);
+  expect(postMock).toHaveBeenCalledWith('/sessions/s20/events', { events: payload });
+  expect(res).toMatchObject({ accepted: true, session_id: 's20' });
+});
