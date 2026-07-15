@@ -56,6 +56,14 @@ class AssessmentSession(Base, TimestampMixin):
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
+    # Phase B (Assessment Runtime Integrity): human-friendly, non-UUID
+    # identifiers. Nullable during rollout (see migration 20260714_01) until
+    # the backfill is verified and a follow-up migration hardens them to
+    # NOT NULL + unique. NOT the same as ``SessionResult.code`` (the
+    # psychometric Holland/MBTI type code) — kept deliberately distinct.
+    run_code: Mapped[str | None] = mapped_column(String(8), nullable=True)
+    participant_code: Mapped[str | None] = mapped_column(String(10), nullable=True, index=True)
+
     answers: Mapped[list[SessionAnswer]] = relationship(
         back_populates="session", cascade="all, delete-orphan"
     )
@@ -64,6 +72,9 @@ class AssessmentSession(Base, TimestampMixin):
     )
     ai_reports: Mapped[list[Any]] = relationship(
         "SessionAIReport", back_populates="session", cascade="all, delete-orphan"
+    )
+    events: Mapped[list[SessionEvent]] = relationship(
+        back_populates="session", cascade="all, delete-orphan", order_by="SessionEvent.server_seq"
     )
 
 
@@ -114,9 +125,71 @@ class SessionResult(Base, TimestampMixin):
     session: Mapped[AssessmentSession] = relationship(back_populates="result")
 
 
+class SessionEventType(str, enum.Enum):
+    """Runtime timeline events captured while a participant takes a session.
+
+    ``revisit`` is a server-derived convenience marker (a ``question_view``
+    for a question already seen earlier in the session) — clients may send a
+    hint but the server is the source of truth; see
+    ``services.session_events.derive_revisit_flags``.
+    """
+
+    QUESTION_VIEW = "question_view"
+    QUESTION_SELECT = "question_select"
+    QUESTION_REVISE = "question_revise"
+    NAVIGATION_NEXT = "navigation_next"
+    NAVIGATION_PREV = "navigation_prev"
+    DWELL = "dwell"
+    REVISIT = "revisit"
+
+
+class SessionEvent(Base):
+    """Append-only runtime timeline event for a session (Phase B).
+
+    Ordering/trust model: ``server_seq`` (assigned monotonically per-session
+    at insert time) and ``received_at`` (server clock) are authoritative for
+    ordering and history integrity. ``client_seq`` and ``occurred_at`` are
+    client-reported and are only used for dwell-time calculation and
+    anomaly detection — never trusted alone for ordering or audit purposes.
+    """
+
+    __tablename__ = "session_events"
+    __table_args__ = (
+        UniqueConstraint("session_id", "server_seq", name="uq_session_event_server_seq"),
+    )
+
+    id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True, default=new_uuid)
+    session_id: Mapped[str] = mapped_column(
+        Uuid(as_uuid=False), ForeignKey("assessment_sessions.id"), nullable=False, index=True
+    )
+    event_type: Mapped[SessionEventType] = mapped_column(
+        Enum(
+            SessionEventType,
+            name="session_event_type_enum",
+            values_callable=lambda enum_cls: [member.value for member in enum_cls],
+        ),
+        nullable=False,
+    )
+    question_id: Mapped[str | None] = mapped_column(
+        Uuid(as_uuid=False), ForeignKey("questions.id"), nullable=True, index=True
+    )
+    option_id: Mapped[str | None] = mapped_column(Uuid(as_uuid=False), nullable=True)
+    previous_option_id: Mapped[str | None] = mapped_column(Uuid(as_uuid=False), nullable=True)
+    client_seq: Mapped[int | None] = mapped_column(nullable=True)
+    server_seq: Mapped[int] = mapped_column(nullable=False)
+    occurred_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    received_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    dwell_ms: Mapped[int | None] = mapped_column(nullable=True)
+    event_metadata: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
+
+    session: Mapped[AssessmentSession] = relationship(back_populates="events")
+
+
 __all__ = [
     "SessionStatus",
     "AssessmentSession",
     "SessionAnswer",
     "SessionResult",
+    "SessionEventType",
+    "SessionEvent",
 ]
