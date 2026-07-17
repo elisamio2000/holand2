@@ -6,16 +6,13 @@ the backfill (see app/scripts/backfill_run_codes.py) has been verified
 complete in each environment — see docs/release-readiness-phased-remediation-plan-fa.md
 BLK-04 / Phase B.
 
-NOTE (pre-existing, out of scope for this migration): this repository has
-multiple unmerged alembic heads (0001_users_and_refresh_tokens,
-20260709_03_combined, 20260709_03_counselor, 20260709_03, 20260710_01).
-This migration chains onto ``20260709_03_combined`` because that is the
-branch that last touched ``assessment_sessions``. A repo-wide merge_heads
-migration is a separate, cross-cutting concern and is intentionally not
-bundled into this Phase B change.
+NOTE (pre-existing, out of scope for this migration): this repository had
+multiple unmerged alembic heads initially. These have been consolidated with
+Phase 6 (Admin LLM Integration) coming before this migration, which came after
+Phase 3 (combined_sessions_contract).
 
 Revision ID: 20260714_01
-Revises: 20260709_03_combined
+Revises: 20260710_01
 Create Date: 2026-07-14 00:00:00.000000
 """
 
@@ -27,7 +24,7 @@ from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = "20260714_01"
-down_revision: str | None = "20260709_03_combined"
+down_revision: str | None = "20260710_01"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 

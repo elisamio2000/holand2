@@ -1,7 +1,7 @@
 """Phase A: identity and RBAC foundation
 
-Revision ID: 20260714_01
-Revises: 20260710_01
+Revision ID: 20260714_02
+Revises: 20260714_01
 Create Date: 2026-07-14 09:30:00.000000
 """
 
@@ -11,8 +11,8 @@ import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision: str = "20260714_01"
-down_revision: str | None = "20260710_01"
+revision: str = "20260714_02"
+down_revision: str | None = "20260714_01"
 branch_labels: Sequence[str] | None = None
 depends_on: Sequence[str] | None = None
 
